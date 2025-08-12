@@ -1,0 +1,56 @@
+.btn-primary {
+  position: relative;
+}
+
+.btn-primary:hover {
+  background: theme("colors.primary-light");
+}
+
+.btn-primary:active {
+  background: theme("colors.primary-dark");
+}
+
+.btn-primary:focus::after {
+  content: "";
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  right: -4px;
+  bottom: -4px;
+  border-radius: 2px;
+  border: 1px dashed white;
+}
+
+.btn-primary:disabled {
+  background: theme("colors.primary-light-2");
+}
+
+.btn-secondary {
+  position: relative;
+}
+.btn-secondary:hover {
+  background: theme("colors.primary-10");
+}
+
+.btn-secondary:active {
+  background: theme("colors.primary-20");
+}
+
+.btn-secondary:focus::after {
+  content: "";
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  right: -4px;
+  bottom: -4px;
+  border-radius: 2px;
+  border: 1px dashed white;
+}
+
+.btn-secondary:disabled {
+  color: theme("colors.gray-60");
+}
+
+.btn-secondary:disabled {
+  border-color: #999999;
+}

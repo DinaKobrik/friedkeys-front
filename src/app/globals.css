@@ -1,0 +1,276 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #161616;
+    --foreground: #ededed;
+  }
+}
+
+@font-face {
+  font-family: "Usuzi Condensed";
+  src: url("/fonts/usuzicond.ttf") format("truetype");
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Usuzi";
+  src: url("/fonts/usuzi.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Usuzi Halftone";
+  src: url("/fonts/usuzihalf.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap");
+
+@import "styles/Buttons";
+@import "styles/Header";
+@import "styles/Advantages";
+@import "styles/Ganres";
+@import "styles/JoinNow";
+@import "styles/GameList";
+
+/* card-corner */
+.card-corner {
+  position: relative;
+  overflow: hidden;
+}
+.card-corner::before {
+  content: "";
+  top: -32px;
+  left: -32px;
+  position: absolute;
+  width: 64px;
+  height: 64px;
+  transform: rotate(45deg);
+  background: theme("colors.main");
+  z-index: 3;
+}
+.card-corner::after {
+  content: "";
+  bottom: -32px;
+  right: -32px;
+  position: absolute;
+  width: 64px;
+  height: 64px;
+  transform: rotate(45deg);
+  background: theme("colors.main");
+  z-index: 3;
+}
+@media (max-width: 767px) {
+  .card-corner::before {
+    top: -16px;
+    left: -16px;
+    width: 32px;
+    height: 32px;
+  }
+  .card-corner::after {
+    bottom: -16px;
+    right: -16px;
+    width: 32px;
+    height: 32px;
+  }
+}
+/* game-card */
+
+.favorite::before {
+  content: "";
+  position: absolute;
+  border-radius: 2px;
+  width: 100%;
+  height: 100%;
+  background: #ffffff1a;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  z-index: -1;
+}
+.sale-time::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #0000006a;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  z-index: -1;
+}
+
+/* payment */
+
+.success {
+  box-shadow: 0px 0px 20px 0px theme("colors.primary-main");
+}
+.failed {
+  box-shadow: 0px 0px 20px 0px theme("colors.red");
+}
+.grid-scroll {
+  grid-auto-flow: column;
+  grid-template-columns: minmax(140px, 1fr);
+}
+/* sicial-link */
+.link-icon:focus {
+  outline: none;
+  position: relative;
+}
+
+.link-icon:focus::before {
+  content: "";
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  right: -4px;
+  bottom: -4px;
+  border: 1px dashed white;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.link-icon:active {
+  background-color: theme("colors.primary-10");
+}
+.advantages__wrapper {
+  position: relative;
+}
+.advantages__wrapper::before,
+.advantages__wrapper::after {
+  content: "";
+  width: 100%;
+  height: 120px;
+  z-index: -1;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateY(-50%) translateX(-50%);
+  border-radius: 10%;
+  background: #4ef4328a;
+  filter: blur(90px);
+}
+.advantages__wrapper::after {
+  display: none;
+}
+@media (max-width: 991px) {
+  .advantages__wrapper::before {
+    height: 71px;
+    top: 25%;
+    left: 0;
+    transform: translateX(0%) translateY(-25%);
+  }
+  .advantages__wrapper::after {
+    display: block;
+    height: 71px;
+    top: 75%;
+    left: 0;
+    transform: translateX(0%) translateY(-75%);
+  }
+}
+
+.advantages {
+  clip-path: polygon(0% 0%, 89% 0%, 89% 100%, 0% 100%);
+}
+@media (max-width: 991px) {
+  .advantages {
+    flex-wrap: wrap;
+    gap: 25px 0;
+  }
+}
+@media (max-width: 575px) {
+  .advantages {
+    flex-wrap: wrap;
+    gap: 8px 0;
+  }
+}
+
+.advantage {
+  clip-path: polygon(0% 0%, 75% 0%, 100% 100%, 25% 100%);
+}
+.advantage:first-child {
+  clip-path: polygon(0% 0%, 75% 0%, 100% 100%, 0% 100%);
+}
+.advantage:last-child {
+  clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 25% 100%);
+}
+.advantage:nth-child(1) {
+  left: 0;
+}
+.advantage:nth-child(2) {
+  left: -50px;
+}
+.advantage:nth-child(3) {
+  left: -100px;
+}
+.advantage:nth-child(4) {
+  left: -150px;
+}
+.advantage:nth-child(5) {
+  left: -200px;
+}
+@media (max-width: 991px) {
+  .advantage {
+    max-width: calc(50% - 85px);
+  }
+  .advantage:nth-child(1) {
+    clip-path: polygon(0% 0%, 85% 0%, 100% 100%, 0% 100%);
+    left: -85px;
+  }
+  .advantage:nth-child(2) {
+    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 15% 100%);
+    left: -115px;
+  }
+  .advantage:nth-child(3) {
+    clip-path: polygon(0% 0%, 100% 0%, 85% 100%, 0% 100%);
+    left: -85px;
+  }
+  .advantage:nth-child(4) {
+    clip-path: polygon(15% 0%, 100% 0%, 100% 100%, 0% 100%);
+    left: -115px;
+  }
+  .advantage:nth-child(5) {
+    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+    max-width: calc(100% - 200px);
+    width: 100%;
+    left: -100px;
+  }
+}
+@media (max-width: 575px) {
+  .advantage {
+    max-width: calc(50% - 50px);
+    padding: 25px 60px 16px;
+  }
+  .advantage:nth-child(1) {
+    clip-path: polygon(0% 0%, 85% 0%, 100% 100%, 0% 100%);
+    left: -85px;
+    padding: 25px 60px 16px;
+  }
+  .advantage:nth-child(2) {
+    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 15% 100%);
+    left: -110px;
+  }
+  .advantage:nth-child(3) {
+    clip-path: polygon(0% 0%, 100% 0%, 85% 100%, 0% 100%);
+    left: -85px;
+  }
+  .advantage:nth-child(4) {
+    clip-path: polygon(15% 0%, 100% 0%, 100% 100%, 0% 100%);
+    left: -110px;
+  }
+  .advantage:nth-child(5) {
+    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+    max-width: calc(100% - 200px);
+    left: -100px;
+    padding: 25px 60px 16px;
+  }
+}
