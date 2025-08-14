@@ -6,6 +6,7 @@ import { useSearchParams, useRouter } from "next/navigation";
 import GameCard from "../GameCard";
 import Button from "@/components/ui/Button";
 import Heading from "@/components/ui/Heading";
+import Input from "@/components/ui/Input";
 
 const GameList: React.FC = () => {
   const [games, setGames] = useState<Game[]>([]);
@@ -613,7 +614,7 @@ const GameList: React.FC = () => {
                     closeAllDropdowns();
                     setIsGenreOpen(!isGenreOpen);
                   }}
-                  className="filter-list focus:outline-noneskew-x-[0deg] lg:skew-x-[20deg] py-[16px] px-[30px] w-full text-white flex justify-between items-center">
+                  className="filter-list focus:outline-none skew-x-[0deg] lg:skew-x-[20deg] py-[16px] px-[30px] w-full text-white flex justify-between items-center">
                   <span
                     className={`flex ${
                       filters.genre.length > 0 ? "text-white" : "text-gray-68"
@@ -768,38 +769,34 @@ const GameList: React.FC = () => {
             <div className="price-filters flex flex-col lg:flex-row justify-center items-center gap-[18px]">
               <div className="flex w-full gap-[18px] overflow-hidden lg:overflow-visible">
                 <div className="relative w-full lg:max-w-[260px]">
-                  <div className="skew-x-[-20deg] w-full bg-2">
-                    <span className="absolute skew-x-[20deg] left-[10px] top-1/2 transform -translate-y-1/2 text-gray-68">
+                  <Input
+                    variant="skewed"
+                    textAlign="right"
+                    type="number"
+                    placeholder="0"
+                    value={filters.minPrice}
+                    onChange={(e) =>
+                      setFilters({ ...filters, minPrice: e.target.value })
+                    }>
+                    <span className="absolute skew-x-[20deg] left-[38px] top-1/2 transform -translate-y-1/2 text-gray-68">
                       from
                     </span>
-                    <input
-                      type="number"
-                      placeholder="0"
-                      value={filters.minPrice}
-                      onChange={(e) =>
-                        setFilters({ ...filters, minPrice: e.target.value })
-                      }
-                      className="filter-list focus:outline-none skew-x-[20deg] py-[16px] px-[30px] text-white w-full pl-[60px] text-right appearance-none bg-transparent no-arrows"
-                      min="0"
-                    />
-                  </div>
+                  </Input>
                 </div>
                 <div className="relative w-full lg:max-w-[260px]">
-                  <div className="skew-x-[-20deg] w-full bg-2">
-                    <span className="absolute skew-x-[20deg] left-[10px] top-1/2 transform -translate-y-1/2 text-gray-68">
+                  <Input
+                    variant="skewed"
+                    textAlign="right"
+                    type="number"
+                    placeholder="0"
+                    value={filters.maxPrice}
+                    onChange={(e) =>
+                      setFilters({ ...filters, maxPrice: e.target.value })
+                    }>
+                    <span className="absolute skew-x-[20deg] left-[38px] top-1/2 transform -translate-y-1/2 text-gray-68">
                       to
                     </span>
-                    <input
-                      type="number"
-                      placeholder="0"
-                      value={filters.maxPrice}
-                      onChange={(e) =>
-                        setFilters({ ...filters, maxPrice: e.target.value })
-                      }
-                      className="filter-list focus:outline-none skew-x-[20deg] py-[16px] px-[30px] text-white w-full pl-[60px] text-right appearance-none bg-transparent no-arrows"
-                      min="0"
-                    />
-                  </div>
+                  </Input>
                 </div>
               </div>
               <div className="relative w-full lg:max-w-[260px]">

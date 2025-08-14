@@ -1,0 +1,23 @@
+@media (pointer: fine) {
+  .input-status:hover {
+    border-radius: 2px;
+    border: 1px solid theme("colors.primary-main");
+  }
+}
+
+.input-status:focus-within {
+  border-radius: 2px;
+  border: 2px solid theme("colors.primary-main");
+}
+
+.input-status:focus-within::after {
+  content: "";
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  right: -4px;
+  bottom: -4px;
+  border-radius: 2px;
+  z-index: -1;
+  border: 1px dashed white;
+}

@@ -1,8 +1,27 @@
 .category {
   position: relative;
 }
-.category:hover::before,
-.category--active::before {
+@media (pointer: fine) {
+  .category:hover::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 10px;
+    transform: translateY(-50%);
+    background: radial-gradient(
+      ellipse at 50% 50%,
+      theme("colors.primary-main") 70%,
+      rgba(0, 0, 0, 0) 70%
+    );
+    z-index: -1;
+    filter: blur(10px);
+  }
+}
+
+.category--active::before,
+.category:focus-visible::before {
   content: "";
   position: absolute;
   top: 50%;
@@ -20,11 +39,12 @@
 }
 @media (max-width: 575px) {
   .category:hover::before,
-  .category--active::before {
+  .category--active::before,
+  .category:focus-visible::before {
     height: 5px;
   }
 }
-.filter-list:focus::after {
+.filter-list:focus-visible::after {
   content: "";
   position: absolute;
   top: -4px;
@@ -36,7 +56,7 @@
   transform: skew(-20deg);
 }
 @media (max-width: 991px) {
-  .filter-list:focus::after {
+  .filter-list:focus-visible::after {
     transform: skew(0deg);
   }
 }
@@ -48,6 +68,7 @@
 }
 .no-arrows {
   -moz-appearance: textfield;
+  appearance: textfield;
 }
 .custom-scrollbar::-webkit-scrollbar {
   width: 8px;

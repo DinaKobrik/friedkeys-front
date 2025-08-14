@@ -1,26 +1,38 @@
 "use client";
 
-import React from "react";
+import React, { useState, ChangeEvent } from "react";
 import Logo from "@/components/ui/Logo";
 import Button from "@/components/ui/Button";
 import Link from "next/link";
 
 const Header = () => {
+  const [searchValue, setSearchValue] = useState("");
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearchValue(e.target.value);
+  };
+
+  const handleClear = () => {
+    setSearchValue("");
+  };
+
   return (
     <header className="py-[14px] flex justify-between items-center gap-[10px]">
       <Logo />
-      <Button
-        variant="secondary"
-        className="search hidden xl:flex max-w-[380px] 2xl:max-w-[636px] h-[48px] relative px-0 py-0"
-        role="search"
-        aria-label="Search site">
+      <div className="w-full search hidden xl:flex max-w-[380px] 2xl:max-w-[636px] h-[48px] bg-2 border-[1px] border-primary-main skew-x-[-20deg] relative">
+        <input
+          value={searchValue}
+          onChange={handleChange}
+          placeholder="Search"
+          className="w-full px-[20px] py-[16px] pl-[82px] font-usuzi-condensed text-[16px] leading-[16px] sm:text-[24px] sm:leading-[28px] border-none bg-transparent focus:outline-none placeholder-gray-68 hover:placeholder-white caret-primary-main skew-x-[20deg]"
+        />
         <svg
           width="33"
           height="32"
           viewBox="0 0 33 32"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          className="absolute top-1/2 left-[34px] transform -translate-y-1/2">
+          className="absolute top-1/2 left-[34px] transform -translate-y-1/2 skew-x-[20deg]">
           <circle
             cx="15.5012"
             cy="14.3847"
@@ -36,14 +48,28 @@ const Header = () => {
             strokeLinecap="square"
           />
         </svg>
-        <input
-          type="text"
-          placeholder="SEARCH..."
-          className="focus:outline-none placeholder-gray-68 caret-primary-main w-full h-full min-h-[24px] pl-[82px]  bg-transparent border-none text-white text-[24px] leading-[28px] uppercase font-bold"
-          tabIndex={-1}
-          aria-label="Search input"
-        />
-      </Button>
+        {searchValue && (
+          <svg
+            width="32"
+            height="32"
+            viewBox="0 0 32 32"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            className="absolute top-1/2 right-[10px] transform -translate-y-1/2 cursor-pointer skew-x-[20deg]"
+            onClick={handleClear}>
+            <path
+              d="M23.5425 23.5429L8.45752 8.45795"
+              stroke="white"
+              strokeWidth="2"
+            />
+            <path
+              d="M23.5425 8.45795L8.45753 23.5429"
+              stroke="white"
+              strokeWidth="2"
+            />
+          </svg>
+        )}
+      </div>
       <div className="max-h-[48px] hidden xl:flex items-center gap-[18px]">
         <Button
           variant="secondary"
@@ -126,9 +152,9 @@ const Header = () => {
         tabIndex={-1}
         aria-hidden="true"
         aria-label="Support mobile link">
-        <div className="support font-usuzi-condensed flex justify-center items-center text-[15px] leading-[17px] sm:text-[26px] sm:leading-[28px] font-bold uppercase text-center text-white px-[10px] py-[10px] sm:px-[12px] sm:py-[12px] pl-[30px] sm:pl-[30px] relative w-[calc(100%-4px)] h-[calc(100%-4px)] bg-main overflow-hidden z-10">
+        <span className="support font-usuzi-condensed flex justify-center items-center text-[15px] leading-[17px] sm:text-[26px] sm:leading-[28px] font-bold uppercase text-center text-white px-[10px] py-[10px] sm:px-[12px] sm:py-[12px] pl-[30px] sm:pl-[30px] relative w-[calc(100%-4px)] h-[calc(100%-4px)] bg-main overflow-hidden z-10">
           SUPPORT
-        </div>
+        </span>
       </Link>
       <div
         className="flex xl:hidden fixed bottom-0 left-1/2 transform -translate-x-1/2 z-[1000] w-full justify-around bg-3"

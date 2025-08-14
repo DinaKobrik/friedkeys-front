@@ -1,6 +1,6 @@
 import React from "react";
 
-const baseStyles = "uppercase text-white  m-0";
+const baseStyles = "uppercase text-white m-0";
 
 const headingStyles = {
   h1: `${baseStyles} font-usuzi text-[24px] leading-[26px] sm:text-[42px] sm:leading-[48px] lg:text-[64px] lg:leading-[72px]`,

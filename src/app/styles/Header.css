@@ -13,10 +13,14 @@
 .support {
   clip-path: polygon(10% 0%, 100% 0%, 100% 100%, 0% 100%);
 }
+@media (pointer: fine) {
+  .menu--mobile__link:hover svg path,
+  .menu--mobile__link:hover svg rect,
+  .menu--mobile__link:hover svg circle {
+    stroke: #4ef432;
+  }
+}
 
-.menu--mobile__link:hover svg path,
-.menu--mobile__link:hover svg rect,
-.menu--mobile__link:hover svg circle,
 .menu--mobile__link:focus svg path,
 .menu--mobile__link:focus svg rect,
 .menu--mobile__link:focus svg circle {

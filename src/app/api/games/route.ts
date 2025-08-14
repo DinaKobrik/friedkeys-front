@@ -52,13 +52,24 @@ export async function GET(request: Request) {
     log(`After system filter length: ${filteredGames.length}`);
   }
   const hasDiscount = searchParams.get("hasDiscount");
+  const today = new Date("2025-08-13T11:53:00Z");
   if (hasDiscount === "true") {
     log("Applying hasDiscount filter");
-    filteredGames = filteredGames.filter(
-      (game: Game) => game.discount !== undefined && game.discount > 0
-    );
+    filteredGames = filteredGames.filter((game: Game) => {
+      const isDiscountValid = game.discount !== undefined && game.discount > 0;
+      const discountDate = game.discountDate
+        ? new Date(game.discountDate)
+        : null;
+      if (discountDate && discountDate <= today) {
+        log(`Discount for game ${game.id} expired on ${game.discountDate}`);
+        return false;
+      }
+
+      return isDiscountValid;
+    });
     log(`After hasDiscount filter length: ${filteredGames.length}`);
   }
+
   const preOrder = searchParams.get("preOrder");
   if (preOrder === "true") {
     log("Applying preOrder filter");
