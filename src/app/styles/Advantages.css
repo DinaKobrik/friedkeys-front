@@ -18,7 +18,7 @@
 .advantages__wrapper::after {
   display: none;
 }
-@media (max-width: 991px) {
+@media (max-width: 1199px) {
   .advantages__wrapper::before {
     height: 71px;
     top: 25%;
@@ -35,98 +35,92 @@
 }
 
 .advantages {
-  clip-path: polygon(0% 0%, 89% 0%, 89% 100%, 0% 100%);
+  grid-template-columns: 1.3fr 1fr 1fr 1fr 1.3fr;
 }
-@media (max-width: 991px) {
+@media (max-width: 1199px) {
   .advantages {
-    flex-wrap: wrap;
-    gap: 25px 0;
-  }
-}
-@media (max-width: 575px) {
-  .advantages {
-    flex-wrap: wrap;
-    gap: 8px 0;
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
-.advantage {
-  clip-path: polygon(0% 0%, 75% 0%, 100% 100%, 25% 100%);
+/* advantages2 */
+
+.advantages2__wrapper {
+  position: relative;
 }
-.advantage:first-child {
-  clip-path: polygon(0% 0%, 75% 0%, 100% 100%, 0% 100%);
+.advantages2__wrapper::before {
+  content: "";
+  width: 100%;
+  height: 120px;
+  z-index: -1;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateY(-50%) translateX(-50%);
+  border-radius: 10%;
+  background: theme("colors.primary-20");
+  filter: blur(90px);
 }
-.advantage:last-child {
-  clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 25% 100%);
-}
-.advantage:nth-child(1) {
-  left: 0;
-}
-.advantage:nth-child(2) {
-  left: -50px;
-}
-.advantage:nth-child(3) {
-  left: -100px;
-}
-.advantage:nth-child(4) {
-  left: -150px;
-}
-.advantage:nth-child(5) {
-  left: -200px;
-}
-@media (max-width: 991px) {
-  .advantage {
-    max-width: calc(50% - 85px);
+@media (max-width: 1199px) {
+  .advantages2__wrapper::before {
+    width: 120px;
+    filter: blur(50px);
   }
-  .advantage:nth-child(1) {
-    clip-path: polygon(0% 0%, 85% 0%, 100% 100%, 0% 100%);
-    left: -85px;
+  .advantage2:before {
+    content: "";
+    height: 120px;
+    width: 120px;
+    z-index: -1;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateY(-50%) translateX(-50%);
+    border-radius: 10%;
+    background: theme("colors.primary-20");
+    filter: blur(50px);
   }
-  .advantage:nth-child(2) {
-    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 15% 100%);
-    left: -115px;
+}
+
+.advantages2 {
+  grid-template-columns: 1.3fr 1fr 1fr 1fr 1.3fr;
+}
+
+@media (max-width: 1199px) {
+  .advantages2 {
+    grid-template-columns: repeat(2, 1fr);
   }
-  .advantage:nth-child(3) {
-    clip-path: polygon(0% 0%, 100% 0%, 85% 100%, 0% 100%);
-    left: -85px;
+  .advantages2::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1px;
+    height: 100%;
+    background: linear-gradient(
+      to top,
+      #4ef4320a 0%,
+      #4ef432 30%,
+      #4ef432 70%,
+      #4ef4320a 100%
+    );
+    z-index: -5;
   }
-  .advantage:nth-child(4) {
-    clip-path: polygon(15% 0%, 100% 0%, 100% 100%, 0% 100%);
-    left: -115px;
-  }
-  .advantage:nth-child(5) {
-    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
-    max-width: calc(100% - 200px);
+  .advantages2::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
     width: 100%;
-    left: -100px;
-  }
-}
-@media (max-width: 575px) {
-  .advantage {
-    max-width: calc(50% - 50px);
-    padding: 25px 60px 16px;
-  }
-  .advantage:nth-child(1) {
-    clip-path: polygon(0% 0%, 85% 0%, 100% 100%, 0% 100%);
-    left: -85px;
-    padding: 25px 60px 16px;
-  }
-  .advantage:nth-child(2) {
-    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 15% 100%);
-    left: -110px;
-  }
-  .advantage:nth-child(3) {
-    clip-path: polygon(0% 0%, 100% 0%, 85% 100%, 0% 100%);
-    left: -85px;
-  }
-  .advantage:nth-child(4) {
-    clip-path: polygon(15% 0%, 100% 0%, 100% 100%, 0% 100%);
-    left: -110px;
-  }
-  .advantage:nth-child(5) {
-    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
-    max-width: calc(100% - 200px);
-    left: -100px;
-    padding: 25px 60px 16px;
+    height: 1px;
+    background: linear-gradient(
+      to right,
+      #4ef4320a 0%,
+      #4ef432 30%,
+      #4ef432 70%,
+      #4ef4320a 100%
+    );
+    z-index: -5;
   }
 }

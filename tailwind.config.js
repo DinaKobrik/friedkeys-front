@@ -20,6 +20,8 @@ module.exports = {
         sale: "#E61E50",
         DLS: "rgba(255, 255, 255, 0.05)",
         red: "#D64431",
+        playstation: "#0070D1",
+        nintendo: "#E60012",
       },
       fontFamily: {
         "usuzi-condensed": ["Usuzi Condensed", "sans-serif"],
@@ -34,6 +36,8 @@ module.exports = {
         lg: "992px",
         xl: "1200px",
         "2xl": "1440px",
+        mainCustom: "1608px",
+        bodyCustom: "1920px",
       },
     },
   },

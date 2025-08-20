@@ -1,0 +1,109 @@
+/* about */
+.about__platforms::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  width: 100%;
+  height: 100px;
+  background: linear-gradient(
+    to right,
+    theme("colors.primary-main") 14%,
+    theme("colors.playstation") 38%,
+    #107b10 63%,
+    theme("colors.nintendo") 100%
+  );
+  filter: blur(90px);
+  z-index: -1;
+}
+.about__platform:nth-child(1):after {
+  content: "";
+  position: absolute;
+  top: 0;
+  z-index: 10;
+  height: 100%;
+  left: 58px;
+  border-left: 2px solid theme("colors.primary-main");
+  transform: skew(20deg);
+}
+.about__platform:nth-child(4)::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  z-index: 10;
+  height: 100%;
+  right: 58px;
+  border-right: 2px solid theme("colors.primary-main");
+  transform: skew(20deg);
+}
+@media (max-width: 1439px) {
+  .about__platforms::before {
+    top: 25%;
+
+    background: linear-gradient(
+      to right,
+      theme("colors.primary-main") 14%,
+      theme("colors.playstation") 100%
+    );
+  }
+  .about__platforms::after {
+    content: "";
+    position: absolute;
+    top: 75%;
+    left: 0;
+    transform: translateY(-50%);
+    width: 100%;
+    height: 100px;
+    background: linear-gradient(
+      to right,
+      #107b10 14%,
+      theme("colors.nintendo") 100%
+    );
+    filter: blur(90px);
+    z-index: -1;
+  }
+  .about__platform:nth-child(3):after {
+    content: "";
+    position: absolute;
+    top: 0;
+    z-index: 10;
+    height: 100%;
+    left: 58px;
+    border-left: 2px solid theme("colors.primary-main");
+    transform: skew(-20deg);
+  }
+  .about__platform:nth-child(2)::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    z-index: 10;
+    height: 100%;
+    right: 58px;
+    border-right: 2px solid theme("colors.primary-main");
+    transform: skew(20deg);
+  }
+  .about__platform:nth-child(4)::after {
+    transform: skew(-20deg);
+  }
+}
+@media (max-width: 767px) {
+  .about__platform:nth-child(n)::after {
+    display: none;
+  }
+}
+@media (max-width: 575px) {
+  .about__platforms::before {
+    top: 50%;
+    background: linear-gradient(
+      to right,
+      theme("colors.primary-main") 14%,
+      theme("colors.playstation") 38%,
+      #107b10 63%,
+      theme("colors.nintendo") 100%
+    );
+  }
+  .about__platforms::after {
+    background: none;
+  }
+}
