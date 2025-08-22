@@ -7,6 +7,8 @@ import Platforms from "@/components/Sections/About/Platforms";
 import Partners from "@/components/Sections/About/Partners";
 import Advantages2 from "@/components/Sections/About/Advantages2";
 import Faq from "@/components/Sections/About/Faq";
+import UsersFeedbacks from "@/components/Sections/Feedback/UsersFeedbacks";
+import Button from "@/components/ui/Button";
 
 export default function About() {
   return (
@@ -20,6 +22,19 @@ export default function About() {
       <AboutUs />
       <Stats />
       <Platforms />
+      <div className="flex flex-col gap-[16px] sm:gap-[24px]">
+        <Heading variant="h2">Players Love FriedKeys — Here’s Why</Heading>
+        <UsersFeedbacks
+          initialReviews={3}
+          containerClassName="flex overflow-scroll gap-[4px] sm:gap-[24px] w-full"
+        />
+        <Button
+          variant="secondary"
+          onClick={() => {
+            window.location.href = "/feedback";
+          }}
+          className="max-w-[270px] sm:max-w-[376px]">{`see all User's feedbacks`}</Button>
+      </div>
       <Advantages2 />
       <Partners />
       <Faq />

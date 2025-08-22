@@ -2,7 +2,7 @@
 
 const BottomBar = () => {
   return (
-    <div className="flex gap-[40px] flex-col-reverse 2xl:flex-row justify-between items-center pt[40px] pb-[116px] bg-main text-white">
+    <div className="flex gap-[40px] flex-col-reverse 2xl:flex-row justify-between items-center pt[40px] pb-[116px] xl:pb-[32px] bg-main text-white">
       <div className="text-[12px] sm:text-[20px]">
         Copyright ©2025 FRIEDKEYS – All rights reserved
       </div>

@@ -95,6 +95,7 @@
 @media (max-width: 575px) {
   .about__platforms::before {
     top: 50%;
+    height: 20px;
     background: linear-gradient(
       to right,
       theme("colors.primary-main") 14%,
@@ -102,6 +103,7 @@
       #107b10 63%,
       theme("colors.nintendo") 100%
     );
+    filter: blur(60px);
   }
   .about__platforms::after {
     background: none;
