@@ -106,7 +106,7 @@ const ChangeName: React.FC = () => {
   const formatLastUpdated = () => {
     const today = new Date();
     const day = String(today.getDate()).padStart(2, "0");
-    const month = String(today.getMonth() + 1).padStart(2, "0"); // Месяцы начинаются с 0
+    const month = String(today.getMonth() + 1).padStart(2, "0");
     const year = today.getFullYear();
     return `${day}.${month}.${year}`;
   };
@@ -155,7 +155,7 @@ const ChangeName: React.FC = () => {
         firstName: formData.firstName,
         lastName: formData.lastName,
         birthday: formatBirthdayForDisplay(formData.birthday),
-        lastUpdated: formatLastUpdated(), // Добавляем текущую дату при сохранении
+        lastUpdated: formatLastUpdated(),
       };
       localStorage.setItem("userProfile", JSON.stringify(updatedData));
     }

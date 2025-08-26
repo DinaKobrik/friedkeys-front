@@ -1,74 +1,113 @@
 "use client";
 
-import React, { useState, ChangeEvent } from "react";
+import React, { useState, FormEvent, useEffect } from "react";
 import Logo from "@/components/ui/Logo";
 import Button from "@/components/ui/Button";
 import Link from "next/link";
+import { useRouter, usePathname } from "next/navigation";
 
 const Header = () => {
   const [searchValue, setSearchValue] = useState("");
+  const router = useRouter();
+  const pathname = usePathname();
+  const [previousPath, setPreviousPath] = useState(pathname);
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value);
   };
 
-  const handleClear = () => {
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    if (searchValue.trim()) {
+      router.push(
+        `/all-games?search=${encodeURIComponent(searchValue.trim())}`
+      );
+    } else {
+      router.push("/all-games");
+    }
+  };
+
+  const handleClearField = () => {
     setSearchValue("");
   };
+
+  // Сброс поля при уходе со страницы /all-games
+  useEffect(() => {
+    if (previousPath === "/all-games" && pathname !== "/all-games") {
+      setSearchValue("");
+    }
+    setPreviousPath(pathname);
+  }, [pathname]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Сброс поля из GameList
+  useEffect(() => {
+    const handleClearSearch = () => {
+      setSearchValue("");
+    };
+    window.addEventListener("clearSearchField", handleClearSearch);
+    return () =>
+      window.removeEventListener("clearSearchField", handleClearSearch);
+  }, []);
 
   return (
     <header className="py-[14px] flex justify-between items-center gap-[10px]">
       <Logo />
       <div className="w-full search hidden xl:flex max-w-[380px] 2xl:max-w-[636px] h-[48px] bg-2 border-[1px] border-primary-main skew-x-[-20deg] relative">
-        <input
-          value={searchValue}
-          onChange={handleChange}
-          placeholder="Search"
-          className="w-full px-[20px] py-[16px] pl-[82px] font-usuzi-condensed text-[16px] leading-[16px] sm:text-[24px] sm:leading-[28px] border-none bg-transparent focus:outline-none placeholder-gray-68 hover:placeholder-white caret-primary-main skew-x-[20deg]"
-        />
-        <svg
-          width="33"
-          height="32"
-          viewBox="0 0 33 32"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          className="absolute top-1/2 left-[34px] transform -translate-y-1/2 skew-x-[20deg]">
-          <circle
-            cx="15.5012"
-            cy="14.3847"
-            r="10.718"
-            stroke="white"
-            strokeWidth="2"
-            strokeLinecap="square"
+        <form onSubmit={handleSubmit} className="w-full">
+          <input
+            name="search"
+            value={searchValue}
+            onChange={handleChange}
+            placeholder="Search"
+            className="w-full px-[20px] py-[10px] pl-[82px] font-usuzi-condensed text-[16px] leading-[16px] sm:text-[24px] sm:leading-[28px] border-none bg-transparent focus:outline-none placeholder-gray-68 hover:placeholder-white caret-primary-main skew-x-[20deg]"
           />
-          <path
-            d="M22.8196 22.2773L28.8909 28.3329"
-            stroke="white"
-            strokeWidth="2"
-            strokeLinecap="square"
-          />
-        </svg>
-        {searchValue && (
-          <svg
-            width="32"
-            height="32"
-            viewBox="0 0 32 32"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            className="absolute top-1/2 right-[10px] transform -translate-y-1/2 cursor-pointer skew-x-[20deg]"
-            onClick={handleClear}>
-            <path
-              d="M23.5425 23.5429L8.45752 8.45795"
-              stroke="white"
-              strokeWidth="2"
-            />
-            <path
-              d="M23.5425 8.45795L8.45753 23.5429"
-              stroke="white"
-              strokeWidth="2"
-            />
-          </svg>
-        )}
+          <button type="submit">
+            <svg
+              width="33"
+              height="32"
+              viewBox="0 0 33 32"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              className="absolute top-1/2 left-[34px] transform -translate-y-1/2 skew-x-[20deg]">
+              <circle
+                cx="15.5012"
+                cy="14.3847"
+                r="10.718"
+                stroke="white"
+                strokeWidth="2"
+                strokeLinecap="square"
+              />
+              <path
+                d="M22.8196 22.2773L28.8909 28.3329"
+                stroke="white"
+                strokeWidth="2"
+                strokeLinecap="square"
+              />
+            </svg>
+          </button>
+
+          {searchValue && (
+            <svg
+              width="32"
+              height="32"
+              viewBox="0 0 32 32"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              className="absolute top-1/2 right-[10px] transform -translate-y-1/2 cursor-pointer skew-x-[20deg]"
+              onClick={handleClearField}>
+              <path
+                d="M23.5425 23.5429L8.45752 8.45795"
+                stroke="white"
+                strokeWidth="2"
+              />
+              <path
+                d="M23.5425 8.45795L8.45753 23.5429"
+                stroke="white"
+                strokeWidth="2"
+              />
+            </svg>
+          )}
+        </form>
       </div>
       <div className="max-h-[48px] hidden xl:flex items-center gap-[18px]">
         <Button
@@ -234,7 +273,7 @@ const Header = () => {
           </svg>
         </Link>
         <Link
-          href=""
+          href="/search"
           className="menu--mobile__link focus:outline-none cursor-pointer flex justify-center items-center px-[8px] py-[18px] w-full"
           aria-label="Search mobile link">
           <svg
@@ -303,7 +342,7 @@ const Header = () => {
           </svg>
         </Link>
         <Link
-          href=""
+          href="/auth/account/personal-info"
           className="menu--mobile__link focus:outline-none cursor-pointer flex justify-center items-center px-[8px] py-[18px] w-full"
           aria-label="Profile mobile link">
           <svg

@@ -8,9 +8,12 @@ import Button from "@/components/ui/Button";
 import Heading from "@/components/ui/Heading";
 import Input from "@/components/ui/Input";
 import Pagination from "@/components/ui/Pagination";
+import { applyFilters, applySort } from "@/utils/filters";
+import { filterGamesBySearch } from "@/utils/search";
 
 const GameList: React.FC = () => {
   const [games, setGames] = useState<Game[]>([]);
+  const [allGames, setAllGames] = useState<Game[]>([]);
   const [filters, setFilters] = useState({
     genre: [] as string[],
     platform: "",
@@ -34,6 +37,7 @@ const GameList: React.FC = () => {
   const sortRef = useRef<HTMLDivElement>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [gamesPerPage, setGamesPerPage] = useState(12);
+  const [localSearchQuery, setLocalSearchQuery] = useState("");
 
   const genres = [
     "Action",
@@ -52,6 +56,7 @@ const GameList: React.FC = () => {
   const router = useRouter();
   const filterFromUrl = searchParams.get("filter");
   const genreFromUrl = searchParams.get("genre");
+  const initialSearchQuery = searchParams.get("search") || "";
   const platforms = ["PlayStation", "Xbox", "Nintendo", "PC"];
   const systems = ["PC", "Mac", "Linux", "Switch", "Switch 2", "PlayStation 4"];
   const dlcOptions = ["Games & DLS", "DLS"];
@@ -70,6 +75,7 @@ const GameList: React.FC = () => {
     "z-a",
   ];
   const [isMobile, setIsMobile] = useState(false);
+
   // Инициализация фильтров и активного фильтра из URL с немедленной фильтрацией
   useEffect(() => {
     let newActiveFilter = activeFilter;
@@ -91,49 +97,37 @@ const GameList: React.FC = () => {
       newActiveFilter = "pre-orders";
     } else if (filterFromUrl === "trending") {
       newActiveFilter = "trending";
-    } else {
-      newActiveFilter = null;
-      newFilters = { ...newFilters, hasDiscount: false };
     }
 
-    // Обновляем состояние
+    // Начальное значение локального поиска
+    setLocalSearchQuery(initialSearchQuery);
+
     setActiveFilter(newActiveFilter);
     setFilters(newFilters);
 
-    // Немедленный вызов fetchGames для применения фильтрации
     const fetchGames = async () => {
       const url = new URL("/api/games", window.location.origin);
-      if (newActiveFilter === "pre-orders") {
-        url.searchParams.append("preOrder", "true");
-      } else if (newActiveFilter === "sale") {
-        url.searchParams.append("hasDiscount", "true");
-      } else {
-        url.searchParams.append("preOrder", "false");
-      }
-      if (newFilters.genre.length > 0) {
-        url.searchParams.append("genre", newFilters.genre.join(","));
-      }
-      Object.entries({ ...newFilters, sort }).forEach(
-        ([key, value]) => value && url.searchParams.append(key, value as string)
-      );
       const res = await fetch(url.toString());
-      if (!res.ok) console.error("Fetch error:", await res.text());
+      if (!res.ok) {
+        console.error("Fetch error:", await res.text());
+        setGames([]);
+        return;
+      }
       const data = await res.json();
-
-      const filteredGames =
-        newActiveFilter === "pre-orders"
-          ? data.filter((game: Game) => game.preOrder)
-          : data.filter((game: Game) => !game.preOrder);
-      setGames(filteredGames);
-      setCurrentPage(1);
+      setAllGames(data);
+      applyFiltersAndSearch(
+        data,
+        newFilters,
+        newActiveFilter,
+        initialSearchQuery
+      );
     };
     fetchGames();
     const checkWidth = () => setIsMobile(window.innerWidth < 992);
     checkWidth();
-
     window.addEventListener("resize", checkWidth);
     return () => window.removeEventListener("resize", checkWidth);
-  }, [genreFromUrl, filterFromUrl]);
+  }, [genreFromUrl, filterFromUrl, initialSearchQuery]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     const handleResize = () => {
@@ -141,35 +135,9 @@ const GameList: React.FC = () => {
     };
     handleResize();
     window.addEventListener("resize", handleResize);
-    const fetchGames = async () => {
-      const url = new URL("/api/games", window.location.origin);
-      if (activeFilter === "pre-orders") {
-        url.searchParams.append("preOrder", "true");
-      } else if (activeFilter === "sale") {
-        url.searchParams.append("hasDiscount", "true");
-      } else {
-        url.searchParams.append("preOrder", "false");
-      }
-      if (filters.genre.length > 0) {
-        url.searchParams.append("genre", filters.genre.join(","));
-      }
-      Object.entries({ ...filters, sort }).forEach(
-        ([key, value]) => value && url.searchParams.append(key, value as string)
-      );
-      const res = await fetch(url.toString());
-      if (!res.ok) console.error("Fetch error:", await res.text());
-      const data = await res.json();
-
-      const filteredGames =
-        activeFilter === "pre-orders"
-          ? data.filter((game: Game) => game.preOrder)
-          : data.filter((game: Game) => !game.preOrder);
-      setGames(filteredGames);
-      setCurrentPage(1);
-    };
-    fetchGames();
+    applyFiltersAndSearch(allGames, filters, activeFilter, localSearchQuery);
     return () => window.removeEventListener("resize", handleResize);
-  }, [filters, sort, activeFilter]);
+  }, [filters, sort, activeFilter, localSearchQuery, allGames]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -214,7 +182,14 @@ const GameList: React.FC = () => {
     });
     setSort("");
     setActiveFilter(null);
-    router.push("/all-games");
+    setLocalSearchQuery(""); // Сбрасываем строку поиска
+    const event = new CustomEvent("clearSearchField");
+    window.dispatchEvent(event);
+    const currentParams = new URLSearchParams(searchParams);
+    currentParams.delete("genre");
+    currentParams.delete("filter");
+    currentParams.delete("search");
+    router.push(`/all-games?${currentParams.toString()}`);
   };
 
   type FilterType = keyof typeof filters | "sort";
@@ -256,7 +231,9 @@ const GameList: React.FC = () => {
     }
     if (filterType === "hasDiscount" && activeFilter === "sale") {
       setActiveFilter(null);
-      router.push("/all-games");
+      const currentParams = new URLSearchParams(searchParams);
+      currentParams.delete("filter");
+      router.push(`/all-games?${currentParams.toString()}`);
     }
   };
 
@@ -282,7 +259,6 @@ const GameList: React.FC = () => {
   };
 
   // Меню по кнопке
-
   const [isFiltersVisible, setIsFiltersVisible] = useState(false);
   const [windowWidth, setWindowWidth] = useState<number>(
     typeof window !== "undefined" ? window.innerWidth : 0
@@ -312,21 +288,21 @@ const GameList: React.FC = () => {
   };
 
   const handleFilterClick = (newFilter: string) => {
-    // Деактивация фильтра при повторном клике
     if (activeFilter === newFilter) {
       setActiveFilter(null);
       setFilters((prev) => ({ ...prev, hasDiscount: false }));
-      router.push("/all-games"); // Сброс URL при деактивации
+      const currentParams = new URLSearchParams(searchParams);
+      currentParams.delete("filter");
+      router.push(`/all-games?${currentParams.toString()}`);
     } else {
       setActiveFilter(newFilter);
       setFilters((prev) => ({
         ...prev,
         hasDiscount: newFilter === "sale",
       }));
-      // Обновляем URL только если текущий URL не /all-games
-      if (filterFromUrl || searchParams.toString()) {
-        router.push(`/all-games?filter=${newFilter}`);
-      }
+      const currentParams = new URLSearchParams(searchParams);
+      currentParams.set("filter", newFilter);
+      router.push(`/all-games?${currentParams.toString()}`);
     }
     closeAllDropdowns();
   };
@@ -345,13 +321,40 @@ const GameList: React.FC = () => {
     };
   }, [isFiltersVisible]);
 
+  // Функция для применения фильтров и поиска
+  const applyFiltersAndSearch = (
+    gamesData: Game[],
+    currentFilters: typeof filters,
+    currentActiveFilter: string | null,
+    currentSearchQuery: string
+  ) => {
+    let filteredGames = [...gamesData];
+
+    // Поиск
+    if (currentSearchQuery) {
+      filteredGames = filterGamesBySearch(filteredGames, currentSearchQuery);
+    }
+
+    // Фильтры
+    filteredGames = applyFilters(
+      filteredGames,
+      currentFilters,
+      currentActiveFilter
+    );
+
+    // Сортировку
+    filteredGames = applySort(filteredGames, sort);
+
+    setGames(filteredGames);
+    setCurrentPage(1);
+  };
   return (
     <div className="game-list mt-[24px] sm:mt-[56px] relative">
       <Heading variant="h1" className="block lg:hidden mb-[8px] text-center">
         catalog
       </Heading>
       <div className="filter-buttons max-w-[986px] my-0 mx-auto mb-4">
-        <div className="flex flex-wrap justify-center items-center gap-[8px] sm:gap-[20px]">
+        <div className="flex flex-wrap justify-center items-center gap-x-[8px] sm:gap-x-[20px]">
           <button
             onClick={() => handleFilterClick("trending")}
             className={`category focus:outline-none py-[8px] px-[15px] sm:py-[16px] sm:px-[30px] text-[20px] leading-[24px] sm:text-[38px] sm:leading-[44px] font-usuzi-condensed text-white uppercase ${
@@ -375,7 +378,7 @@ const GameList: React.FC = () => {
           </button>
         </div>
       </div>
-      <div className="game-count flex justify-between items-center mb-[24px]">
+      <div className="game-count flex justify-between lg:justify-start items-center mb-[24px]">
         {isMobile && (
           <div className="skew-x-[-20deg] bg-2 h-[42px] sm:h-[58px] flex">
             <button
@@ -402,6 +405,9 @@ const GameList: React.FC = () => {
             </button>
           </div>
         )}
+        <Heading variant="h3" className="mr-[100px] hidden lg:block">
+          Home / Catalog
+        </Heading>
         <div className="game-count text-[16px] sm:text-[32px] font-usuzi-condensed text-white uppercase">
           {games.length} games
         </div>
@@ -792,36 +798,38 @@ const GameList: React.FC = () => {
               Price
             </h3>
             <div className="price-filters flex flex-col lg:flex-row justify-center items-center gap-[18px]">
-              <div className="flex w-full gap-[18px] overflow-hidden lg:overflow-visible">
-                <div className="relative w-full lg:max-w-[260px]">
-                  <Input
-                    variant="skewed"
-                    textAlign="right"
-                    type="number"
-                    placeholder="0"
-                    value={filters.minPrice}
-                    onChange={(e) =>
-                      setFilters({ ...filters, minPrice: e.target.value })
-                    }>
-                    <span className="absolute skew-x-[20deg] left-[38px] top-1/2 transform -translate-y-1/2 text-gray-68">
-                      from
-                    </span>
-                  </Input>
-                </div>
-                <div className="relative w-full lg:max-w-[260px]">
-                  <Input
-                    variant="skewed"
-                    textAlign="right"
-                    type="number"
-                    placeholder="0"
-                    value={filters.maxPrice}
-                    onChange={(e) =>
-                      setFilters({ ...filters, maxPrice: e.target.value })
-                    }>
-                    <span className="absolute skew-x-[20deg] left-[38px] top-1/2 transform -translate-y-1/2 text-gray-68">
-                      to
-                    </span>
-                  </Input>
+              <div className=" w-full overflow-hidden lg:overflow-visible">
+                <div className="w-[calc(100%+20px)] grid grid-cols-2 gap-[18px] ml-[-10px]">
+                  <div className="relative lg:max-w-[260px]">
+                    <Input
+                      variant="skewed"
+                      textAlign="right"
+                      type="number"
+                      placeholder="0"
+                      value={filters.minPrice}
+                      onChange={(e) =>
+                        setFilters({ ...filters, minPrice: e.target.value })
+                      }>
+                      <span className="absolute skew-x-[20deg] left-[38px] top-1/2 transform -translate-y-1/2 text-gray-68">
+                        from
+                      </span>
+                    </Input>
+                  </div>
+                  <div className="relative w-full lg:max-w-[260px]">
+                    <Input
+                      variant="skewed"
+                      textAlign="right"
+                      type="number"
+                      placeholder="0"
+                      value={filters.maxPrice}
+                      onChange={(e) =>
+                        setFilters({ ...filters, maxPrice: e.target.value })
+                      }>
+                      <span className="absolute skew-x-[20deg] left-[38px] top-1/2 transform -translate-y-1/2 text-gray-68">
+                        to
+                      </span>
+                    </Input>
+                  </div>
                 </div>
               </div>
               <div className="relative w-full lg:max-w-[260px]">
@@ -853,6 +861,7 @@ const GameList: React.FC = () => {
               key={game.id}
               game={game}
               showSaleTimer={activeFilter === "sale"}
+              hidePreOrder={activeFilter === "pre-orders" ? false : true}
             />
           ))
         ) : (

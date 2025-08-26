@@ -7,7 +7,7 @@ import Link from "next/link";
 import AccountMenu from "@/components/Sections/Account/AccountMenu";
 
 const PersonalInfo: React.FC = () => {
-  // Константа SVG для редактирования
+  // SVG для редактирования
   const EditIcon = (
     <svg
       width="24"
@@ -42,7 +42,7 @@ const PersonalInfo: React.FC = () => {
     </svg>
   );
 
-  // Константа SVG для даты
+  // SVG для даты
   const CalendarIcon = (
     <svg
       width="24"

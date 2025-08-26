@@ -52,16 +52,33 @@ export async function GET(request: Request) {
     log(`After system filter length: ${filteredGames.length}`);
   }
   const hasDiscount = searchParams.get("hasDiscount");
-  const today = new Date();
+  const now = new Date();
+
   if (hasDiscount === "true") {
     log("Applying hasDiscount filter");
     filteredGames = filteredGames.filter((game: Game) => {
       const isDiscountValid = game.discount && game.discount > 0;
-      const discountDate = game.discountDate
-        ? new Date(game.discountDate)
-        : null;
-      if (discountDate && discountDate <= today) {
-        log(`Discount for game ${game.id} expired on ${game.discountDate}`);
+      let discountDateTime: number | null = null;
+
+      if (game.discountDate) {
+        const discountDate = new Date(game.discountDate);
+        discountDateTime = discountDate.getTime();
+        if (isNaN(discountDateTime)) {
+          log(`Invalid discountDate for game ${game.id}: ${game.discountDate}`);
+          return false;
+        }
+      }
+
+      const isDiscountExpired = discountDateTime
+        ? discountDateTime <= now.getTime()
+        : true;
+
+      if (isDiscountExpired) {
+        log(
+          `Discount for game ${game.id} expired on ${
+            game.discountDate
+          } (Current: ${now.toISOString()})`
+        );
         return false;
       }
 
