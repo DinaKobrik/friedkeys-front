@@ -7,18 +7,21 @@ import Image from "next/image";
 interface GameCardProps {
   game: Game;
   showSaleTimer?: boolean;
+  hidePreOrder?: boolean;
 }
 
-const GameCard: React.FC<GameCardProps> = ({ game, showSaleTimer = false }) => {
+const GameCard: React.FC<GameCardProps> = ({
+  game,
+  showSaleTimer = false,
+  hidePreOrder = false,
+}) => {
   const discountPrice = game.discount
     ? (game.price * (1 - game.discount / 100)).toFixed(2)
     : null;
 
-  // Состояние для отслеживания мобильного режима
   const [isMobile, setIsMobile] = useState(false);
-
-  // Состояние для таймера скидки
   const [discountTime, setDiscountTime] = useState<string | null>(null);
+  const [isFavorite, setIsFavorite] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
@@ -29,7 +32,14 @@ const GameCard: React.FC<GameCardProps> = ({ game, showSaleTimer = false }) => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // Преобразование даты в зависимости от ширины экрана
+  useEffect(() => {
+    const storedFavorites = localStorage.getItem("favoriteGames");
+    if (storedFavorites) {
+      const favoriteIds = JSON.parse(storedFavorites);
+      setIsFavorite(favoriteIds.includes(game.id));
+    }
+  }, [game.id]);
+
   const formatReleaseDate = (dateString: string) => {
     const date = new Date(dateString);
     const day = date.getDate();
@@ -47,7 +57,6 @@ const GameCard: React.FC<GameCardProps> = ({ game, showSaleTimer = false }) => {
     }
   };
 
-  // Расчёт оставшегося времени до окончания скидки с таймером
   useEffect(() => {
     const updateDiscountTime = () => {
       if (!game.discountDate || !game.discount || game.discount === 0) {
@@ -87,25 +96,55 @@ const GameCard: React.FC<GameCardProps> = ({ game, showSaleTimer = false }) => {
     return () => clearInterval(interval);
   }, [game.discountDate, game.discount]);
 
-  // Проверка, истекла ли скидка
   const isDiscountExpired = game.discountDate
     ? new Date(game.discountDate).getTime() < new Date().getTime()
     : false;
 
+  const toggleFavorite = async () => {
+    const storedFavorites = localStorage.getItem("favoriteGames");
+    let favoriteIds = storedFavorites ? JSON.parse(storedFavorites) : [];
+
+    if (isFavorite) {
+      favoriteIds = favoriteIds.filter((id: number) => id !== game.id);
+    } else {
+      favoriteIds.push(game.id);
+    }
+
+    localStorage.setItem("favoriteGames", JSON.stringify(favoriteIds));
+    setIsFavorite(!isFavorite);
+
+    try {
+      const response = await fetch("/api/games", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (response.ok) {
+        await response.json();
+      }
+    } catch (error) {
+      console.error("Failed to fetch updated games:", error);
+    }
+  };
+
   return (
     <div className="w-full h-full flex flex-col relative min-w-[175px] sm:min-w-[200px]">
-      <div className="favorite absolute w-[48px] h-[48px] right-0 top-0 z-10 flex justify-center items-center cursor-pointer">
+      <div
+        className="favorite absolute w-[36px] h-[36px] sm:w-[48px] sm:h-[48px] right-0 top-0 z-10 flex justify-center items-center cursor-pointer"
+        onClick={toggleFavorite}>
         <svg
-          width="22"
-          height="28"
+          width="16.5"
+          height="21"
+          className="sm:w-[22px] sm:h-[28px]"
           viewBox="0 0 22 28"
-          fill="none"
+          fill={isFavorite ? "#FFFF25" : "none"}
           xmlns="http://www.w3.org/2000/svg">
           <path
             fillRule="evenodd"
             clipRule="evenodd"
             d="M20.9702 1.66669C13.1831 1.66669 8.81716 1.66669 1.03003 1.66669V26.3334L11.0336 21.7394L20.9702 26.3334V1.66669Z"
-            stroke="white"
+            stroke={isFavorite ? "#FFFF25" : "white"}
             strokeWidth="2"
             strokeLinecap="square"
           />
@@ -122,15 +161,15 @@ const GameCard: React.FC<GameCardProps> = ({ game, showSaleTimer = false }) => {
             className="object-cover"
           />
           {showSaleTimer && discountTime && (
-            <div className="sale-time absolute bottom-0 left-0 text-sale text-[12px] leading-[14px] sm:text-[19px] md:text-[24px] sm:leading-[30px] p-[8px] sm:p-[16px] text-center w-full z-10">
+            <div className="sale-time absolute bottom-0 left-0 text-sale text-[12px] leading-[14px] md:text-[19px] md:leading-[30px] p-[8px] sm:p-[16px] text-center w-full z-10">
               {discountTime}
             </div>
           )}
         </div>
-        <div className="py-[8px] px-[12px] sm:py-[12px] sm:px-[16px]">
+        <div className="py-[8px] px-[12px] md:py-[12px] md:px-[16px] flex flex-col justify-between">
           <div className="flex gap-[16px] items-start">
             <p
-              className={`hidden sm:block font-medium text-white h-full text-[12px] sm:text-[20px] py-[4px] sm:py-[6px] px-[8px] bg-DLS ${
+              className={`hidden sm:block font-medium text-white h-auto text-[12px] sm:text-[20px] py-[4px] sm:py-[6px] px-[8px] bg-DLS ${
                 game.hasDlc ? "block" : "hidden sm:hidden"
               }`}>
               DLS
@@ -139,7 +178,7 @@ const GameCard: React.FC<GameCardProps> = ({ game, showSaleTimer = false }) => {
               {game.title}
             </h3>
           </div>
-          <div className="flex justify-between items-center">
+          <div className="flex justify-between items-center h-[34px]">
             <p
               className={`block sm:hidden font-medium text-white h-full text-[12px] sm:text-[20px] py-[4px] sm:py-[6px] px-[8px] bg-DLS ${
                 game.hasDlc ? "block" : "hidden"
@@ -147,7 +186,7 @@ const GameCard: React.FC<GameCardProps> = ({ game, showSaleTimer = false }) => {
               DLS
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-[1px] sm:gap-[20px] items-end mr-auto w-full">
+            <div className="flex flex-col sm:flex-row gap-[1px] sm:gap-[20px] lg:gap-[7px] xl:gap-[20px] items-end mr-auto w-full">
               {discountPrice &&
               game.discount &&
               game.discount > 0 &&
@@ -160,16 +199,16 @@ const GameCard: React.FC<GameCardProps> = ({ game, showSaleTimer = false }) => {
                     {game.price}$
                   </span>{" "}
                   <span
-                    className={`absolute right-0 sm:bottom-[130px] md:sticky md:right-auto md:bottom-auto text-white font-bold text-[13px] sm:text-[18px] py-[4px] px-[8px] sm:py-[7px] sm:px-[16px] rounded-[2px] bg-sale ${
+                    className={`absolute right-0 md:sticky md:right-auto md:bottom-auto text-white font-bold text-[13px] md:text-[18px] leading-[13px] sm:leading-[20px] py-[4px] px-[8px] md:py-[7px] md:px-[16px] rounded-[2px] bg-sale ${
                       showSaleTimer && discountTime
-                        ? "bottom-[132px]"
-                        : "bottom-[102px]"
+                        ? "bottom-[132px] sm:bottom-[160px]"
+                        : "bottom-[102px] sm:bottom-[130px]"
                     }`}>
                     -{game.discount}%
                   </span>
                 </>
               ) : (
-                <span className="text-white font-bold text-[15px] sm:text-[28px]">
+                <span className="text-white font-bold text-[15px] sm:text-[28px] leading-[17px] sm:leading-[28px]">
                   {game.price}$
                 </span>
               )}
@@ -178,10 +217,9 @@ const GameCard: React.FC<GameCardProps> = ({ game, showSaleTimer = false }) => {
         </div>
         <div className="h-[7px] w-[50%] absolute bottom-0 left-[50%] bg-primary-main translate-x-[-50%] blur-[30px] z-0"></div>
       </div>
-      {/* Блок Pre-order */}
-      {game.preOrder && game.releaseDate && (
+      {!hidePreOrder && game.preOrder && game.releaseDate && (
         <div className="block max-w-[284px] mx-auto mt-[12px] py-[4px] px-[12px] skew-x-[-20deg] bg-primary-main">
-          <p className="skew-x-[20deg] text-center text-black text-[12px] sm:text-[16px]">
+          <p className="skew-x-[20deg] text-center text-black text-[16px] sm:text-[16px]">
             PRE-ORDER {formatReleaseDate(game.releaseDate)}
           </p>
         </div>

@@ -229,3 +229,26 @@
   will-change: transform;
   backface-visibility: hidden;
 }
+
+/* account__link */
+
+.account__link:hover::before,
+.account__link--active::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  width: 100%;
+  height: 8px;
+  background: theme("colors.primary-main");
+  filter: blur(15px);
+  z-index: -1;
+}
+@media (max-width: 575px) {
+  .account__link:hover::before,
+  .account__link--active::before {
+    height: 4px;
+    filter: blur(10px);
+  }
+}

@@ -52,11 +52,11 @@ export async function GET(request: Request) {
     log(`After system filter length: ${filteredGames.length}`);
   }
   const hasDiscount = searchParams.get("hasDiscount");
-  const today = new Date("2025-08-13T11:53:00Z");
+  const today = new Date();
   if (hasDiscount === "true") {
     log("Applying hasDiscount filter");
     filteredGames = filteredGames.filter((game: Game) => {
-      const isDiscountValid = game.discount !== undefined && game.discount > 0;
+      const isDiscountValid = game.discount && game.discount > 0;
       const discountDate = game.discountDate
         ? new Date(game.discountDate)
         : null;

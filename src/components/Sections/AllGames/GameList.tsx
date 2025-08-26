@@ -281,10 +281,34 @@ const GameList: React.FC = () => {
       ?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
+  // Меню по кнопке
+
   const [isFiltersVisible, setIsFiltersVisible] = useState(false);
+  const [windowWidth, setWindowWidth] = useState<number>(
+    typeof window !== "undefined" ? window.innerWidth : 0
+  );
 
   const toggleFilters = () => {
     setIsFiltersVisible(!isFiltersVisible);
+  };
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  // Динамический top
+  const calculateTopStyle = () => {
+    if (isMobile && isFiltersVisible) {
+      const baseTop = windowWidth >= 640 ? 82 : 64;
+      const scrollY = typeof window !== "undefined" ? window.scrollY : 0;
+      const adjustedTop = Math.max(baseTop - scrollY, 0);
+      return { top: `${adjustedTop}px` };
+    }
+    return { top: "auto" };
   };
 
   const handleFilterClick = (newFilter: string) => {
@@ -388,7 +412,7 @@ const GameList: React.FC = () => {
         !isMobile ? "block" : isFiltersVisible ? "block" : "hidden"
       }`}
         style={{
-          top: isMobile && isFiltersVisible ? "82px" : "auto",
+          ...calculateTopStyle(),
           bottom: isMobile && isFiltersVisible ? "60px" : "auto",
         }}>
         <div>
