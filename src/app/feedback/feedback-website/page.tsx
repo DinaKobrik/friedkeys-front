@@ -3,11 +3,38 @@ import React, { useState, useEffect } from "react";
 import Heading from "@/components/ui/Heading";
 import Text from "@/components/ui/Text";
 import Button from "@/components/ui/Button";
+import Textarea from "@/components/ui/Textarea";
+
+// SVG для звездочки
+const StarIcon = ({
+  filled,
+  onClick,
+}: {
+  filled: boolean;
+  onClick: () => void;
+}) => (
+  <svg
+    className={`w-12 h-12 cursor-pointer ${
+      filled ? "fill-primary-main stroke-primary-main" : "stroke-white"
+    }`}
+    viewBox="0 0 45 43"
+    strokeWidth="3"
+    stroke="currentColor"
+    fill="none"
+    onClick={onClick}>
+    <path
+      d="M22.5 5.5L26.6535 18.2832H40.0945L29.2205 26.1836L33.374 38.9668L22.5 31.0664L11.626 38.9668L15.7795 26.1836L4.90545 18.2832H18.3465L22.5 5.5Z"
+      strokeLinecap="round"
+    />
+  </svg>
+);
 
 const FeedbackPage: React.FC = () => {
   const [rating, setRating] = useState<number | null>(null);
   const [reviewText, setReviewText] = useState("");
   const [isLg, setIsLg] = useState(false);
+  const [isTouchedReview, setIsTouchedReview] = useState(false);
+  const [isValidReview, setIsValidReview] = useState(true);
 
   useEffect(() => {
     const handleResize = () => {
@@ -51,6 +78,26 @@ const FeedbackPage: React.FC = () => {
     ? feedbackMessages.find((msg) => msg.stars === rating)
     : null;
 
+  const handleReviewChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const newReviewText = e.target.value;
+    setReviewText(newReviewText);
+    if (isTouchedReview && !isValidReview && newReviewText.trim()) {
+      setIsValidReview(true);
+    }
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsTouchedReview(true);
+    if (!reviewText.trim()) {
+      setIsValidReview(false);
+      return;
+    }
+    alert("Review submitted successfully!");
+    setRating(null);
+    setReviewText("");
+  };
+
   return (
     <div className="mt-[24px] sm:mt-[80px]">
       <Heading variant="h3" className="mb-[24px] sm:mb-[40px]">
@@ -74,38 +121,32 @@ const FeedbackPage: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 justify-items-center md:justify-items-start items-center gap-[16px]">
           <div className="flex gap-[16px] items-center">
             {Array.from({ length: 5 }, (_, i) => i + 1).map((star) => (
-              <svg
+              <StarIcon
                 key={star}
-                className={`w-12 h-12 cursor-pointer ${
-                  rating && star <= rating
-                    ? "fill-primary-main stroke-primary-main"
-                    : "stroke-white"
-                }`}
-                viewBox="0 0 45 43"
-                strokeWidth="3"
-                stroke="currentColor"
-                fill="none"
-                onClick={() => setRating(star)}>
-                <path
-                  d="M22.5 5.5L26.6535 18.2832H40.0945L29.2205 26.1836L33.374 38.9668L22.5 31.0664L11.626 38.9668L15.7795 26.1836L4.90545 18.2832H18.3465L22.5 5.5Z"
-                  strokeLinecap="round"
-                />
-              </svg>
+                filled={rating !== null && star <= rating}
+                onClick={() => setRating(star)}
+              />
             ))}
           </div>
           {currentFeedback && <Text>{currentFeedback.text}</Text>}
         </div>
         <form action="">
-          <Heading variant="h3" className="mb-[8px]">
-            Your Review
-          </Heading>
-          <textarea
-            className="w-full h-[104px] sm:h-[120px] py-[16px] px-[20px] resize-none bg-2 text-white placeholder-gray-68 rounded mb-[24px] sm:mb-[56px]"
-            placeholder={currentFeedback ? currentFeedback.placeholder : ""}
+          <Textarea
+            label="Your Review"
             value={reviewText}
-            onChange={(e) => setReviewText(e.target.value)}
+            name="review"
+            required
+            onChange={handleReviewChange}
+            placeholder={currentFeedback ? currentFeedback.placeholder : ""}
+            className="w-full h-[104px] sm:h-[120px] py-[16px] px-[20px] resize-none bg-2 text-white placeholder-gray-68 rounded"
+            variant="straight"
+            isTouched={isTouchedReview}
+            isValid={isValidReview}
+            errorMessage={
+              !isValidReview && isTouchedReview ? "Fill in the field" : ""
+            }
           />
-          <div className="flex flex-col-reverse sm:flex-row justify-center mx-auto gap-[8px] sm:gap-[26px] max-w-[calc(100%-18px)] w-full">
+          <div className="flex flex-col-reverse sm:flex-row justify-center mx-auto gap-[8px] sm:gap-[26px] max-w-[calc(100%-18px)] w-full mt-[24px] sm:mt-[56px]">
             <Button
               variant="secondary"
               onClick={() => {
@@ -113,7 +154,7 @@ const FeedbackPage: React.FC = () => {
               }}>
               Back to reviews
             </Button>
-            <Button variant="primary" type="submit">
+            <Button variant="primary" type="submit" onClick={handleSubmit}>
               Submit Review
             </Button>
           </div>

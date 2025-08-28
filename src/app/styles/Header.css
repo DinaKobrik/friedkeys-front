@@ -26,3 +26,33 @@
 .menu--mobile__link:focus svg circle {
   stroke: #4ef432;
 }
+
+/* search */
+@media (pointer: fine) {
+  .search:hover {
+    box-shadow: 0px 0px 8px theme("colors.primary-light");
+  }
+  .search:hover input::placeholder {
+    color: theme("colors.white");
+  }
+}
+
+.search:focus-within {
+  border: 2px solid theme("colors.primary-main");
+  box-shadow: none;
+}
+.search:focus-within input::placeholder {
+  color: theme("colors.2");
+  display: none;
+}
+.search:focus-within::after {
+  content: "";
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  right: -4px;
+  bottom: -4px;
+  border-radius: 2px;
+  z-index: -1;
+  border: 1px dashed white;
+}

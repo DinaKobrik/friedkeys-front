@@ -68,6 +68,7 @@ export default function ForgotPassword() {
         <Input
           label="Email"
           type="text"
+          name="email"
           value={email}
           onChange={(e) => {
             setEmail(e.target.value);

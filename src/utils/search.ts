@@ -1,4 +1,3 @@
-// utils/search.ts
 import { Game } from "@/types/game";
 
 export const filterGamesBySearch = (

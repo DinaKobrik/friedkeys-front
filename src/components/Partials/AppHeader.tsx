@@ -112,6 +112,9 @@ const Header = () => {
       <div className="max-h-[48px] hidden xl:flex items-center gap-[18px]">
         <Button
           variant="secondary"
+          onClick={() => {
+            window.location.href = "/support";
+          }}
           className="h-[48px] flex justify-center items-center"
           aria-label="Support page">
           support
@@ -160,6 +163,9 @@ const Header = () => {
         </Button>
         <Button
           variant="secondary"
+          onClick={() => {
+            window.location.href = "/auth/account/personal-info";
+          }}
           className="h-[48px] flex justify-center items-center"
           aria-label="Settings">
           <svg
@@ -186,7 +192,7 @@ const Header = () => {
         </Button>
       </div>
       <Link
-        href=""
+        href="/support"
         className="support-container flex justify-center items-center xl:hidden max-w-[200px] h-[40px] sm:h-[48px] no-underline relative w-auto"
         tabIndex={-1}
         aria-hidden="true"

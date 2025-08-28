@@ -121,6 +121,7 @@ export default function ResetPassword() {
         <Input
           label="New Password"
           type={showPassword ? "text" : "password"}
+          name="newPassword"
           value={newPassword}
           onChange={(e) => setNewPassword(e.target.value)}
           required
@@ -141,6 +142,7 @@ export default function ResetPassword() {
         </Input>
         <Input
           label="Confirm Password"
+          name="confirmPassword"
           type={showConfirmPassword ? "text" : "password"}
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}

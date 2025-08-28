@@ -180,6 +180,7 @@ const ChangeName: React.FC = () => {
           <Input
             label="First Name"
             type="text"
+            name="firstName"
             value={formData.firstName}
             onChange={(e) =>
               setFormData({ ...formData, firstName: e.target.value })
@@ -192,6 +193,7 @@ const ChangeName: React.FC = () => {
           <Input
             label="Last Name"
             type="text"
+            name="lastName"
             value={formData.lastName}
             onChange={(e) =>
               setFormData({ ...formData, lastName: e.target.value })
@@ -204,6 +206,7 @@ const ChangeName: React.FC = () => {
           <Input
             label="Birthday"
             type="date"
+            name="birthday"
             value={formData.birthday}
             onChange={(e) =>
               setFormData({ ...formData, birthday: e.target.value })

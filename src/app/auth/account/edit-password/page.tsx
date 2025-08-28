@@ -172,6 +172,7 @@ const ChangePassword: React.FC = () => {
           <Input
             label="Old Password"
             type="password"
+            name="oldPassword"
             value={oldPassword}
             onChange={(e) => {
               setOldPassword(e.target.value);
@@ -194,6 +195,7 @@ const ChangePassword: React.FC = () => {
             <Input
               label="New Password"
               type={showNewPassword ? "text" : "password"}
+              name="newPassword"
               value={newPassword}
               onChange={(e) => {
                 setNewPassword(e.target.value);
@@ -222,6 +224,7 @@ const ChangePassword: React.FC = () => {
             <Input
               label="Confirm New Password"
               type={showConfirmPassword ? "text" : "password"}
+              name="confirmNewPassword"
               value={confirmPassword}
               onChange={(e) => {
                 setConfirmPassword(e.target.value);

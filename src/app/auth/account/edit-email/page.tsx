@@ -78,6 +78,7 @@ const ChangeEmail: React.FC = () => {
           <Input
             label="New Email"
             type="text"
+            name="email"
             value={email}
             onChange={(e) => {
               setEmail(e.target.value);

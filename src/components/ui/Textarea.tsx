@@ -3,11 +3,10 @@
 import React, { useState, useEffect, ChangeEvent, ReactNode } from "react";
 import Text from "@/components/ui/Text";
 
-interface InputProps {
+interface TextareaProps {
   label?: string;
   value: string;
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
-  type?: string;
+  onChange: (e: ChangeEvent<HTMLTextAreaElement>) => void;
   required?: boolean;
   placeholder?: string;
   className?: string;
@@ -22,11 +21,10 @@ interface InputProps {
   name?: string;
 }
 
-const Input: React.FC<InputProps> = ({
+const Textarea: React.FC<TextareaProps> = ({
   label,
   value,
   onChange,
-  type = "text",
   required = false,
   placeholder,
   className,
@@ -69,23 +67,23 @@ const Input: React.FC<InputProps> = ({
 
   const wrapperBaseStyles = "relative w-full";
   const containerBaseStyles =
-    "relative w-full text-white bg-2 focus:outline-none h-[48px] sm:h-[56px]";
-  const inputBaseStyles =
-    "w-full h-full px-[20px] py-[16px] border-none bg-transparent placeholder-gray-68 caret-primary-main focus:outline-none";
+    "relative w-full text-white bg-2 focus:outline-none input-status";
+  const textareaBaseStyles =
+    "w-full px-[20px] py-[16px] border-none bg-transparent placeholder-gray-68 caret-primary-main focus:outline-none resize-none";
   const textAlignStyles = textAlign === "right" ? "text-right" : "text-left";
   const skewedContainerStyles = "skew-x-[-20deg]";
-  const skewedInputStyles = "skew-x-[20deg]";
+  const skewedTextareaStyles = "skew-x-[20deg]";
   const straightContainerStyles = "";
-  const straightInputStyles = "";
+  const straightTextareaStyles = "";
   const errorStyles = "border-[1px] border-red";
 
   const containerVariantStyles =
     variant === "skewed" ? skewedContainerStyles : straightContainerStyles;
-  const inputVariantStyles =
-    variant === "skewed" ? skewedInputStyles : straightInputStyles;
+  const textareaVariantStyles =
+    variant === "skewed" ? skewedTextareaStyles : straightTextareaStyles;
 
   return (
-    <div className={`${wrapperBaseStyles} ${className}`}>
+    <div className={`${wrapperBaseStyles}`}>
       {label && (
         <label className="uppercase text-white m-0 font-usuzi-condensed text-[16px] leading-[16px] sm:text-[26px] sm:leading-[28px] mb-[8px] block">
           {label}
@@ -94,20 +92,18 @@ const Input: React.FC<InputProps> = ({
       <div
         className={`${containerBaseStyles} ${containerVariantStyles} ${
           !effectiveIsValid && required ? errorStyles : ""
-        } input-status`}>
-        <input
-          type={type}
+        }`}>
+        <textarea
           value={value}
           onChange={onChange}
           placeholder={placeholder}
-          min={type === "number" ? "0" : undefined}
           onBlur={handleBlur}
           autoComplete={autoComplete}
           readOnly={readOnly}
           name={name}
-          id={name}
-          className={`${inputBaseStyles} ${inputVariantStyles} ${textAlignStyles}`}
-          style={{ backgroundColor: "transparent" }}
+          className={`${textareaBaseStyles} ${textareaVariantStyles} ${textAlignStyles} ${
+            className || ""
+          }`}
         />
         {children}
       </div>
@@ -150,4 +146,4 @@ const Input: React.FC<InputProps> = ({
   );
 };
 
-export default Input;
+export default Textarea;

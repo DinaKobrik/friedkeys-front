@@ -26,7 +26,7 @@ export default function About() {
         <Heading variant="h2">Players Love FriedKeys — Here’s Why</Heading>
         <UsersFeedbacks
           initialReviews={3}
-          containerClassName="flex overflow-scroll gap-[4px] sm:gap-[24px] w-full"
+          containerClassName="flex overflow-scroll hide-scrollbar gap-[4px] sm:gap-[24px] w-full"
         />
         <Button
           variant="secondary"
