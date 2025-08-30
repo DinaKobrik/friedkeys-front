@@ -42,14 +42,14 @@ const SearchPage = () => {
       <Heading variant="h1" className="mb-[20px]">
         Search
       </Heading>
-      <div className="w-full search flex h-[48px] bg-2 border-[1px] border-primary-main skew-x-[-20deg] relative">
+      <div className="w-[calc(100%-20px)] search flex h-[48px] bg-2 border-[1px] border-primary-main skew-x-[-20deg] relative">
         <form onSubmit={handleSubmit} className="w-full">
           <input
             name="search"
             value={searchValue}
             onChange={handleChange}
             placeholder="Search"
-            className="w-full px-[20px] py-[10px] pl-[82px] font-usuzi-condensed text-[16px] leading-[16px] sm:text-[24px] sm:leading-[28px] border-none bg-transparent focus:outline-none placeholder-gray-68 hover:placeholder-white caret-primary-main skew-x-[20deg]"
+            className="w-full h-full px-[20px] py-[10px] pl-[82px] font-usuzi-condensed text-[16px] leading-[16px] sm:text-[24px] sm:leading-[28px] border-none bg-transparent focus:outline-none placeholder-gray-68 hover:placeholder-white caret-primary-main skew-x-[20deg]"
           />
           <button type="submit">
             <svg

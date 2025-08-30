@@ -8,8 +8,8 @@ interface InstagramIconProps {
   onMouseUp?: () => void;
   onTouchStart?: () => void;
   onTouchEnd?: () => void;
-  isHovered?: boolean; // Новый пропс для состояния наведения
-  isActive?: boolean; // Новый пропс для состояния активности
+  isHovered?: boolean;
+  isActive?: boolean;
 }
 
 const InstagramIcon: React.FC<InstagramIconProps> = ({
@@ -20,8 +20,8 @@ const InstagramIcon: React.FC<InstagramIconProps> = ({
   onMouseUp,
   onTouchStart,
   onTouchEnd,
-  isHovered = false, // Значение по умолчанию
-  isActive = false, // Значение по умолчанию
+  isHovered = false,
+  isActive = false,
 }) => {
   const [color, setColor] = useState("#8D8D8D");
 
@@ -29,7 +29,7 @@ const InstagramIcon: React.FC<InstagramIconProps> = ({
     if (isActive) setColor("#4EF432");
     else if (isHovered) setColor("#4EF432");
     else setColor("#8D8D8D");
-  }, [isHovered, isActive]); // Зависимости обновляются на основе пропсов
+  }, [isHovered, isActive]);
 
   return (
     <svg

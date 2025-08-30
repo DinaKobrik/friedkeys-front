@@ -33,6 +33,18 @@
   font-weight: 400;
   font-style: normal;
 }
+@font-face {
+  font-family: "Usuzi Gradient";
+  src: url("/fonts/usuzigrad.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Usuzi Bold";
+  src: url("/fonts/usuzibold.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap");
 
 @import "styles/Buttons";
@@ -233,6 +245,18 @@
   }
 }
 
+/* orders */
+.orders-grid {
+  grid-template-columns: 1.5fr 1.5fr repeat(4, 1fr);
+}
+.order-grid {
+  grid-template-columns: 1.5fr 1.5fr repeat(4, 1fr);
+}
+@media (max-width: 1199px) {
+  .order-grid {
+    grid-template-columns: 1fr;
+  }
+}
 /* support */
 
 .trash-icon::before {
