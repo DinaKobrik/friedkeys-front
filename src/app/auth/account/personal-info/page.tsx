@@ -206,82 +206,84 @@ const PersonalInfo: React.FC = () => {
         <Heading variant="h1" className="text-center sm:text-left">
           Personal Info
         </Heading>
-        <div className="flex flex-col w-full max-w-[520px] mx-auto gap-[16px]">
-          <div>
-            <Heading variant="h3" className="mb-[8px]">
-              Email
-            </Heading>
-            <div className="w-full border-1 border-primary-main relative text-white bg-2 focus:outline-none h-[48px] sm:h-[56px] flex items-center px-4">
-              {userData.email}
-              <Link
-                href="/auth/account/edit-email"
-                className="absolute top-[16px] right-[16px]">
-                {EditIcon}
-              </Link>
+        <div className="max-w-[520px] mx-auto w-full flex flex-col gap-[24px] sm:gap-[48px]">
+          <div className="flex flex-col w-full gap-[16px]">
+            <div>
+              <Heading variant="h3" className="mb-[8px]">
+                Email
+              </Heading>
+              <div className="w-full border-1 border-primary-main relative text-white bg-2 focus:outline-none h-[48px] sm:h-[56px] flex items-center px-4">
+                {userData.email}
+                <Link
+                  href="/auth/account/edit-email"
+                  className="absolute top-[12px] right-[12px] sm:top-[16px] sm:right-[16px]">
+                  {EditIcon}
+                </Link>
+              </div>
+            </div>
+            <div>
+              <Heading variant="h3" className="mb-[8px]">
+                Password
+              </Heading>
+              <div className="w-full border-1 border-primary-main relative text-white bg-2 focus:outline-none h-[48px] sm:h-[56px] flex items-center px-4">
+                {userData.password}
+                <Link
+                  href="/auth/account/edit-password"
+                  className="absolute top-[12px] right-[12px] sm:top-[16px] sm:right-[16px]">
+                  {EditIcon}
+                </Link>
+              </div>
+            </div>
+            <div>
+              <Heading variant="h3" className="mb-[8px]">
+                First Name
+              </Heading>
+              <div className="w-full border-1 border-primary-main relative text-white bg-2 focus:outline-none h-[48px] sm:h-[56px] flex items-center px-4">
+                {userData.firstName}
+                <Link
+                  href="/auth/account/edit-name"
+                  className="absolute top-[12px] right-[12px] sm:top-[16px] sm:right-[16px]">
+                  {EditIcon}
+                </Link>
+              </div>
+            </div>
+            <div>
+              <Heading variant="h3" className="mb-[8px]">
+                Last Name
+              </Heading>
+              <div className="w-full border-1 border-primary-main relative text-white bg-2 focus:outline-none h-[48px] sm:h-[56px] flex items-center px-4">
+                {userData.lastName}
+                <Link
+                  href="/auth/account/edit-name"
+                  className="absolute top-[12px] right-[12px] sm:top-[16px] sm:right-[16px]">
+                  {EditIcon}
+                </Link>
+              </div>
+            </div>
+            <div className="mb-[24px] sm:mb-[0px]">
+              <Heading variant="h3" className="mb-[8px]">
+                Birthday
+              </Heading>
+              <div className="w-full border-1 border-primary-main relative text-white bg-2 focus:outline-none h-[48px] sm:h-[56px] flex items-center px-4">
+                {userData.birthday}
+                <Link
+                  href="/auth/account/edit-name"
+                  className="absolute top-[12px] right-[12px] sm:top-[16px] sm:right-[16px]">
+                  {CalendarIcon}
+                </Link>
+              </div>
             </div>
           </div>
-          <div>
-            <Heading variant="h3" className="mb-[8px]">
-              Password
-            </Heading>
-            <div className="w-full border-1 border-primary-main relative text-white bg-2 focus:outline-none h-[48px] sm:h-[56px] flex items-center px-4">
-              {userData.password}
-              <Link
-                href="/auth/account/edit-password"
-                className="absolute top-[16px] right-[16px]">
-                {EditIcon}
-              </Link>
-            </div>
+          <div className="grid grid-cols-2 items-center w-full max-w-[calc(100%-20px)] mx-auto gap-[20px]">
+            <Button variant="secondary">log out</Button>
+            <Link href="" className="text-primary-main text-end">
+              Delete my account
+            </Link>
           </div>
-          <div>
-            <Heading variant="h3" className="mb-[8px]">
-              First Name
-            </Heading>
-            <div className="w-full border-1 border-primary-main relative text-white bg-2 focus:outline-none h-[48px] sm:h-[56px] flex items-center px-4">
-              {userData.firstName}
-              <Link
-                href="/auth/account/edit-name"
-                className="absolute top-[16px] right-[16px]">
-                {EditIcon}
-              </Link>
-            </div>
-          </div>
-          <div>
-            <Heading variant="h3" className="mb-[8px]">
-              Last Name
-            </Heading>
-            <div className="w-full border-1 border-primary-main relative text-white bg-2 focus:outline-none h-[48px] sm:h-[56px] flex items-center px-4">
-              {userData.lastName}
-              <Link
-                href="/auth/account/edit-name"
-                className="absolute top-[16px] right-[16px]">
-                {EditIcon}
-              </Link>
-            </div>
-          </div>
-          <div className="mb-[24px] sm:mb-[0px]">
-            <Heading variant="h3" className="mb-[8px]">
-              Birthday
-            </Heading>
-            <div className="w-full border-1 border-primary-main relative text-white bg-2 focus:outline-none h-[48px] sm:h-[56px] flex items-center px-4">
-              {userData.birthday}
-              <Link
-                href="/auth/account/edit-name"
-                className="absolute top-[16px] right-[16px]">
-                {CalendarIcon}
-              </Link>
-            </div>
-          </div>
+          <Text className="text-center">
+            Member since: {userData.lastUpdated}
+          </Text>
         </div>
-        <div className="grid grid-cols-2 items-center w-full max-w-[500px] mx-auto gap-[20px]">
-          <Button variant="secondary">log out</Button>
-          <Link href="" className="text-primary-main text-end">
-            Delete my account
-          </Link>
-        </div>
-        <Text className="text-center">
-          Member since: {userData.lastUpdated}
-        </Text>
       </div>
     </div>
   );

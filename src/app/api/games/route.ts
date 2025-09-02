@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import gamesData from "../../../../public/data/games.json";
+import newsData from "../../../../public/data/news.json";
 import { Game } from "@/types/game";
+import { New } from "@/types/new";
 import * as fs from "fs";
 import * as path from "path";
 
@@ -12,19 +14,18 @@ export async function GET(request: Request) {
   };
 
   log("Route executed");
-  log(`Raw gamesData: ${JSON.stringify(gamesData)}`);
-  if (!gamesData || !Array.isArray(gamesData)) {
-    log("gamesData is invalid or empty:" + JSON.stringify(gamesData));
-    return NextResponse.json({ error: "Invalid data" }, { status: 500 });
-  }
-  log(`Games data length: ${(gamesData as Game[]).length}`);
-
   const { searchParams } = new URL(request.url);
   log(
     `Query params: ${JSON.stringify(
       Object.fromEntries(searchParams.entries())
     )}`
   );
+  // Логика для игр
+  if (!gamesData || !Array.isArray(gamesData)) {
+    log("gamesData is invalid or empty:" + JSON.stringify(gamesData));
+    return NextResponse.json({ error: "Invalid data" }, { status: 500 });
+  }
+  log(`Games data length: ${(gamesData as Game[]).length}`);
 
   let filteredGames = [...(gamesData as Game[])];
   const genre = searchParams.get("genre")?.split(",");
@@ -208,6 +209,46 @@ export async function GET(request: Request) {
       default:
         log(`No sort applied for: ${sort}`);
     }
+  }
+  // Логика для новостей
+  const newsType = searchParams.get("type");
+  if (newsType === "news") {
+    log("Fetching news data");
+    if (!newsData || !Array.isArray(newsData)) {
+      log("newsData is invalid or empty:" + JSON.stringify(newsData));
+      return NextResponse.json({ error: "Invalid news data" }, { status: 500 });
+    }
+    let filteredNews = [...(newsData as New[])];
+    const gameId = searchParams.get("gameId");
+    if (gameId) {
+      log(`Applying gameId filter: ${gameId}`);
+      filteredNews = filteredNews.filter(
+        (news: New) => news.gameId === parseInt(gameId)
+      );
+    }
+    const sortNews = searchParams.get("sortNews");
+    if (sortNews) {
+      switch (sortNews) {
+        case "newest-first":
+          filteredNews.sort(
+            (a: New, b: New) =>
+              new Date(b.date).getTime() - new Date(a.date).getTime()
+          );
+          log("Applied newest-first sort for news");
+          break;
+        case "oldest-first":
+          filteredNews.sort(
+            (a: New, b: New) =>
+              new Date(a.date).getTime() - new Date(b.date).getTime()
+          );
+          log("Applied oldest-first sort for news");
+          break;
+        default:
+          log(`No sort applied for news: ${sortNews}`);
+      }
+    }
+    log(`Final filteredNews length: ${filteredNews.length}`);
+    return NextResponse.json(filteredNews);
   }
 
   log(`Final filteredGames length: ${filteredGames.length}`);

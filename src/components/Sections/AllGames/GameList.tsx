@@ -380,7 +380,7 @@ const GameList: React.FC = () => {
       </div>
       <div className="game-count flex justify-between lg:justify-start items-center mb-[24px]">
         {isMobile && (
-          <div className="skew-x-[-20deg] bg-2 h-[42px] sm:h-[58px] flex">
+          <div className="skew-x-[-20deg] bg-2 h-[42px] sm:h-[58px] flex ml-[10px]">
             <button
               onClick={toggleFilters}
               className="filter-list focus:outline-none skew-x-[20deg] py-[12px] px-[38px] sm:py-[16px] sm:px-[30px] w-full text-white flex justify-between items-center text-[15px] leading-[17px]  sm:text-[34px] font-usuzi-condensed uppercase">
@@ -422,13 +422,13 @@ const GameList: React.FC = () => {
           bottom: isMobile && isFiltersVisible ? "60px" : "auto",
         }}>
         <div>
-          <div className="flex justify-between items-center lg:hidden">
-            <h3 className="text-[32px] font-usuzi-condensed text-white uppercase mt-4">
+          <div className="flex justify-between items-center lg:hidden mb-[20px] mt-[24px]">
+            <h3 className="text-[32px] font-usuzi-condensed text-white uppercase">
               Fliters
             </h3>
             <span
               onClick={() => setIsFiltersVisible(false)}
-              className="text-white p-[8px] cursor-pointer mb-[20px]">
+              className="text-white p-[8px] cursor-pointer ">
               ✖
             </span>
           </div>
@@ -832,7 +832,7 @@ const GameList: React.FC = () => {
                   </div>
                 </div>
               </div>
-              <div className="relative w-full lg:max-w-[260px]">
+              <div className="relative w-full max-w-[calc(100%-20px)] lg:max-w-[260px] lg:ml-[34px]">
                 <div className="w-full">
                   <Button variant="secondary" onClick={resetFilters}>
                     Reset Filters
@@ -843,7 +843,7 @@ const GameList: React.FC = () => {
           </div>
           <Button
             variant="primary"
-            className="block lg:hidden mb-[72px]"
+            className="block lg:hidden mb-[72px] max-w-[calc(100%-20px)]"
             onClick={() => {
               setIsFiltersVisible(false);
               document

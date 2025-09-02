@@ -10,7 +10,7 @@ const Logo = () => {
       href="/"
       className="w-[135px] h-[24px] sm:w-[296px] sm:h-[54px] sm:ml-0 cursor-pointer">
       <Image
-        src="/logo.png"
+        src="/images/logo.png"
         alt="FriedKeys logo"
         width={296}
         height={54}

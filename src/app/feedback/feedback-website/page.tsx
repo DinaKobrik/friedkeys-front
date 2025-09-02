@@ -147,11 +147,7 @@ const FeedbackPage: React.FC = () => {
             }
           />
           <div className="flex flex-col-reverse sm:flex-row justify-center mx-auto gap-[8px] sm:gap-[26px] max-w-[calc(100%-18px)] w-full mt-[24px] sm:mt-[56px]">
-            <Button
-              variant="secondary"
-              onClick={() => {
-                window.location.href = "/feedback";
-              }}>
+            <Button variant="secondary" onClick={() => window.history.back()}>
               Back to reviews
             </Button>
             <Button variant="primary" type="submit" onClick={handleSubmit}>

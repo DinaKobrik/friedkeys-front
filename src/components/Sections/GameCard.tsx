@@ -180,7 +180,7 @@ const GameCard: React.FC<GameCardProps> = ({
           </div>
           <div className="flex justify-between items-center h-[34px]">
             <p
-              className={`block sm:hidden font-medium text-white h-full text-[12px] sm:text-[20px] py-[4px] sm:py-[6px] px-[8px] bg-DLS ${
+              className={`block sm:hidden font-medium text-white text-[12px] leading-[14px] sm:text-[20px] sm:leading-[24px] py-[4px] sm:py-[6px] px-[8px] bg-DLS ${
                 game.hasDlc ? "block" : "hidden"
               }`}>
               DLS
@@ -218,8 +218,8 @@ const GameCard: React.FC<GameCardProps> = ({
         <div className="h-[7px] w-[50%] absolute bottom-0 left-[50%] bg-primary-main translate-x-[-50%] blur-[30px] z-0"></div>
       </div>
       {!hidePreOrder && game.preOrder && game.releaseDate && (
-        <div className="block max-w-[284px] mx-auto mt-[12px] py-[4px] px-[12px] skew-x-[-20deg] bg-primary-main">
-          <p className="skew-x-[20deg] text-center text-black text-[16px] sm:text-[16px]">
+        <div className="block max-w-[284px] w-[calc(100%-20px)] mx-auto mt-[8px] sm:mt-[12px] py-[4px] px-[12px] skew-x-[-20deg] bg-primary-main rounded-[1px]">
+          <p className="skew-x-[20deg] text-center text-black text-[12px] leading-[12px] sm:text-[16px] sm:leading-[16px]">
             PRE-ORDER {formatReleaseDate(game.releaseDate)}
           </p>
         </div>

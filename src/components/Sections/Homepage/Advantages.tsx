@@ -206,13 +206,13 @@ const Advantages: React.FC = () => {
               <div
                 className={`${BASE_STYLES.advantage} ${
                   index === 0
-                    ? "skew-x-[-20deg] px-[40px] pl-[85px] 2xl:px-[30px] 2xl:pl-[90px]"
+                    ? "skew-x-[-20deg] px-[40px] pl-[90px] 2xl:px-[30px] 2xl:pl-[90px]"
                     : index === 1
-                    ? "skew-x-[-20deg] px-[25px] pr-[85px] sm:pl-[40px] 2xl:px-[70px] xl:pr-[40px]"
+                    ? "skew-x-[-20deg] px-[25px] pr-[85px] sm:pl-[40px] 2xl:px-[50px] xl:pr-[40px]"
                     : index === 2
-                    ? "skew-x-[20deg] xl:skew-x-[-20deg] px-[25px] pl-[85px] sm:pr-[40px] xl:px-[70px] 2xl:pl-[40px]"
+                    ? "skew-x-[20deg] xl:skew-x-[-20deg] px-[25px] pl-[85px] sm:pr-[40px] xl:px-[50px]"
                     : index === 3
-                    ? "skew-x-[20deg] xl:skew-x-[-20deg] px-[25px] pr-[85px] sm:pl-[40px] xl:px-[70px] 2xl:pr-[40px]"
+                    ? "skew-x-[20deg] xl:skew-x-[-20deg] px-[25px] pr-[85px] sm:pl-[40px] xl:px-[50px]"
                     : index === 4
                     ? "skew-x-[-20deg] px-[50px] pr-[75px] 2xl:px-[30px] 2xl:pr-[90px]"
                     : ""

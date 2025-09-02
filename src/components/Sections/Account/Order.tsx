@@ -47,9 +47,6 @@ const Order: React.FC<OrderProps> = ({
       }
     };
   }, [index]);
-  // const [isLessThan1199State, setIsLessThan1199State] = useState(
-  //   window.innerWidth < 1199 || false
-  // );
   const baseClass = `order-grid p-[16px] pb-[24px] sm:p-[32px] sm:pb-[40px] xl:p-[16px] xl:pb-[16px] grid gap-[24px] justify-between ${
     isLessThan1199State ? "card-corner" : ""
   }`;

@@ -42,7 +42,7 @@ function AppFooter() {
           </li>
           <li>
             <Link
-              href=""
+              href="/support"
               aria-label="Support"
               className="text-white text-[16px] sm:text-[24px] no-underline hover:text-primary-main focus:outline-none focus:text-primary-main transition-colors duration-300 ease-in-out">
               Support
@@ -60,7 +60,7 @@ function AppFooter() {
           </li>
           <li>
             <Link
-              href=""
+              href="/feedback"
               aria-label="User's feedbacks"
               className="text-white text-[16px] sm:text-[24px] no-underline hover:text-primary-main focus:outline-none focus:text-primary-main transition-colors duration-300 ease-in-out">
               {`User's feedbacks`}

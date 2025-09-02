@@ -1,0 +1,718 @@
+[
+  {
+    "id": 1,
+    "gameId": 1,
+    "image": "/images/game1.png",
+    "title": "Exciting Update for Very very very very very very loooooooooooooong name Game 1",
+    "description": "A major update has been released, adding new levels and features. Players are thrilled! A major update has been released, adding new levels and features. Players are thrilled! A major update has been released, adding new levels and features. Players are thrilled! A major update has been released, adding new levels and features. Players are thrilled! A major update has been released, adding new levels and features. Players are thrilled! A major update has been released, adding new levels and features. Players are thrilled!",
+    "date": "2025-08-29",
+    "time": "14:30",
+    "hashtags": [
+      "#Update",
+      "#NewLevels",
+      "#Game1",
+      "#Exciting",
+      "#Features",
+      "#Players",
+      "#Gaming",
+      "#News"
+    ]
+  },
+  {
+    "id": 2,
+    "gameId": 2,
+    "image": "/images/game2.png",
+    "title": "New DLC Announced for Game 2",
+    "description": "Get ready for an exciting new DLC with additional content and challenges.",
+    "date": "2025-08-28",
+    "time": "10:15",
+    "hashtags": [
+      "#DLC",
+      "#Game2",
+      "#NewContent",
+      "#Challenges",
+      "#Gaming",
+      "#Announcement",
+      "#Update"
+    ]
+  },
+  {
+    "id": 3,
+    "gameId": 3,
+    "image": "/images/game3.png",
+    "title": "Game 3 Community Event",
+    "description": "Join us for a special community event with exclusive rewards Join us for a special community event with exclusive rewards! Join us for a special community event with exclusive rewards! Join us for a special community event with exclusive rewards!!",
+    "date": "2025-08-27",
+    "time": "16:45",
+    "hashtags": [
+      "#Community",
+      "#Game3",
+      "#Event",
+      "#Rewards",
+      "#Gaming",
+      "#Exclusive"
+    ]
+  },
+  {
+    "id": 4,
+    "gameId": 4,
+    "image": "/images/game4.png",
+    "title": "Patch Notes for Game 4",
+    "description": "Check out the latest patch notes with bug fixes and improvements.",
+    "date": "2025-08-26",
+    "time": "09:30",
+    "hashtags": [
+      "#PatchNotes",
+      "#Game4",
+      "#BugFixes",
+      "#Improvements",
+      "#Gaming",
+      "#Update"
+    ]
+  },
+  {
+    "id": 5,
+    "gameId": 5,
+    "image": "/images/game5.png",
+    "title": "Game 5 Goes Free-to-Play",
+    "description": "Exciting news! Game 5 is now free-to-play for all users.",
+    "date": "2025-08-25",
+    "time": "13:20",
+    "hashtags": [
+      "#FreeToPlay",
+      "#Game5",
+      "#Exciting",
+      "#News",
+      "#Gaming",
+      "#Update"
+    ]
+  },
+  {
+    "id": 6,
+    "gameId": 6,
+    "image": "/images/game6.png",
+    "title": "New Skins in Game 6",
+    "description": "New cosmetic skins are now available for purchase in Game 6.",
+    "date": "2025-08-24",
+    "time": "11:00",
+    "hashtags": [
+      "#Skins",
+      "#Game6",
+      "#Cosmetic",
+      "#Purchase",
+      "#Gaming",
+      "#New"
+    ]
+  },
+  {
+    "id": 7,
+    "gameId": 7,
+    "image": "/images/game7.png",
+    "title": "Game 7 Tournament Announced",
+    "description": "A global tournament for Game 7 is coming soon with big prizes!",
+    "date": "2025-08-23",
+    "time": "15:10",
+    "hashtags": [
+      "#Tournament",
+      "#Game7",
+      "#Global",
+      "#Prizes",
+      "#Gaming",
+      "#Event"
+    ]
+  },
+  {
+    "id": 8,
+    "gameId": 8,
+    "image": "/images/game8.png",
+    "title": "Game 8 Beta Testing",
+    "description": "Beta testing for Game 8 is now open to selected players.",
+    "date": "2025-08-22",
+    "time": "08:45",
+    "hashtags": [
+      "#BetaTesting",
+      "#Game8",
+      "#Players",
+      "#Gaming",
+      "#New",
+      "#Test"
+    ]
+  },
+  {
+    "id": 9,
+    "gameId": 9,
+    "image": "/images/game9.png",
+    "title": "Game 9 Performance Update",
+    "description": "A performance update for Game 9 improves frame rates significantly.",
+    "date": "2025-08-21",
+    "time": "12:30",
+    "hashtags": ["#Performance", "#Game9", "#Update", "#FrameRates", "#Gaming"]
+  },
+  {
+    "id": 10,
+    "gameId": 10,
+    "image": "/images/game10.png",
+    "title": "Game 10 Anniversary Celebration",
+    "description": "Celebrate the 1-year anniversary of Game 10 with special events!",
+    "date": "2025-08-20",
+    "time": "17:00",
+    "hashtags": [
+      "#Anniversary",
+      "#Game10",
+      "#Celebration",
+      "#Events",
+      "#Gaming"
+    ]
+  },
+  {
+    "id": 11,
+    "gameId": 11,
+    "image": "/images/game11.png",
+    "title": "New Mode in Game 11",
+    "description": "A new game mode has been added to Game 11, offering fresh gameplay.",
+    "date": "2025-08-19",
+    "time": "10:50",
+    "hashtags": ["#NewMode", "#Game11", "#Gameplay", "#Gaming", "#Update"]
+  },
+  {
+    "id": 12,
+    "gameId": 12,
+    "image": "/images/game12.png",
+    "title": "Game 12 Crossplay Update",
+    "description": "Crossplay is now available for Game 12 across all platforms.",
+    "date": "2025-08-18",
+    "time": "14:15",
+    "hashtags": ["#Crossplay", "#Game12", "#Update", "#Platforms", "#Gaming"]
+  },
+  {
+    "id": 13,
+    "gameId": 13,
+    "image": "/images/game13.png",
+    "title": "Game 13 Security Patch",
+    "description": "A security patch for Game 13 addresses recent vulnerabilities.",
+    "date": "2025-08-17",
+    "time": "09:00",
+    "hashtags": [
+      "#Security",
+      "#Game13",
+      "#Patch",
+      "#Vulnerabilities",
+      "#Gaming"
+    ]
+  },
+  {
+    "id": 14,
+    "gameId": 14,
+    "image": "/images/game14.png",
+    "title": "Game 14 Expansion Pack",
+    "description": "An expansion pack for Game 14 adds new regions to explore.",
+    "date": "2025-08-16",
+    "time": "13:40",
+    "hashtags": ["#Expansion", "#Game14", "#NewRegions", "#Gaming", "#Update"]
+  },
+  {
+    "id": 15,
+    "gameId": 15,
+    "image": "/images/game15.png",
+    "title": "Game 15 Community Feedback",
+    "description": "We’ve incorporated community feedback into the latest Game 15 update.",
+    "date": "2025-08-15",
+    "time": "11:30",
+    "hashtags": ["#Community", "#Game15", "#Feedback", "#Update", "#Gaming"]
+  },
+  {
+    "id": 16,
+    "gameId": 16,
+    "image": "/images/game16.png",
+    "title": "Game 16 Esports Event",
+    "description": "An esports event for Game 16 is scheduled for next month.",
+    "date": "2025-08-14",
+    "time": "15:20",
+    "hashtags": ["#Esports", "#Game16", "#Event", "#Gaming", "#Scheduled"]
+  },
+  {
+    "id": 17,
+    "gameId": 17,
+    "image": "/images/game17.png",
+    "title": "Game 17 Bug Fix",
+    "description": "A bug fix update for Game 17 is now live.",
+    "date": "2025-08-13",
+    "time": "08:55",
+    "hashtags": ["#BugFix", "#Game17", "#Update", "#Gaming", "#Live"]
+  },
+  {
+    "id": 18,
+    "gameId": 18,
+    "image": "/images/game18.png",
+    "title": "Game 18 New Characters",
+    "description": "New playable characters are now available in Game 18.",
+    "date": "2025-08-12",
+    "time": "12:10",
+    "hashtags": ["#NewCharacters", "#Game18", "#Playable", "#Gaming", "#Update"]
+  },
+  {
+    "id": 19,
+    "gameId": 19,
+    "image": "/images/game19.png",
+    "title": "Game 19 Server Maintenance",
+    "description": "Scheduled maintenance for Game 19 servers will occur tonight.",
+    "date": "2025-08-11",
+    "time": "16:00",
+    "hashtags": ["#Maintenance", "#Game19", "#Servers", "#Gaming", "#Scheduled"]
+  },
+  {
+    "id": 20,
+    "gameId": 20,
+    "image": "/images/game20.png",
+    "title": "Game 20 Collaboration",
+    "description": "Game 20 collaborates with a popular franchise for new content.",
+    "date": "2025-08-10",
+    "time": "10:30",
+    "hashtags": [
+      "#Collaboration",
+      "#Game20",
+      "#Franchise",
+      "#NewContent",
+      "#Gaming"
+    ]
+  },
+  {
+    "id": 21,
+    "gameId": 21,
+    "image": "/images/game21.png",
+    "title": "Game 21 Performance Boost",
+    "description": "A performance boost update for Game 21 is now available.",
+    "date": "2025-08-09",
+    "time": "14:00",
+    "hashtags": ["#Performance", "#Game21", "#Boost", "#Update", "#Gaming"]
+  },
+  {
+    "id": 22,
+    "gameId": 22,
+    "image": "/images/game22.png",
+    "title": "Game 22 Limited Edition",
+    "description": "A limited edition version of Game 22 is now on sale.",
+    "date": "2025-08-08",
+    "time": "11:45",
+    "hashtags": ["#LimitedEdition", "#Game22", "#Sale", "#Gaming", "#New"]
+  },
+  {
+    "id": 23,
+    "gameId": 23,
+    "image": "/images/game23.png",
+    "title": "Game 23 Patch Notes",
+    "description": "Check out the latest patch notes for Game 23.",
+    "date": "2025-08-07",
+    "time": "09:20",
+    "hashtags": ["#PatchNotes", "#Game23", "#Update", "#Gaming", "#Notes"]
+  },
+  {
+    "id": 24,
+    "gameId": 24,
+    "image": "/images/game24.png",
+    "title": "Game 24 Community Day",
+    "description": "Join the Game 24 Community Day for fun activities!",
+    "date": "2025-08-06",
+    "time": "15:30",
+    "hashtags": ["#CommunityDay", "#Game24", "#Activities", "#Gaming", "#Event"]
+  },
+  {
+    "id": 25,
+    "gameId": 25,
+    "image": "/images/game25.png",
+    "title": "Game 25 New Update",
+    "description": "A new update for Game 25 includes exciting features.",
+    "date": "2025-08-05",
+    "time": "13:15",
+    "hashtags": ["#NewUpdate", "#Game25", "#Features", "#Gaming", "#Exciting"]
+  },
+  {
+    "id": 26,
+    "gameId": 26,
+    "image": "/images/game26.png",
+    "title": "Game 26 Esports League",
+    "description": "A new esports league for Game 26 is launching soon.",
+    "date": "2025-08-04",
+    "time": "10:00",
+    "hashtags": ["#EsportsLeague", "#Game26", "#Launch", "#Gaming", "#New"]
+  },
+  {
+    "id": 27,
+    "gameId": 27,
+    "image": "/images/game27.png",
+    "title": "Game 27 Balance Patch",
+    "description": "A balance patch for Game 27 is now live.",
+    "date": "2025-08-03",
+    "time": "14:25",
+    "hashtags": ["#BalancePatch", "#Game27", "#Update", "#Gaming", "#Live"]
+  },
+  {
+    "id": 28,
+    "gameId": 28,
+    "image": "/images/game28.png",
+    "title": "Game 28 Anniversary",
+    "description": "Celebrate the 2-year anniversary of Game 28 with events!",
+    "date": "2025-08-02",
+    "time": "12:50",
+    "hashtags": ["#Anniversary", "#Game28", "#Events", "#Gaming", "#Celebrate"]
+  },
+  {
+    "id": 29,
+    "gameId": 29,
+    "image": "/images/game29.png",
+    "title": "Game 29 New DLC",
+    "description": "A new DLC for Game 29 is available for purchase.",
+    "date": "2025-08-01",
+    "time": "09:10",
+    "hashtags": ["#NewDLC", "#Game29", "#Purchase", "#Gaming", "#Update"]
+  },
+  {
+    "id": 30,
+    "gameId": 30,
+    "image": "/images/game30.png",
+    "title": "Game 30 Beta Launch",
+    "description": "The beta version of Game 30 is now open to players.",
+    "date": "2025-07-31",
+    "time": "15:40",
+    "hashtags": ["#BetaLaunch", "#Game30", "#Players", "#Gaming", "#New"]
+  },
+  {
+    "id": 31,
+    "gameId": 31,
+    "image": "/images/game31.png",
+    "title": "Game 31 Major Overhaul",
+    "description": "A major overhaul for Game 31 brings a complete redesign and new mechanics.",
+    "date": "2025-07-30",
+    "time": "14:00",
+    "hashtags": [
+      "#Overhaul",
+      "#Game31",
+      "#Redesign",
+      "#Mechanics",
+      "#Gaming",
+      "#Update",
+      "#New"
+    ]
+  },
+  {
+    "id": 32,
+    "gameId": 32,
+    "image": "/images/game32.png",
+    "title": "Game 32 New Expansion",
+    "description": "A new expansion for Game 32 introduces unexplored territories.",
+    "date": "2025-07-29",
+    "time": "10:30",
+    "hashtags": [
+      "#Expansion",
+      "#Game32",
+      "#Territories",
+      "#Gaming",
+      "#NewContent"
+    ]
+  },
+  {
+    "id": 33,
+    "gameId": 33,
+    "image": "/images/game33.png",
+    "title": "Game 33 Player Meetup",
+    "description": "Join the Game 33 player meetup for exclusive in-game rewards.",
+    "date": "2025-07-28",
+    "time": "16:15",
+    "hashtags": [
+      "#Meetup",
+      "#Game33",
+      "#Rewards",
+      "#Gaming",
+      "#Event",
+      "#Players"
+    ]
+  },
+  {
+    "id": 34,
+    "gameId": 34,
+    "image": "/images/game34.png",
+    "title": "Game 34 Bug Resolution",
+    "description": "Latest bug resolution update for Game 34 improves stability.",
+    "date": "2025-07-27",
+    "time": "09:45",
+    "hashtags": ["#BugFix", "#Game34", "#Stability", "#Update", "#Gaming"]
+  },
+  {
+    "id": 35,
+    "gameId": 35,
+    "image": "/images/game35.png",
+    "title": "Game 35 Open Beta",
+    "description": "Game 35 open beta is now available for all players to test.",
+    "date": "2025-07-26",
+    "time": "13:20",
+    "hashtags": ["#OpenBeta", "#Game35", "#Players", "#Gaming", "#Test", "#New"]
+  },
+  {
+    "id": 36,
+    "gameId": 36,
+    "image": "/images/game36.png",
+    "title": "Game 36 Cosmetic Pack",
+    "description": "New cosmetic pack released for Game 36 with unique designs.",
+    "date": "2025-07-25",
+    "time": "11:10",
+    "hashtags": ["#Cosmetic", "#Game36", "#Pack", "#Designs", "#Gaming", "#New"]
+  },
+  {
+    "id": 37,
+    "gameId": 37,
+    "image": "/images/game37.png",
+    "title": "Game 37 World Championship",
+    "description": "Game 37 World Championship is set to begin next week.",
+    "date": "2025-07-24",
+    "time": "15:00",
+    "hashtags": ["#Championship", "#Game37", "#World", "#Gaming", "#Event"]
+  },
+  {
+    "id": 38,
+    "gameId": 38,
+    "image": "/images/game38.png",
+    "title": "Game 38 Alpha Release",
+    "description": "The alpha version of Game 38 is now available for testing.",
+    "date": "2025-07-23",
+    "time": "08:30",
+    "hashtags": ["#AlphaRelease", "#Game38", "#Testing", "#Gaming", "#New"]
+  },
+  {
+    "id": 39,
+    "gameId": 39,
+    "image": "/images/game39.png",
+    "title": "Game 39 Optimization Patch",
+    "description": "Optimization patch for Game 39 enhances performance.",
+    "date": "2025-07-22",
+    "time": "12:40",
+    "hashtags": [
+      "#Optimization",
+      "#Game39",
+      "#Patch",
+      "#Performance",
+      "#Gaming"
+    ]
+  },
+  {
+    "id": 40,
+    "gameId": 40,
+    "image": "/images/game40.png",
+    "title": "Game 40 Birthday Bash",
+    "description": "Celebrate Game 40's 3rd birthday with special events.",
+    "date": "2025-07-21",
+    "time": "17:15",
+    "hashtags": ["#Birthday", "#Game40", "#Bash", "#Events", "#Gaming"]
+  },
+  {
+    "id": 41,
+    "gameId": 41,
+    "image": "/images/game41.png",
+    "title": "Game 41 Multiplayer Mode",
+    "description": "New multiplayer mode added to Game 41 for co-op play.",
+    "date": "2025-07-20",
+    "time": "10:25",
+    "hashtags": ["#Multiplayer", "#Game41", "#Coop", "#Gaming", "#NewMode"]
+  },
+  {
+    "id": 42,
+    "gameId": 42,
+    "image": "/images/game42.png",
+    "title": "Game 42 Cross-Platform",
+    "description": "Cross-platform support now live for Game 42.",
+    "date": "2025-07-19",
+    "time": "14:50",
+    "hashtags": ["#CrossPlatform", "#Game42", "#Support", "#Gaming", "#Update"]
+  },
+  {
+    "id": 43,
+    "gameId": 43,
+    "image": "/images/game43.png",
+    "title": "Game 43 Security Update",
+    "description": "Security update for Game 43 fixes critical issues.",
+    "date": "2025-07-18",
+    "time": "09:10",
+    "hashtags": ["#SecurityUpdate", "#Game43", "#Fixes", "#Gaming", "#Patch"]
+  },
+  {
+    "id": 44,
+    "gameId": 44,
+    "image": "/images/game44.png",
+    "title": "Game 44 New DLC Pack",
+    "description": "New DLC pack for Game 44 adds exciting content.",
+    "date": "2025-07-17",
+    "time": "13:30",
+    "hashtags": ["#DLC", "#Game44", "#NewContent", "#Gaming", "#Update"]
+  },
+  {
+    "id": 45,
+    "gameId": 45,
+    "image": "/images/game45.png",
+    "title": "Game 45 Community Input",
+    "description": "Game 45 incorporates community input for its latest update.",
+    "date": "2025-07-16",
+    "time": "11:00",
+    "hashtags": [
+      "#CommunityInput",
+      "#Game45",
+      "#Update",
+      "#Gaming",
+      "#Feedback"
+    ]
+  },
+  {
+    "id": 46,
+    "gameId": 46,
+    "image": "/images/game46.png",
+    "title": "Game 46 Esports Tournament",
+    "description": "Esports tournament for Game 46 starts this weekend.",
+    "date": "2025-07-15",
+    "time": "15:45",
+    "hashtags": ["#Esports", "#Game46", "#Tournament", "#Gaming", "#Weekend"]
+  },
+  {
+    "id": 47,
+    "gameId": 47,
+    "image": "/images/game47.png",
+    "title": "Game 47 Crash Fix",
+    "description": "Crash fix update for Game 47 is now available.",
+    "date": "2025-07-14",
+    "time": "08:55",
+    "hashtags": ["#CrashFix", "#Game47", "#Update", "#Gaming", "#Fix"]
+  },
+  {
+    "id": 48,
+    "gameId": 48,
+    "image": "/images/game48.png",
+    "title": "Game 48 New Heroes",
+    "description": "New heroes added to Game 48 for enhanced gameplay.",
+    "date": "2025-07-13",
+    "time": "12:20",
+    "hashtags": ["#NewHeroes", "#Game48", "#Gameplay", "#Gaming", "#Update"]
+  },
+  {
+    "id": 49,
+    "gameId": 49,
+    "image": "/images/game49.png",
+    "title": "Game 49 Server Downtime",
+    "description": "Scheduled downtime for Game 49 servers tonight.",
+    "date": "2025-07-12",
+    "time": "16:10",
+    "hashtags": ["#Downtime", "#Game49", "#Servers", "#Gaming", "#Maintenance"]
+  },
+  {
+    "id": 50,
+    "gameId": 50,
+    "image": "/images/game50.png",
+    "title": "Game 50 Partnership",
+    "description": "Game 50 partners with a major brand for new content.",
+    "date": "2025-07-11",
+    "time": "10:40",
+    "hashtags": ["#Partnership", "#Game50", "#Brand", "#NewContent", "#Gaming"]
+  },
+  {
+    "id": 51,
+    "gameId": 51,
+    "image": "/images/game51.png",
+    "title": "Game 51 Speed Boost",
+    "description": "Speed boost update for Game 51 improves gameplay.",
+    "date": "2025-07-10",
+    "time": "14:15",
+    "hashtags": ["#SpeedBoost", "#Game51", "#Update", "#Gameplay", "#Gaming"]
+  },
+  {
+    "id": 52,
+    "gameId": 52,
+    "image": "/images/game52.png",
+    "title": "Game 52 Special Edition",
+    "description": "Special edition of Game 52 now available for purchase.",
+    "date": "2025-07-09",
+    "time": "11:25",
+    "hashtags": ["#SpecialEdition", "#Game52", "#Purchase", "#Gaming", "#New"]
+  },
+  {
+    "id": 53,
+    "gameId": 53,
+    "image": "/images/game53.png",
+    "title": "Game 53 Patch Details",
+    "description": "Detailed patch notes for Game 53 are now released.",
+    "date": "2025-07-08",
+    "time": "09:30",
+    "hashtags": ["#PatchDetails", "#Game53", "#Notes", "#Gaming", "#Update"]
+  },
+  {
+    "id": 54,
+    "gameId": 54,
+    "image": "/images/game54.png",
+    "title": "Game 54 Fan Day",
+    "description": "Game 54 Fan Day offers fun activities for players.",
+    "date": "2025-07-07",
+    "time": "15:50",
+    "hashtags": ["#FanDay", "#Game54", "#Activities", "#Gaming", "#Event"]
+  },
+  {
+    "id": 55,
+    "gameId": 55,
+    "image": "/images/game55.png",
+    "title": "Game 55 Feature Drop",
+    "description": "New feature drop for Game 55 includes exciting additions.",
+    "date": "2025-07-06",
+    "time": "13:00",
+    "hashtags": ["#FeatureDrop", "#Game55", "#Additions", "#Gaming", "#Update"]
+  },
+  {
+    "id": 56,
+    "gameId": 56,
+    "image": "/images/game56.png",
+    "title": "Game 56 Pro League",
+    "description": "Pro league for Game 56 launches with top players.",
+    "date": "2025-07-05",
+    "time": "10:15",
+    "hashtags": ["#ProLeague", "#Game56", "#Players", "#Gaming", "#Launch"]
+  },
+  {
+    "id": 57,
+    "gameId": 57,
+    "image": "/images/game57.png",
+    "title": "Game 57 Balance Adjustment",
+    "description": "Balance adjustment update for Game 57 is now live.",
+    "date": "2025-07-04",
+    "time": "14:35",
+    "hashtags": ["#BalanceAdjustment", "#Game57", "#Update", "#Gaming", "#Live"]
+  },
+  {
+    "id": 58,
+    "gameId": 58,
+    "image": "/images/game58.png",
+    "title": "Game 58 Milestone",
+    "description": "Game 58 reaches a major milestone with new content.",
+    "date": "2025-07-03",
+    "time": "12:10",
+    "hashtags": [
+      "#Milestone",
+      "#Game58",
+      "#NewContent",
+      "#Gaming",
+      "#Celebrate"
+    ]
+  },
+  {
+    "id": 59,
+    "gameId": 59,
+    "image": "/images/game59.png",
+    "title": "Game 59 Extra DLC",
+    "description": "Extra DLC for Game 59 adds more gameplay options.",
+    "date": "2025-07-02",
+    "time": "09:20",
+    "hashtags": ["#ExtraDLC", "#Game59", "#Gameplay", "#Gaming", "#Update"]
+  },
+  {
+    "id": 60,
+    "gameId": 60,
+    "image": "/images/game60.png",
+    "title": "Game 60 Early Access",
+    "description": "Early access for Game 60 is now open to players.",
+    "date": "2025-07-01",
+    "time": "15:30",
+    "hashtags": ["#EarlyAccess", "#Game60", "#Players", "#Gaming", "#New"]
+  }
+]
