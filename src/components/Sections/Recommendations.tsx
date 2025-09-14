@@ -20,14 +20,14 @@ const Recommendations = () => {
       const topGames = data
         .filter((game: Game) => !game.preOrder && game.reviews)
         .sort((a: Game, b: Game) => (b.reviews || 0) - (a.reviews || 0))
-        .slice(0, 3); // Берем первые 3
+        .slice(0, 3);
       setRecommendedGames(topGames);
     };
     fetchGames();
   }, []);
 
   return (
-    <div className="my-[40px] md:my-[120px]">
+    <section>
       <Heading variant="h1">Recommendations</Heading>
       <GameWrapper>
         {recommendedGames.length > 0 ? (
@@ -36,7 +36,7 @@ const Recommendations = () => {
           <p className="text-center text-gray-68">Loading recommendations...</p>
         )}
       </GameWrapper>
-    </div>
+    </section>
   );
 };
 

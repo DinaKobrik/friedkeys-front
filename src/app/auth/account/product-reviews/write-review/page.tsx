@@ -1,0 +1,308 @@
+"use client";
+
+import React, { useState, useEffect, FormEvent, Suspense } from "react";
+import Image from "next/image";
+import Heading from "@/components/ui/Heading";
+import Text from "@/components/ui/Text";
+import Button from "@/components/ui/Button";
+import Textarea from "@/components/ui/Textarea";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Game } from "@/types/game";
+
+// SVG
+const LikeIcon = ({
+  className,
+  onClick,
+}: {
+  className?: string;
+  onClick?: () => void;
+}) => (
+  <svg
+    width="32"
+    height="32"
+    viewBox="0 0 32 32"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className={className}
+    onClick={onClick}>
+    <path
+      fillRule="evenodd"
+      clipRule="evenodd"
+      d="M11.1455 10.105C10.8348 10.4675 10.6641 10.9291 10.6641 11.4066V23.3334C10.6641 24.4379 11.5595 25.3334 12.6641 25.3334H23.6616C24.6281 25.3334 25.4564 24.6421 25.6293 23.6911L27.5687 13.0245C27.7919 11.7968 26.8488 10.6667 25.601 10.6667H18.6641L20.8346 4.15516C21.1193 3.30109 20.7326 2.36765 19.9274 1.96504V1.96504C19.1849 1.59381 18.2851 1.77552 17.7448 2.40579L11.1455 10.105Z"
+      stroke="currentColor"
+      strokeWidth="1.5"
+    />
+    <path
+      d="M5.33333 24V12"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+    />
+  </svg>
+);
+
+interface Review {
+  gameId: number;
+  liked: boolean;
+  review: string;
+  pros: string;
+  cons: string;
+  likes: number;
+  dislikes: number;
+  date: string;
+  order: string;
+}
+
+const ReviewContent: React.FC = () => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const [games, setGames] = useState<Game[]>([]);
+  const [game, setGame] = useState<Game | null>(null);
+  const [liked, setLiked] = useState(false);
+  const [reviewText, setReviewText] = useState("");
+  const [pros, setPros] = useState<string>("");
+  const [cons, setCons] = useState<string>("");
+  const [gameId, setGameId] = useState<number>(1);
+  const [editIndex, setEditIndex] = useState<number | null>(null);
+  const [isTouchedReview, setIsTouchedReview] = useState(false);
+  const [isValidReview, setIsValidReview] = useState(true);
+  const [isLg, setIsLg] = useState(false);
+  const [order, setOrder] = useState<string>("123456789");
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsLg(window.innerWidth >= 992);
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const handleReviewChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const value = e.target.value;
+    setReviewText(value);
+    setIsTouchedReview(true);
+    setIsValidReview(value.trim().length > 0);
+  };
+
+  const handleProsChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const value = e.target.value;
+    setPros(value);
+  };
+
+  const handleConsChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const value = e.target.value;
+    setCons(value);
+  };
+
+  useEffect(() => {
+    const fetchGames = async () => {
+      try {
+        const response = await fetch("/api/games?type=game");
+        const data = await response.json();
+        if (Array.isArray(data)) {
+          setGames(data);
+        } else {
+          console.warn("Invalid games data format from API");
+        }
+      } catch (error) {
+        console.error("Failed to fetch games:", error);
+      }
+    };
+
+    fetchGames();
+  }, []);
+
+  useEffect(() => {
+    const storedEditIndex = localStorage.getItem("editIndex");
+    const paramGameId = searchParams.get("gameId");
+    if (paramGameId) {
+      setGameId(Number(paramGameId));
+    }
+    if (storedEditIndex !== null) {
+      const index = Number(storedEditIndex);
+      setEditIndex(index);
+      const savedReviews = localStorage.getItem("reviews");
+      if (savedReviews && index >= 0) {
+        const reviews = JSON.parse(savedReviews);
+        const review = reviews[index];
+        if (review) {
+          setLiked(review.liked);
+          setReviewText(review.review || "");
+          setPros(review.pros || "");
+          setCons(review.cons || "");
+          setGameId(review.gameId);
+          setOrder(review.order || "123456789");
+        }
+      }
+    }
+
+    if (games.length > 0) {
+      const foundGame = games.find((g) => g.id === gameId);
+      setGame(foundGame || games[0]);
+    }
+  }, [searchParams, games, gameId]);
+
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    const savedReviews = localStorage.getItem("reviews");
+    const reviews = savedReviews ? JSON.parse(savedReviews) : [];
+    const newOrder =
+      "ORD" + Math.floor(100000 + Math.random() * 900000).toString();
+    const newReview: Review = {
+      gameId,
+      liked,
+      review: reviewText,
+      pros,
+      cons,
+      likes: 0,
+      dislikes: 0,
+      date: new Date().toISOString().split("T")[0],
+      order: newOrder,
+    };
+
+    if (editIndex !== null && editIndex >= 0 && editIndex < reviews.length) {
+      const updatedReviews = [...reviews];
+      updatedReviews[editIndex] = newReview;
+      localStorage.setItem("reviews", JSON.stringify(updatedReviews));
+    } else {
+      localStorage.setItem("reviews", JSON.stringify([...reviews, newReview]));
+    }
+    localStorage.removeItem("editIndex");
+    router.push("/auth/account/product-reviews");
+  };
+
+  if (!game) {
+    return (
+      <Heading variant="h3" className="text-center py-10">
+        Loading...
+      </Heading>
+    );
+  }
+
+  return (
+    <main className="mt-[40px] sm:mt-[80px]">
+      <section>
+        <Heading variant="h3" className="mb-[24px] sm:mb-[40px]">
+          {isLg ? `account / orders / ${order} / review of ${game.title}` : ""}
+        </Heading>
+        <Heading
+          variant="h1"
+          className="mb-[24px] sm:mb-[80px] text-center sm:text-left relative z-10">
+          review the game
+        </Heading>
+        <div className="max-w-[792px] w-full mx-auto">
+          <div className="max-w-[568px] mx-auto mb-[24px] sm:mb-[48px] relative">
+            <Image
+              src={game.image}
+              alt={game.title}
+              width={568}
+              height={320}
+              className="absolute top-0 left-0 object-cover filter blur-[20px] z-0"
+            />
+            <Image
+              src={game.image}
+              alt={game.title}
+              width={520}
+              height={280}
+              className="relative z-10 mx-auto mb-[8px] sm:mb-[24px]"
+            />
+            <Heading
+              variant="h3"
+              className="text-center relative z-10 max-w-[520px]">
+              {game.title}
+            </Heading>
+          </div>
+          <div className="mb-[24px] sm:mb-[56px]">
+            <Text className="font-bold mb-[8px]">
+              Tell us what you think about this game!
+            </Text>
+            <Text>
+              Share your experience to help other players decide — whether you
+              loved it or not, your opinion matters
+            </Text>
+          </div>
+          <form
+            action=""
+            className="flex flex-col w-full gap-[24px] sm:gap-[56px]"
+            onSubmit={handleSubmit}>
+            <div className="flex gap-[26px] max-w-[calc(100%-20px)] mx-auto w-full">
+              <button
+                type="button"
+                className={`w-full h-[40px] sm:h-[48px] flex justify-center items-center py-[8px] px-[20px] border-[1px] skew-x-[-20deg] border-red rotate-180 ${
+                  !liked ? "bg-red-20" : ""
+                }`}
+                onClick={() => setLiked(false)}>
+                <LikeIcon className="skew-x-[20deg] w-[24px] h-[24px] sm:w-[32px] sm:h-[32px]" />
+              </button>
+              <button
+                type="button"
+                className={`w-full h-[40px] sm:h-[48px] flex justify-center items-center py-[8px] px-[20px] border-[1px] skew-x-[-20deg] border-primary-main ${
+                  liked ? "bg-primary-20" : ""
+                }`}
+                onClick={() => setLiked(true)}>
+                <LikeIcon className="skew-x-[20deg] w-[24px] h-[24px] sm:w-[32px] sm:h-[32px]" />
+              </button>
+            </div>
+            <Textarea
+              label="Your Review"
+              value={reviewText}
+              name="review"
+              required
+              onChange={handleReviewChange}
+              placeholder="What did you enjoy? Any issues? Would you recommend it?"
+              className="w-full h-[104px] sm:h-[120px]"
+              variant="straight"
+              isTouched={isTouchedReview}
+              isValid={isValidReview}
+              errorMessage={
+                !isValidReview && isTouchedReview ? "Fill in the field" : ""
+              }
+            />
+            <Textarea
+              label="Pros"
+              value={pros}
+              name="pros"
+              onChange={handleProsChange}
+              placeholder="What did you like? (separate items with commas)"
+              className="w-full h-[104px] sm:h-[120px]"
+              variant="straight"
+            />
+            <Textarea
+              label="Cons"
+              value={cons}
+              name="cons"
+              onChange={handleConsChange}
+              placeholder="What could be better? (separate items with commas)"
+              className="w-full h-[104px] sm:h-[120px]"
+              variant="straight"
+            />
+            <div className="flex flex-col-reverse md:flex-row gap-[8px] sm:gap-[26px] max-w-[calc(100%-20px)] mx-auto w-full">
+              <Button
+                variant="secondary"
+                onClick={() => router.push("/auth/account/product-reviews")}>
+                Back to reviews
+              </Button>
+              <Button variant="primary" type="submit">
+                Submit Review
+              </Button>
+            </div>
+          </form>
+        </div>
+      </section>
+    </main>
+  );
+};
+
+export default function WriteReviewPage() {
+  return (
+    <Suspense
+      fallback={
+        <Heading variant="h3" className="text-center py-10">
+          Loading review form...
+        </Heading>
+      }>
+      <ReviewContent />
+    </Suspense>
+  );
+}

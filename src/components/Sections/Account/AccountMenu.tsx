@@ -82,7 +82,7 @@ const AccountMenu: React.FC<{ activeLink?: string }> = ({ activeLink }) => {
   } ${windowWidth < 991 && isMenuVisible ? "bottom-0" : "bottom-auto"}`;
 
   return (
-    <div className="mb-[24px] mt-[24px] sm:mt-[80px] relative">
+    <section className="mb-[24px] mt-[24px] sm:mt-[80px] relative">
       <div className="flex justify-between items-center bg-2 w-[100vw] relative left-[-16px] sm:left-[-46px] py-[8px] sm:py-[16px] px-[16px] sm:px-[46px] lg:hidden">
         <Heading variant="h2">account Menu</Heading>
         <Button
@@ -166,7 +166,7 @@ const AccountMenu: React.FC<{ activeLink?: string }> = ({ activeLink }) => {
           </Heading>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

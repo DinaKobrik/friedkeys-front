@@ -13,12 +13,12 @@ const StatItem = ({ number, label }: { number: string; label: string }) => (
 
 const Stats = () => {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 2xl:flex justify-around items-center py-[40px] gap-[32px]">
+    <section className="grid grid-cols-1 md:grid-cols-2 2xl:flex justify-around items-center py-[40px] gap-[32px]">
       <StatItem number="10 000+" label="games in our catalog" />
       <StatItem number="500 000+" label="happy customers" />
       <StatItem number="1M+" label="games in our catalog" />
       <StatItem number="4.9/5" label="average customer rating" />
-    </div>
+    </section>
   );
 };
 

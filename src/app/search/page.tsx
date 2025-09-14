@@ -38,11 +38,11 @@ const SearchPage = () => {
   }, [pathname]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-start mt-[24px]">
+    <main className="min-h-screen flex flex-col items-center justify-start mt-[24px]">
       <Heading variant="h1" className="mb-[20px]">
         Search
       </Heading>
-      <div className="w-[calc(100%-20px)] search flex h-[48px] bg-2 border-[1px] border-primary-main skew-x-[-20deg] relative">
+      <section className="w-[calc(100%-20px)] search flex h-[48px] bg-2 border-[1px] border-primary-main skew-x-[-20deg] relative">
         <form onSubmit={handleSubmit} className="w-full">
           <input
             name="search"
@@ -98,8 +98,8 @@ const SearchPage = () => {
             </svg>
           )}
         </form>
-      </div>
-    </div>
+      </section>
+    </main>
   );
 };
 

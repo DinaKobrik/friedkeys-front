@@ -12,17 +12,17 @@ import Button from "@/components/ui/Button";
 
 export default function About() {
   return (
-    <div className="flex flex-col justify-around gap-[48px] sm:gap-[80px] mt-[24px] sm:mt-[80px]">
-      <div>
+    <main className="flex flex-col justify-around gap-[48px] sm:gap-[80px] mt-[24px] sm:mt-[80px]">
+      <section>
         <Heading variant="h3" className="mb-[24px] sm:mb-[40px]">
           Home / About FriedKeys
         </Heading>
         <Heading variant="h1">About FriedKeys</Heading>
-      </div>
+      </section>
       <AboutUs />
       <Stats />
       <Platforms />
-      <div className="flex flex-col gap-[16px] sm:gap-[24px]">
+      <section className="flex flex-col gap-[16px] sm:gap-[24px]">
         <Heading variant="h2">Players Love FriedKeys — Here’s Why</Heading>
         <UsersFeedbacks
           initialReviews={3}
@@ -34,10 +34,10 @@ export default function About() {
             window.location.href = "/feedback";
           }}
           className="max-w-[270px] sm:max-w-[376px]">{`see all User's feedbacks`}</Button>
-      </div>
+      </section>
       <Advantages2 />
       <Partners />
       <Faq />
-    </div>
+    </main>
   );
 }

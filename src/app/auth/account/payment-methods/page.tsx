@@ -95,114 +95,124 @@ const PaymentMethodsPage = () => {
   );
 
   return (
-    <div className="min-h-screen mt-[24px] sm:mt-[80px]">
+    <main className="min-h-screen mt-[24px] sm:mt-[80px]">
       <AccountMenu activeLink="/auth/account/payment-methods" />
-      <Heading
-        variant="h1"
-        className="mt-[40px] mb-[24px] sm:mt-[80px] sm:mb-[48px]">
-        Payment Methods
-      </Heading>
-      <div className="grid grid-cols-1 lg:grid-cols-2 lg:grid-rows-2 gap-[24px] mb-[24px] sm:mb-[56px]">
-        <div className={baseStyle}>
-          <div className="max-w-[520px] w-full mx-auto flex flex-col justify-between h-full">
-            <Heading
-              variant="h2"
-              className="mb-[24px] sm:mb-[32px] text-center">
-              Debit / Credit Card
-            </Heading>
-            <div className="mb-[24px] sm:mb-[32px]">
-              {creditCards.map((card: CreditCard) => {
-                const lastFour = card.number.slice(-4);
-                return (
-                  <div
-                    key={card.id}
-                    className="mb-[16px] last:mb-0 flex items-center justify-between">
-                    <div className="flex items-center gap-[16px]">
-                      <Image
-                        src={card.image}
-                        alt={`${card.name} card`}
-                        width={40}
-                        height={26}
-                        className="mr-[12px] rounded-[2px] overflow-hidden"
-                      />
-                      <Text>
-                        {card.name} **** {lastFour}
-                      </Text>
+      <section>
+        <Heading
+          variant="h1"
+          className="mt-[40px] mb-[24px] sm:mt-[80px] sm:mb-[48px]">
+          Payment Methods
+        </Heading>
+        <div className="grid grid-cols-1 lg:grid-cols-2 lg:grid-rows-2 gap-[24px] mb-[24px] sm:mb-[56px]">
+          <div className={baseStyle}>
+            <div className="max-w-[520px] w-full mx-auto flex flex-col justify-between h-full">
+              <Heading
+                variant="h2"
+                className="mb-[24px] sm:mb-[32px] text-center">
+                Debit / Credit Card
+              </Heading>
+              <div className="mb-[24px] sm:mb-[32px]">
+                {creditCards.map((card: CreditCard) => {
+                  const lastFour = card.number.slice(-4);
+                  return (
+                    <div
+                      key={card.id}
+                      className="mb-[16px] last:mb-0 flex items-center justify-between">
+                      <div className="flex items-center gap-[16px]">
+                        <Image
+                          src={card.image}
+                          alt={`${card.name} card`}
+                          width={40}
+                          height={26}
+                          className="mr-[12px] rounded-[2px] overflow-hidden"
+                        />
+                        <Text>
+                          {card.name} **** {lastFour}
+                        </Text>
+                      </div>
+                      <Button
+                        variant="secondary"
+                        onClick={() => handleDeleteCard(card.id)}
+                        className="max-w-[70px] mr-0 hidden lg:block">
+                        <TrashIcon />
+                      </Button>
+                      <button
+                        onClick={() => handleDeleteCard(card.id)}
+                        className="max-w-[24px] h-[40px] lg:hidden">
+                        <TrashIcon />
+                      </button>
                     </div>
-                    <Button
-                      variant="secondary"
-                      onClick={() => handleDeleteCard(card.id)}
-                      className="max-w-[70px] mr-0 hidden lg:block">
-                      <TrashIcon />
-                    </Button>
-                    <button
-                      onClick={() => handleDeleteCard(card.id)}
-                      className="max-w-[24px] h-[40px] lg:hidden">
-                      <TrashIcon />
-                    </button>
-                  </div>
-                );
-              })}
+                  );
+                })}
+              </div>
+              <Button
+                variant="primary"
+                className="max-w-[500px] hidden lg:block">
+                Add Card
+              </Button>
+              <Button variant="secondary" className="max-w-[500px] lg:hidden">
+                Add Card
+              </Button>
             </div>
-            <Button variant="primary" className="max-w-[500px] hidden lg:block">
-              Add Card
-            </Button>
-            <Button variant="secondary" className="max-w-[500px] lg:hidden">
-              Add Card
-            </Button>
           </div>
-        </div>
 
-        <div className={baseStyle}>
-          <div className="max-w-[520px] w-full mx-auto flex flex-col justify-between h-full">
-            <Heading
-              variant="h2"
-              className="mb-[24px] sm:mb-[32px] text-center">
-              wallet
-            </Heading>
-            <Heading
-              variant="h1"
-              className="mb-[24px] sm:mb-[32px] text-center">
-              120.38 $
-            </Heading>
-            <Button variant="primary" className="max-w-[500px] hidden lg:block">
-              Add to Wallet
-            </Button>
-            <Button variant="secondary" className="max-w-[500px] lg:hidden">
-              Add to Wallet
-            </Button>
+          <div className={baseStyle}>
+            <div className="max-w-[520px] w-full mx-auto flex flex-col justify-between h-full">
+              <Heading
+                variant="h2"
+                className="mb-[24px] sm:mb-[32px] text-center">
+                wallet
+              </Heading>
+              <Heading
+                variant="h1"
+                className="mb-[24px] sm:mb-[32px] text-center">
+                120.38 $
+              </Heading>
+              <Button
+                variant="primary"
+                className="max-w-[500px] hidden lg:block">
+                Add to Wallet
+              </Button>
+              <Button variant="secondary" className="max-w-[500px] lg:hidden">
+                Add to Wallet
+              </Button>
+            </div>
           </div>
-        </div>
 
-        <div className={baseStyle}>
-          <div className="max-w-[520px] w-full mx-auto flex flex-col justify-between h-full">
-            <Heading variant="h2" className="mb-[40px] text-center">
-              paypal
-            </Heading>
-            <Button variant="primary" className="max-w-[500px] hidden lg:block">
-              Add paypal
-            </Button>
-            <Button variant="secondary" className="max-w-[500px] lg:hidden">
-              Add paypal
-            </Button>
+          <div className={baseStyle}>
+            <div className="max-w-[520px] w-full mx-auto flex flex-col justify-between h-full">
+              <Heading variant="h2" className="mb-[40px] text-center">
+                paypal
+              </Heading>
+              <Button
+                variant="primary"
+                className="max-w-[500px] hidden lg:block">
+                Add paypal
+              </Button>
+              <Button variant="secondary" className="max-w-[500px] lg:hidden">
+                Add paypal
+              </Button>
+            </div>
           </div>
-        </div>
 
-        <div className={baseStyle}>
-          <div className="max-w-[520px] w-full mx-auto flex flex-col justify-between h-full">
-            <Heading variant="h2" className="mb-[40px] text-center">
-              Crypto
-            </Heading>
-            <Button variant="primary" className="max-w-[500px] hidden lg:block">
-              Add crypto Wallet
-            </Button>
-            <Button variant="secondary" className="max-w-[500px] lg:hidden">
-              Add crypto Wallet
-            </Button>
+          <div className={baseStyle}>
+            <div className="max-w-[520px] w-full mx-auto flex flex-col justify-between h-full">
+              <Heading variant="h2" className="mb-[40px] text-center">
+                Crypto
+              </Heading>
+              <Button
+                variant="primary"
+                className="max-w-[500px] hidden lg:block">
+                Add crypto Wallet
+              </Button>
+              <Button variant="secondary" className="max-w-[500px] lg:hidden">
+                Add crypto Wallet
+              </Button>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
+      </section>
+    </main>
   );
 };
 

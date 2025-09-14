@@ -60,7 +60,7 @@ const UsersFeedbacks: React.FC<UsersFeedbacksProps> = ({
   if (loading) return <div>Loading...</div>;
 
   return (
-    <div className="users-feedbacks">
+    <section className="users-feedbacks">
       <div className={`${containerClassName}`}>
         {paginatedReviews.length > 0 ? (
           paginatedReviews
@@ -77,7 +77,7 @@ const UsersFeedbacks: React.FC<UsersFeedbacksProps> = ({
           handlePageChange={handlePageChange}
         />
       )}
-    </div>
+    </section>
   );
 };
 

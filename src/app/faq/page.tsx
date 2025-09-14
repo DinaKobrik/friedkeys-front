@@ -89,64 +89,66 @@ const FAQPage = () => {
   };
 
   return (
-    <main>
-      <Heading variant="h1" className="mb-[24px] sm:mb-[80px]">
-        Frequently Asked Questions
-      </Heading>
-      <div className="max-w-[1064px] mx-auto">
-        {faqData.map((section, sectionIndex) => (
-          <div key={sectionIndex} className="mb-[32px] sm:mb-[56px]">
-            <Heading variant="h2" className="mb-[16px] sm:mb-[48px]">
-              {section.section}
-            </Heading>
-            {section.questions.map((item, index) => {
-              const globalIndex = sectionIndex * 10 + index;
-              const isOpen = openIndex === globalIndex;
+    <main className="mt-[24px] sm:mt-[80px]">
+      <section>
+        <Heading variant="h1" className="mb-[24px] sm:mb-[80px]">
+          Frequently Asked Questions
+        </Heading>
+        <div className="max-w-[1064px] mx-auto">
+          {faqData.map((section, sectionIndex) => (
+            <div key={sectionIndex} className="mb-[32px] sm:mb-[56px]">
+              <Heading variant="h2" className="mb-[16px] sm:mb-[48px]">
+                {section.section}
+              </Heading>
+              {section.questions.map((item, index) => {
+                const globalIndex = sectionIndex * 10 + index;
+                const isOpen = openIndex === globalIndex;
 
-              return (
-                <div key={index} className="relative mb-[8px] sm:mb-[16px]">
-                  <div
-                    className={`card-corner cursor-pointer overflow-hidden relative z-[1]  flex justify-between gap-[20px] items-center w-full sm:px-[32px] sm:py-[34px] px-[16px] py-[28px] bg-2 border-none z-2 ${
-                      isOpen ? "mb-[8px]" : ""
-                    }`}
-                    onClick={() => toggleAnswer(globalIndex)}>
-                    <Heading variant="h3">{item.question}</Heading>
-                    <svg
-                      width="100%"
-                      height="100%"
-                      viewBox="0 0 32 32"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                      className={`transition-transform duration-500 w-[24px] h-[24px] sm:w-[32px] sm:h-[32px] ${
-                        isOpen ? "" : "rotate-180"
-                      }`}>
-                      <path
-                        d="M25.3307 20.6666L15.9974 11.3333L6.66406 20.6666"
-                        stroke="white"
-                        strokeWidth="1.5"
-                        strokeLinecap="square"
+                return (
+                  <div key={index} className="relative mb-[8px] sm:mb-[16px]">
+                    <div
+                      className={`card-corner cursor-pointer overflow-hidden relative z-[1]  flex justify-between gap-[20px] items-center w-full sm:px-[32px] sm:py-[34px] px-[16px] py-[28px] bg-2 border-none z-2 ${
+                        isOpen ? "mb-[8px]" : ""
+                      }`}
+                      onClick={() => toggleAnswer(globalIndex)}>
+                      <Heading variant="h3">{item.question}</Heading>
+                      <svg
+                        width="100%"
+                        height="100%"
+                        viewBox="0 0 32 32"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        className={`transition-transform duration-500 w-[24px] h-[24px] sm:w-[32px] sm:h-[32px] ${
+                          isOpen ? "" : "rotate-180"
+                        }`}>
+                        <path
+                          d="M25.3307 20.6666L15.9974 11.3333L6.66406 20.6666"
+                          stroke="white"
+                          strokeWidth="1.5"
+                          strokeLinecap="square"
+                        />
+                      </svg>
+                      <span
+                        className={`absolute opacity-${
+                          isOpen ? "1" : "0"
+                        } w-1/2 h-1/5 -bottom-1/4 left-1/2 -translate-x-1/2 bg-[#4ef432] blur-[50px] z-[-1] transition-opacity duration-500`}
                       />
-                    </svg>
-                    <span
-                      className={`absolute opacity-${
-                        isOpen ? "1" : "0"
-                      } w-1/2 h-1/5 -bottom-1/4 left-1/2 -translate-x-1/2 bg-[#4ef432] blur-[50px] z-[-1] transition-opacity duration-500`}
+                    </div>
+                    <p
+                      className={`card-corner relative bg-2 ${
+                        isOpen
+                          ? "max-h-[1000px] opacity-100 p-[16px] pb-[24px] sm:p-[32px] sm:pb-[40px]"
+                          : "max-h-0 opacity-0 p-0"
+                      } transition-all duration-500 overflow-hidden`}
+                      dangerouslySetInnerHTML={{ __html: item.answer }}
                     />
                   </div>
-                  <p
-                    className={`card-corner relative bg-2 ${
-                      isOpen
-                        ? "max-h-[1000px] opacity-100 p-[16px] pb-[24px] sm:p-[32px] sm:pb-[40px]"
-                        : "max-h-0 opacity-0 p-0"
-                    } transition-all duration-500 overflow-hidden`}
-                    dangerouslySetInnerHTML={{ __html: item.answer }}
-                  />
-                </div>
-              );
-            })}
-          </div>
-        ))}
-      </div>
+                );
+              })}
+            </div>
+          ))}
+        </div>
+      </section>
     </main>
   );
 };

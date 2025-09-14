@@ -13,8 +13,10 @@ export default function RootLayout({
       <body className="max-w-[1700px] mx-auto px-[16px] sm:px-[46px] font-inter bg-main text-white font-medium">
         <AppHeader />
         {children}
-        <AppFooter />
-        <BottomBar />
+        <footer>
+          <AppFooter />
+          <BottomBar />
+        </footer>
       </body>
     </html>
   );

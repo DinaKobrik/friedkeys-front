@@ -119,96 +119,100 @@ export default function LogIn() {
   ];
 
   return (
-    <div className="flex flex-col justify-center items-center min-h-[100vh] max-w-[520px] mx-auto">
-      <Heading variant="h1" className="mb-[24px] sm:mb-[32px] text-center">
-        Log In
-      </Heading>
-      <form onSubmit={handleSubmit} className="w-full max-w-[520px]">
-        <Input
-          label="Email"
-          type="text"
-          name="email"
-          value={email}
-          onChange={(e) => {
-            setEmail(e.target.value);
-            if (isTouchedEmail) setIsValidEmail(true);
-          }}
-          required
-          variant="straight"
-          errorMessage={
-            isValidEmail
-              ? "Please enter a valid email"
-              : !email.trim()
-              ? "Fill in the field"
-              : "Invalid email format"
-          }
-          className="mb-[24px]"
-          autoComplete="off"
-          isTouched={isTouchedEmail}
-          isValid={isValidEmail}
-        />
-        <Input
-          label="Password"
-          type={showPassword ? "text" : "password"}
-          name="password"
-          value={password}
-          onChange={(e) => {
-            setPassword(e.target.value);
-            if (isTouchedPassword) setIsValidPassword(true);
-          }}
-          required
-          variant="straight"
-          errorMessage={
-            isValidPassword ? "Please enter the password" : "Fill in the field"
-          }
-          className="mb-[8px]"
-          autoComplete="new-password"
-          isTouched={isTouchedPassword}
-          isValid={isValidPassword}>
-          <div
-            onClick={() => setShowPassword(!showPassword)}
-            className="absolute top-[50%] translate-y-[-50%] right-[16px]">
-            {showPassword ? <EyeOpen /> : <EyeClosed />}
-          </div>
-        </Input>
-        <Link
-          href="../auth/forgot-password/"
-          className="block text-primary-main text-[20px] mb-[24px]">
-          Forgot password
-        </Link>
-        <Button variant="primary" type="submit" className="max-w-[502px]">
+    <main className="mt-[40px]">
+      <section className="min-h-screen flex flex-col justify-center items-center max-w-[520px] mx-auto">
+        <Heading variant="h1" className="mb-[24px] sm:mb-[32px] text-center">
           Log In
-        </Button>
-      </form>
-      <div className="relative w-full">
-        <Heading variant="h3" className="my-[48px] w-full text-center">
-          or
         </Heading>
-        <div className="h-[7px] w-full absolute top-[50%] left-[50%] bg-primary-main translate-x-[-50%] translate-y-[-50%] blur-[12px] z-[-1]"></div>
-      </div>
-      <div className="max-w-[520px] w-full h-[80px] overflow-hidden relative mb-[40px]">
-        <div className="flex items-center justify-center gap-[12px] sm:gap-[18px] w-[calc(100%+40px)] sm:w-[560px] mx-auto absolute left-[50%] translate-x-[-50%] top-0">
-          {socialLinks.map((link, index) => (
-            <Link
-              key={index}
-              href={link.href}
-              className={`h-full w-full sm:w-auto flex items-center justify-center bg-2 rounded-[2px] hover:bg-primary-10 active:bg-primary-20 py-[16px] px-[28px] sm:py-[20px] sm:px-[41px] skew-x-[-15deg]`}>
-              <Image
-                src={link.src}
-                alt={link.alt}
-                className="object-cover skew-x-[15deg] sm:w-[40px] sm:h-[40px]"
-                width={24}
-                height={24}
-              />
-            </Link>
-          ))}
+        <form onSubmit={handleSubmit} className="w-full max-w-[520px]">
+          <Input
+            label="Email"
+            type="text"
+            name="email"
+            value={email}
+            onChange={(e) => {
+              setEmail(e.target.value);
+              if (isTouchedEmail) setIsValidEmail(true);
+            }}
+            required
+            variant="straight"
+            errorMessage={
+              isValidEmail
+                ? "Please enter a valid email"
+                : !email.trim()
+                ? "Fill in the field"
+                : "Invalid email format"
+            }
+            className="mb-[24px]"
+            autoComplete="off"
+            isTouched={isTouchedEmail}
+            isValid={isValidEmail}
+          />
+          <Input
+            label="Password"
+            type={showPassword ? "text" : "password"}
+            name="password"
+            value={password}
+            onChange={(e) => {
+              setPassword(e.target.value);
+              if (isTouchedPassword) setIsValidPassword(true);
+            }}
+            required
+            variant="straight"
+            errorMessage={
+              isValidPassword
+                ? "Please enter the password"
+                : "Fill in the field"
+            }
+            className="mb-[8px]"
+            autoComplete="new-password"
+            isTouched={isTouchedPassword}
+            isValid={isValidPassword}>
+            <div
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute top-[50%] translate-y-[-50%] right-[16px]">
+              {showPassword ? <EyeOpen /> : <EyeClosed />}
+            </div>
+          </Input>
+          <Link
+            href="../auth/forgot-password/"
+            className="block text-primary-main text-[20px] mb-[24px]">
+            Forgot password
+          </Link>
+          <Button variant="primary" type="submit" className="max-w-[502px]">
+            Log In
+          </Button>
+        </form>
+        <div className="relative w-full">
+          <Heading variant="h3" className="my-[48px] w-full text-center">
+            or
+          </Heading>
+          <div className="h-[7px] w-full absolute top-[50%] left-[50%] bg-primary-main translate-x-[-50%] translate-y-[-50%] blur-[12px] z-[-1]"></div>
         </div>
-      </div>
-      <Link
-        href="/auth/registration"
-        className="text-white text-[20px] text-center">
-        No account yet?
-      </Link>
-    </div>
+        <div className="max-w-[520px] w-full h-[80px] overflow-hidden relative mb-[40px]">
+          <div className="flex items-center justify-center gap-[12px] sm:gap-[18px] w-[calc(100%+40px)] sm:w-[560px] mx-auto absolute left-[50%] translate-x-[-50%] top-0">
+            {socialLinks.map((link, index) => (
+              <Link
+                key={index}
+                href={link.href}
+                className={`h-full w-full sm:w-auto flex items-center justify-center bg-2 rounded-[2px] hover:bg-primary-10 active:bg-primary-20 py-[16px] px-[28px] sm:py-[20px] sm:px-[41px] skew-x-[-15deg]`}>
+                <Image
+                  src={link.src}
+                  alt={link.alt}
+                  className="object-cover skew-x-[15deg] sm:w-[40px] sm:h-[40px]"
+                  width={24}
+                  height={24}
+                />
+              </Link>
+            ))}
+          </div>
+        </div>
+        <Link
+          href="/auth/registration"
+          className="text-white text-[20px] text-center">
+          No account yet?
+        </Link>
+      </section>
+    </main>
   );
 }

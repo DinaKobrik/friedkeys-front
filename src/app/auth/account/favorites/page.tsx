@@ -90,9 +90,9 @@ const Favorites: React.FC = () => {
   };
 
   return (
-    <div>
+    <main>
       <AccountMenu activeLink="/auth/account/favorites" />
-      <div className="flex flex-col gap-[24px] sm:gap-[48px] mt-[40px] sm:mt-[80px]">
+      <section className="flex flex-col gap-[24px] sm:gap-[48px] mt-[40px] sm:mt-[80px]">
         <div className="flex flex-col sm:flex-row justify-between items-center gap-[8px]">
           <Heading variant="h1" className="text-center sm:text-left">
             Favorites
@@ -101,7 +101,7 @@ const Favorites: React.FC = () => {
             {favoriteGames.length} games
           </div>
         </div>
-        <div className="favorites-grid grid grid-cols-2 lg:grid-cols-3 gap-[12px] sm:gap-[24px] mb-[56px]">
+        <div className="favorites-grid grid grid-cols-2 lg:grid-cols-3 gap-[12px]">
           {paginatedGames}
         </div>
         {totalPages > 1 && (
@@ -111,8 +111,8 @@ const Favorites: React.FC = () => {
             handlePageChange={handlePageChange}
           />
         )}
-      </div>
-    </div>
+      </section>
+    </main>
   );
 };
 

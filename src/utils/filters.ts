@@ -11,7 +11,7 @@ export const hasDiscountFilter = (game: Game): boolean => {
       discountDate.setHours(23, 59, 59, 999);
       discountDateTime = discountDate.getTime();
     } else {
-      console.log(
+      console.error(
         `Invalid discountDate for game ${game.id}: ${game.discountDate}`
       );
       return false;

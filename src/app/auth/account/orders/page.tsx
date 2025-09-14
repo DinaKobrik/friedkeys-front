@@ -85,44 +85,46 @@ export default function OrdersPage() {
   };
 
   return (
-    <div className="min-h-screen mt-[24px] sm:mt-[80px]">
+    <main className="min-h-screen mt-[24px] sm:mt-[80px]">
       <AccountMenu activeLink="/auth/account/orders" />
-      <div className="flex flex-col sm:flex-row justify-between items-center gap-[8px] mt-[40px] sm:mt-[80px] mb-[24px] lg:mb-[80px]">
-        <Heading variant="h1">orders</Heading>
-        <div className="game-count text-[16px] sm:text-[32px] sm:font-usuzi-condensed text-white sm:uppercase">
-          {mockOrders.length} orders
+      <section>
+        <div className="flex flex-col sm:flex-row justify-between items-center gap-[8px] mt-[40px] sm:mt-[80px] mb-[24px] lg:mb-[80px]">
+          <Heading variant="h1">orders</Heading>
+          <div className="game-count text-[16px] sm:text-[32px] sm:font-usuzi-condensed text-white sm:uppercase">
+            {mockOrders.length} orders
+          </div>
         </div>
-      </div>
-      <div className="orders-grid hidden xl:grid grid-cols-6 justify-items-center items-center skew-x-[-20deg] bg-3 py-[12px] px-[18px] max-w-[calc(100%-20px)] mx-auto mb-[8px]">
-        <Heading variant="h3" className="skew-x-[20deg]">
-          ID
-        </Heading>
-        <Heading variant="h3" className="skew-x-[20deg]">
-          date / time
-        </Heading>
-        <Heading variant="h3" className="skew-x-[20deg]">
-          count
-        </Heading>
-        <Heading variant="h3" className="skew-x-[20deg] text-center">
-          total price
-        </Heading>
-        <Heading variant="h3" className="skew-x-[20deg] text-center">
-          Payment method
-        </Heading>
-        <Heading variant="h3" className="skew-x-[20deg]">
-          status
-        </Heading>
-      </div>
-      <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-1 gap-[16px] xl:gap-0 mb-[24px] sm:mb-[56px] xl:bg-2 py-[24px]">
-        {paginatedOrders}
-      </div>
-      {totalPages > 1 && (
-        <Pagination
-          totalPages={totalPages}
-          currentPage={currentPage}
-          handlePageChange={handlePageChange}
-        />
-      )}
-    </div>
+        <div className="orders-grid hidden xl:grid grid-cols-6 justify-items-center items-center skew-x-[-20deg] bg-3 py-[12px] px-[18px] max-w-[calc(100%-20px)] mx-auto mb-[8px]">
+          <Heading variant="h3" className="skew-x-[20deg]">
+            ID
+          </Heading>
+          <Heading variant="h3" className="skew-x-[20deg]">
+            date / time
+          </Heading>
+          <Heading variant="h3" className="skew-x-[20deg]">
+            count
+          </Heading>
+          <Heading variant="h3" className="skew-x-[20deg] text-center">
+            total price
+          </Heading>
+          <Heading variant="h3" className="skew-x-[20deg] text-center">
+            Payment method
+          </Heading>
+          <Heading variant="h3" className="skew-x-[20deg]">
+            status
+          </Heading>
+        </div>
+        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-1 gap-[16px] xl:gap-0 mb-[24px] sm:mb-[56px] xl:bg-2 xl:py-[24px]">
+          {paginatedOrders}
+        </div>
+        {totalPages > 1 && (
+          <Pagination
+            totalPages={totalPages}
+            currentPage={currentPage}
+            handlePageChange={handlePageChange}
+          />
+        )}
+      </section>
+    </main>
   );
 }

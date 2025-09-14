@@ -4,6 +4,7 @@ import Heading from "@/components/ui/Heading";
 import Text from "@/components/ui/Text";
 import Button from "@/components/ui/Button";
 import Textarea from "@/components/ui/Textarea";
+import { useRouter } from "next/navigation";
 
 // SVG для звездочки
 const StarIcon = ({
@@ -30,6 +31,7 @@ const StarIcon = ({
 );
 
 const FeedbackPage: React.FC = () => {
+  const router = useRouter();
   const [rating, setRating] = useState<number | null>(null);
   const [reviewText, setReviewText] = useState("");
   const [isLg, setIsLg] = useState(false);
@@ -99,7 +101,7 @@ const FeedbackPage: React.FC = () => {
   };
 
   return (
-    <div className="mt-[24px] sm:mt-[80px]">
+    <main className="mt-[24px] sm:mt-[80px]">
       <Heading variant="h3" className="mb-[24px] sm:mb-[40px]">
         {isLg
           ? `Home / User's feedbacks / feedback on the website`
@@ -108,7 +110,7 @@ const FeedbackPage: React.FC = () => {
       <Heading variant="h1" className="mb-[24px] sm:mb-[80px]">
         feedback on the website
       </Heading>
-      <div className="max-w-[792px] mx-auto flex flex-col justify-center gap-[24px] sm:gap-[56px] w-full">
+      <section className="max-w-[792px] mx-auto flex flex-col justify-center gap-[24px] sm:gap-[56px] w-full">
         <div>
           <Text className="font-bold mb-[8px]">
             We’d love to hear your thoughts!
@@ -147,7 +149,9 @@ const FeedbackPage: React.FC = () => {
             }
           />
           <div className="flex flex-col-reverse sm:flex-row justify-center mx-auto gap-[8px] sm:gap-[26px] max-w-[calc(100%-18px)] w-full mt-[24px] sm:mt-[56px]">
-            <Button variant="secondary" onClick={() => window.history.back()}>
+            <Button
+              variant="secondary"
+              onClick={() => router.push("/feedback")}>
               Back to reviews
             </Button>
             <Button variant="primary" type="submit" onClick={handleSubmit}>
@@ -155,8 +159,8 @@ const FeedbackPage: React.FC = () => {
             </Button>
           </div>
         </form>
-      </div>
-    </div>
+      </section>
+    </main>
   );
 };
 

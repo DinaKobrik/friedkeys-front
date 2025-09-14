@@ -196,177 +196,179 @@ const SupportPage: React.FC = () => {
   }, []);
 
   return (
-    <div className="min-h-screen mt-[24px] sm:mt-[80px]">
-      <Heading variant="h3" className="mb-[24px] sm:mb-[40px]">
-        Home / support
-      </Heading>
-      <Heading variant="h1" className="mb-[24px] sm:mb-[80px]">
-        FriedKeys Support Center
-      </Heading>
-      <div className="flex flex-col gap-[16px] max-w-[792px] mx-auto w-full">
-        <Text>
-          Please fill out the form below to submit your support request. We’ll
-          get back to you soon!
-        </Text>
-
-        <form
-          onSubmit={handleSubmit}
-          className="w-full flex flex-col gap-[16px]">
-          <div
-            className="relative cursor-pointer"
-            ref={topicRef}
-            onClick={() => setIsTopicOpen(!isTopicOpen)}>
-            <Input
-              label="Select Topic"
-              type="text"
-              value={selectedTopic}
-              name="topic"
-              required
-              onChange={() => {}}
-              variant="straight"
-              errorMessage={
-                !isValidTopic && isTouchedTopic ? "Fill in the field" : ""
-              }
-              className="mb-[0] cursor-pointer"
-              readOnly
-              isTouched={isTouchedTopic}
-              isValid={isValidTopic}>
-              <div className="absolute top-[50%] translate-y-[-50%] right-[16px] cursor-pointer">
-                <ArrowIcon />
-              </div>
-            </Input>
-            {isTopicOpen && (
-              <div
-                id="topicDropdown"
-                className="absolute top-[64px] sm:top-[84px] z-50 w-full bg-2 mt-[8px] max-h-[200px] overflow-y-auto custom-scrollbar">
-                {topics.map((topic) => (
-                  <div
-                    key={topic}
-                    className="px-[20px] py-[12px] cursor-pointer hover:bg-primary-10"
-                    onClick={() => handleTopicSelect(topic)}>
-                    {topic}
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-
-          <div
-            className="relative cursor-pointer"
-            ref={orderRef}
-            onClick={() => setIsOrderOpen(!isOrderOpen)}>
-            <Input
-              label="Select Order"
-              type="text"
-              value={selectedOrder}
-              name="order"
-              required
-              onChange={() => {}}
-              variant="straight"
-              className="mb-[0] cursor-pointer"
-              readOnly
-              isTouched={isTouchedOrder}
-              isValid={isValidOrder}
-              errorMessage={
-                !isValidOrder && isTouchedOrder ? "Fill in the field" : ""
-              }>
-              <div className="absolute top-[50%] translate-y-[-50%] right-[16px] cursor-pointer">
-                <ArrowIcon />
-              </div>
-            </Input>
-            {isOrderOpen && (
-              <div
-                id="orderDropdown"
-                className="absolute top-[64px] sm:top-[84px] z-50 w-full bg-2 mt-[8px] max-h-[200px] overflow-y-auto custom-scrollbar">
-                {orders.map((order) => (
-                  <div
-                    key={order}
-                    className="px-[20px] py-[12px] cursor-pointer hover:bg-primary-10"
-                    onClick={() => handleOrderSelect(order)}>
-                    {order}
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-
-          <div>
-            <Textarea
-              label="Your Message"
-              value={message}
-              name="message"
-              required
-              onChange={handleMessageChange}
-              placeholder="Describe your issue in detail"
-              className="h-[104px] sm:h-[120px]"
-              variant="straight"
-              isTouched={isTouchedMessage}
-              isValid={isValidMessage}
-              errorMessage={
-                !isValidMessage && isTouchedMessage ? "Fill in the field" : ""
-              }
-            />
-          </div>
-
-          <div className="flex flex-col gap-[8px] w-full mb-[32px] sm:mb-[40px]">
-            <Heading variant="h3">{`Upload a Screenshot (.png or .jpg)`}</Heading>
-            <div className="grid grid-cols-1 md:grid-cols-5 md:h-[136px] py-[8px] justify-center items-center gap-[24px] md:gap-[50px]">
-              <Button
-                variant="secondary"
-                type="button"
-                onClick={() => fileInputRef.current?.click()}
-                className="md:col-span-2">
-                Add Screenshot
-              </Button>
-              <input
-                type="file"
-                ref={fileInputRef}
-                onChange={handleScreenshotUpload}
-                accept="image/*"
-                multiple
-                className="hidden"
-                name="screenshots"
-              />
-              <div className="flex overflow-x-auto custom-scrollbar-h md:col-span-3 gap-[12px] md:gap-[24px]">
-                {screenshots.map((src, index) => (
-                  <div key={index} className="relative flex-shrink-0 group">
-                    <Image
-                      src={src}
-                      alt="Screenshot"
-                      width={120}
-                      height={120}
-                      className="object-cover rounded h-[82px] w-[82px] md:h-[120px] md:w-[120px]"
-                    />
-                    <div
-                      className={`absolute cursor-pointer top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] w-[44px] h-[44px] md:w-[64px] md:h-[64px] flex justify-center items-center rounded-full trash-icon ${
-                        isTouchDevice ? "" : "hidden group-hover:flex"
-                      }`}
-                      onClick={() => handleRemoveScreenshot(index)}>
-                      <TrashIcon />
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <Text>
-              Attach a photo or screenshot to help us understand your issue
-              faster
-            </Text>
-          </div>
-
-          <Button
-            variant="primary"
-            type="submit"
-            className="max-w-[calc(100%-20px)]">
-            Submit Request
-          </Button>
+    <main className="min-h-screen mt-[24px] sm:mt-[80px]">
+      <section>
+        <Heading variant="h3" className="mb-[24px] sm:mb-[40px]">
+          Home / support
+        </Heading>
+        <Heading variant="h1" className="mb-[24px] sm:mb-[80px]">
+          FriedKeys Support Center
+        </Heading>
+        <div className="flex flex-col gap-[16px] max-w-[792px] mx-auto w-full">
           <Text>
-            Our support team typically replies within a few hours. Thanks for
-            your patience!
+            Please fill out the form below to submit your support request. We’ll
+            get back to you soon!
           </Text>
-        </form>
-      </div>
-    </div>
+
+          <form
+            onSubmit={handleSubmit}
+            className="w-full flex flex-col gap-[16px]">
+            <div
+              className="relative cursor-pointer"
+              ref={topicRef}
+              onClick={() => setIsTopicOpen(!isTopicOpen)}>
+              <Input
+                label="Select Topic"
+                type="text"
+                value={selectedTopic}
+                name="topic"
+                required
+                onChange={() => {}}
+                variant="straight"
+                errorMessage={
+                  !isValidTopic && isTouchedTopic ? "Fill in the field" : ""
+                }
+                className="mb-[0] cursor-pointer"
+                readOnly
+                isTouched={isTouchedTopic}
+                isValid={isValidTopic}>
+                <div className="absolute top-[50%] translate-y-[-50%] right-[16px] cursor-pointer">
+                  <ArrowIcon />
+                </div>
+              </Input>
+              {isTopicOpen && (
+                <div
+                  id="topicDropdown"
+                  className="absolute top-[64px] sm:top-[84px] z-50 w-full bg-2 mt-[8px] max-h-[200px] overflow-y-auto custom-scrollbar">
+                  {topics.map((topic) => (
+                    <div
+                      key={topic}
+                      className="px-[20px] py-[12px] cursor-pointer hover:bg-primary-10"
+                      onClick={() => handleTopicSelect(topic)}>
+                      {topic}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            <div
+              className="relative cursor-pointer"
+              ref={orderRef}
+              onClick={() => setIsOrderOpen(!isOrderOpen)}>
+              <Input
+                label="Select Order"
+                type="text"
+                value={selectedOrder}
+                name="order"
+                required
+                onChange={() => {}}
+                variant="straight"
+                className="mb-[0] cursor-pointer"
+                readOnly
+                isTouched={isTouchedOrder}
+                isValid={isValidOrder}
+                errorMessage={
+                  !isValidOrder && isTouchedOrder ? "Fill in the field" : ""
+                }>
+                <div className="absolute top-[50%] translate-y-[-50%] right-[16px] cursor-pointer">
+                  <ArrowIcon />
+                </div>
+              </Input>
+              {isOrderOpen && (
+                <div
+                  id="orderDropdown"
+                  className="absolute top-[64px] sm:top-[84px] z-50 w-full bg-2 mt-[8px] max-h-[200px] overflow-y-auto custom-scrollbar">
+                  {orders.map((order) => (
+                    <div
+                      key={order}
+                      className="px-[20px] py-[12px] cursor-pointer hover:bg-primary-10"
+                      onClick={() => handleOrderSelect(order)}>
+                      {order}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            <div>
+              <Textarea
+                label="Your Message"
+                value={message}
+                name="message"
+                required
+                onChange={handleMessageChange}
+                placeholder="Describe your issue in detail"
+                className="h-[104px] sm:h-[120px]"
+                variant="straight"
+                isTouched={isTouchedMessage}
+                isValid={isValidMessage}
+                errorMessage={
+                  !isValidMessage && isTouchedMessage ? "Fill in the field" : ""
+                }
+              />
+            </div>
+
+            <div className="flex flex-col gap-[8px] w-full mb-[32px] sm:mb-[40px]">
+              <Heading variant="h3">{`Upload a Screenshot (.png or .jpg)`}</Heading>
+              <div className="grid grid-cols-1 md:grid-cols-5 md:h-[136px] py-[8px] justify-center items-center gap-[24px] md:gap-[50px]">
+                <Button
+                  variant="secondary"
+                  type="button"
+                  onClick={() => fileInputRef.current?.click()}
+                  className="md:col-span-2">
+                  Add Screenshot
+                </Button>
+                <input
+                  type="file"
+                  ref={fileInputRef}
+                  onChange={handleScreenshotUpload}
+                  accept="image/*"
+                  multiple
+                  className="hidden"
+                  name="screenshots"
+                />
+                <div className="flex overflow-x-auto custom-scrollbar-h md:col-span-3 gap-[12px] md:gap-[24px]">
+                  {screenshots.map((src, index) => (
+                    <div key={index} className="relative flex-shrink-0 group">
+                      <Image
+                        src={src}
+                        alt="Screenshot"
+                        width={120}
+                        height={120}
+                        className="object-cover rounded h-[82px] w-[82px] md:h-[120px] md:w-[120px]"
+                      />
+                      <div
+                        className={`absolute cursor-pointer top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] w-[44px] h-[44px] md:w-[64px] md:h-[64px] flex justify-center items-center rounded-full trash-icon ${
+                          isTouchDevice ? "" : "hidden group-hover:flex"
+                        }`}
+                        onClick={() => handleRemoveScreenshot(index)}>
+                        <TrashIcon />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <Text>
+                Attach a photo or screenshot to help us understand your issue
+                faster
+              </Text>
+            </div>
+
+            <Button
+              variant="primary"
+              type="submit"
+              className="max-w-[calc(100%-20px)]">
+              Submit Request
+            </Button>
+            <Text>
+              Our support team typically replies within a few hours. Thanks for
+              your patience!
+            </Text>
+          </form>
+        </div>
+      </section>
+    </main>
   );
 };
 

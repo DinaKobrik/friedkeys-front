@@ -53,7 +53,7 @@
   {
     "id": 4,
     "title": "Game 4",
-    "image": "/images/game4.jpg",
+    "image": "/images/game4.png",
     "price": 39.99,
     "discount": 10,
     "discountDate": "2025-10-10",
@@ -70,7 +70,7 @@
   {
     "id": 5,
     "title": "Game 5",
-    "image": "/images/game5.jpg",
+    "image": "/images/game5.png",
     "price": 69.99,
     "discount": 25,
     "discountDate": "2025-10-15",

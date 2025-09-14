@@ -9,8 +9,10 @@ import { useParams } from "next/navigation";
 import GameCard from "@/components/Sections/GameCard";
 import { Game } from "@/types/game";
 import Button from "@/components/ui/Button";
+import { useRouter } from "next/navigation";
 
 export default function NewPage() {
+  const router = useRouter();
   const params = useParams();
   const [news, setNews] = useState<New | null>(null);
   const [game, setGame] = useState<Game | null>(null);
@@ -27,7 +29,6 @@ export default function NewPage() {
         const fetchedNews = newsData[0];
         setNews(fetchedNews);
 
-        // Очистка состояния перед новым запросом
         setGame(null);
 
         // Запрос всех игр
@@ -72,12 +73,12 @@ export default function NewPage() {
   });
 
   return (
-    <div className="min-h-screen mt-[24px] sm:mt-[80px]">
+    <main className="min-h-screen mt-[24px] sm:mt-[80px]">
       <Heading variant="h3" className="hidden lg:block">
         Home / news / {news.title}
       </Heading>
       <Button
-        onClick={() => window.history.back()}
+        onClick={() => router.push("/news")}
         variant="secondary"
         className="max-w-[150px] sm:max-w-[190px] ml-[10px] block lg:hidden bg-main">
         <svg
@@ -96,37 +97,37 @@ export default function NewPage() {
         </svg>
         All news
       </Button>
-
-      <div className="mb-[50px] sm:mb-[80px] relative new__image -z-10 my-[26px]">
-        <div className="w-[100vw] ml-[-16px] sm:ml-[-46px] mainCustom:w-full h-full max-h-[905px]">
-          <Image
-            src={news.image}
-            alt={news.title}
-            width={1608}
-            height={905}
-            className="mx-auto blur-xl"
-          />
-        </div>
-        <div className="absolute top-1/2 translate-y-[-45%] 2xl:translate-y-[-50%] left-1/2 translate-x-[-50%] w-full h-full max-w-[1064px] max-h-[612px]">
-          <div className="mx-auto">
+      <section>
+        <div className="mb-[50px] sm:mb-[80px] relative new__image -z-10 my-[26px]">
+          <div className="w-[100vw] ml-[-16px] sm:ml-[-46px] mainCustom:w-[calc(100%+92px)] h-full max-h-[905px]">
             <Image
               src={news.image}
               alt={news.title}
-              width={1064}
-              height={560}
-              className="mx-auto w-full h-full new-clip"
+              width={1608}
+              height={905}
+              className="mx-auto blur-xl"
             />
           </div>
+          <div className="absolute top-1/2 translate-y-[-45%] 2xl:translate-y-[-50%] left-1/2 translate-x-[-50%] w-full h-full max-w-[1064px] max-h-[612px]">
+            <div className="mx-auto h-[calc(100%-26px)] md:h-[calc(100%-52px)] mainCustom:h-full">
+              <Image
+                src={news.image}
+                alt={news.title}
+                width={1064}
+                height={560}
+                className="mx-auto object-cover w-full h-full new-clip"
+              />
+            </div>
+          </div>
         </div>
-      </div>
-      <Heading variant="h1" className="mb-[16px]">
-        {news.title}
-      </Heading>
-      <p className="text-[#C1C1C1] text-[14px] leading-[16px] sm:text-[20px] sm:leading-[24px] text-start mb-[48px] sm:mb-[80px]">
-        {formattedDate}, {formattedTime}
-      </p>
-
-      <div className="max-w-[1064px] mx-auto">
+        <Heading variant="h1" className="mb-[16px]">
+          {news.title}
+        </Heading>
+        <p className="text-[#C1C1C1] text-[14px] leading-[16px] sm:text-[20px] sm:leading-[24px] text-start mb-[48px] sm:mb-[80px]">
+          {formattedDate}, {formattedTime}
+        </p>
+      </section>
+      <section className="max-w-[1064px] mx-auto">
         <Text className="mb-[75px]">{news.description}</Text>
 
         <div className="max-w-[175px] sm:max-w-[520px] mx-auto mb-[32px] sm:mb-[48px]">
@@ -145,7 +146,7 @@ export default function NewPage() {
             </span>
           ))}
         </div>
-      </div>
-    </div>
+      </section>
+    </main>
   );
 }

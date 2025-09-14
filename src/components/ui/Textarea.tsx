@@ -69,7 +69,7 @@ const Textarea: React.FC<TextareaProps> = ({
   const containerBaseStyles =
     "relative w-full text-white bg-2 focus:outline-none input-status";
   const textareaBaseStyles =
-    "w-full px-[20px] py-[16px] border-none bg-transparent placeholder-gray-68 caret-primary-main focus:outline-none resize-none";
+    "custom-scrollbar w-full px-[20px] py-[16px] border-none bg-transparent placeholder-gray-68 caret-primary-main focus:outline-none resize-none";
   const textAlignStyles = textAlign === "right" ? "text-right" : "text-left";
   const skewedContainerStyles = "skew-x-[-20deg]";
   const skewedTextareaStyles = "skew-x-[20deg]";

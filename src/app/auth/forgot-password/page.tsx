@@ -36,61 +36,69 @@ export default function ForgotPassword() {
   };
 
   return (
-    <div className="relative flex flex-col justify-center items-center min-h-[100vh] pt-[88px] mt-[40px]">
-      <Button
-        variant="secondary"
-        onClick={() => window.history.back()}
-        className="absolute top-0 left-0 max-w-[117px] sm:max-w-[183px]">
-        <svg
-          width="14"
-          height="22"
-          viewBox="0 0 14 22"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          className="mr-[12px]">
-          <path
-            d="M11.668 20.3334L2.33463 11L11.668 1.66669"
-            stroke="white"
-            strokeWidth="2"
-            strokeLinecap="square"
-          />
-        </svg>
-        back
-      </Button>
-      <Heading variant="h1" className="mb-[24px] sm:mb-[32px] text-center">
-        Forgot Your Password?
-      </Heading>
-      <Text className="mb-[24px] sm:mb-[32px] text-left sm:text-center">
-        No worries — it happens! <br />
-        Enter your email below and we’ll send you a link to reset your password.
-      </Text>
-      <form onSubmit={handleSubmit} className="space-y-4 w-full max-w-[520px]">
-        <Input
-          label="Email"
-          type="text"
-          name="email"
-          value={email}
-          onChange={(e) => {
-            setEmail(e.target.value);
-            if (isTouched) setIsValid(true);
-          }}
-          required
-          variant="straight"
-          errorMessage={
-            isValid
-              ? "Please enter a valid email"
-              : !email.trim()
-              ? "Fill in the field"
-              : "Invalid email format"
-          }
-          className="mb-[40px]"
-          isTouched={isTouched}
-          isValid={isValid}
-        />
-        <Button variant="primary" type="submit" className="max-w-[502px]">
-          Send Reset Link
+    <main className="mt-[40px]">
+      <section className="min-h-screen relative pt-[88px] flex flex-col justify-center items-center">
+        <Button
+          variant="secondary"
+          onClick={() => window.history.back()}
+          className="absolute top-0 left-0 max-w-[117px] sm:max-w-[183px]">
+          <svg
+            width="14"
+            height="22"
+            viewBox="0 0 14 22"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            className="mr-[12px]">
+            <path
+              d="M11.668 20.3334L2.33463 11L11.668 1.66669"
+              stroke="white"
+              strokeWidth="2"
+              strokeLinecap="square"
+            />
+          </svg>
+          back
         </Button>
-      </form>
-    </div>
+        <Heading variant="h1" className="mb-[24px] sm:mb-[32px] text-center">
+          Forgot Your Password?
+        </Heading>
+        <Text className="mb-[24px] sm:mb-[32px] text-left sm:text-center">
+          No worries — it happens! <br />
+          Enter your email below and we’ll send you a link to reset your
+          password.
+        </Text>
+        <form
+          onSubmit={handleSubmit}
+          className="space-y-4 w-full max-w-[520px] mx-auto">
+          <Input
+            label="Email"
+            type="text"
+            name="email"
+            value={email}
+            onChange={(e) => {
+              setEmail(e.target.value);
+              if (isTouched) setIsValid(true);
+            }}
+            required
+            variant="straight"
+            errorMessage={
+              isValid
+                ? "Please enter a valid email"
+                : !email.trim()
+                ? "Fill in the field"
+                : "Invalid email format"
+            }
+            className="mb-[40px]"
+            isTouched={isTouched}
+            isValid={isValid}
+          />
+          <Button
+            variant="primary"
+            type="submit"
+            className="max-w-[calc(100%-20px)] sm:max-w-[502px] mx-auto">
+            Send Reset Link
+          </Button>
+        </form>
+      </section>
+    </main>
   );
 }

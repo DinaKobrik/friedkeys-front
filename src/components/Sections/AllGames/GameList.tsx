@@ -349,7 +349,7 @@ const GameList: React.FC = () => {
     setCurrentPage(1);
   };
   return (
-    <div className="game-list mt-[24px] sm:mt-[56px] relative">
+    <section className="game-list mt-[24px] sm:mt-[56px] relative">
       <Heading variant="h1" className="block lg:hidden mb-[8px] text-center">
         catalog
       </Heading>
@@ -854,7 +854,7 @@ const GameList: React.FC = () => {
           </Button>
         </div>
       </div>
-      <div className="grid grid-cols-2 lg:grid-cols-3 gap-[12px] sm:gap-[24px] mb-[56px]">
+      <div className="grid grid-cols-2 lg:grid-cols-3 gap-[12px] sm:gap-[24px] mb-[24px] md:mb-[56px]">
         {paginatedGames.length > 0 ? (
           paginatedGames.map((game) => (
             <GameCard
@@ -876,7 +876,7 @@ const GameList: React.FC = () => {
         currentPage={currentPage}
         handlePageChange={handlePageChange}
       />
-    </div>
+    </section>
   );
 };
 

@@ -170,9 +170,9 @@ const ChangeName: React.FC = () => {
   };
 
   return (
-    <div>
+    <main>
       <AccountMenu activeLink="/auth/account/personal-info" />
-      <div className="flex flex-col gap-[24px] sm:gap-[48px] mt-[40px] sm:mt-[80px]">
+      <section className="flex flex-col gap-[24px] sm:gap-[48px] mt-[40px] sm:mt-[80px]">
         <Heading variant="h1" className="text-center sm:text-left">
           edit personal info
         </Heading>
@@ -227,8 +227,8 @@ const ChangeName: React.FC = () => {
             </Button>
           </div>
         </div>
-      </div>
-    </div>
+      </section>
+    </main>
   );
 };
 

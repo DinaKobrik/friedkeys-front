@@ -83,7 +83,7 @@ const Faq = () => {
   };
 
   return (
-    <div>
+    <section>
       <Heading variant="h2" className="mb-[8px] sm:mb-[24px]">
         FAQs
       </Heading>
@@ -109,7 +109,7 @@ const Faq = () => {
         className="max-w-[219px] mt-[40px]">
         see all faqs
       </Button>
-    </div>
+    </section>
   );
 };
 

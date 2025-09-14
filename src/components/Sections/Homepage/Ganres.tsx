@@ -22,7 +22,7 @@ const Genres = () => {
   ];
 
   return (
-    <div className="my-[56px] md:my-[120px]">
+    <section>
       <Heading variant="h1" className="mb-[40px]">
         Ganres
       </Heading>
@@ -54,7 +54,7 @@ const Genres = () => {
         }}>
         view all genres
       </Button>
-    </div>
+    </section>
   );
 };
 

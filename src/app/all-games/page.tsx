@@ -5,7 +5,7 @@ import Recommendations from "@/components/Sections/Recommendations";
 
 export default function AllGame() {
   return (
-    <main>
+    <main className="flex flex-col w-full gap-[40px] md:gap-[120px]">
       <Suspense
         fallback={
           <div className="text-[32px] font-usuzi-condensed text-white uppercase col-span-3 text-center mt-[80px]">

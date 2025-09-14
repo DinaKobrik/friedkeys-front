@@ -286,232 +286,239 @@ export default function Registration() {
   }, []);
 
   return (
-    <div className="relative flex flex-col justify-center items-center min-h-[100vh] pt-[60px] 2xl:pt-0 mt-[40px]">
-      <Button
-        variant="secondary"
-        onClick={() => window.history.back()}
-        className="absolute top-0 left-0 max-w-[183px]">
-        <svg
-          width="14"
-          height="22"
-          viewBox="0 0 14 22"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          className="mr-[12px]">
-          <path
-            d="M11.668 20.3334L2.33463 11L11.668 1.66669"
-            stroke="white"
-            strokeWidth="2"
-            strokeLinecap="square"
-          />
-        </svg>
-        back
-      </Button>
-      <Heading variant="h1" className="mb-[24px] sm:mb-[32px] text-center">
-        Create new account
-      </Heading>
-      <form onSubmit={handleSubmit} className="w-full max-w-[520px] space-y-4">
-        <Input
-          label="Email"
-          type="text"
-          value={email}
-          name="email"
-          onChange={(e) => {
-            setEmail(e.target.value);
-            if (isTouchedEmail) setIsValidEmail(true);
-          }}
-          required
-          variant="straight"
-          errorMessage={
-            isValidEmail
-              ? "Please enter a valid email"
-              : !email.trim()
-              ? "Fill in the field"
-              : "Invalid email format"
-          }
-          className="mb-[24px]"
-          autoComplete="off"
-          isTouched={isTouchedEmail}
-          isValid={isValidEmail}
-        />
-        <Input
-          label="Password"
-          type={showPassword ? "text" : "password"}
-          value={password}
-          name="password"
-          onChange={(e) => {
-            setPassword(e.target.value);
-            if (isTouchedPassword) setIsValidPassword(true);
-          }}
-          required
-          variant="straight"
-          errorMessage={
-            isValidPassword ? "Please enter a password" : "Fill in the field"
-          }
-          className="mb-[24px]"
-          autoComplete="new-password"
-          isTouched={isTouchedPassword}
-          isValid={isValidPassword}>
-          <div
-            onClick={() => setShowPassword(!showPassword)}
-            className="absolute top-[50%] translate-y-[-50%] right-[16px]">
-            {showPassword ? <EyeOpen /> : <EyeClosed />}
-          </div>
-        </Input>
-        <Input
-          label="First Name"
-          type="text"
-          value={firstName}
-          name="firstName"
-          onChange={(e) => {
-            setFirstName(e.target.value);
-            if (isTouchedFirstName) setIsValidFirstName(true);
-          }}
-          required
-          variant="straight"
-          errorMessage={
-            isValidFirstName
-              ? "Please enter your first name"
-              : "Fill in the field"
-          }
-          className="mb-[24px]"
-          autoComplete="off"
-          isTouched={isTouchedFirstName}
-          isValid={isValidFirstName}
-        />
-        <Input
-          label="Last Name"
-          type="text"
-          value={lastName}
-          name="lastName"
-          onChange={(e) => {
-            setLastName(e.target.value);
-            if (isTouchedLastName) setIsValidLastName(true);
-          }}
-          required
-          variant="straight"
-          errorMessage={
-            isValidLastName
-              ? "Please enter your last name"
-              : "Fill in the field"
-          }
-          className="mb-[24px]"
-          autoComplete="off"
-          isTouched={isTouchedLastName}
-          isValid={isValidLastName}
-        />
-        <div className="relative mb-[24px]">
+    <main className="mt-[40px]">
+      <section className="relative flex flex-col justify-center items-center min-h-screen pt-[60px] 2xl:pt-0">
+        <Button
+          variant="secondary"
+          onClick={() => window.history.back()}
+          className="absolute top-0 left-0 max-w-[183px]">
+          <svg
+            width="14"
+            height="22"
+            viewBox="0 0 14 22"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            className="mr-[12px]">
+            <path
+              d="M11.668 20.3334L2.33463 11L11.668 1.66669"
+              stroke="white"
+              strokeWidth="2"
+              strokeLinecap="square"
+            />
+          </svg>
+          back
+        </Button>
+        <Heading variant="h1" className="mb-[24px] sm:mb-[32px] text-center">
+          Create new account
+        </Heading>
+        <form
+          onSubmit={handleSubmit}
+          className="w-full max-w-[520px] space-y-4">
           <Input
-            label="Birthday"
-            type="date"
-            value={birthday}
-            name="birthday"
-            onChange={(e) => {
-              setBirthday(e.target.value);
-              if (isTouchedBirthday) setIsValidBirthday(true);
-            }}
-            required
-            variant="straight"
-            errorMessage={
-              isValidBirthday
-                ? "Please select your birthday"
-                : !birthday.trim()
-                ? "Fill in the field"
-                : "Date must be on or before today"
-            }
-            className="mb-[0]"
-            autoComplete="off"
-            isTouched={isTouchedBirthday}
-            isValid={isValidBirthday}>
-            <div className="absolute top-[50%] translate-y-[-50%] right-[16px] cursor-pointer pointer-events-none">
-              <CalendarIcon />
-            </div>
-          </Input>
-        </div>
-        <div
-          ref={countryRef}
-          onClick={() => setIsCountryOpen(!isCountryOpen)}
-          className="relative mb-[24px] cursor-pointer">
-          <Input
-            label="Country"
+            label="Email"
             type="text"
-            value={country}
-            name="country"
+            value={email}
+            name="email"
             onChange={(e) => {
-              setCountry(e.target.value);
-              if (isTouchedCountry) setIsValidCountry(true);
+              setEmail(e.target.value);
+              if (isTouchedEmail) setIsValidEmail(true);
             }}
             required
             variant="straight"
             errorMessage={
-              !isValidCountry && isTouchedCountry && !country.trim()
+              isValidEmail
+                ? "Please enter a valid email"
+                : !email.trim()
                 ? "Fill in the field"
-                : ""
+                : "Invalid email format"
             }
-            className="mb-[0] cursor-pointer"
+            className="mb-[24px]"
             autoComplete="off"
-            readOnly
-            isTouched={isTouchedCountry}
-            isValid={isValidCountry}>
-            <div className="absolute top-[50%] translate-y-[-50%] right-[16px] cursor-pointer">
-              <ArrowIcon />
+            isTouched={isTouchedEmail}
+            isValid={isValidEmail}
+          />
+          <Input
+            label="Password"
+            type={showPassword ? "text" : "password"}
+            value={password}
+            name="password"
+            onChange={(e) => {
+              setPassword(e.target.value);
+              if (isTouchedPassword) setIsValidPassword(true);
+            }}
+            required
+            variant="straight"
+            errorMessage={
+              isValidPassword ? "Please enter a password" : "Fill in the field"
+            }
+            className="mb-[24px]"
+            autoComplete="new-password"
+            isTouched={isTouchedPassword}
+            isValid={isValidPassword}>
+            <div
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute top-[50%] translate-y-[-50%] right-[16px]">
+              {showPassword ? <EyeOpen /> : <EyeClosed />}
             </div>
           </Input>
-
-          {isCountryOpen && (
-            <div className="absolute top-[64px] sm:top-[84px] z-10 w-full bg-2 mt-[8px] max-h-[200px] overflow-y-auto custom-scrollbar">
-              {countries.map((countryName, index) => (
-                <div
-                  key={index}
-                  onClick={() => {
-                    setCountry(countryName);
-                    setIsValidCountry(true);
-                    setIsCountryOpen(false);
-                  }}
-                  className="px-[20px] py-[12px] cursor-pointer hover:bg-primary-10">
-                  {countryName}
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-        <div className="flex items-center mb-[24px]">
+          <Input
+            label="First Name"
+            type="text"
+            value={firstName}
+            name="firstName"
+            onChange={(e) => {
+              setFirstName(e.target.value);
+              if (isTouchedFirstName) setIsValidFirstName(true);
+            }}
+            required
+            variant="straight"
+            errorMessage={
+              isValidFirstName
+                ? "Please enter your first name"
+                : "Fill in the field"
+            }
+            className="mb-[24px]"
+            autoComplete="off"
+            isTouched={isTouchedFirstName}
+            isValid={isValidFirstName}
+          />
+          <Input
+            label="Last Name"
+            type="text"
+            value={lastName}
+            name="lastName"
+            onChange={(e) => {
+              setLastName(e.target.value);
+              if (isTouchedLastName) setIsValidLastName(true);
+            }}
+            required
+            variant="straight"
+            errorMessage={
+              isValidLastName
+                ? "Please enter your last name"
+                : "Fill in the field"
+            }
+            className="mb-[24px]"
+            autoComplete="off"
+            isTouched={isTouchedLastName}
+            isValid={isValidLastName}
+          />
+          <div className="relative mb-[24px]">
+            <Input
+              label="Birthday"
+              type="date"
+              value={birthday}
+              name="birthday"
+              onChange={(e) => {
+                setBirthday(e.target.value);
+                if (isTouchedBirthday) setIsValidBirthday(true);
+              }}
+              required
+              variant="straight"
+              errorMessage={
+                isValidBirthday
+                  ? "Please select your birthday"
+                  : !birthday.trim()
+                  ? "Fill in the field"
+                  : "Date must be on or before today"
+              }
+              className="mb-[0]"
+              autoComplete="off"
+              isTouched={isTouchedBirthday}
+              isValid={isValidBirthday}>
+              <div className="absolute top-[50%] translate-y-[-50%] right-[16px] cursor-pointer pointer-events-none">
+                <CalendarIcon />
+              </div>
+            </Input>
+          </div>
           <div
-            className={`w-[24px] h-[24px] bg-transparent border-2 rounded-sm flex items-center justify-center mr-[16px] cursor-pointer ${
-              !isAgreed && isTouchedAgreed ? "border-red" : "border-white"
-            }`}
-            onClick={() => setIsAgreed(!isAgreed)}>
-            {isAgreed && (
-              <svg
-                width="12"
-                height="9"
-                viewBox="0 0 12 9"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M1 4L4.5 8L11 1"
-                  stroke="white"
-                  strokeWidth="2"
-                  strokeLinecap="square"
-                />
-              </svg>
+            ref={countryRef}
+            onClick={() => setIsCountryOpen(!isCountryOpen)}
+            className="relative mb-[24px] cursor-pointer">
+            <Input
+              label="Country"
+              type="text"
+              value={country}
+              name="country"
+              onChange={(e) => {
+                setCountry(e.target.value);
+                if (isTouchedCountry) setIsValidCountry(true);
+              }}
+              required
+              variant="straight"
+              errorMessage={
+                !isValidCountry && isTouchedCountry && !country.trim()
+                  ? "Fill in the field"
+                  : ""
+              }
+              className="mb-[0] cursor-pointer"
+              autoComplete="off"
+              readOnly
+              isTouched={isTouchedCountry}
+              isValid={isValidCountry}>
+              <div className="absolute top-[50%] translate-y-[-50%] right-[16px] cursor-pointer">
+                <ArrowIcon />
+              </div>
+            </Input>
+
+            {isCountryOpen && (
+              <div className="absolute top-[64px] sm:top-[84px] z-10 w-full bg-2 mt-[8px] max-h-[200px] overflow-y-auto custom-scrollbar">
+                {countries.map((countryName, index) => (
+                  <div
+                    key={index}
+                    onClick={() => {
+                      setCountry(countryName);
+                      setIsValidCountry(true);
+                      setIsCountryOpen(false);
+                    }}
+                    className="px-[20px] py-[12px] cursor-pointer hover:bg-primary-10">
+                    {countryName}
+                  </div>
+                ))}
+              </div>
             )}
           </div>
-          <Text>
-            I agree with the{" "}
-            <Link href="/terms-conditions" className="underline">
-              Terms
-            </Link>{" "}
-            and{" "}
-            <Link href="/privacy-policy" className="underline">
-              Privacy Policy
-            </Link>
-          </Text>
-        </div>
-        <Button variant="primary" type="submit" className="max-w-[502px]">
-          Create Account
-        </Button>
-      </form>
-    </div>
+          <div className="flex items-center mb-[24px]">
+            <div
+              className={`w-[24px] h-[24px] bg-transparent border-2 rounded-sm flex items-center justify-center mr-[16px] cursor-pointer ${
+                !isAgreed && isTouchedAgreed ? "border-red" : "border-white"
+              }`}
+              onClick={() => setIsAgreed(!isAgreed)}>
+              {isAgreed && (
+                <svg
+                  width="12"
+                  height="9"
+                  viewBox="0 0 12 9"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M1 4L4.5 8L11 1"
+                    stroke="white"
+                    strokeWidth="2"
+                    strokeLinecap="square"
+                  />
+                </svg>
+              )}
+            </div>
+            <Text>
+              I agree with the{" "}
+              <Link href="/terms-conditions" className="underline">
+                Terms
+              </Link>{" "}
+              and{" "}
+              <Link href="/privacy-policy" className="underline">
+                Privacy Policy
+              </Link>
+            </Text>
+          </div>
+          <Button
+            variant="primary"
+            type="submit"
+            className="max-w-[calc(100%-20px)] sm:max-w-[502px] mx-auto">
+            Create Account
+          </Button>
+        </form>
+      </section>
+    </main>
   );
 }

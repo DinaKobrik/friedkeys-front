@@ -32,12 +32,12 @@ const PreOrders = () => {
   }, []);
 
   return (
-    <div className="my-[40px] md:my-[120px]">
+    <section>
       <div className="mb-[24px] sm:mb-[40px] flex justify-between items-center">
         <Heading variant="h1">Pre-orders</Heading>
         <Button
           variant="secondary"
-          className="max-w-[238px] mr-0 hidden sm:block"
+          className="max-w-[238px] mr-[10px] hidden md:block"
           onClick={() => {
             window.location.href = "/all-games?filter=pre-orders";
           }}>
@@ -51,7 +51,7 @@ const PreOrders = () => {
           <p className="text-center text-gray-68">Loading pre-orders...</p>
         )}
       </div>
-    </div>
+    </section>
   );
 };
 

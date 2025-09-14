@@ -61,23 +61,25 @@ export default function NewsPage() {
   };
 
   return (
-    <div className="min-h-screen mt-[24px] sm:mt-[80px]">
+    <main className="min-h-screen mt-[24px] sm:mt-[80px]">
       <Heading variant="h3" className="mb-[24px] sm:mb-[40px]">
         Home / news
       </Heading>
       <Heading variant="h1" className="mb-[40px] sm:mb-[80px]">
         news
       </Heading>
-      <div className="news-grid grid grid-cols-1 md:grid-cols-2 gap-[24px] mb-[24px] sm:mb-[56px]">
-        {paginatedNews}
-      </div>
-      {totalPages > 1 && (
-        <Pagination
-          totalPages={totalPages}
-          currentPage={currentPage}
-          handlePageChange={handlePageChange}
-        />
-      )}
-    </div>
+      <section>
+        <div className="news-grid grid grid-cols-1 md:grid-cols-2 gap-[24px] mb-[24px] sm:mb-[56px]">
+          {paginatedNews}
+        </div>
+        {totalPages > 1 && (
+          <Pagination
+            totalPages={totalPages}
+            currentPage={currentPage}
+            handlePageChange={handlePageChange}
+          />
+        )}
+      </section>
+    </main>
   );
 }

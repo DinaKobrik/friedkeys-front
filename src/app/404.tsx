@@ -5,7 +5,7 @@ import Heading from "@/components/ui/Heading";
 
 export default function Custom404() {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center py-[80px]">
+    <main className="min-h-screen flex flex-col items-center justify-center py-[80px]">
       <div className="font-usuzi-grad text-[120px] leading-[100px] sm:text-[200px] sm:leading-[200px] text-primary-main mb-[32px] sm:mb-[40px]">
         404
       </div>
@@ -23,6 +23,6 @@ export default function Custom404() {
         onClick={() => (window.location.href = "/")}>
         Home
       </Button>
-    </div>
+    </main>
   );
 }

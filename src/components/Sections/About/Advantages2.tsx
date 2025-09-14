@@ -190,7 +190,7 @@ const Advantages2: React.FC = () => {
   ];
 
   return (
-    <div className="advantages2__wrapper">
+    <section className="advantages2__wrapper">
       <div className="w-full overflow-hidden">
         <div className={`${BASE_STYLES.advantages} advantages2`}>
           {CONTENT_ITEMS.map((item, index) => (
@@ -225,7 +225,7 @@ const Advantages2: React.FC = () => {
           ))}
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

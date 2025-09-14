@@ -111,7 +111,7 @@ const PlatformItem = ({
 
 const Platforms = () => {
   return (
-    <div>
+    <section>
       <div className="mb-[40px] sm:mb-[102px]">
         <Heading variant="h2" className="mb-[8px] sm:mb-[24px]">
           Games for Every Gamer
@@ -146,7 +146,7 @@ const Platforms = () => {
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

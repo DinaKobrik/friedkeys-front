@@ -5,7 +5,7 @@ import Button from "@/components/ui/Button";
 
 const JoinNow = () => {
   return (
-    <div className="joinnow mx-auto relative z-10 my-[56px] md:my-[120px]">
+    <section className="joinnow mx-auto relative z-10">
       <div className="joinnow-wrapper relative flex justify-center px-0 md:py-[215px] max-w-[680px] mx-auto w-full py-[43px]">
         <svg
           width="100%"
@@ -62,10 +62,16 @@ const JoinNow = () => {
             Create an account today and unlock exclusive games, epic discounts,
             and special rewards
           </p>
-          <Button variant="primary">sign up</Button>
+          <Button
+            variant="primary"
+            onClick={() => {
+              window.location.href = "/auth/log-in";
+            }}>
+            sign up
+          </Button>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

@@ -110,62 +110,67 @@ export default function ResetPassword() {
   );
 
   return (
-    <div className="flex flex-col justify-center items-center min-h-[100vh] mt-[40px]">
-      <Heading variant="h1" className="mb-[24px] sm:mb-[32px] text-center">
-        Reset Password
-      </Heading>
-      <Text className="mb-[24px] sm:mb-[72px] text-center">
-        Enter a new password for your account.
-      </Text>
-      <form onSubmit={handleSubmit} className="w-full max-w-[520px]">
-        <Input
-          label="New Password"
-          type={showPassword ? "text" : "password"}
-          name="newPassword"
-          value={newPassword}
-          onChange={(e) => setNewPassword(e.target.value)}
-          required
-          variant="straight"
-          errorMessage={
-            isValidNew
-              ? "Please enter the password."
-              : "This field is required."
-          }
-          className="mb-[16px]"
-          isTouched={isTouchedNew}
-          isValid={isValidNew}>
-          <div
-            onClick={() => setShowPassword(!showPassword)}
-            className="absolute top-[50%] translate-y-[-50%] right-[16px]">
-            {showPassword ? <EyeOpen /> : <EyeClosed />}
-          </div>
-        </Input>
-        <Input
-          label="Confirm Password"
-          name="confirmPassword"
-          type={showConfirmPassword ? "text" : "password"}
-          value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
-          required
-          variant="straight"
-          errorMessage={
-            isValidConfirm
-              ? "Please repeat the password."
-              : "Passwords do not match."
-          }
-          className="mb-[40px]"
-          isTouched={isTouchedConfirm}
-          isValid={isValidConfirm}>
-          <div
-            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-            className="absolute top-[50%] translate-y-[-50%] right-[16px]">
-            {showConfirmPassword ? <EyeOpen /> : <EyeClosed />}
-          </div>
-        </Input>
-        <Button variant="primary" type="submit" className="max-w-[502px]">
+    <main className="mt-[40px]">
+      <section className="flex flex-col justify-center items-center min-h-screen">
+        <Heading variant="h1" className="mb-[24px] sm:mb-[32px] text-center">
           Reset Password
-        </Button>
-      </form>
-    </div>
+        </Heading>
+        <Text className="mb-[24px] sm:mb-[72px] text-center">
+          Enter a new password for your account.
+        </Text>
+        <form onSubmit={handleSubmit} className="w-full max-w-[520px]">
+          <Input
+            label="New Password"
+            type={showPassword ? "text" : "password"}
+            name="newPassword"
+            value={newPassword}
+            onChange={(e) => setNewPassword(e.target.value)}
+            required
+            variant="straight"
+            errorMessage={
+              isValidNew
+                ? "Please enter the password."
+                : "This field is required."
+            }
+            className="mb-[16px]"
+            isTouched={isTouchedNew}
+            isValid={isValidNew}>
+            <div
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute top-[50%] translate-y-[-50%] right-[16px]">
+              {showPassword ? <EyeOpen /> : <EyeClosed />}
+            </div>
+          </Input>
+          <Input
+            label="Confirm Password"
+            name="confirmPassword"
+            type={showConfirmPassword ? "text" : "password"}
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            required
+            variant="straight"
+            errorMessage={
+              isValidConfirm
+                ? "Please repeat the password."
+                : "Passwords do not match."
+            }
+            className="mb-[40px]"
+            isTouched={isTouchedConfirm}
+            isValid={isValidConfirm}>
+            <div
+              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+              className="absolute top-[50%] translate-y-[-50%] right-[16px]">
+              {showConfirmPassword ? <EyeOpen /> : <EyeClosed />}
+            </div>
+          </Input>
+          <Button
+            variant="primary"
+            type="submit"
+            className="max-w-[calc(100%-20px)] sm:max-w-[502px] mx-auto">
+            Reset Password
+          </Button>
+        </form>
+      </section>
+    </main>
   );
 }

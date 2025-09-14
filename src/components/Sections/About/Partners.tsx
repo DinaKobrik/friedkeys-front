@@ -173,7 +173,7 @@ const Partners = () => {
   ];
 
   return (
-    <div>
+    <section>
       <Heading variant="h2" className="mb-[8px] sm:mb-[24px]">
         Our Partners
       </Heading>
@@ -205,7 +205,7 @@ const Partners = () => {
           </button>
           <button
             onClick={scrollRight}
-            className="w-[64px] h-[64px] flex justify-center items-center p-[16px] rounded-full bg-gray-800 z-10"
+            className="w-[64px] h-[64px] flex justify-center items-center p-[16px] rounded-full bg-DLS backdrop-blur-[10px] z-10"
             aria-label="Scroll right">
             <svg
               width="12"
@@ -250,7 +250,7 @@ const Partners = () => {
           })}
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

@@ -27,16 +27,15 @@ const TrendingGames = () => {
   }, []);
 
   return (
-    <div className="my-[40px] md:my-[120px]">
+    <section>
       <div className="mb-[24px] sm:mb-[40px] flex justify-between items-center">
         <Heading variant="h1">Trending</Heading>
         <Button
           variant="secondary"
-          className="max-w-[238px] mr-0 hidden sm:block"
+          className="max-w-[238px] mr-[10px] hidden md:block"
           onClick={() => {
             window.location.href = "/all-games?filter=trending";
           }}>
-          {" "}
           see all games
         </Button>
       </div>
@@ -47,7 +46,7 @@ const TrendingGames = () => {
           <p className="text-center text-gray-68">Loading trending games...</p>
         )}
       </div>
-    </div>
+    </section>
   );
 };
 

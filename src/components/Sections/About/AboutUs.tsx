@@ -6,7 +6,7 @@ import Image from "next/image";
 
 const AboutUs = () => {
   return (
-    <div className="grid grid-cols-1 xl:grid-cols-2 gap-[16px] sm:gap-[24px]">
+    <section className="grid grid-cols-1 xl:grid-cols-2 gap-[16px] sm:gap-[24px]">
       <div>
         <Heading variant="h2" className="mb-[24px]">
           About us
@@ -44,7 +44,7 @@ const AboutUs = () => {
           className="w-full h-full object-cover"
         />
       </div>
-    </div>
+    </section>
   );
 };
 
