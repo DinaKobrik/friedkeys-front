@@ -5,6 +5,7 @@ import Image from "next/image";
 import { Game } from "@/types/game";
 import Heading from "@/components/ui/Heading";
 import Button from "@/components/ui/Button";
+import Link from "next/link";
 
 const Banner: React.FC = () => {
   const [games, setGames] = useState<Game[]>([]);
@@ -30,6 +31,7 @@ const Banner: React.FC = () => {
 
   // Выбираем игру по id
   const game = games.find((g) => g.id === 5) || {
+    id: 1,
     image: "",
     price: 0,
     discount: 0,
@@ -197,13 +199,15 @@ const Banner: React.FC = () => {
     <section className="relative banner__container w-full mx-auto">
       <div className="relative banner mx-auto mb-[32px] sm:mb-0">
         {game.image && (
-          <Image
-            src={game.image}
-            alt={game.title || "Game Banner"}
-            width={1920}
-            height={500}
-            className="min-h-[216px] sm:min-h-[360px] h-full object-cover"
-          />
+          <Link href={`/all-games/${game.id}`} className="w-full h-full">
+            <Image
+              src={game.image}
+              alt={game.title || "Game Banner"}
+              width={1920}
+              height={500}
+              className="min-h-[216px] sm:min-h-[360px] h-full object-cover"
+            />
+          </Link>
         )}
       </div>
       {renderPriceBlock()}

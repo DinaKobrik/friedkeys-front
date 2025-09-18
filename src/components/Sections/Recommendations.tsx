@@ -31,7 +31,13 @@ const Recommendations = () => {
       <Heading variant="h1">Recommendations</Heading>
       <GameWrapper>
         {recommendedGames.length > 0 ? (
-          recommendedGames.map((game) => <GameCard key={game.id} game={game} />)
+          recommendedGames.map((game) => (
+            <div
+              key={game.id}
+              className="flex-shrink-0 max-w-[175px] sm:min-w-[200px] sm:max-w-[340px] lg:max-w-[520px] w-full">
+              <GameCard key={game.id} game={game} />
+            </div>
+          ))
         ) : (
           <p className="text-center text-gray-68">Loading recommendations...</p>
         )}

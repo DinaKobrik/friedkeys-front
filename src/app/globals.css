@@ -55,6 +55,7 @@
 @import "styles/JoinNow";
 @import "styles/GameList";
 @import "styles/AboutPlatforms";
+@import "styles/GamePage";
 
 /* card-corner */
 .card-corner {
@@ -292,6 +293,11 @@
 }
 .custom-scrollbar-h::-webkit-scrollbar-button {
   display: none;
+}
+@media (max-width: 767px) {
+  .custom-scrollbar-h::-webkit-scrollbar {
+    height: 4px;
+  }
 }
 
 /* new */

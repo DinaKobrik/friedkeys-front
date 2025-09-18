@@ -9,6 +9,7 @@ import React, {
 } from "react";
 import Image from "next/image";
 import { Game } from "@/types/game";
+import Link from "next/link";
 
 const Slider: React.FC = () => {
   const [games, setGames] = useState<Game[]>([]);
@@ -194,13 +195,15 @@ const Slider: React.FC = () => {
               <li
                 key={index}
                 className="w-[100vw] home__slide bodyCustom:w-full flex-shrink-0 ">
-                <Image
-                  src={game.image}
-                  alt={game.title || "Game Slider"}
-                  width={1920}
-                  height={880}
-                  className="w-full h-[216px] sm:h-[440px] md:h-[580px] xl:h-[880px] object-cover no-drag cursor-grab"
-                />
+                <Link href={`/all-games/${game.id}`} className="w-full h-full">
+                  <Image
+                    src={game.image}
+                    alt={game.title || "Game Slider"}
+                    width={1920}
+                    height={880}
+                    className="w-full h-[216px] sm:h-[440px] md:h-[580px] xl:h-[880px] object-cover no-drag"
+                  />
+                </Link>
               </li>
             ))}
           </ul>

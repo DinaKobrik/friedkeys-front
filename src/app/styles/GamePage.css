@@ -1,0 +1,106 @@
+/* header */
+
+.game__header {
+  max-width: 1920px;
+  width: calc(100vw - 15px);
+}
+.game__header::before {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  top: 0;
+  left: 50%;
+  max-width: 1920px;
+  width: calc(100vw - 15px);
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    theme("colors.main") 0%,
+    theme("colors.main") 0 2%,
+    rgba(0, 0, 0, 0) 20%,
+    rgba(0, 0, 0, 0) 80%,
+    theme("colors.main") 98%,
+    theme("colors.main") 100%
+  );
+  background-size: 1920px auto;
+  transform: translateX(-50%);
+  z-index: 1;
+}
+.game__header {
+  left: -16px;
+}
+
+.game__header-img {
+  clip-path: polygon(5% 0%, 100% 0%, 100% 90%, 95% 100%, 0% 100%, 0% 10%);
+}
+.game__header-info {
+  clip-path: polygon(7% 0%, 100% 0%, 100% 93%, 93% 100%, 0% 100%, 0% 7%);
+}
+@media (pointer: coarse) {
+  .game__header,
+  .game__header::before {
+    width: 100vw;
+  }
+}
+
+@media (max-width: 1920px) {
+  .game__header,
+  .game__header::before {
+    max-width: 1700px;
+  }
+}
+@media (pointer: coarse) {
+  .game__header,
+  .game__header::before {
+    width: 100vw;
+  }
+}
+@media (max-width: 1920px) {
+  .game__header,
+  .game__header::before {
+    max-width: 1700px;
+  }
+}
+@media (min-width: 576px) {
+  .game__header {
+    left: -46px;
+  }
+}
+/* Десктоп  */
+@media (min-width: 1935px) and (hover: hover),
+  (min-width: 1935px) and (pointer: fine) {
+  .game__header {
+    left: -156px;
+  }
+}
+
+/* Сенсорное устройство */
+@media (min-width: 1921px) and (hover: none),
+  (min-width: 1921px) and (pointer: coarse) {
+  .game__header {
+    left: -156px;
+  }
+}
+
+/* configurations */
+
+.configurations__button:first-child::after {
+  content: "";
+  width: 1px;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 12px;
+  background: theme("colors.primary-main");
+  transform: skew(20deg);
+}
+.configurations__button:last-child::after {
+  content: "";
+  width: 1px;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  right: 12px;
+  background: theme("colors.primary-main");
+  transform: skew(20deg);
+}

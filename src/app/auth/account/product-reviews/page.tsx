@@ -9,6 +9,7 @@ import { Game } from "@/types/game";
 import AccountMenu from "@/components/Sections/Account/AccountMenu";
 import Pagination from "@/components/ui/Pagination";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 // SVG
 const LikeIcon = ({ className }: { className?: string }) => (
@@ -263,13 +264,15 @@ const ProductReviews: React.FC = () => {
           key={globalIndex}
           className="grid grid-cols-1 lg:grid-cols-3 gap-[8px] sm:gap-[24px]">
           <div className="card-corner">
-            <Image
-              src={game.image}
-              alt={game.title}
-              width={520}
-              height={280}
-              className="object-cover w-full h-full"
-            />
+            <Link href={`/all-games/${game.id}`} className="w-full h-full">
+              <Image
+                src={game.image}
+                alt={game.title}
+                width={520}
+                height={280}
+                className="object-cover w-full h-full"
+              />
+            </Link>
           </div>
           <div className="lg:col-span-2 card-corner grid grid-cols-1 gap-[23px] w-full p-[16px] pb-[24px] sm:py-[24px] sm:px-[32px] xl:h-[280px] bg-2 relative">
             <div className="h-[20px] w-[50%] absolute top-0 left-[50%] bg-primary-main translate-x-[-50%] blur-[50px] z-0"></div>

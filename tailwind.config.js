@@ -20,6 +20,7 @@ module.exports = {
         sale: "#E61E50",
         DLS: "rgba(255, 255, 255, 0.05)",
         red: "#D64431",
+        green: "#0EC21B",
         "red-20": "#D644312A",
         playstation: "#0070D1",
         nintendo: "#E60012",
