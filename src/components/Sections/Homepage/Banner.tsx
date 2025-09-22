@@ -57,7 +57,7 @@ const Banner: React.FC = () => {
       </Heading>
       <Heading
         variant="h2"
-        className="skew-x-[20deg] h-[42px] py-[10px] sm:py-[12px] px-[12px] line-through sm:hidden">
+        className="skew-x-[20deg] h-[42px] py-[10px] sm:py-[12px] px-[4px] xs:px-[12px] line-through sm:hidden">
         {game.price}$
       </Heading>
     </div>
@@ -72,7 +72,7 @@ const Banner: React.FC = () => {
       </Heading>
       <Heading
         variant="h2"
-        className="skew-x-[20deg] py-[10px] sm:py-[12px] h-[42px] px-[12px] xs:px-[20px] sm:hidden ">
+        className="skew-x-[20deg] py-[10px] sm:py-[12px] h-[42px] px-[4px] xs:px-[20px] sm:hidden ">
         -{game.discount}%
       </Heading>
     </div>
@@ -89,10 +89,10 @@ const Banner: React.FC = () => {
         {game.discount && game.discount > 0 && !isDiscountExpired ? (
           <>
             {selectedVariant === 1 && (
-              <div className="md:h-[52px] banner-grid w-full items-start justify-items-start gap-[8px] mx-auto ml-[10px]">
+              <div className="max-w-[calc(100%-20px)] md:h-[52px] banner-grid w-full items-start justify-items-start gap-[8px] mx-auto ml-[10px]">
                 {PriceOriginalBlock}
                 <div className="skew-x-[-20deg] border-[1px] border-primary-main rounded-[2px] h-full flex justify-center items-center w-full">
-                  <span className="skew-x-[20deg] text-white font-usuzi-condensed text-[24px] leading-[22px] sm:text-[38px] sm:leading-[29px] py-[12px] px-[30px] h-[42px] sm:h-[50px]">
+                  <span className="skew-x-[20deg] text-white font-usuzi-condensed text-[24px] leading-[20px] sm:text-[38px] sm:leading-[29px] py-[12px] px-[30px] h-[42px] sm:h-[50px]">
                     {discountPrice?.toFixed(2)}$
                   </span>
                 </div>
@@ -105,7 +105,7 @@ const Banner: React.FC = () => {
               </div>
             )}
             {selectedVariant === 2 && (
-              <div className=" sm:max-w-[520px] w-full mx-auto ml-[10px]">
+              <div className=" max-w-[calc(100%-20px)] sm:max-w-[520px] w-full mx-auto ml-[10px]">
                 <Heading
                   variant="h1"
                   className="text-center mb-[6px] hidden sm:block">
@@ -126,12 +126,12 @@ const Banner: React.FC = () => {
               </div>
             )}
             {selectedVariant === 3 && (
-              <div className="flex flex-col gap-[8px] w-full max-w-[520px] mx-auto ml-[10px]">
-                <div className="h-[42px] sm:h-[52px] flex w-full items-center gap-[8px]">
+              <div className="flex flex-col gap-[8px] w-full max-w-[calc(100%-20px)] sm:max-w-[520px] mx-auto ml-[10px]">
+                <div className="h-[42px] sm:h-[52px] flex w-full items-center gap-[8px] max-w-[100%]">
                   {PriceOriginalBlock}
                   {DiscountBadgeBlock}
                   <div className="skew-x-[-20deg] border-[1px] border-primary-main rounded-[2px] h-full flex justify-center items-center w-full">
-                    <span className="skew-x-[20deg] text-white font-usuzi-condensed text-[20px] leading-[24px] sm:text-[38px] sm:leading-[29px] py-[12px] px-[18px] sm:px-[30px]">
+                    <span className="skew-x-[20deg] text-white font-usuzi-condensed text-[20px] leading-[24px] sm:text-[38px] sm:leading-[29px] py-[12px] px-[8px] xs:px-[18px] sm:px-[30px]">
                       {discountPrice?.toFixed(2)}$
                     </span>
                   </div>
@@ -140,8 +140,8 @@ const Banner: React.FC = () => {
               </div>
             )}
             {selectedVariant === 4 && (
-              <div className="sm:max-w-[383px] flex flex-col w-full gap-[8px] sm:gap-[16px] ml-[10px] sm:ml-0">
-                <div className="grid grid-cols-2 lg:flex justify-between gap-[24px] items-center">
+              <div className="max-w-[calc(100%-20px)] sm:max-w-[383px] flex flex-col w-full gap-[8px] sm:gap-[16px] mx-[10px] sm:ml-0">
+                <div className="grid grid-cols-2 lg:flex justify-between gap-[8px] xs:gap-[24px] items-center">
                   {DiscountBadgeBlock}
                   <Heading variant="h1" className="text-center hidden sm:block">
                     {discountPrice?.toFixed(2)}$
@@ -151,17 +151,23 @@ const Banner: React.FC = () => {
                   </span>
                 </div>
 
-                <Button variant="primary">Add to cart</Button>
+                <Button
+                  variant="primary"
+                  className="max-w-[calc(100%-20px)] sm:max-w-[100%]">
+                  Add to cart
+                </Button>
               </div>
             )}
             {selectedVariant === 5 && (
               <>
-                <div className="flex gap-[8px] items-center h-[42px] sm:h-[52px] max-w-[calc(100%-20px)] sm:max-w-[calc(100%-66px)] w-full mx-auto sm:mx-0 ml-[10px] sm:ml-0">
-                  {DiscountBadgeBlock}
-                  <div className="skew-x-[-20deg] border-[1px] border-primary-main rounded-[2px] h-full flex justify-center items-center">
-                    <span className="skew-x-[20deg] text-white font-usuzi-condensed text-[20px] leading-[24px] sm:text-[38px] sm:leading-[29px] py-[10px] sm:py-[12px] px-[12px] xs:px-[18px] md:px-[30px]">
-                      {discountPrice?.toFixed(2)}$
-                    </span>
+                <div className="flex flex-col xs:flex-row gap-[8px] items-center xs:h-[42px] sm:h-[52px] max-w-[calc(100%-20px)] sm:max-w-[calc(100%-66px)] w-full mx-auto sm:mx-0 ml-[10px] sm:ml-0">
+                  <div className="flex gap-[8px] items-center h-[42px] sm:h-[52px] xs:max-w-[calc(100%-20px)] sm:max-w-[calc(100%-66px)] w-full xs:w-auto mx-auto sm:mx-0 xs:ml-[10px] sm:ml-0">
+                    {DiscountBadgeBlock}
+                    <div className="skew-x-[-20deg] border-[1px] border-primary-main rounded-[2px] h-full flex justify-center items-center">
+                      <span className="skew-x-[20deg] text-white font-usuzi-condensed text-[20px] leading-[24px] sm:text-[38px] sm:leading-[29px] py-[10px] sm:py-[12px] px-[12px] xs:px-[18px] md:px-[30px]">
+                        {discountPrice?.toFixed(2)}$
+                      </span>
+                    </div>
                   </div>
                   <Button
                     variant="primary"

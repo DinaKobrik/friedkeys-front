@@ -48,7 +48,7 @@ const NewGames = () => {
         {newGames.length > 0 ? (
           newGames.map((game) => <GameCard key={game.id} game={game} />)
         ) : (
-          <p className="text-center text-gray-68">Loading new games...</p>
+          <p className="text-gray-68">Loading new games...</p>
         )}
       </div>
     </section>

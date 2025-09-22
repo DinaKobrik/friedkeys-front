@@ -291,7 +291,7 @@ export default function Registration() {
         <Button
           variant="secondary"
           onClick={() => window.history.back()}
-          className="absolute top-0 left-0 max-w-[183px]">
+          className="absolute top-0 left-0 max-w-[117px] sm:max-w-[163px] h-[40px] sm:h-[50px] flex justify-center items-center ml-[10px]">
           <svg
             width="14"
             height="22"

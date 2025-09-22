@@ -1,6 +1,13 @@
 "use client";
 
-import React, { useState, useEffect, FormEvent, Suspense } from "react";
+import React, {
+  useState,
+  useEffect,
+  useCallback,
+  FormEvent,
+  KeyboardEvent,
+  Suspense,
+} from "react";
 import Image from "next/image";
 import Heading from "@/components/ui/Heading";
 import Text from "@/components/ui/Text";
@@ -24,7 +31,8 @@ const LikeIcon = ({
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
     className={className}
-    onClick={onClick}>
+    onClick={onClick}
+    aria-hidden="true">
     <path
       fillRule="evenodd"
       clipRule="evenodd"
@@ -53,7 +61,7 @@ interface Review {
   order: string;
 }
 
-const ReviewContent: React.FC = () => {
+const ReviewContent: React.FC = React.memo(() => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [games, setGames] = useState<Game[]>([]);
@@ -69,49 +77,33 @@ const ReviewContent: React.FC = () => {
   const [isLg, setIsLg] = useState(false);
   const [order, setOrder] = useState<string>("123456789");
 
+  const handleResize = useCallback(() => {
+    setIsLg(window.innerWidth >= 992);
+  }, []);
+
+  const fetchGames = useCallback(async () => {
+    try {
+      const response = await fetch("/api/games?type=game");
+      const data = await response.json();
+      if (Array.isArray(data)) {
+        setGames(data);
+      } else {
+        console.warn("Invalid games data format from API");
+      }
+    } catch (error) {
+      console.error("Failed to fetch games:", error);
+    }
+  }, []);
+
   useEffect(() => {
-    const handleResize = () => {
-      setIsLg(window.innerWidth >= 992);
-    };
     handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  const handleReviewChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const value = e.target.value;
-    setReviewText(value);
-    setIsTouchedReview(true);
-    setIsValidReview(value.trim().length > 0);
-  };
-
-  const handleProsChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const value = e.target.value;
-    setPros(value);
-  };
-
-  const handleConsChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const value = e.target.value;
-    setCons(value);
-  };
+  }, [handleResize]);
 
   useEffect(() => {
-    const fetchGames = async () => {
-      try {
-        const response = await fetch("/api/games?type=game");
-        const data = await response.json();
-        if (Array.isArray(data)) {
-          setGames(data);
-        } else {
-          console.warn("Invalid games data format from API");
-        }
-      } catch (error) {
-        console.error("Failed to fetch games:", error);
-      }
-    };
-
     fetchGames();
-  }, []);
+  }, [fetchGames]);
 
   useEffect(() => {
     const storedEditIndex = localStorage.getItem("editIndex");
@@ -142,6 +134,43 @@ const ReviewContent: React.FC = () => {
       setGame(foundGame || games[0]);
     }
   }, [searchParams, games, gameId]);
+
+  const handleReviewChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const value = e.target.value;
+    setReviewText(value);
+    setIsTouchedReview(true);
+    setIsValidReview(value.trim().length > 0);
+  };
+
+  const handleProsChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const value = e.target.value;
+    setPros(value);
+  };
+
+  const handleConsChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const value = e.target.value;
+    setCons(value);
+  };
+
+  const handleKeyDown = (
+    e: KeyboardEvent<HTMLTextAreaElement>,
+    field: string
+  ) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      switch (field) {
+        case "review":
+          document.querySelector<HTMLInputElement>('[name="pros"]')?.focus();
+          break;
+        case "pros":
+          document.querySelector<HTMLInputElement>('[name="cons"]')?.focus();
+          break;
+        case "cons":
+          (e.target as HTMLTextAreaElement).blur();
+          break;
+      }
+    }
+  };
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -174,125 +203,171 @@ const ReviewContent: React.FC = () => {
 
   if (!game) {
     return (
-      <Heading variant="h3" className="text-center py-10">
+      <Heading variant="h3" className="text-center py-10" aria-live="polite">
         Loading...
       </Heading>
     );
   }
 
   return (
-    <main className="mt-[40px] sm:mt-[80px]">
-      <section>
-        <Heading variant="h3" className="mb-[24px] sm:mb-[40px]">
-          {isLg ? `account / orders / ${order} / review of ${game.title}` : ""}
-        </Heading>
-        <Heading
-          variant="h1"
-          className="mb-[24px] sm:mb-[80px] text-center sm:text-left relative z-10">
-          review the game
-        </Heading>
-        <div className="max-w-[792px] w-full mx-auto">
-          <div className="max-w-[568px] mx-auto mb-[24px] sm:mb-[48px] relative">
-            <Image
-              src={game.image}
-              alt={game.title}
-              width={568}
-              height={320}
-              className="absolute top-0 left-0 object-cover filter blur-[20px] z-0"
-            />
-            <Image
-              src={game.image}
-              alt={game.title}
-              width={520}
-              height={280}
-              className="relative z-10 mx-auto mb-[8px] sm:mb-[24px]"
-            />
-            <Heading
-              variant="h3"
-              className="text-center relative z-10 max-w-[520px]">
-              {game.title}
-            </Heading>
-          </div>
-          <div className="mb-[24px] sm:mb-[56px]">
-            <Text className="font-bold mb-[8px]">
-              Tell us what you think about this game!
-            </Text>
-            <Text>
-              Share your experience to help other players decide — whether you
-              loved it or not, your opinion matters
-            </Text>
-          </div>
-          <form
-            action=""
-            className="flex flex-col w-full gap-[24px] sm:gap-[56px]"
-            onSubmit={handleSubmit}>
-            <div className="flex gap-[26px] max-w-[calc(100%-20px)] mx-auto w-full">
-              <button
-                type="button"
-                className={`w-full h-[40px] sm:h-[48px] flex justify-center items-center py-[8px] px-[20px] border-[1px] skew-x-[-20deg] border-red rotate-180 ${
-                  !liked ? "bg-red-20" : ""
-                }`}
-                onClick={() => setLiked(false)}>
-                <LikeIcon className="skew-x-[20deg] w-[24px] h-[24px] sm:w-[32px] sm:h-[32px]" />
-              </button>
-              <button
-                type="button"
-                className={`w-full h-[40px] sm:h-[48px] flex justify-center items-center py-[8px] px-[20px] border-[1px] skew-x-[-20deg] border-primary-main ${
-                  liked ? "bg-primary-20" : ""
-                }`}
-                onClick={() => setLiked(true)}>
-                <LikeIcon className="skew-x-[20deg] w-[24px] h-[24px] sm:w-[32px] sm:h-[32px]" />
-              </button>
+    <main
+      className="mt-[40px] sm:mt-[80px]"
+      role="main"
+      aria-label="Write Review Page">
+      <Suspense fallback={<div>Loading review form...</div>}>
+        <section role="region" aria-label="Review Form Section">
+          <Heading
+            variant="h3"
+            className="mb-[24px] sm:mb-[40px]"
+            aria-label={`Navigation: account / orders / ${order} / review of ${game.title}`}>
+            {isLg
+              ? `account / orders / ${order} / review of ${game.title}`
+              : ""}
+          </Heading>
+          <Heading
+            variant="h1"
+            className="mb-[24px] sm:mb-[80px] text-center sm:text-left relative z-10"
+            aria-label="Review the game title">
+            review the game
+          </Heading>
+          <div
+            className="max-w-[792px] w-full mx-auto"
+            role="region"
+            aria-label="Game Review Content">
+            <div
+              className="max-w-[568px] mx-auto mb-[24px] sm:mb-[48px] relative"
+              role="region"
+              aria-label={`Game image and title: ${game.title}`}>
+              <Image
+                src={game.image}
+                alt={game.title}
+                width={568}
+                height={320}
+                className="absolute top-0 left-0 min-h-[226px] sm:min-h-[320px] filter blur-[20px] z-0 object-cover"
+                loading="lazy"
+              />
+              <Image
+                src={game.image}
+                alt={game.title}
+                width={520}
+                height={280}
+                className="relative z-10 min-h-[216px] sm:min-h-[280px] top-[5px] sm:top-[20px] mx-auto mb-[13px] sm:mb-[44px] object-cover"
+                loading="lazy"
+              />
+              <Heading
+                variant="h3"
+                className="text-center relative z-10 max-w-[520px]"
+                aria-label={`Game title: ${game.title}`}>
+                {game.title}
+              </Heading>
             </div>
-            <Textarea
-              label="Your Review"
-              value={reviewText}
-              name="review"
-              required
-              onChange={handleReviewChange}
-              placeholder="What did you enjoy? Any issues? Would you recommend it?"
-              className="w-full h-[104px] sm:h-[120px]"
-              variant="straight"
-              isTouched={isTouchedReview}
-              isValid={isValidReview}
-              errorMessage={
-                !isValidReview && isTouchedReview ? "Fill in the field" : ""
-              }
-            />
-            <Textarea
-              label="Pros"
-              value={pros}
-              name="pros"
-              onChange={handleProsChange}
-              placeholder="What did you like? (separate items with commas)"
-              className="w-full h-[104px] sm:h-[120px]"
-              variant="straight"
-            />
-            <Textarea
-              label="Cons"
-              value={cons}
-              name="cons"
-              onChange={handleConsChange}
-              placeholder="What could be better? (separate items with commas)"
-              className="w-full h-[104px] sm:h-[120px]"
-              variant="straight"
-            />
-            <div className="flex flex-col-reverse md:flex-row gap-[8px] sm:gap-[26px] max-w-[calc(100%-20px)] mx-auto w-full">
-              <Button
-                variant="secondary"
-                onClick={() => router.push("/auth/account/product-reviews")}>
-                Back to reviews
-              </Button>
-              <Button variant="primary" type="submit">
-                Submit Review
-              </Button>
+            <div
+              className="mb-[24px] sm:mb-[56px]"
+              role="region"
+              aria-label="Review instructions">
+              <Text
+                className="font-bold mb-[8px]"
+                aria-label="Instruction bold text">
+                Tell us what you think about this game!
+              </Text>
+              <Text aria-label="Instruction details">
+                Share your experience to help other players decide — whether you
+                loved it or not, your opinion matters
+              </Text>
             </div>
-          </form>
-        </div>
-      </section>
+            <form
+              action=""
+              className="flex flex-col w-full gap-[24px] sm:gap-[56px]"
+              onSubmit={handleSubmit}
+              aria-label="Review submission form">
+              <div
+                className="flex gap-[26px] max-w-[calc(100%-20px)] mx-auto w-full"
+                role="group"
+                aria-label="Like or dislike selection">
+                <button
+                  type="button"
+                  className={`w-full h-[40px] sm:h-[48px] flex justify-center items-center py-[8px] px-[20px] border-[1px] skew-x-[-20deg] border-red rotate-180 ${
+                    !liked ? "bg-red-20" : ""
+                  }`}
+                  onClick={() => setLiked(false)}
+                  aria-label="Dislike this game">
+                  <LikeIcon className="skew-x-[20deg] w-[24px] h-[24px] sm:w-[32px] sm:h-[32px]" />
+                </button>
+                <button
+                  type="button"
+                  className={`w-full h-[40px] sm:h-[48px] flex justify-center items-center py-[8px] px-[20px] border-[1px] skew-x-[-20deg] border-primary-main ${
+                    liked ? "bg-primary-20" : ""
+                  }`}
+                  onClick={() => setLiked(true)}
+                  aria-label="Like this game">
+                  <LikeIcon className="skew-x-[20deg] w-[24px] h-[24px] sm:w-[32px] sm:h-[32px]" />
+                </button>
+              </div>
+              <Textarea
+                label="Your Review"
+                value={reviewText}
+                name="review"
+                required
+                onChange={handleReviewChange}
+                onKeyDown={(e) => handleKeyDown(e, "review")}
+                placeholder="What did you enjoy? Any issues? Would you recommend it?"
+                className="w-full h-[104px] sm:h-[120px]"
+                variant="straight"
+                isTouched={isTouchedReview}
+                isValid={isValidReview}
+                errorMessage={
+                  !isValidReview && isTouchedReview ? "Fill in the field" : ""
+                }
+                aria-label="Your review text area"
+              />
+              <Textarea
+                label="Pros"
+                value={pros}
+                name="pros"
+                onChange={handleProsChange}
+                onKeyDown={(e) => handleKeyDown(e, "pros")}
+                placeholder="What did you like? (separate items with commas)"
+                className="w-full h-[104px] sm:h-[120px]"
+                variant="straight"
+                aria-label="Pros text area"
+              />
+              <Textarea
+                label="Cons"
+                value={cons}
+                name="cons"
+                onChange={handleConsChange}
+                onKeyDown={(e) => handleKeyDown(e, "cons")}
+                placeholder="What could be better? (separate items with commas)"
+                className="w-full h-[104px] sm:h-[120px]"
+                variant="straight"
+                aria-label="Cons text area"
+              />
+              <div
+                className="flex flex-col-reverse md:flex-row gap-[8px] sm:gap-[26px] max-w-[calc(100%-20px)] mx-auto w-full"
+                role="region"
+                aria-label="Form actions">
+                <Button
+                  variant="secondary"
+                  onClick={() => router.push("/auth/account/product-reviews")}
+                  aria-label="Back to reviews">
+                  Back to reviews
+                </Button>
+                <Button
+                  variant="primary"
+                  type="submit"
+                  aria-label="Submit review">
+                  Submit Review
+                </Button>
+              </div>
+            </form>
+          </div>
+        </section>
+      </Suspense>
     </main>
   );
-};
+});
+
+ReviewContent.displayName = "ReviewContent";
 
 export default function WriteReviewPage() {
   return (

@@ -13,6 +13,7 @@ import Link from "next/link";
 
 const Slider: React.FC = () => {
   const [games, setGames] = useState<Game[]>([]);
+  const [loading, setLoading] = useState(true);
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [screenWidth, setScreenWidth] = useState<number>(
@@ -25,6 +26,7 @@ const Slider: React.FC = () => {
   useEffect(() => {
     const fetchGames = async () => {
       try {
+        setLoading(true);
         const response = await fetch("/api/games?type=game");
         const data = await response.json();
         if (Array.isArray(data)) {
@@ -34,6 +36,8 @@ const Slider: React.FC = () => {
         }
       } catch (error) {
         console.error("Failed to fetch games:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -181,7 +185,9 @@ const Slider: React.FC = () => {
 
   return (
     <section className="relative home__slider w-full max-w-[1920px] mx-auto">
-      {topGames.length > 0 && (
+      {loading ? (
+        <p className="text-center py-10 text-gray-68">Loading slider...</p>
+      ) : topGames.length > 0 ? (
         <div className="relative overflow-hidden" ref={sliderRef}>
           <ul
             className="flex transition-transform duration-500 ease-in-out"
@@ -244,7 +250,7 @@ const Slider: React.FC = () => {
             </svg>
           </button>
         </div>
-      )}
+      ) : null}
     </section>
   );
 };

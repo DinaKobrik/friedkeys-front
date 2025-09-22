@@ -1,10 +1,18 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, {
+  useState,
+  useEffect,
+  useCallback,
+  useMemo,
+  Suspense,
+} from "react";
 import Heading from "@/components/ui/Heading";
-import Pagination from "@/components/ui/Pagination";
-import AccountMenu from "@/components/Sections/Account/AccountMenu";
-import Order from "@/components/Sections/Account/Order";
+const Pagination = React.lazy(() => import("@/components/ui/Pagination"));
+const AccountMenu = React.lazy(
+  () => import("@/components/Sections/Account/AccountMenu")
+);
+const Order = React.lazy(() => import("@/components/Sections/Account/Order"));
 
 const initialMockOrders = Array.from({ length: 97 }, (_, index) => ({
   id: `FK-20250603-124${index + 1}`,
@@ -16,15 +24,14 @@ const initialMockOrders = Array.from({ length: 97 }, (_, index) => ({
   status: "Pending",
 }));
 
-export default function OrdersPage() {
+export default React.memo(function OrdersPage() {
   const [ordersPerPage, setOrdersPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
   const [mockOrders, setMockOrders] = useState(initialMockOrders);
 
   useEffect(() => {
-    const newMockOrders = Array.from(
-      { length: initialMockOrders.length },
-      (_, index) => {
+    const generateMockOrders = () => {
+      return Array.from({ length: initialMockOrders.length }, (_, index) => {
         const date = new Date(2025, 7, 28 - index, 12 + index, 0);
         const month = String(date.getMonth() + 1);
         const day = String(date.getDate());
@@ -46,8 +53,10 @@ export default function OrdersPage() {
             Math.floor(Math.random() * 3)
           ],
         };
-      }
-    );
+      });
+    };
+
+    const newMockOrders = generateMockOrders();
     setMockOrders(newMockOrders);
 
     if (typeof window !== "undefined") {
@@ -60,33 +69,42 @@ export default function OrdersPage() {
     }
   }, []);
 
-  const totalPages = Math.ceil(mockOrders.length / ordersPerPage);
-  const paginatedOrders = mockOrders
-    .slice((currentPage - 1) * ordersPerPage, currentPage * ordersPerPage)
-    .map((order, index) => (
-      <Order
-        key={order.id}
-        id={order.id}
-        date={order.date}
-        time={order.time}
-        gameCount={order.gameCount}
-        totalPrice={order.totalPrice}
-        paymentMethod={order.paymentMethod}
-        status={order.status}
-        index={index}
-      />
+  const paginatedOrders = useMemo(() => {
+    const startIdx = (currentPage - 1) * ordersPerPage;
+    const endIdx = currentPage * ordersPerPage;
+    return mockOrders.slice(startIdx, endIdx).map((order, index) => (
+      <Suspense key={order.id} fallback={<div>Loading order...</div>}>
+        <Order
+          id={order.id}
+          date={order.date}
+          time={order.time}
+          gameCount={order.gameCount}
+          totalPrice={order.totalPrice}
+          paymentMethod={order.paymentMethod}
+          status={order.status}
+          index={index}
+        />
+      </Suspense>
     ));
+  }, [mockOrders, currentPage, ordersPerPage]);
 
-  const handlePageChange = (page: number) => {
+  const totalPages = useMemo(
+    () => Math.ceil(mockOrders.length / ordersPerPage),
+    [mockOrders.length, ordersPerPage]
+  );
+
+  const handlePageChange = useCallback((page: number) => {
     setCurrentPage(page);
     document
       .querySelector(".order-grid")
       ?.scrollIntoView({ behavior: "smooth", block: "start" });
-  };
+  }, []);
 
   return (
     <main className="min-h-screen mt-[24px] sm:mt-[80px]">
-      <AccountMenu activeLink="/auth/account/orders" />
+      <Suspense fallback={<div>Loading menu...</div>}>
+        <AccountMenu activeLink="/auth/account/orders" />
+      </Suspense>
       <section>
         <div className="flex flex-col sm:flex-row justify-between items-center gap-[8px] mt-[40px] sm:mt-[80px] mb-[24px] lg:mb-[80px]">
           <Heading variant="h1">orders</Heading>
@@ -118,13 +136,15 @@ export default function OrdersPage() {
           {paginatedOrders}
         </div>
         {totalPages > 1 && (
-          <Pagination
-            totalPages={totalPages}
-            currentPage={currentPage}
-            handlePageChange={handlePageChange}
-          />
+          <Suspense fallback={<div>Loading pagination...</div>}>
+            <Pagination
+              totalPages={totalPages}
+              currentPage={currentPage}
+              handlePageChange={handlePageChange}
+            />
+          </Suspense>
         )}
       </section>
     </main>
   );
-}
+});

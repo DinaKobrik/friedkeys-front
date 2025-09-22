@@ -64,16 +64,18 @@ const AddToCartBlock: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="fixed bottom-0 left-0 w-full bg-gray-900 p-[16px] sm:p-[24px] z-50 flex items-center justify-between">
-        <span>Loading...</span>
+      <div className="fixed bottom-0 left-0 sm:hidden p-[16px] z-[10000] flex w-full items-center justify-center gap-[16px] bg-main border-primary-main border-t-[1px]">
+        <p className="text-gray-68">Loading trending games...</p>
       </div>
     );
   }
 
   if (!game) {
     return (
-      <div className="fixed bottom-0 left-0 w-full bg-gray-900 p-[16px] sm:p-[24px] z-50 flex items-center justify-between">
-        <span>Game not found</span>
+      <div className="fixed bottom-0 left-0 sm:hidden p-[16px] z-[10000] flex w-full items-center justify-center gap-[16px] bg-main border-primary-main border-t-[1px]">
+        <p className="text-[32px] font-usuzi-condensed text-white uppercase col-span-3 text-center">
+          Game not found
+        </p>
       </div>
     );
   }

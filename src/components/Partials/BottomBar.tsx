@@ -33,7 +33,7 @@ const BottomBar = () => {
           />
         </svg>
       </div>
-      <div className="flex items-center gap-[32px]">
+      <div className="flex items-center gap-[16px] xs:gap-[32px]">
         <div className="cursor-pointer flex justify-center items-center gap-[8px] sm:gap-[16px] text-[14px] sm:text-[24px]">
           <svg
             width="32"

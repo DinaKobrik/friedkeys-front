@@ -60,9 +60,7 @@ const DiscountedGames = () => {
             <GameCard key={game.id} game={game} showSaleTimer={true} />
           ))
         ) : (
-          <p className="text-center text-gray-68">
-            Loading discounted games...
-          </p>
+          <p className="text-gray-68">Loading discounted games...</p>
         )}
       </GameWrapper>
     </section>

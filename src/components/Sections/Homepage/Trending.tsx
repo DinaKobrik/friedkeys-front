@@ -39,11 +39,11 @@ const TrendingGames = () => {
           see all games
         </Button>
       </div>
-      <div className="w-full flex sm:grid overflow-scroll hide-scrollbar sm:overflow-visible sm:grid-flow-row grid-cols-6 sm:grid-cols-2 lg:grid-cols-3 gap-[12px] sm:gap-[24px]">
+      <div className="w-full flex sm:grid overflow-scroll hide-scrollbar sm:overflow-visible sm:grid-flow-row sm:grid-cols-2 lg:grid-cols-3 gap-[12px] sm:gap-[24px]">
         {games.length > 0 ? (
           games.map((game) => <GameCard key={game.id} game={game} />)
         ) : (
-          <p className="text-center text-gray-68">Loading trending games...</p>
+          <p className="text-gray-68">Loading trending games...</p>
         )}
       </div>
     </section>

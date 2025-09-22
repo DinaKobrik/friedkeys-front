@@ -132,3 +132,10 @@
     height: 100%;
   }
 }
+@media (max-width: 393px) {
+  .custom404__banner::before,
+  .joinnow__banner::before {
+    top: 10px;
+    height: 90%;
+  }
+}

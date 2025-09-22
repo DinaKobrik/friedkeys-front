@@ -80,7 +80,7 @@ export default function NewPage() {
       <Button
         onClick={() => router.push("/news")}
         variant="secondary"
-        className="max-w-[150px] sm:max-w-[190px] ml-[10px] block lg:hidden bg-main">
+        className="max-w-[143px] sm:max-w-[190px] h-[40px] sm:h-[50px] flex justify-center items-center ml-[10px] lg:hidden bg-main">
         <svg
           width="24"
           height="24"
@@ -105,17 +105,17 @@ export default function NewPage() {
               alt={news.title}
               width={1608}
               height={905}
-              className="mx-auto blur-xl"
+              className="mx-auto blur-xl min-h-[320px]"
             />
           </div>
-          <div className="absolute top-1/2 translate-y-[-45%] 2xl:translate-y-[-50%] left-1/2 translate-x-[-50%] w-full h-full max-w-[1064px] max-h-[612px]">
-            <div className="mx-auto h-[calc(100%-26px)] md:h-[calc(100%-52px)] mainCustom:h-full">
+          <div className="absolute top-[50px] 2xl:top-1/2 h-[calc(100%-100px)] mainCustom:h-full 2xl:translate-y-[-50%] left-1/2 translate-x-[-50%] w-full max-w-[1064px] max-h-[612px]">
+            <div className="mx-auto w-full h-full">
               <Image
                 src={news.image}
                 alt={news.title}
                 width={1064}
                 height={560}
-                className="mx-auto object-cover w-full h-full new-clip"
+                className="mx-auto min-h-[220px] object-cover w-full h-full new-clip"
               />
             </div>
           </div>

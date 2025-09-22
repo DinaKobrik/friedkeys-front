@@ -1,12 +1,19 @@
 "use client";
 
-import React, { useState, useEffect, ChangeEvent, ReactNode } from "react";
+import React, {
+  useState,
+  useEffect,
+  ChangeEvent,
+  ReactNode,
+  KeyboardEvent,
+} from "react";
 import Text from "@/components/ui/Text";
 
 interface TextareaProps {
   label?: string;
   value: string;
   onChange: (e: ChangeEvent<HTMLTextAreaElement>) => void;
+  onKeyDown?: (e: KeyboardEvent<HTMLTextAreaElement>) => void;
   required?: boolean;
   placeholder?: string;
   className?: string;
@@ -25,6 +32,7 @@ const Textarea: React.FC<TextareaProps> = ({
   label,
   value,
   onChange,
+  onKeyDown,
   required = false,
   placeholder,
   className,
@@ -41,7 +49,6 @@ const Textarea: React.FC<TextareaProps> = ({
   const [internalIsTouched, setInternalIsTouched] = useState(false);
   const [internalIsValid, setInternalIsValid] = useState(true);
 
-  // Используем внешние пропсы, если они переданы, иначе внутренние состояния
   const effectiveIsTouched =
     isTouched !== undefined ? isTouched : internalIsTouched;
   const effectiveIsValid = isValid !== undefined ? isValid : internalIsValid;
@@ -96,6 +103,7 @@ const Textarea: React.FC<TextareaProps> = ({
         <textarea
           value={value}
           onChange={onChange}
+          onKeyDown={onKeyDown}
           placeholder={placeholder}
           onBlur={handleBlur}
           autoComplete={autoComplete}

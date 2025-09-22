@@ -1,6 +1,12 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, {
+  useState,
+  useEffect,
+  useCallback,
+  useMemo,
+  Suspense,
+} from "react";
 import Image from "next/image";
 import Heading from "@/components/ui/Heading";
 import Text from "@/components/ui/Text";
@@ -19,7 +25,8 @@ const LikeIcon = ({ className }: { className?: string }) => (
     viewBox="0 0 32 32"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
-    className={className}>
+    className={className}
+    aria-hidden="true">
     <path
       fillRule="evenodd"
       clipRule="evenodd"
@@ -43,7 +50,8 @@ const DeleteIcon = ({ className }: { className?: string }) => (
     viewBox="0 0 32 32"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
-    className={className}>
+    className={className}
+    aria-hidden="true">
     <path
       d="M5.49219 8.60156H26.5071L24.6173 28.3337H7.38205L5.49219 8.60156Z"
       stroke="currentColor"
@@ -72,7 +80,8 @@ const EditIcon = ({ className }: { className?: string }) => (
     viewBox="0 0 32 32"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
-    className={className}>
+    className={className}
+    aria-hidden="true">
     <path
       d="M21.4675 4L28 10.5325L10.5325 28L4.00614 27.9939L4 21.4675L21.4675 4Z"
       stroke="white"
@@ -100,13 +109,7 @@ interface Review {
   order: string;
 }
 
-// Форматирование даты
-const formatDate = (dateString: string) => {
-  const date = new Date(dateString);
-  return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
-};
-
-const ProductReviews: React.FC = () => {
+const ProductReviews: React.FC = React.memo(() => {
   const [games, setGames] = useState<Game[]>([]);
   const [reviews, setReviews] = useState<Review[]>([]);
   const [loading, setLoading] = useState(true);
@@ -114,24 +117,29 @@ const ProductReviews: React.FC = () => {
   const reviewsPerPage = 3;
   const router = useRouter();
 
-  useEffect(() => {
-    const fetchGames = async () => {
-      try {
-        setLoading(true);
-        const response = await fetch("/api/games?type=game");
-        const data = await response.json();
-        if (Array.isArray(data)) {
-          setGames(data);
-        } else {
-          console.warn("Invalid games data format from API");
-        }
-      } catch (error) {
-        console.error("Failed to fetch games:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const formatDate = useCallback((dateString: string) => {
+    const date = new Date(dateString);
+    return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+  }, []);
 
+  const fetchGames = useCallback(async () => {
+    try {
+      setLoading(true);
+      const response = await fetch("/api/games?type=game");
+      const data = await response.json();
+      if (Array.isArray(data)) {
+        setGames(data);
+      } else {
+        console.warn("Invalid games data format from API");
+      }
+    } catch (error) {
+      console.error("Failed to fetch games:", error);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
     const savedReviews = localStorage.getItem("reviews");
     if (savedReviews) {
       setReviews(JSON.parse(savedReviews));
@@ -227,7 +235,7 @@ const ProductReviews: React.FC = () => {
     }
 
     fetchGames();
-  }, []);
+  }, [fetchGames]);
 
   useEffect(() => {
     if (reviews.length > 0) {
@@ -235,154 +243,217 @@ const ProductReviews: React.FC = () => {
     }
   }, [reviews]);
 
-  const handleDeleteReview = (globalIndex: number) => {
-    const newReviews = reviews.filter((_, i) => i !== globalIndex);
-    setReviews(newReviews);
-  };
+  const handleDeleteReview = useCallback(
+    (globalIndex: number) => {
+      const newReviews = reviews.filter((_, i) => i !== globalIndex);
+      setReviews(newReviews);
+    },
+    [reviews]
+  );
 
-  const handleEditReview = (globalIndex: number) => {
-    const review = reviews[globalIndex];
-    localStorage.setItem("editIndex", globalIndex.toString());
-    router.push(
-      `/auth/account/product-reviews/write-review?gameId=${review.gameId}`
-    );
-  };
-
-  // Логика пагинации
-  const totalPages = Math.ceil(reviews.length / reviewsPerPage);
-  const paginatedReviews = reviews
-    .slice((currentPage - 1) * reviewsPerPage, currentPage * reviewsPerPage)
-    .map((review, localIndex) => {
-      const game = games.find((g) => g.id === review.gameId);
-      if (!game) {
-        console.warn(`Game with id ${review.gameId} not found.`);
-        return null;
-      }
-      const globalIndex = (currentPage - 1) * reviewsPerPage + localIndex;
-      return (
-        <div
-          key={globalIndex}
-          className="grid grid-cols-1 lg:grid-cols-3 gap-[8px] sm:gap-[24px]">
-          <div className="card-corner">
-            <Link href={`/all-games/${game.id}`} className="w-full h-full">
-              <Image
-                src={game.image}
-                alt={game.title}
-                width={520}
-                height={280}
-                className="object-cover w-full h-full"
-              />
-            </Link>
-          </div>
-          <div className="lg:col-span-2 card-corner grid grid-cols-1 gap-[23px] w-full p-[16px] pb-[24px] sm:py-[24px] sm:px-[32px] xl:h-[280px] bg-2 relative">
-            <div className="h-[20px] w-[50%] absolute top-0 left-[50%] bg-primary-main translate-x-[-50%] blur-[50px] z-0"></div>
-            <div className="flex items-center gap-[16px] sm:gap-[32px]">
-              <div
-                className={`w-[64px] h-[40px] sm:w-[72px] sm:h-[48px] flex justify-center items-center py-[8px] px-[20px] border-[1px] skew-x-[-20deg] ${
-                  review.liked
-                    ? "border-primary-main bg-primary-20"
-                    : "border-red bg-red-20 rotate-180"
-                }`}>
-                <LikeIcon className={`skew-x-[20deg]`} />
-              </div>
-              <div className="flex items-center justify-between gap-[24px] w-full">
-                <Heading variant="h3" className="line-clamp-1">
-                  {game.title}
-                </Heading>
-                <Text className="text-[20px] leading-[20px] text-[#C1C1C1] flex-shrink-0 hidden lg:block">
-                  {formatDate(review.date)}
-                </Text>
-              </div>
-            </div>
-            <Text className="line-clamp-3">{review.review}</Text>
-            <div className="flex justify-between items-start xl:items-end flex-col xl:flex-row gap-[16px]">
-              <div className="flex gap-[8px] sm:gap-[16px] items-center flex-shrink-0">
-                <p className="text-[14px] leading-[20px] sm:text-[20px] font-medium text-white">
-                  This review is helpful
-                </p>
-                <div className="py-[6px] px-[12px] lg:py-[13px] lg:px-[30px] lg:skew-x-[-20deg] bg-primary-20">
-                  <span className="lg:skew-x-[20deg] block font-semibold text-[14px] leading-[20px] sm:text-[20px] sm:leading-[26px]">
-                    Yes {review.likes}
-                  </span>
-                </div>
-                <div className="py-[6px] px-[12px] lg:py-[13px] lg:px-[30px] lg:skew-x-[-20deg] bg-red-20">
-                  <span className="lg:skew-x-[20deg] block font-semibold text-[14px] leading-[20px] sm:text-[20px] sm:leading-[26px]">
-                    No {review.dislikes}
-                  </span>
-                </div>
-              </div>
-              <div className="flex justify-between items-end xl:justify-end w-full">
-                <div className="flex gap-[10px] sm:gap-[26px]">
-                  <Button
-                    variant="secondary"
-                    className="w-[64px] h-[40px] sm:w-[72px] sm:h-[48px] flex justify-center items-center"
-                    onClick={() => handleDeleteReview(globalIndex)}>
-                    <DeleteIcon className="cursor-pointer w-[24px] h-[24px] sm:w-[32px] sm:h-[32px]" />
-                  </Button>
-                  <Button
-                    variant="secondary"
-                    className="w-[64px] h-[40px] sm:w-[72px] sm:h-[48px] flex justify-center items-center"
-                    onClick={() => handleEditReview(globalIndex)}>
-                    <EditIcon className="cursor-pointer w-[24px] h-[24px] sm:w-[32px] sm:h-[32px]" />
-                  </Button>
-                </div>
-                <Text className="text-[#C1C1C1] flex-shrink-0 lg:hidden">
-                  {formatDate(review.date)}
-                </Text>
-              </div>
-            </div>
-          </div>
-        </div>
+  const handleEditReview = useCallback(
+    (globalIndex: number) => {
+      const review = reviews[globalIndex];
+      localStorage.setItem("editIndex", globalIndex.toString());
+      router.push(
+        `/auth/account/product-reviews/write-review?gameId=${review.gameId}`
       );
-    });
+    },
+    [reviews, router]
+  );
 
-  const handlePageChange = (page: number) => {
+  const paginatedReviews = useMemo(() => {
+    return reviews
+      .slice((currentPage - 1) * reviewsPerPage, currentPage * reviewsPerPage)
+      .map((review, localIndex) => {
+        const game = games.find((g) => g.id === review.gameId);
+        if (!game) {
+          console.warn(`Game with id ${review.gameId} not found.`);
+          return null;
+        }
+        const globalIndex = (currentPage - 1) * reviewsPerPage + localIndex;
+        return (
+          <div
+            key={globalIndex}
+            className="grid grid-cols-1 lg:grid-cols-3 gap-[8px] sm:gap-[24px]"
+            role="region"
+            aria-label={`Review for ${game.title} from ${formatDate(
+              review.date
+            )}`}>
+            <div className="card-corner">
+              <Link
+                href={`/all-games/${game.id}`}
+                className="w-full h-full"
+                aria-label={`View game ${game.title}`}>
+                <Image
+                  src={game.image}
+                  alt={game.title}
+                  width={520}
+                  height={280}
+                  className="object-cover h-[160px] xs:h-[200px] sm:h-[240px] md:h-[300px] lg:h-full w-full"
+                  loading="lazy"
+                />
+              </Link>
+            </div>
+            <div className="lg:col-span-2 card-corner grid grid-cols-1 gap-[23px] w-full p-[16px] pb-[24px] sm:py-[24px] sm:px-[32px] lg:h-[336px] xl:h-[280px] bg-2 relative">
+              <div className="h-[20px] w-[50%] absolute top-0 left-[50%] bg-primary-main translate-x-[-50%] blur-[50px] z-0"></div>
+              <div className="flex items-center gap-[16px] sm:gap-[32px]">
+                <div
+                  className={`w-[64px] h-[40px] sm:w-[72px] sm:h-[48px] flex justify-center items-center py-[8px] px-[20px] border-[1px] skew-x-[-20deg] ${
+                    review.liked
+                      ? "border-primary-main bg-primary-20"
+                      : "border-red bg-red-20 rotate-180"
+                  }`}
+                  aria-label={
+                    review.liked ? "Liked review" : "Disliked review"
+                  }>
+                  <LikeIcon className={`skew-x-[20deg]`} />
+                </div>
+                <div className="flex items-center justify-between gap-[24px] w-full">
+                  <Heading
+                    variant="h3"
+                    className="line-clamp-1"
+                    aria-label={`Game title: ${game.title}`}>
+                    {game.title}
+                  </Heading>
+                  <Text
+                    className="text-[20px] leading-[20px] text-[#C1C1C1] flex-shrink-0 hidden lg:block"
+                    aria-label={`Review date: ${formatDate(review.date)}`}>
+                    {formatDate(review.date)}
+                  </Text>
+                </div>
+              </div>
+              <Text
+                className="line-clamp-3"
+                aria-label={`Review text: ${review.review}`}>
+                {review.review}
+              </Text>
+              <div className="flex justify-between items-start xl:items-end flex-col xl:flex-row gap-[16px]">
+                <div
+                  className="flex gap-[8px] sm:gap-[16px] items-center flex-shrink-0"
+                  aria-label={`Helpfulness votes: ${review.likes} likes, ${review.dislikes} dislikes`}>
+                  <p className="text-[14px] leading-[20px] sm:text-[20px] font-medium text-white">
+                    This review is helpful
+                  </p>
+                  <div className="py-[6px] px-[12px] lg:py-[13px] lg:px-[30px] lg:skew-x-[-20deg] bg-primary-20">
+                    <span className="lg:skew-x-[20deg] block font-semibold text-[14px] leading-[20px] sm:text-[20px] sm:leading-[26px]">
+                      Yes {review.likes}
+                    </span>
+                  </div>
+                  <div className="py-[6px] px-[12px] lg:py-[13px] lg:px-[30px] lg:skew-x-[-20deg] bg-red-20">
+                    <span className="lg:skew-x-[20deg] block font-semibold text-[14px] leading-[20px] sm:text-[20px] sm:leading-[26px]">
+                      No {review.dislikes}
+                    </span>
+                  </div>
+                </div>
+                <div className="flex justify-between items-end xl:justify-end w-full">
+                  <div className="flex gap-[10px] sm:gap-[26px]">
+                    <Button
+                      variant="secondary"
+                      className="w-[64px] h-[40px] sm:w-[72px] sm:h-[48px] flex justify-center items-center"
+                      onClick={() => handleDeleteReview(globalIndex)}
+                      aria-label={`Delete review for ${game.title}`}>
+                      <DeleteIcon className="cursor-pointer w-[24px] h-[24px] sm:w-[32px] sm:h-[32px]" />
+                    </Button>
+                    <Button
+                      variant="secondary"
+                      className="w-[64px] h-[40px] sm:w-[72px] sm:h-[48px] flex justify-center items-center"
+                      onClick={() => handleEditReview(globalIndex)}
+                      aria-label={`Edit review for ${game.title}`}>
+                      <EditIcon className="cursor-pointer w-[24px] h-[24px] sm:w-[32px] sm:h-[32px]" />
+                    </Button>
+                  </div>
+                  <Text
+                    className="text-[#C1C1C1] flex-shrink-0 lg:hidden"
+                    aria-label={`Review date: ${formatDate(review.date)}`}>
+                    {formatDate(review.date)}
+                  </Text>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      });
+  }, [
+    reviews,
+    games,
+    currentPage,
+    formatDate,
+    handleDeleteReview,
+    handleEditReview,
+  ]);
+
+  const handlePageChange = useCallback((page: number) => {
     setCurrentPage(page);
     document
       .querySelector(".favorites-grid")
       ?.scrollIntoView({ behavior: "smooth", block: "start" });
-  };
+  }, []);
 
   if (loading) {
     return (
-      <Heading variant="h3" className="text-center py-10">
+      <Heading variant="h3" className="text-center py-10" aria-live="polite">
         Loading...
       </Heading>
     );
   }
 
   return (
-    <main className="mt-[24px] sm:mt-[80px]">
-      <AccountMenu activeLink="/auth/account/product-reviews" />
-      <section>
-        <div className="flex items-center justify-between mb-[48px] mt-[40px] sm:mt-[80px]">
-          <Heading variant="h1" className="text-center lg:text-left w-full">
+    <main
+      className="mt-[24px] sm:mt-[80px]"
+      role="main"
+      aria-label="Product Reviews Page">
+      <Suspense fallback={<div>Loading menu...</div>}>
+        <AccountMenu activeLink="/auth/account/product-reviews" />
+      </Suspense>
+      <section role="region" aria-label="Product Reviews Section">
+        <div
+          className="flex items-center justify-between mb-[48px] mt-[40px] sm:mt-[80px]"
+          role="banner">
+          <Heading
+            variant="h1"
+            className="text-center lg:text-left w-full"
+            aria-label="Product Reviews Title">
             Product Reviews
           </Heading>
-          <div className="game-count hidden lg:block flex-shrink-0 text-[16px] sm:text-[32px] font-usuzi-condensed text-white uppercase">
+          <div
+            className="game-count hidden lg:block flex-shrink-0 text-[16px] sm:text-[32px] font-usuzi-condensed text-white uppercase"
+            aria-label={`Total reviews: ${reviews.length}`}>
             {reviews.length} reviews
           </div>
         </div>
         {reviews.length === 0 ? (
-          <Heading variant="h3" className="my-[24px] sm:my-[48px]">
+          <Heading
+            variant="h3"
+            className="my-[24px] sm:my-[48px]"
+            aria-label="No reviews message">
             No reviews yet
           </Heading>
         ) : (
-          <div className="favorites-grid grid grid-cols-1 gap-[16px] sm:gap-[24px] mb-[24px] sm:mb-[48px]">
+          <div
+            className="favorites-grid grid grid-cols-1 gap-[16px] sm:gap-[24px] mb-[24px] sm:mb-[48px]"
+            role="region"
+            aria-label="Reviews List">
             {paginatedReviews}
             <Pagination
-              totalPages={totalPages}
+              totalPages={Math.ceil(reviews.length / reviewsPerPage)}
               currentPage={currentPage}
               handlePageChange={handlePageChange}
+              aria-label="Pagination Controls"
             />
           </div>
         )}
-        <Button variant="primary" className="max-w-[500px]">
+        <Button
+          variant="primary"
+          className="max-w-[calc(100%-20px)] sm:max-w-[500px]"
+          aria-label="Leave a review for a game">
           leave a review for the game
         </Button>
       </section>
     </main>
   );
-};
+});
+
+ProductReviews.displayName = "ProductReviews";
 
 export default ProductReviews;

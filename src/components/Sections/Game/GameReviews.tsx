@@ -395,7 +395,11 @@ const GameReviews: React.FC = () => {
           </div>
         </div>
       </div>
-      <Button variant="primary">Read all reviews ({totalReviews})</Button>
+      <Button
+        variant="primary"
+        className="max-w-[calc(100%-20px)] sm:max-w-[440px] mx-auto">
+        Read all reviews ({totalReviews})
+      </Button>
     </section>
   );
 };

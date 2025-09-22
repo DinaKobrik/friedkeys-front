@@ -176,7 +176,7 @@ export default function LogIn() {
           </Input>
           <Link
             href="../auth/forgot-password/"
-            className="block text-primary-main text-[20px] mb-[24px]">
+            className="block text-primary-main text-[15px] leading-[15px] sm:text-[20px] sm:leading-[20px] mb-[24px]">
             Forgot password
           </Link>
           <Button variant="primary" type="submit" className="max-w-[502px]">
@@ -209,7 +209,7 @@ export default function LogIn() {
         </div>
         <Link
           href="/auth/registration"
-          className="text-white text-[20px] text-center">
+          className="text-white text-[15px] leading-[15px] sm:text-[20px] sm:leading-[20px] text-center">
           No account yet?
         </Link>
       </section>
