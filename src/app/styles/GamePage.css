@@ -82,7 +82,45 @@
   }
 }
 
-/* configurations */
+/* editions */
+.game__editions-card {
+  box-sizing: border-box;
+  outline-offset: -4px;
+  overflow: hidden;
+  position: relative;
+}
+.game__editions-card:hover {
+  outline: 2px solid theme("colors.primary-main");
+}
+.game__editions-card:hover::before,
+.game__editions-card:focus::before {
+  content: "";
+  top: -31px;
+  left: -31px;
+  position: absolute;
+  width: 62px;
+  height: 62px;
+  transform: rotate(45deg);
+  background: theme("colors.main");
+  border: 2px solid theme("colors.primary-main");
+  z-index: 53;
+}
+@media (max-width: 767px) {
+  .game__editions-card {
+    outline-offset: -2px;
+  }
+  .game__editions-card:hover {
+    outline: 1px solid theme("colors.primary-main");
+  }
+  .game__editions-card:hover::before,
+  .game__editions-card:focus::before {
+    top: -15px;
+    left: -15px;
+    width: 30px;
+    height: 30px;
+    border: 1px solid theme("colors.primary-main");
+  }
+}
 
 .configurations__button:first-child::after {
   content: "";

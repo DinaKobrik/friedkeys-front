@@ -104,25 +104,11 @@
   background-size: 100% 16px;
   z-index: -1;
 }
-@media (max-width: 616px) {
+@media (max-width: 767px) {
   .custom404__banner::before,
   .joinnow__banner::before {
     top: 16px;
-    height: 93%;
-  }
-}
-@media (max-width: 610px) {
-  .custom404__banner::before,
-  .joinnow__banner::before {
-    top: 10px;
-    height: 96%;
-  }
-}
-@media (max-width: 590px) {
-  .custom404__banner::before,
-  .joinnow__banner::before {
-    top: 21px;
-    height: 90%;
+    height: 91%;
   }
 }
 @media (max-width: 575px) {

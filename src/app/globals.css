@@ -50,9 +50,12 @@
 @import "styles/Buttons";
 @import "styles/Header";
 @import "styles/Input";
+@import "styles/Banner";
+@import "styles/QuickMenu";
 @import "styles/Advantages";
 @import "styles/Ganres";
 @import "styles/JoinNow";
+@import "styles/News";
 @import "styles/GameList";
 @import "styles/AboutPlatforms";
 @import "styles/GamePage";
@@ -163,7 +166,6 @@
   transform: rotate(45deg);
   background: theme("colors.main");
   border: 2px solid theme("colors.primary-main");
-  box-shadow: 0 0px 15px 0px theme("colors.primary-main");
   z-index: 3;
 }
 .join-review::after {
@@ -176,7 +178,6 @@
   transform: rotate(45deg);
   background: theme("colors.main");
   border: 2px solid theme("colors.primary-main");
-  box-shadow: 0 0px 15px 1px theme("colors.primary-main");
   z-index: 3;
 }
 @media (max-width: 767px) {
@@ -300,49 +301,15 @@
   }
 }
 
-/* new */
-.new__image::before {
-  content: "";
-  position: absolute;
-  top: -60px;
-  left: 50%;
-  max-width: 1920px;
-  width: calc(100vw - 15px);
-  height: calc(100% + 100px);
-  background: linear-gradient(
-    to bottom,
-    theme("colors.main") 0%,
-    theme("colors.main") 7%,
-    rgba(0, 0, 0, 0) 20%,
-    rgba(0, 0, 0, 0) 80%,
-    theme("colors.main") 93%,
-    theme("colors.main") 100%
-  );
-  background-size: 1920px auto;
-  transform: translateX(-50%);
-  z-index: 1;
-}
-@media (pointer: coarse) {
-  .new__image::before {
-    width: 100vw;
-  }
-}
-.new-clip {
-  clip-path: polygon(5% 0%, 100% 0%, 100% 90%, 95% 100%, 0% 100%, 0% 10%);
-}
+/* home slider */
 
-/* banner */
-.banner,
-.banner__container,
 .home__slider {
   width: calc(100vw - 15px);
   max-width: 1920px;
 }
-.banner__container,
 .home__slider {
   left: -16px;
 }
-.banner::before,
 .home__slider::before {
   content: "";
   pointer-events: none;
@@ -365,33 +332,23 @@
   z-index: 1;
 }
 @media (max-width: 1920px) {
-  .banner,
-  .banner::before,
-  .banner__container,
   .home__slider,
   .home__slider::before {
     max-width: 1700px;
   }
 }
 @media (pointer: coarse) {
-  .banner,
-  .banner::before,
-  .banner__container,
   .home__slider,
   .home__slider::before {
     width: 100vw;
   }
 }
 @media (max-width: 1920px) {
-  .banner,
-  .banner::before,
-  .banner__container,
   .home__slider {
     max-width: 1700px;
   }
 }
 @media (min-width: 576px) {
-  .banner__container,
   .home__slider {
     left: -46px;
   }
@@ -399,7 +356,6 @@
 /* Десктоп  */
 @media (min-width: 1935px) and (hover: hover),
   (min-width: 1935px) and (pointer: fine) {
-  .banner__container,
   .home__slider {
     left: -156px;
   }
@@ -408,41 +364,10 @@
 /* Сенсорное устройство */
 @media (min-width: 1921px) and (hover: none),
   (min-width: 1921px) and (pointer: coarse) {
-  .banner__container,
   .home__slider {
     left: -156px;
   }
 }
-
-.banner-grid {
-  display: grid;
-  grid-template-areas: "old_price new_price sale button";
-  grid-template-columns: repeat(4, min-content);
-  grid-template-rows: auto;
-}
-.banner-grid div:nth-child(1) {
-  grid-area: old_price;
-}
-.banner-grid div:nth-child(2) {
-  grid-area: new_price;
-}
-.banner-grid div:nth-child(3) {
-  grid-area: sale;
-}
-.banner-grid button {
-  grid-area: button;
-}
-@media (max-width: 767px) {
-  .banner-grid {
-    grid-template-areas:
-      "old_price sale sale sale"
-      "new_price new_price button button";
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: auto auto;
-  }
-}
-
-/* home slider */
 
 .home__slide {
   max-width: 1700px;

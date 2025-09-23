@@ -296,7 +296,10 @@ const ProductReviews: React.FC = React.memo(() => {
               </Link>
             </div>
             <div className="lg:col-span-2 card-corner grid grid-cols-1 gap-[23px] w-full p-[16px] pb-[24px] sm:py-[24px] sm:px-[32px] lg:h-[336px] xl:h-[280px] bg-2 relative">
-              <div className="h-[20px] w-[50%] absolute top-0 left-[50%] bg-primary-main translate-x-[-50%] blur-[50px] z-0"></div>
+              <div
+                className={`h-[20px] w-[50%] absolute top-0 left-[50%] ${
+                  !review.liked ? "bg-red" : "bg-primary-main"
+                } translate-x-[-50%] blur-[50px] z-0`}></div>
               <div className="flex items-center gap-[16px] sm:gap-[32px]">
                 <div
                   className={`w-[64px] h-[40px] sm:w-[72px] sm:h-[48px] flex justify-center items-center py-[8px] px-[20px] border-[1px] skew-x-[-20deg] ${

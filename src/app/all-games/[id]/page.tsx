@@ -4,6 +4,7 @@ import React from "react";
 import GameHeader from "@/components/Sections/Game/GameHeader";
 import GameAbout from "@/components/Sections/Game/GameAbout";
 import GameSlider from "@/components/Sections/Game/GameSlider";
+import GameEditions from "@/components/Sections/Game/GameEditions";
 import GameDescription from "@/components/Sections/Game/GameDescription";
 import GameConfigurations from "@/components/Sections/Game/GameConfigurations";
 import GameFranchise from "@/components/Sections/Game/GameFranchise";
@@ -17,6 +18,7 @@ const GameDetailPage: React.FC = () => {
       <GameHeader />
       <GameAbout />
       <GameSlider />
+      <GameEditions />
       <GameDescription />
       <GameConfigurations />
       <GameFranchise />

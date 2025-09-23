@@ -55,7 +55,7 @@ const Custom404 = () => {
               </linearGradient>
             </defs>
           </svg>
-          <div className="custom404__banner absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 md:max-w-[680px] w-full md:max-h-[532px] h-full mx-auto md:p-[110px_100px_102px] flex flex-col justify-center items-center sm:max-w-[538px] sm:max-h-[418px] xs:p-[56px_39px] p-[29px_34px] xs:max-w-[358px] xs:max-h-[278px] max-w-[322px] max-h-[250px]">
+          <div className="custom404__banner absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 md:max-w-[680px] w-full md:max-h-[532px] h-full mx-auto md:p-[110px_100px_102px] flex flex-col justify-center items-center sm:max-w-[538px] sm:max-h-[418px] xs:p-[56px_39px] p-[29px_20px] xs:max-w-[358px] xs:max-h-[278px] max-w-[322px] max-h-[250px]">
             <div className="font-usuzi-grad mb-[8px] text-[80px] leading-[50px] xs:text-[100px] xs:leading-[80px] md:text-[128px] md:leading-[128px] text-primary-main">
               404
             </div>

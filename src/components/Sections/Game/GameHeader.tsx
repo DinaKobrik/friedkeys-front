@@ -405,7 +405,9 @@ const GameHeader: React.FC = () => {
                     </span>
                   )}
                 </div>
-                <Button variant="primary">Add to Cart</Button>
+                <Button variant="primary" className="max-w-[calc(100%-20px)]">
+                  Add to Cart
+                </Button>
               </div>
             </div>
             <div className="h-[7px] w-[75%] sm:w-[50%] absolute bottom-0 left-[50%] bg-primary-main translate-x-[-50%] blur-[30px] z-0"></div>

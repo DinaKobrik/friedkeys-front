@@ -85,7 +85,7 @@ const Banner: React.FC = () => {
           discountPrice === null
             ? "bodyCustom:left-[237px]"
             : "bodyCustom:left-[157px]"
-        } max-w-[calc(100%-32px)] sm:max-w-[calc(100%-46px)] w-full xl:max-w-[800px] mx-auto`}>
+        } max-w-[calc(100%-32px)] sm:max-w-[calc(100%-46px)] w-full xl:max-w-[800px] mx-auto ml-[32px] xs:ml-0`}>
         {game.discount && game.discount > 0 && !isDiscountExpired ? (
           <>
             {selectedVariant === 1 && (
