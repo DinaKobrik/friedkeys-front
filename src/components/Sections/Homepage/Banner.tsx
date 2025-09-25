@@ -9,7 +9,16 @@ import Link from "next/link";
 
 const Banner: React.FC = () => {
   const [games, setGames] = useState<Game[]>([]);
-  const [selectedVariant] = useState(5); // Варианты баннеров игр со скидкой
+  const [selectedVariant] = useState(1); // Варианты баннеров игр со скидкой
+  const [cartQuantities, setCartQuantities] = useState<{
+    [key: string]: {
+      quantity: number;
+      edition: string;
+      platform: string;
+      region: string;
+      addedAt: number;
+    };
+  }>({});
 
   useEffect(() => {
     const fetchGames = async () => {
@@ -27,6 +36,9 @@ const Banner: React.FC = () => {
     };
 
     fetchGames();
+
+    const cartData = localStorage.getItem("cart");
+    setCartQuantities(cartData ? JSON.parse(cartData) : {});
   }, []);
 
   // Выбираем игру по id
@@ -46,6 +58,70 @@ const Banner: React.FC = () => {
     game.discount && game.discount > 0 && !isDiscountExpired
       ? game.price * (1 - game.discount / 100)
       : null;
+
+  const getUniqueCartKey = (gameId: number) => `${gameId}_Standard_PC_US`;
+
+  const cartItem = cartQuantities[getUniqueCartKey(game.id)] || {
+    quantity: 0,
+    edition: "Standard",
+    platform: "PC",
+    region: "US",
+    addedAt: 0,
+  };
+  const cartQuantity = cartItem.quantity;
+
+  const addToCart = () => {
+    const gameId = game.id;
+    const cartKey = getUniqueCartKey(gameId);
+    const newItem = {
+      quantity: (cartQuantities[cartKey]?.quantity || 0) + 1,
+      edition: "Standard",
+      platform: "PC",
+      region: "US",
+      addedAt: Date.now(),
+    };
+    setCartQuantities((prev) => {
+      const newQuantities = {
+        ...prev,
+        [cartKey]: newItem,
+      };
+      localStorage.setItem("cart", JSON.stringify(newQuantities));
+      return newQuantities;
+    });
+  };
+
+  const updateQuantity = (gameId: number, delta: number) => {
+    const cartKey = getUniqueCartKey(gameId);
+    setCartQuantities((prev) => {
+      const currentItem = prev[cartKey] || {
+        quantity: 0,
+        edition: "Standard",
+        platform: "PC",
+        region: "US",
+        addedAt: Date.now(),
+      };
+      const newQuantity = Math.max(0, currentItem.quantity + delta);
+
+      if (newQuantity === 0) {
+        const newQuantities = { ...prev };
+        delete newQuantities[cartKey];
+        localStorage.setItem("cart", JSON.stringify(newQuantities));
+        return newQuantities;
+      }
+
+      const newItem = {
+        ...currentItem,
+        quantity: newQuantity,
+        addedAt: Date.now(),
+      };
+      const newQuantities = {
+        ...prev,
+        [cartKey]: newItem,
+      };
+      localStorage.setItem("cart", JSON.stringify(newQuantities));
+      return newQuantities;
+    });
+  };
 
   // Старая цена
   const PriceOriginalBlock = (
@@ -79,17 +155,19 @@ const Banner: React.FC = () => {
   );
 
   const renderPriceBlock = () => {
+    const isInCart = cartQuantity > 0;
+
     return (
       <div
         className={`sm:absolute z-50 bottom-[0] sm:bottom-[20%] left-[6px] sm:left-[46px] xl:left-[130px] ${
           discountPrice === null
             ? "bodyCustom:left-[237px]"
             : "bodyCustom:left-[157px]"
-        } max-w-[calc(100%-32px)] sm:max-w-[calc(100%-46px)] w-full xl:max-w-[800px] mx-auto ml-[32px] xs:ml-0`}>
+        } max-w-[calc(100%-32px)] sm:max-w-[calc(100%-46px)] w-full xl:max-w-[800px] mx-auto ml-[32px] sm:ml-0`}>
         {game.discount && game.discount > 0 && !isDiscountExpired ? (
           <>
             {selectedVariant === 1 && (
-              <div className="max-w-[calc(100%-20px)] md:h-[52px] banner-grid w-full items-start justify-items-start gap-[8px] mx-auto ml-[10px]">
+              <div className=" md:h-[52px] banner-grid w-full items-start justify-items-start gap-[8px] mx-auto ]">
                 {PriceOriginalBlock}
                 <div className="skew-x-[-20deg] border-[1px] border-primary-main rounded-[2px] h-full flex justify-center items-center w-full">
                   <span className="skew-x-[20deg] text-white font-usuzi-condensed text-[24px] leading-[20px] sm:text-[38px] sm:leading-[29px] py-[12px] px-[30px] h-[42px] sm:h-[50px]">
@@ -97,15 +175,36 @@ const Banner: React.FC = () => {
                   </span>
                 </div>
                 {DiscountBadgeBlock}
-                <Button
-                  variant="primary"
-                  className="w-full lg:w-[360px] ml-0 whitespace-nowrap">
-                  Add to cart
-                </Button>
+                {isInCart ? (
+                  <div className="flex items-center gap-[6px] sm:gap-[24px] flex-shrink-0 w-full max-w-[100%] sm:max-w-[202px]">
+                    <Button
+                      variant="secondary"
+                      className="max-w-[44px] sm:max-w-[64px] h-[42px] sm:h-[52px] flex items-center justify-center flex-shrink-0"
+                      onClick={() => updateQuantity(game.id, -1)}>
+                      -
+                    </Button>
+                    <span className="text-white text-[18px] font-bold">
+                      {cartQuantity}
+                    </span>
+                    <Button
+                      variant="secondary"
+                      className="max-w-[44px] sm:max-w-[64px] h-[42px] sm:h-[52px] flex items-center justify-center flex-shrink-0"
+                      onClick={() => updateQuantity(game.id, 1)}>
+                      +
+                    </Button>
+                  </div>
+                ) : (
+                  <Button
+                    variant="primary"
+                    className="w-full lg:w-[360px] ml-0 whitespace-nowrap"
+                    onClick={addToCart}>
+                    Add to cart
+                  </Button>
+                )}
               </div>
             )}
             {selectedVariant === 2 && (
-              <div className=" max-w-[calc(100%-20px)] sm:max-w-[520px] w-full mx-auto ml-[10px]">
+              <div className=" sm:max-w-[520px] w-full mx-auto">
                 <Heading
                   variant="h1"
                   className="text-center mb-[6px] hidden sm:block">
@@ -117,11 +216,32 @@ const Banner: React.FC = () => {
                 <div className="h-[42px] sm:h-[52px] flex w-full items-center gap-[8px]">
                   {PriceOriginalBlock}
                   {DiscountBadgeBlock}
-                  <Button
-                    variant="primary"
-                    className="sm:max-w-[216px] ml-0 whitespace-nowrap">
-                    Add to cart
-                  </Button>
+                  {isInCart ? (
+                    <div className="flex items-center sm:gap-[24px] flex-shrink-0 w-full max-w-[125px] sm:max-w-[202px]">
+                      <Button
+                        variant="secondary"
+                        className="max-w-[44px] sm:max-w-[64px] h-[42px] sm:h-[52px] flex items-center justify-center flex-shrink-0"
+                        onClick={() => updateQuantity(game.id, -1)}>
+                        -
+                      </Button>
+                      <span className="text-white text-[18px] font-bold">
+                        {cartQuantity}
+                      </span>
+                      <Button
+                        variant="secondary"
+                        className="max-w-[44px] sm:max-w-[64px] h-[42px] sm:h-[52px] flex items-center justify-center flex-shrink-0"
+                        onClick={() => updateQuantity(game.id, 1)}>
+                        +
+                      </Button>
+                    </div>
+                  ) : (
+                    <Button
+                      variant="primary"
+                      className="sm:max-w-[216px] ml-0 whitespace-nowrap"
+                      onClick={addToCart}>
+                      Add to cart
+                    </Button>
+                  )}
                 </div>
               </div>
             )}
@@ -136,7 +256,32 @@ const Banner: React.FC = () => {
                     </span>
                   </div>
                 </div>
-                <Button variant="primary">Add to cart</Button>
+                {isInCart ? (
+                  <div className="flex items-center gap-[24px] flex-shrink-0 w-full max-w-[202px] mx-auto">
+                    <Button
+                      variant="secondary"
+                      className="max-w-[64px] h-[48px] flex items-center justify-center flex-shrink-0"
+                      onClick={() => updateQuantity(game.id, -1)}>
+                      -
+                    </Button>
+                    <span className="text-white text-[18px] font-bold">
+                      {cartQuantity}
+                    </span>
+                    <Button
+                      variant="secondary"
+                      className="max-w-[64px] h-[48px] flex items-center justify-center flex-shrink-0"
+                      onClick={() => updateQuantity(game.id, 1)}>
+                      +
+                    </Button>
+                  </div>
+                ) : (
+                  <Button
+                    variant="primary"
+                    className="max-w-[calc(100%-20px)]"
+                    onClick={addToCart}>
+                    Add to cart
+                  </Button>
+                )}
               </div>
             )}
             {selectedVariant === 4 && (
@@ -151,16 +296,37 @@ const Banner: React.FC = () => {
                   </span>
                 </div>
 
-                <Button
-                  variant="primary"
-                  className="max-w-[calc(100%-20px)] sm:max-w-[100%]">
-                  Add to cart
-                </Button>
+                {isInCart ? (
+                  <div className="flex items-center gap-[24px] flex-shrink-0 w-full max-w-[202px] mx-auto">
+                    <Button
+                      variant="secondary"
+                      className="max-w-[64px] h-[48px] flex items-center justify-center flex-shrink-0"
+                      onClick={() => updateQuantity(game.id, -1)}>
+                      -
+                    </Button>
+                    <span className="text-white text-[18px] font-bold">
+                      {cartQuantity}
+                    </span>
+                    <Button
+                      variant="secondary"
+                      className="max-w-[64px] h-[48px] flex items-center justify-center flex-shrink-0"
+                      onClick={() => updateQuantity(game.id, 1)}>
+                      +
+                    </Button>
+                  </div>
+                ) : (
+                  <Button
+                    variant="primary"
+                    className="max-w-[calc(100%-20px)] sm:max-w-[100%]"
+                    onClick={addToCart}>
+                    Add to cart
+                  </Button>
+                )}
               </div>
             )}
             {selectedVariant === 5 && (
               <>
-                <div className="flex flex-col xs:flex-row gap-[8px] items-center xs:h-[42px] sm:h-[52px] max-w-[calc(100%-20px)] sm:max-w-[calc(100%-66px)] w-full mx-auto sm:mx-0 ml-[10px] sm:ml-0">
+                <div className="flex flex-col xs:flex-row gap-[8px] items-center xs:h-[42px] sm:h-[52px] sm:max-w-[calc(100%-66px)] w-full mx-auto sm:mx-0 ">
                   <div className="flex gap-[8px] items-center h-[42px] sm:h-[52px] xs:max-w-[calc(100%-20px)] sm:max-w-[calc(100%-66px)] w-full xs:w-auto mx-auto sm:mx-0 xs:ml-[10px] sm:ml-0">
                     {DiscountBadgeBlock}
                     <div className="skew-x-[-20deg] border-[1px] border-primary-main rounded-[2px] h-full flex justify-center items-center">
@@ -169,11 +335,32 @@ const Banner: React.FC = () => {
                       </span>
                     </div>
                   </div>
-                  <Button
-                    variant="primary"
-                    className="max-w-[362px] ml-0 whitespace-nowrap">
-                    Add to cart
-                  </Button>
+                  {isInCart ? (
+                    <div className="flex items-center gap-[24px] xs:gap-0 sm:gap-[24px] flex-shrink-0 w-full max-w-[202px] xs:max-w-[140px] sm:max-w-[202px]">
+                      <Button
+                        variant="secondary"
+                        className="max-w-[64px] xs:max-w-[44px] sm:max-w-[64px] h-[42px] sm:h-[52px] flex items-center justify-center flex-shrink-0"
+                        onClick={() => updateQuantity(game.id, -1)}>
+                        -
+                      </Button>
+                      <span className="text-white text-[18px] font-bold">
+                        {cartQuantity}
+                      </span>
+                      <Button
+                        variant="secondary"
+                        className="max-w-[64px] xs:max-w-[44px] sm:max-w-[64px] h-[42px] sm:h-[52px] flex items-center justify-center flex-shrink-0"
+                        onClick={() => updateQuantity(game.id, 1)}>
+                        +
+                      </Button>
+                    </div>
+                  ) : (
+                    <Button
+                      variant="primary"
+                      className="max-w-[362px] ml-0 whitespace-nowrap"
+                      onClick={addToCart}>
+                      Add to cart
+                    </Button>
+                  )}
                 </div>
               </>
             )}
@@ -192,9 +379,32 @@ const Banner: React.FC = () => {
                 {game.price}$
               </Heading>
             </div>
-            <Button variant="primary" className="sm:max-w-[216px] ml-0">
-              Add to cart
-            </Button>
+            {isInCart ? (
+              <div className="flex items-center gap-[24px] flex-shrink-0 w-full max-w-[202px]">
+                <Button
+                  variant="secondary"
+                  className="max-w-[64px] h-[48px] flex items-center justify-center flex-shrink-0"
+                  onClick={() => updateQuantity(game.id, -1)}>
+                  -
+                </Button>
+                <span className="text-white text-[18px] font-bold">
+                  {cartQuantity}
+                </span>
+                <Button
+                  variant="secondary"
+                  className="max-w-[64px] h-[48px] flex items-center justify-center flex-shrink-0"
+                  onClick={() => updateQuantity(game.id, 1)}>
+                  +
+                </Button>
+              </div>
+            ) : (
+              <Button
+                variant="primary"
+                className="sm:max-w-[216px] ml-0"
+                onClick={addToCart}>
+                Add to cart
+              </Button>
+            )}
           </div>
         )}
       </div>

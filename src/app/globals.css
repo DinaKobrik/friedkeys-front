@@ -59,6 +59,7 @@
 @import "styles/GameList";
 @import "styles/AboutPlatforms";
 @import "styles/GamePage";
+@import "styles/Cart";
 
 /* card-corner */
 .card-corner {

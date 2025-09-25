@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Heading from "@/components/ui/Heading";
 import GameWrapper from "@/components/layout/GameWrapper";
-import GameCard from "./GameCard";
+import GameCard from "../GameCard";
 import { Game } from "@/types/game";
 
 const Recommendations = () => {

@@ -121,6 +121,9 @@ const Header = () => {
         </Button>
         <Button
           variant="secondary"
+          onClick={() => {
+            window.location.href = "/cart/shopping-cart";
+          }}
           className="h-[48px] flex justify-center items-center"
           aria-label="User profile">
           <svg
@@ -306,7 +309,7 @@ const Header = () => {
           </svg>
         </Link>
         <Link
-          href=""
+          href="/cart/shopping-cart"
           className="menu--mobile__link focus:outline-none cursor-pointer flex justify-center items-center px-[8px] py-[18px] w-full"
           aria-label="Cart mobile link">
           <svg

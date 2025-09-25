@@ -21,6 +21,9 @@ const GameEditionsSection: React.FC = () => {
   const [game, setGame] = useState<Game | null>(null);
   const [loading, setLoading] = useState(true);
   const [isFavorite, setIsFavorite] = useState(false);
+  const [cartQuantities, setCartQuantities] = useState<{
+    [key: number]: number;
+  }>({});
 
   const fetchGame = useCallback(async () => {
     const id = params?.id as string;
@@ -49,6 +52,9 @@ const GameEditionsSection: React.FC = () => {
 
   useEffect(() => {
     fetchGame();
+
+    const cartData = localStorage.getItem("cart");
+    setCartQuantities(cartData ? JSON.parse(cartData) : {});
   }, [fetchGame]);
 
   useEffect(() => {
@@ -89,6 +95,41 @@ const GameEditionsSection: React.FC = () => {
       console.error("Failed to fetch updated games:", error);
     }
   };
+
+  const addToCart = () => {
+    if (!game) return;
+    const gameId = game.id;
+    setCartQuantities((prev) => {
+      const newQuantities = {
+        ...prev,
+        [gameId]: (prev[gameId] || 0) + 1,
+      };
+      localStorage.setItem("cart", JSON.stringify(newQuantities));
+      return newQuantities;
+    });
+  };
+
+  const updateQuantity = (gameId: number, delta: number) => {
+    setCartQuantities((prev) => {
+      const newQuantity = Math.max(0, (prev[gameId] || 0) + delta);
+
+      if (newQuantity === 0) {
+        const newQuantities = { ...prev };
+        delete newQuantities[gameId];
+        localStorage.setItem("cart", JSON.stringify(newQuantities));
+        return newQuantities;
+      }
+
+      const newQuantities = {
+        ...prev,
+        [gameId]: newQuantity,
+      };
+      localStorage.setItem("cart", JSON.stringify(newQuantities));
+      return newQuantities;
+    });
+  };
+
+  const cartQuantity = game ? cartQuantities[game.id] || 0 : 0;
 
   if (loading || !game) {
     return (
@@ -140,91 +181,125 @@ const GameEditionsSection: React.FC = () => {
         Game Editions
       </Heading>
       <div className="flex w-full overflow-scroll hide-scrollbar h-full gap-[12px] sm:gap-[24px]">
-        {editions.map((edition, index) => (
-          <div
-            key={index}
-            className="flex flex-col relative game__editions-card border-[1px] border-transparent justify-between gap-[8px] flex-shrink-0 w-[268px] sm:w-[400px] lg:w-[520px]"
-            role="region"
-            aria-label={`${edition.type} Edition Details`}>
+        {editions.map((edition, index) => {
+          const isInCart = cartQuantity > 0;
+
+          return (
             <div
-              className="favorite absolute w-[36px] h-[36px] sm:w-[48px] sm:h-[48px] right-[2px] top-[1px] md:right-[4px] md:top-[3px] z-10 flex justify-center items-center cursor-pointer"
-              onClick={toggleFavorite}>
-              <svg
-                width="16.5"
-                height="21"
-                className="sm:w-[22px] sm:h-[28px]"
-                viewBox="0 0 22 28"
-                fill={isFavorite ? "#FFFF25" : "none"}
-                xmlns="http://www.w3.org/2000/svg"
+              key={index}
+              className="flex flex-col relative game__editions-card border-[1px] border-transparent justify-between gap-[8px] flex-shrink-0 w-[268px] sm:w-[400px] lg:w-[520px]"
+              role="region"
+              aria-label={`${edition.type} Edition Details`}>
+              <div
+                className="favorite absolute w-[36px] h-[36px] sm:w-[48px] sm:h-[48px] right-[2px] top-[1px] md:right-[4px] md:top-[3px] z-10 flex justify-center items-center cursor-pointer"
                 onClick={toggleFavorite}>
-                <path
-                  fillRule="evenodd"
-                  clipRule="evenodd"
-                  d="M20.9702 1.66669C13.1831 1.66669 8.81716 1.66669 1.03003 1.66669V26.3334L11.0336 21.7394L20.9702 26.3334V1.66669Z"
-                  stroke={isFavorite ? "#FFFF25" : "white"}
-                  strokeWidth="2"
-                  strokeLinecap="square"
+                <svg
+                  width="16.5"
+                  height="21"
+                  className="sm:w-[22px] sm:h-[28px]"
+                  viewBox="0 0 22 28"
+                  fill={isFavorite ? "#FFFF25" : "none"}
+                  xmlns="http://www.w3.org/2000/svg"
+                  onClick={toggleFavorite}>
+                  <path
+                    fillRule="evenodd"
+                    clipRule="evenodd"
+                    d="M20.9702 1.66669C13.1831 1.66669 8.81716 1.66669 1.03003 1.66669V26.3334L11.0336 21.7394L20.9702 26.3334V1.66669Z"
+                    stroke={isFavorite ? "#FFFF25" : "white"}
+                    strokeWidth="2"
+                    strokeLinecap="square"
+                  />
+                </svg>
+              </div>
+              <div className="card-corner game__editions-img w-[calc(100%-2px)] md:w-[calc(100%-4px)] h-[200px] sm:h-[280px] relative flex-shrink-0">
+                <Image
+                  src={game.image}
+                  alt={`${game.title} ${edition.type} Edition`}
+                  width={520}
+                  height={280}
+                  className="object-cover w-full h-full m-[1px] md:m-[3px]"
+                  loading="lazy"
                 />
-              </svg>
-            </div>
-            <div className="card-corner game__editions-img w-[calc(100%-2px)] md:w-[calc(100%-4px)]  h-[200px] sm:h-[280px] relative flex-shrink-0">
-              <Image
-                src={game.image}
-                alt={`${game.title} ${edition.type} Edition`}
-                width={520}
-                height={280}
-                className="object-cover w-full h-full m-[1px] md:m-[3px]"
-                loading="lazy"
-              />
-            </div>
-            <div className="bg-2 p-[20px] pb-[32px] h-full flex flex-col justify-between gap-[16px]">
-              <div className="mb-[80px]">
-                <Heading
-                  variant="h3"
-                  className="mb-[20px]"
-                  aria-label={`${edition.type} Edition`}>
-                  {edition.type} Edition
-                </Heading>
-                <ul className="list-disc pl-[20px]">
-                  {edition.advantages.map((advantage, idx) => (
-                    <li key={idx} aria-label={`Advantage: ${advantage}`}>
-                      <Text>{advantage}</Text>
-                    </li>
-                  ))}
-                </ul>
               </div>
-              <div className="flex flex-col w-full items-start gap-[24px]">
-                <div className="flex gap-[1px] sm:gap-[20px] w-full items-center lg:items-end justify-between lg:justify-center">
-                  {discountPrice &&
-                  game.discount &&
-                  game.discount > 0 &&
-                  !isDiscountExpired ? (
-                    <>
-                      <div className="flex items-center gap-[4px] lg:gap-[16px] flex-col lg:flex-row">
-                        <span className="line-through font-usuzi-condensed text-gray-68 font-bold text-[20px] sm:text-[32px] leading-[16px] sm:leading-[30px]">
-                          {game.price}$
-                        </span>
-                        <span className="text-white font-usuzi-condensed font-bold text-[24px] leading-[22px] sm:text-[32px] py-[4px] px-[8px] md:py-[6px] md:px-[16px] rounded-[2px] bg-sale">
-                          -{game.discount}%
-                        </span>
-                      </div>
-                      <span className="text-white font-usuzi-condensed text-center font-bold text-[32px] sm:text-[48px] leading-[28px] sm:leading-[37px]">
-                        {discountPrice}$
-                      </span>
-                    </>
-                  ) : (
-                    <span className="text-white font-usuzi-condensed text-center w-full font-bold text-[32px] sm:text-[48px] leading-[28px] sm:leading-[37px]">
-                      {game.price}$
-                    </span>
-                  )}
+              <div className="bg-2 p-[20px] pb-[32px] h-full flex flex-col justify-between gap-[16px]">
+                <div className="mb-[80px]">
+                  <Heading
+                    variant="h3"
+                    className="mb-[20px]"
+                    aria-label={`${edition.type} Edition`}>
+                    {edition.type} Edition
+                  </Heading>
+                  <ul className="list-disc pl-[20px]">
+                    {edition.advantages.map((advantage, idx) => (
+                      <li key={idx} aria-label={`Advantage: ${advantage}`}>
+                        <Text>{advantage}</Text>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-                <Button variant="primary" className="max-w-[calc(100%-20px)]">
-                  Add to Cart
-                </Button>
+                <div className="flex flex-col w-full items-start gap-[24px]">
+                  <div className="flex gap-[1px] sm:gap-[20px] w-full items-center lg:items-end justify-between lg:justify-center">
+                    {discountPrice &&
+                    game.discount &&
+                    game.discount > 0 &&
+                    !isDiscountExpired ? (
+                      <>
+                        <div className="flex items-center gap-[4px] lg:gap-[16px] flex-col lg:flex-row">
+                          <span className="line-through font-usuzi-condensed text-gray-68 font-bold text-[20px] sm:text-[32px] leading-[16px] sm:leading-[30px]">
+                            {game.price}$
+                          </span>
+                          <span className="text-white font-usuzi-condensed font-bold text-[24px] leading-[22px] sm:text-[32px] py-[4px] px-[8px] md:py-[6px] md:px-[16px] rounded-[2px] bg-sale">
+                            -{game.discount}%
+                          </span>
+                        </div>
+                        <span className="text-white font-usuzi-condensed text-center font-bold text-[32px] sm:text-[48px] leading-[28px] sm:leading-[37px]">
+                          {discountPrice}$
+                        </span>
+                      </>
+                    ) : (
+                      <span className="text-white font-usuzi-condensed text-center w-full font-bold text-[32px] sm:text-[48px] leading-[28px] sm:leading-[37px]">
+                        {game.price}$
+                      </span>
+                    )}
+                  </div>
+                  <div className="w-full">
+                    {isInCart ? (
+                      <div className="flex w-full justify-center items-center">
+                        <div className="font-usuzi-condensed hidden sm:block text-[24px] leading-[26px] text-center w-full">
+                          in the cart
+                        </div>
+                        <div className="flex items-center gap-[24px] flex-shrink-0 w-full max-w-[202px]">
+                          <Button
+                            variant="secondary"
+                            className="max-w-[64px] h-[48px] flex items-center justify-center flex-shrink-0"
+                            onClick={() => updateQuantity(game.id, -1)}>
+                            -
+                          </Button>
+                          <span className="text-white text-[18px] font-bold">
+                            {cartQuantity}
+                          </span>
+                          <Button
+                            variant="secondary"
+                            className="max-w-[64px] h-[48px] flex items-center justify-center flex-shrink-0"
+                            onClick={() => updateQuantity(game.id, 1)}>
+                            +
+                          </Button>
+                        </div>
+                      </div>
+                    ) : (
+                      <Button
+                        variant="primary"
+                        className="max-w-[calc(100%-20px)]"
+                        onClick={() => addToCart()}>
+                        Add to Cart
+                      </Button>
+                    )}
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </section>
   );

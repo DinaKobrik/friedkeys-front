@@ -85,6 +85,7 @@
 .banner-grid div:nth-child(3) {
   grid-area: sale;
 }
+.banner-grid div:nth-child(4),
 .banner-grid button {
   grid-area: button;
 }

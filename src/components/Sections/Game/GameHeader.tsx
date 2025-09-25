@@ -6,6 +6,8 @@ import Image from "next/image";
 import Heading from "@/components/ui/Heading";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
+import { useCart } from "./CartHandler";
+import CartButton from "./CartHandler";
 import { Game } from "@/types/game";
 
 // SVG для стрелочки
@@ -46,13 +48,10 @@ const FavoriteIcon = ({ isFavorite }: { isFavorite: boolean }) => (
   </svg>
 );
 
-const GameHeader: React.FC = () => {
+const GameHeaderContent: React.FC = () => {
   const params = useParams();
   const [game, setGame] = useState<Game | null>(null);
   const [isFavorite, setIsFavorite] = useState(false);
-  const [selectedEdition, setSelectedEdition] = useState("");
-  const [selectedPlatform, setSelectedPlatform] = useState("");
-  const [selectedRegion, setSelectedRegion] = useState("");
   const [isEditionOpen, setIsEditionOpen] = useState(false);
   const [isPlatformOpen, setIsPlatformOpen] = useState(false);
   const [isRegionOpen, setIsRegionOpen] = useState(false);
@@ -67,8 +66,16 @@ const GameHeader: React.FC = () => {
   const [isValidRegion, setIsValidRegion] = useState(true);
   const [isMinimum, setIsMinimum] = useState(false);
 
-  // Статичные данные для выпадающих списков
-  const editions = ["Standard", "Deluxe", "Ultimate"];
+  const {
+    selectedEdition,
+    setSelectedEdition,
+    selectedPlatform,
+    setSelectedPlatform,
+    selectedRegion,
+    setSelectedRegion,
+  } = useCart();
+
+  const editions = ["Standard", "Deluxe"];
   const platforms = ["PC", "PS5", "Xbox"];
   const regions = [
     "US",
@@ -110,19 +117,18 @@ const GameHeader: React.FC = () => {
   }, [params]);
 
   useEffect(() => {
-    const storedFavorites = localStorage.getItem("favoriteGames");
-    if (storedFavorites && game) {
-      const favoriteIds = JSON.parse(storedFavorites);
+    if (game) {
+      const storedFavorites = localStorage.getItem("favoriteGames");
+      const favoriteIds = storedFavorites ? JSON.parse(storedFavorites) : [];
       setIsFavorite(favoriteIds.includes(game.id));
     }
   }, [game]);
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth > 992 && !isMinimum) {
-        setIsMinimum(true);
-      } else if (window.innerWidth <= 992 && isMinimum) {
-        setIsMinimum(false);
+      const newIsMinimum = window.innerWidth > 992;
+      if (newIsMinimum !== isMinimum) {
+        setIsMinimum(newIsMinimum);
       }
     };
 
@@ -192,13 +198,6 @@ const GameHeader: React.FC = () => {
   }, []);
 
   if (!game) return <Heading variant="h3">Loading...</Heading>;
-
-  const discountPrice = game.discount
-    ? (game.price * (1 - game.discount / 100)).toFixed(2)
-    : null;
-  const isDiscountExpired = game.discountDate
-    ? new Date(game.discountDate).getTime() < new Date().getTime()
-    : false;
 
   return (
     <section className="relative pt-[40px] lg:pt-0">
@@ -380,34 +379,8 @@ const GameHeader: React.FC = () => {
                   )}
                 </div>
               </div>
-              <div className="hidden sm:flex flex-col w-full items-start gap-[24px]">
-                <div className="flex gap-[1px] sm:gap-[20px] w-full items-end justify-between">
-                  {discountPrice &&
-                  game.discount &&
-                  game.discount > 0 &&
-                  !isDiscountExpired ? (
-                    <>
-                      <div className="flex items-center gap-[16px] flex-col sm:flex-row">
-                        <span className="line-through font-usuzi-condensed text-gray-68 font-bold text-[20px] sm:text-[32px] leading-[16px] sm:leading-[30px]">
-                          {game.price}$
-                        </span>
-                        <span className="text-white font-usuzi-condensed font-bold text-[24px] leading-[16px] py-[4px] px-[8px] md:py-[6px] md:px-[16px] rounded-[2px] bg-sale">
-                          -{game.discount}%
-                        </span>
-                      </div>
-                      <span className="text-white font-usuzi-condensed text-center font-bold text-[32px] sm:text-[48px] leading-[28px] sm:leading-[37px]">
-                        {discountPrice}$
-                      </span>
-                    </>
-                  ) : (
-                    <span className="text-white font-usuzi-condensed text-center w-full font-bold text-[32px] sm:text-[48px] leading-[28px] sm:leading-[37px]">
-                      {game.price}$
-                    </span>
-                  )}
-                </div>
-                <Button variant="primary" className="max-w-[calc(100%-20px)]">
-                  Add to Cart
-                </Button>
+              <div className="w-full hidden sm:block">
+                <CartButton game={game} />
               </div>
             </div>
             <div className="h-[7px] w-[75%] sm:w-[50%] absolute bottom-0 left-[50%] bg-primary-main translate-x-[-50%] blur-[30px] z-0"></div>
@@ -417,5 +390,7 @@ const GameHeader: React.FC = () => {
     </section>
   );
 };
+
+const GameHeader: React.FC = () => <GameHeaderContent />;
 
 export default GameHeader;

@@ -1,7 +1,7 @@
 import "../globals.css";
 import React, { Suspense } from "react";
 import GameList from "@/components/Sections/AllGames/GameList";
-import Recommendations from "@/components/Sections/Recommendations";
+import Recommendations from "@/components/Sections/AllGames/Recommendations";
 
 export default function AllGame() {
   return (

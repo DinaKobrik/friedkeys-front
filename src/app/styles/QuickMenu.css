@@ -1,6 +1,6 @@
-/* QuickMenu */
+/* quick-menu */
 @media (min-width: 992px) {
-  .quickMenu::before {
+  .quick-menu::before {
     content: "";
     width: 25px;
     height: 100%;
@@ -10,7 +10,7 @@
     z-index: 100;
     background: theme("colors.main");
   }
-  .quickMenu::after {
+  .quick-menu::after {
     content: "";
     width: 25px;
     height: 100%;
@@ -20,7 +20,7 @@
     z-index: 100;
     background: theme("colors.main");
   }
-  .quickMenu__button:first-child button::after {
+  .quick-menu__button:first-child button::after {
     content: "";
     width: 1px;
     height: 100%;
@@ -30,7 +30,7 @@
     background: theme("colors.primary-main");
     transform: skew(20deg);
   }
-  .quickMenu__button:last-child button::after {
+  .quick-menu__button:last-child button::after {
     content: "";
     width: 1px;
     height: 100%;
@@ -41,11 +41,11 @@
     transform: skew(20deg);
   }
 }
-.quickMenu__menu {
+.quick-menu__menu {
   clip-path: polygon(6% 0%, 100% 0%, 100% 90%, 94% 100%, 0% 100%, 0% 10%);
 }
-.quickMenu__link--active:hover::before,
-.quickMenu__link--active:focus::before {
+.quick-menu__link--active:hover::before,
+.quick-menu__link--active:focus::before {
   content: "";
   width: 100%;
   height: 4px;
