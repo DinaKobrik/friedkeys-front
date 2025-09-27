@@ -1,9 +1,15 @@
+import React from "react";
 import CartMenu from "@/components/Sections/Cart/CartMenu";
+import { CartProvider } from "@/components/Sections/Game/CartHandler";
+import PaymentContent from "@/components/Sections/Cart/PaymentContent";
 
-export default function Payment() {
+const Payment = () => {
   return (
-    <main>
+    <CartProvider>
       <CartMenu activeItem="payment" />
-    </main>
+      <PaymentContent />
+    </CartProvider>
   );
-}
+};
+
+export default Payment;

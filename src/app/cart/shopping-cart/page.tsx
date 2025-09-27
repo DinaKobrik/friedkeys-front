@@ -10,7 +10,6 @@ import React, {
 import Image from "next/image";
 import Link from "next/link";
 import Heading from "@/components/ui/Heading";
-import Text from "@/components/ui/Text";
 import Button from "@/components/ui/Button";
 import Pagination from "@/components/ui/Pagination";
 import CartMenu from "@/components/Sections/Cart/CartMenu";
@@ -374,38 +373,39 @@ const CartPage: React.FC = () => {
   }, [dropdownOpen]);
 
   const calculateTotal = () => {
-    let totalPrice = 0;
-    let totalDiscount = 0;
+    let officialPrice = 0; // Итоговая сумма без скидок
+    let totalDiscount = 0; // Общая сумма скидок
 
     Object.entries(cartItems).forEach(([cartKey, item]) => {
       const gameId = Number(cartKey.split("_")[0]);
       const game = cartGames.find((g) => g.id === gameId);
       if (game) {
-        const originalPrice = game.price * item.quantity;
-        const discountedPrice =
-          game.discount && game.discountDate
-            ? game.price * (1 - (game.discount || 0) / 100) * item.quantity
-            : null;
+        const quantity = item.quantity;
+        const originalPrice = game.price * quantity; // Исходная цена за количество
+        officialPrice += originalPrice;
+
         const isDiscountExpired =
           game.discountDate &&
           new Date(game.discountDate).getTime() < new Date().getTime();
 
-        if (discountedPrice && !isDiscountExpired) {
-          totalPrice += Number(discountedPrice.toFixed(2));
-          totalDiscount += originalPrice - Number(discountedPrice.toFixed(2));
-        } else {
-          totalPrice += originalPrice;
+        if (game.discount && !isDiscountExpired) {
+          const discountAmount =
+            ((game.price * (game.discount || 0)) / 100) * quantity;
+          totalDiscount += discountAmount;
         }
       }
     });
 
+    const subtotal = officialPrice - totalDiscount;
+
     return {
-      totalPrice: totalPrice.toFixed(2),
+      officialPrice: officialPrice.toFixed(2),
       totalDiscount: totalDiscount.toFixed(2),
+      subtotal: subtotal.toFixed(2),
     };
   };
 
-  const { totalPrice, totalDiscount } = calculateTotal();
+  const { officialPrice, totalDiscount, subtotal } = calculateTotal();
 
   const paginatedGames = useMemo(() => {
     const startIdx = (currentPage - 1) * gamesPerPage;
@@ -498,13 +498,12 @@ const CartPage: React.FC = () => {
               </div>
               <div className="flex justify-between w-[calc(100%-20px)] mx-auto md:w-full">
                 <div>
-                  <Button
-                    variant="secondary"
-                    className="w-[64px] h-[40px] sm:w-[72px] sm:h-[48px] flex justify-center items-center border-DLS lg:border-primary-main"
+                  <button
+                    className="my-0 mx-auto rounded-[2px] cursor-pointer px-[12px] py-[12px] focus:outline-none skew-x-[-20deg] w-[64px] h-[40px] sm:w-[72px] sm:h-[48px] flex justify-center items-center border-[1px] border-DLS lg:border-primary-main"
                     onClick={() => removeFromCart(gameId, cartKey)}
                     aria-label={`Remove ${game.title} ${edition} from cart`}>
-                    <DeleteIcon className="cursor-pointer w-[24px] h-[24px] sm:w-[32px] sm:h-[32px]" />
-                  </Button>
+                    <DeleteIcon className="cursor-pointer skew-x-[20deg] w-[24px] h-[24px] sm:w-[32px] sm:h-[32px]" />
+                  </button>
                 </div>
                 <div className="flex items-center gap-[24px] flex-shrink-0 w-full max-w-[108px] sm:max-w-[202px]">
                   <div className="relative hidden lg:flex items-center gap-[24px]">
@@ -605,9 +604,7 @@ const CartPage: React.FC = () => {
         <div className="flex flex-col 2xl:flex-row gap-[24px]">
           <div className="flex-1 flex flex-col gap-[16px]">
             {Object.keys(cartItems).length === 0 ? (
-              <Text className="text-center text-gray-300">
-                Your cart is empty
-              </Text>
+              <p className="text-gray-68">Your cart is empty</p>
             ) : (
               paginatedGames
             )}
@@ -626,7 +623,7 @@ const CartPage: React.FC = () => {
                   Official price
                 </span>
                 <span className="text-gray-68 font-bold text-[20px] leading-[24px]">
-                  {totalPrice}$
+                  {officialPrice}$
                 </span>
               </div>
               <div className="flex w-full justify-between items-center gap-[10px]">
@@ -643,10 +640,14 @@ const CartPage: React.FC = () => {
                 Subtotal
               </span>
               <span className="text-white font-bold text-[28px] leading-[28px]">
-                {(Number(totalPrice) - Number(totalDiscount)).toFixed(2)}$
+                {subtotal}$
               </span>
             </div>
-            <Button variant="primary">Continue</Button>
+            <Button
+              variant="primary"
+              onClick={() => (window.location.href = "/cart/payment")}>
+              Continue
+            </Button>
           </div>
         </div>
         {totalPages > 1 && (
@@ -670,7 +671,7 @@ const CartPage: React.FC = () => {
               Official price
             </span>
             <span className="text-gray-68 font-bold text-[20px] leading-[24px]">
-              {totalPrice}$
+              {officialPrice}$
             </span>
           </div>
           <div className="flex w-full justify-between items-center gap-[10px]">
@@ -687,16 +688,17 @@ const CartPage: React.FC = () => {
             Subtotal
           </span>
           <span className="text-white font-bold text-[28px] leading-[28px]">
-            {(Number(totalPrice) - Number(totalDiscount)).toFixed(2)}$
+            {subtotal}$
           </span>
         </div>
         <div className="fixed bottom-[60px] left-0 sm:static z-[2000] flex items-center gap-[16px] w-full p-[16px] sm:p-0 border-t-[1px] border-primary-main sm:border-none bg-2 sm:bg-transparent">
           <span className=" sm:hidden text-white font-bold font-usuzi-condensed text-[22px] leading-[22px] sm:text-[28px] sm:leading-[28px]">
-            {(Number(totalPrice) - Number(totalDiscount)).toFixed(2)}$
+            {subtotal}$
           </span>
           <Button
             variant="primary"
-            className="max-w-[calc(100%-20px)] mr-[10px] sm:mx-auto">
+            className="max-w-[calc(100%-20px)] mr-[10px] sm:mx-auto"
+            onClick={() => (window.location.href = "/cart/payment")}>
             Continue
           </Button>
         </div>

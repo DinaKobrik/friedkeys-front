@@ -99,6 +99,8 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
     const inputVariantStyles =
       variant === "skewed" ? skewedInputStyles : straightInputStyles;
 
+    const inputPaddingStyles = children ? "pr-[35px]" : "";
+
     return (
       <div className={`${wrapperBaseStyles} ${className}`}>
         {label && (
@@ -121,7 +123,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
             readOnly={readOnly}
             name={name}
             id={name}
-            className={`${inputBaseStyles} ${inputVariantStyles} ${textAlignStyles}`}
+            className={`${inputBaseStyles} ${inputVariantStyles} ${textAlignStyles} ${inputPaddingStyles}`}
             onKeyDown={onKeyDown}
             ref={ref}
           />
