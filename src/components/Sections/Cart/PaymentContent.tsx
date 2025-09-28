@@ -73,8 +73,7 @@ function useScrollBorders(cartQuantities: Record<string, CartItem>) {
 
 const PaymentContent = () => {
   const { cartQuantities, setCartQuantities } = useCart();
-
-  const [selectedAdress, setselectedAdress] = useState("");
+  const [selectedAdress, setSelectedAdress] = useState("");
   const [isAddressOpen, setIsAddressOpen] = useState(false);
   const [discountCode, setDiscountCode] = useState("");
   const [giftCard, setGiftCard] = useState("");
@@ -82,12 +81,24 @@ const PaymentContent = () => {
   const adressRef = useRef<HTMLDivElement>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const gamesPerPage = 5;
-
   const [editingCartKey, setEditingCartKey] = useState<string | null>(null);
   const [newQuantity, setNewQuantity] = useState(0);
+  const [paymentMethod, setPaymentMethod] = useState<string>("");
 
-  // Переключение между режимами отображения (1 - пагинация, 2 - скролл)
+  const [order, setOrder] = useState<Record<string, CartItem>>({}); // eslint-disable-line @typescript-eslint/no-unused-vars
+
+  /* eslint-disable @typescript-eslint/no-unused-vars */
+  const [orderData, setOrderData] = useState<{
+    total: number;
+    date: string;
+    time: string;
+    paymentMethod: string;
+  } | null>(null);
+  /* eslint-enable @typescript-eslint/no-unused-vars */
+
+  // Варианты дизайна списка игр
   const [displayMode, setDisplayMode] = useState(2); // eslint-disable-line @typescript-eslint/no-unused-vars
+  const paymentMethodRef = useRef<HTMLDivElement>(null);
 
   const addresses = [
     "France (VAT 20%",
@@ -114,6 +125,15 @@ const PaymentContent = () => {
     };
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const savedOrder = localStorage.getItem("order");
+      if (savedOrder) setOrder(JSON.parse(savedOrder));
+      const savedOrderData = localStorage.getItem("orderData");
+      if (savedOrderData) setOrderData(JSON.parse(savedOrderData));
+    }
   }, []);
 
   const fetchGameById = async (id: number) => {
@@ -470,8 +490,8 @@ const PaymentContent = () => {
             return (
               <div
                 key={cartKey}
-                className="grid grid-cols-5 justify-between items-center py-[8px] sm:py-[10px] group">
-                <div className="col-span-3 relative">
+                className="grid grid-cols-4 xs:grid-cols-5 justify-between items-center py-[8px] sm:py-[10px] group gap-[10px]">
+                <div className="col-span-2 xs:col-span-3 relative">
                   <span className="text-white cursor-pointer text-[15px] leading-[15px] sm:text-[20px] sm:leading-[24px] font-medium line-clamp-2 sm:line-clamp-1 hover:text-primary-main">
                     {displayTitle}
                   </span>
@@ -572,7 +592,43 @@ const PaymentContent = () => {
     setCurrentPage(page);
   }, []);
 
-  // Кнопки вниз
+  const handlePay = () => {
+    if (!selectedAdress) {
+      adressRef.current?.scrollIntoView({ behavior: "smooth" });
+      return;
+    }
+
+    if (!paymentMethod) {
+      paymentMethodRef.current?.scrollIntoView({ behavior: "smooth" });
+      return;
+    }
+
+    const newOrder = { ...cartQuantities };
+    setOrder(newOrder);
+    setCartQuantities({});
+
+    const now = new Date();
+    const date = now.toLocaleDateString("en-US");
+    const time = now.toLocaleTimeString("en-US", {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+    const newOrderData = {
+      total,
+      date,
+      time,
+      paymentMethod,
+    };
+    setOrderData(newOrderData);
+
+    if (typeof window !== "undefined") {
+      localStorage.setItem("order", JSON.stringify(newOrder));
+      localStorage.setItem("orderData", JSON.stringify(newOrderData));
+    }
+
+    window.location.href = "/cart/payment/success";
+  };
+
   const ArrowDownIcon = (
     <svg
       width="10"
@@ -610,9 +666,9 @@ const PaymentContent = () => {
               <Input
                 type="text"
                 value={selectedAdress}
-                name="addres"
+                name="address"
                 variant="skewed"
-                onChange={(e) => setselectedAdress(e.target.value)}
+                onChange={(e) => setSelectedAdress(e.target.value)}
                 required
                 errorMessage={!selectedAdress ? "Fill in the field" : undefined}
                 className="mb-[0] cursor-pointer"
@@ -626,17 +682,19 @@ const PaymentContent = () => {
               </Input>
               {isAddressOpen && (
                 <div className="absolute top-[48px] sm:top-[55px] left-[-10px] z-10 w-full bg-2 max-h-[200px] overflow-y-auto custom-scrollbar">
-                  {addresses.map((addres, index) => {
+                  {addresses.map((address, index) => {
                     const vatPercentage = parseFloat(
-                      addres.match(/(\d+)%/)?.[1] || "0"
+                      address.match(/(\d+)%/)?.[1] || "0"
                     );
                     const vatAmount = subtotal * (vatPercentage / 100);
-                    const displayValue = `${addres} +${vatAmount.toFixed(2)}$)`;
+                    const displayValue = `${address} +${vatAmount.toFixed(
+                      2
+                    )}$)`;
                     return (
                       <div
                         key={index}
                         onClick={() => {
-                          setselectedAdress(displayValue);
+                          setSelectedAdress(displayValue);
                           setIsAddressOpen(false);
                         }}
                         className="px-[20px] py-[12px] cursor-pointer hover:bg-primary-10">
@@ -648,9 +706,11 @@ const PaymentContent = () => {
               )}
             </div>
           </div>
-          <PaymentMethod
-            onMethodSelect={(method) => console.log("Selected:", method)} // Подключить бэк
-          />
+          <div ref={paymentMethodRef}>
+            <PaymentMethod
+              onMethodSelect={(method) => setPaymentMethod(method)}
+            />
+          </div>
         </div>
         <section className="w-full xl:w-[521px] flex flex-col gap-[12px] sm:gap-[16px]">
           <div className="lg:skew-x-[-20deg] lg:py-[6px] lg:px-[24px] lg:flex justify-center items-center lg:bg-3">
@@ -766,7 +826,7 @@ const PaymentContent = () => {
                 </div>
               )}
             </div>
-            <div className="flex w-full justify-between items-center gap-[10px] mb-[32px] md:mb-[56px]">
+            <div className="flex w-full justify-between items-center gap-[10px] sm:mb-[32px] md:mb-[56px]">
               <span className="uppercase m-0 text-white font-usuzi-condensed text-[16px] leading-[16px] sm:text-[28px] sm:leading-[28px]">
                 Total
               </span>
@@ -775,15 +835,13 @@ const PaymentContent = () => {
               </span>
             </div>
             <div className="fixed bottom-[60px] left-0 sm:static z-[2000] flex items-center gap-[16px] w-full p-[16px] sm:p-0 border-t-[1px] border-primary-main sm:border-none bg-2 sm:bg-transparent">
-              <span className=" sm:hidden text-white font-bold font-usuzi-condensed text-[22px] leading-[22px] sm:text-[28px] sm:leading-[28px]">
+              <span className="sm:hidden text-white font-bold font-usuzi-condensed text-[22px] leading-[22px] sm:text-[28px] sm:leading-[28px]">
                 {total.toFixed(2)}$
               </span>
               <Button
                 variant="primary"
                 className="max-w-[calc(100%-20px)] mr-[10px] sm:mx-auto"
-                onClick={() =>
-                  (window.location.href = "/cart/payment/success")
-                }>
+                onClick={handlePay}>
                 Pay
               </Button>
             </div>

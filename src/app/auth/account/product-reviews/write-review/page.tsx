@@ -71,11 +71,11 @@ const ReviewContent: React.FC = React.memo(() => {
   const [pros, setPros] = useState<string>("");
   const [cons, setCons] = useState<string>("");
   const [gameId, setGameId] = useState<number>(1);
-  const [editIndex, setEditIndex] = useState<number | null>(null);
   const [isTouchedReview, setIsTouchedReview] = useState(false);
   const [isValidReview, setIsValidReview] = useState(true);
   const [isLg, setIsLg] = useState(false);
   const [order, setOrder] = useState<string>("123456789");
+  const [originalReview, setOriginalReview] = useState<Review | null>(null);
 
   const handleResize = useCallback(() => {
     setIsLg(window.innerWidth >= 992);
@@ -106,34 +106,44 @@ const ReviewContent: React.FC = React.memo(() => {
   }, [fetchGames]);
 
   useEffect(() => {
-    const storedEditIndex = localStorage.getItem("editIndex");
     const paramGameId = searchParams.get("gameId");
+    const paramLiked = searchParams.get("liked") === "true";
+    const paramOrder =
+      searchParams.get("order") ||
+      `ORD${Math.floor(100000 + Math.random() * 900000)}`;
+
     if (paramGameId) {
-      setGameId(Number(paramGameId));
-    }
-    if (storedEditIndex !== null) {
-      const index = Number(storedEditIndex);
-      setEditIndex(index);
-      const savedReviews = localStorage.getItem("reviews");
-      if (savedReviews && index >= 0) {
-        const reviews = JSON.parse(savedReviews);
-        const review = reviews[index];
-        if (review) {
-          setLiked(review.liked);
-          setReviewText(review.review || "");
-          setPros(review.pros || "");
-          setCons(review.cons || "");
-          setGameId(review.gameId);
-          setOrder(review.order || "123456789");
-        }
+      const newGameId = Number(paramGameId);
+      setGameId(newGameId);
+
+      const storedReviews = localStorage.getItem("reviews");
+      const reviews = storedReviews ? JSON.parse(storedReviews) : [];
+      const existingReview = reviews.find(
+        (r: Review) => r.gameId === newGameId
+      );
+
+      if (existingReview) {
+        setOriginalReview(existingReview);
+        setLiked(existingReview.liked);
+        setReviewText(existingReview.review || "");
+        setPros(existingReview.pros || "");
+        setCons(existingReview.cons || "");
+        setOrder(existingReview.order || paramOrder);
+      } else {
+        setOriginalReview(null);
+        setLiked(paramLiked || false);
+        setReviewText("");
+        setPros("");
+        setCons("");
+        setOrder(paramOrder);
+      }
+
+      if (games.length > 0) {
+        const foundGame = games.find((g) => g.id === newGameId);
+        setGame(foundGame || games[0]);
       }
     }
-
-    if (games.length > 0) {
-      const foundGame = games.find((g) => g.id === gameId);
-      setGame(foundGame || games[0]);
-    }
-  }, [searchParams, games, gameId]);
+  }, [searchParams, games]);
 
   const handleReviewChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const value = e.target.value;
@@ -174,10 +184,10 @@ const ReviewContent: React.FC = React.memo(() => {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    const savedReviews = localStorage.getItem("reviews");
-    const reviews = savedReviews ? JSON.parse(savedReviews) : [];
-    const newOrder =
-      "ORD" + Math.floor(100000 + Math.random() * 900000).toString();
+    if (!isValidReview) return;
+
+    const savedReviews = localStorage.getItem("reviews") || "[]";
+    const reviews = JSON.parse(savedReviews);
     const newReview: Review = {
       gameId,
       liked,
@@ -187,17 +197,31 @@ const ReviewContent: React.FC = React.memo(() => {
       likes: 0,
       dislikes: 0,
       date: new Date().toISOString().split("T")[0],
-      order: newOrder,
+      order,
     };
 
-    if (editIndex !== null && editIndex >= 0 && editIndex < reviews.length) {
-      const updatedReviews = [...reviews];
-      updatedReviews[editIndex] = newReview;
-      localStorage.setItem("reviews", JSON.stringify(updatedReviews));
+    const existingIndex = reviews.findIndex((r: Review) => r.gameId === gameId);
+    if (existingIndex !== -1) {
+      reviews[existingIndex] = newReview;
     } else {
-      localStorage.setItem("reviews", JSON.stringify([...reviews, newReview]));
+      reviews.push(newReview);
     }
-    localStorage.removeItem("editIndex");
+
+    localStorage.setItem("reviews", JSON.stringify(reviews));
+    router.push("/auth/account/product-reviews");
+  };
+
+  const handleCancel = () => {
+    if (originalReview) {
+      setLiked(originalReview.liked);
+      setReviewText(originalReview.review || "");
+      setPros(originalReview.pros || "");
+      setCons(originalReview.cons || "");
+      setOrder(
+        originalReview.order ||
+          `ORD${Math.floor(100000 + Math.random() * 900000)}`
+      );
+    }
     router.push("/auth/account/product-reviews");
   };
 
@@ -348,7 +372,7 @@ const ReviewContent: React.FC = React.memo(() => {
                 aria-label="Form actions">
                 <Button
                   variant="secondary"
-                  onClick={() => router.push("/auth/account/product-reviews")}
+                  onClick={handleCancel}
                   aria-label="Back to reviews">
                   Back to reviews
                 </Button>

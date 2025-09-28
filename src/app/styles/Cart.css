@@ -40,7 +40,7 @@
   height: 100%;
   position: absolute;
   top: 0;
-  right: 17px;
+  right: 18px;
   background: theme("colors.primary-main");
   transform: skew(20deg);
 }
@@ -57,4 +57,17 @@
   .cart-menu__button:last-child {
     justify-content: start;
   }
+}
+
+/* payment */
+
+.success {
+  box-shadow: 0px 0px 20px 0px theme("colors.primary-main");
+}
+.failed {
+  box-shadow: 0px 0px 20px 0px theme("colors.red");
+}
+.grid-scroll {
+  grid-auto-flow: column;
+  grid-template-columns: minmax(140px, 1fr);
 }

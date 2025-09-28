@@ -69,7 +69,7 @@ const GameReviewsSection: React.FC = () => {
   useEffect(() => {
     fetchGames();
 
-    const savedReviews = localStorage.getItem("reviews");
+    const savedReviews = localStorage.getItem("gameReviews");
     if (savedReviews) {
       setReviews(JSON.parse(savedReviews));
     } else {
@@ -97,13 +97,13 @@ const GameReviewsSection: React.FC = () => {
         },
       ];
       setReviews(initialReviews);
-      localStorage.setItem("reviews", JSON.stringify(initialReviews));
+      localStorage.setItem("gameReviews", JSON.stringify(initialReviews));
     }
   }, [fetchGames]);
 
   useEffect(() => {
     if (reviews.length > 0) {
-      localStorage.setItem("reviews", JSON.stringify(reviews));
+      localStorage.setItem("gameReviews", JSON.stringify(reviews));
     }
   }, [reviews]);
 

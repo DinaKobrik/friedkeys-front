@@ -35,7 +35,7 @@ const Genres = () => {
                 key={index}
                 className="ganer cursor-pointer relative flex justify-center items-center overflow-hidden w-[calc(100%-4px)]"
                 aria-label={`Go to ${genre.name} genre page in catalog`}>
-                <div className="ganer-text font-usuzi-halftone flex justify-center items-center relative overflow-hidden w-[calc(100%-4px)] h-[calc(100%-4px)] py-[27px] px-[25px] sm:px-[35px] lg:py-[108px] lg:px-[68px] bg-2 text-[20px] leading-[26px] lg:text-[38px] lg:leading-[44px] uppercase text-white z-10">
+                <div className="ganer-text font-usuzi-halftone flex justify-center items-center relative overflow-hidden w-[calc(100%-4px)] h-[calc(100%-4px)] py-[27px] px-[25px] sm:px-[35px] lg:py-[108px] lg:px-[68px] bg-2 text-[16px] xs:text-[20px] leading-[26px] lg:text-[38px] lg:leading-[44px] uppercase text-white z-10">
                   <span className="relative transition-all duration-500 ease-in-out">
                     {genre.name}
                   </span>
@@ -47,7 +47,7 @@ const Genres = () => {
       </div>
       <Button
         variant="primary"
-        className="max-w-[349px]"
+        className="max-w-[calc(100%-20px)] sm:max-w-[349px]"
         aria-label="View all genres"
         onClick={() => {
           window.location.href = "/all-games";

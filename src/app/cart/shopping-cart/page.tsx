@@ -499,7 +499,7 @@ const CartPage: React.FC = () => {
               <div className="flex justify-between w-[calc(100%-20px)] mx-auto md:w-full">
                 <div>
                   <button
-                    className="my-0 mx-auto rounded-[2px] cursor-pointer px-[12px] py-[12px] focus:outline-none skew-x-[-20deg] w-[64px] h-[40px] sm:w-[72px] sm:h-[48px] flex justify-center items-center border-[1px] border-DLS lg:border-primary-main"
+                    className="my-0 mx-auto rounded-[2px] cursor-pointer lg:hover:bg-primary-10 px-[12px] py-[12px] focus:outline-none skew-x-[-20deg] w-[64px] h-[40px] sm:w-[72px] sm:h-[48px] flex justify-center items-center border-[1px] border-DLS lg:border-primary-main"
                     onClick={() => removeFromCart(gameId, cartKey)}
                     aria-label={`Remove ${game.title} ${edition} from cart`}>
                     <DeleteIcon className="cursor-pointer skew-x-[20deg] w-[24px] h-[24px] sm:w-[32px] sm:h-[32px]" />
@@ -662,7 +662,10 @@ const CartPage: React.FC = () => {
       </section>
       <CartRecommendations />
       <div className="w-full 2xl:hidden px-[12px] flex flex-col gap-[16px]">
-        <Heading variant="h2" className="mb-[32px]" aria-label="Total Price">
+        <Heading
+          variant="h2"
+          className="mb-[20px] sm:mb-[32px]"
+          aria-label="Total Price">
           Total Price
         </Heading>
         <div className="flex flex-col w-full gap-[20px] pb-[20px] border-b-4 border-[#4C4C4C]">
@@ -670,7 +673,7 @@ const CartPage: React.FC = () => {
             <span className="uppercase m-0 text-gray-68 font-usuzi-condensed text-[16px] leading-[16px] sm:text-[26px] sm:leading-[28px]">
               Official price
             </span>
-            <span className="text-gray-68 font-bold text-[20px] leading-[24px]">
+            <span className="text-gray-68 font-bold text-[15px] leading-[15px] sm:text-[20px] sm:leading-[24px]">
               {officialPrice}$
             </span>
           </div>
@@ -678,16 +681,16 @@ const CartPage: React.FC = () => {
             <span className="uppercase m-0 text-gray-68 font-usuzi-condensed text-[16px] leading-[16px] sm:text-[26px] sm:leading-[28px]">
               Discount
             </span>
-            <span className="text-gray-68 font-bold text-[20px] leading-[24px]">
+            <span className="text-gray-68 font-bold text-[15px] leading-[15px] sm:text-[20px] sm:leading-[24px]">
               {totalDiscount}$
             </span>
           </div>
         </div>
-        <div className="flex w-full justify-between items-center gap-[10px] mb-[68px]">
+        <div className="flex w-full justify-between items-center gap-[10px] sm:mb-[68px]">
           <span className="uppercase m-0 text-white font-usuzi-condensed text-[16px] leading-[16px] sm:text-[28px] sm:leading-[28px]">
             Subtotal
           </span>
-          <span className="text-white font-bold text-[28px] leading-[28px]">
+          <span className="text-white font-bold text-[20px] leading-[24px] sm:text-[28px] sm:leading-[28px]">
             {subtotal}$
           </span>
         </div>
