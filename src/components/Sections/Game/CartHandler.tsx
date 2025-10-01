@@ -20,7 +20,9 @@ export interface CartItem {
 
 interface CartContextType {
   cartQuantities: { [key: string]: CartItem };
-  setCartQuantities: (quantities: { [key: string]: CartItem }) => void;
+  setCartQuantities: React.Dispatch<
+    React.SetStateAction<{ [key: string]: CartItem }>
+  >;
   selectedEdition: string;
   setSelectedEdition: (edition: string) => void;
   selectedPlatform: string;
@@ -114,11 +116,10 @@ const CartButton: React.FC<{ game: Game | null }> = ({ game }) => {
       region: selectedRegion,
       addedAt: Date.now(),
     };
-    const newCartQuantities = {
+    setCartQuantities({
       ...cartQuantities,
       [cartKey]: newItem,
-    };
-    setCartQuantities(newCartQuantities);
+    });
   };
 
   const updateQuantity = (cartKey: string, delta: number) => {
@@ -141,11 +142,10 @@ const CartButton: React.FC<{ game: Game | null }> = ({ game }) => {
         quantity: newQuantity,
         addedAt: Date.now(),
       };
-      const newCartQuantities = {
+      setCartQuantities({
         ...cartQuantities,
         [cartKey]: newItem,
-      };
-      setCartQuantities(newCartQuantities);
+      });
     }
   };
 
@@ -205,7 +205,7 @@ const CartButton: React.FC<{ game: Game | null }> = ({ game }) => {
               <span className="line-through font-usuzi-condensed text-gray-68 font-bold text-[20px] sm:text-[32px] leading-[16px] sm:leading-[30px]">
                 {game.price}$
               </span>
-              <span className="text-white font-usuzi-condensed font-bold text-[24px] leading-[16px] py-[4px] px-[8px] md:py-[6px] md:px-[16px] rounded-[2px] bg-sale">
+              <span className="text-white font-usuzi-condensed font-bold text-[24px] leading-[22px] py-[4px] px-[8px] md:py-[6px] md:px-[16px] rounded-[2px] bg-sale">
                 -{game.discount}%
               </span>
             </div>
@@ -227,7 +227,7 @@ const CartButton: React.FC<{ game: Game | null }> = ({ game }) => {
           Add to Cart
         </Button>
       ) : (
-        <div className="flex sm:w-full items-center gap-6 w-full max-w-[202px] sm:max-w-[100%] sm:justify-center">
+        <div className="flex sm:w-full h-[42px] sm:h-[52px] items-center gap-6 w-full max-w-[202px] sm:max-w-[100%] sm:justify-center">
           <div className="hidden sm:block font-usuzi-condensed text-[24px] leading-[26px] text-center w-full">
             in the cart
           </div>

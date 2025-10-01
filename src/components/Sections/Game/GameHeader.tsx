@@ -51,6 +51,7 @@ const FavoriteIcon = ({ isFavorite }: { isFavorite: boolean }) => (
 const GameHeaderContent: React.FC = () => {
   const params = useParams();
   const [game, setGame] = useState<Game | null>(null);
+  const [imageSrc, setImageSrc] = useState<string>("/images/no-image.jpg");
   const [isFavorite, setIsFavorite] = useState(false);
   const [isEditionOpen, setIsEditionOpen] = useState(false);
   const [isPlatformOpen, setIsPlatformOpen] = useState(false);
@@ -118,6 +119,9 @@ const GameHeaderContent: React.FC = () => {
 
   useEffect(() => {
     if (game) {
+      setImageSrc(
+        game.image && game.image.trim() ? game.image : "/images/no-image.jpg"
+      );
       const storedFavorites = localStorage.getItem("favoriteGames");
       const favoriteIds = storedFavorites ? JSON.parse(storedFavorites) : [];
       setIsFavorite(favoriteIds.includes(game.id));
@@ -227,22 +231,24 @@ const GameHeaderContent: React.FC = () => {
       <div className="grid grid-cols-1 gap-[24px]">
         <div className="game__header relative h-[320px] sm:h-[440px] md:h-[520px] lg:h-[973px] overflow-hidden">
           <Image
-            src={game.image}
+            src={imageSrc || "/images/no-image.jpg"}
             alt={game.title}
             width={1920}
             height={973}
             className="object-cover w-full h-full blur-xl -z-10"
+            onError={() => setImageSrc("/images/no-image.jpg")}
           />
         </div>
-        <div className="block lg:hidden h-[429px] sm:h-[601px]"></div>
-        <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 pt-[40px] lg:pt-0 gap-[0px] lg:gap-[24px] max-w-[1608px] items-start lg:items-center justify-center absolute top-[50px] lg:top-1/2 lg:translate-y-[-45%] 2xl:translate-y-[-50%] left-1/2 translate-x-[-50%] w-full h-[calc(100%-40px)] lg:max-h-[648px]">
+        <div className="block lg:hidden h-[460px] sm:h-[660px] md:h-[601px]"></div>
+        <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 pt-[40px] lg:pt-0 gap-[72px] lg:gap-[24px] max-w-[1608px] items-start lg:items-center justify-center absolute top-[50px] lg:top-1/2 lg:translate-y-[-45%] 2xl:translate-y-[-50%] left-1/2 translate-x-[-50%] w-full h-[calc(100%-40px)] lg:max-h-[648px]">
           <div className="2xl:col-span-2 top-0 left-0 w-full h-[220px] sm:h-[340px] md:h-[420px] lg:h-full flex justify-center items-center">
             <Image
-              src={game.image}
+              src={imageSrc || "/images/no-image.jpg"}
               alt={game.title}
               width={1064}
               height={648}
               className="object-cover max-w-[1064px] min-h-[220px] max-h-[648px] h-full w-full game__header-img"
+              onError={() => setImageSrc("/images/no-image.jpg")}
             />
           </div>
           <div
@@ -259,14 +265,28 @@ const GameHeaderContent: React.FC = () => {
                 <FavoriteIcon isFavorite={isFavorite} />
               </div>
             </div>
-            <div className="flex flex-col w-full lg:h-[calc(100%-72px)] justify-between items-start gap-[16px] sm:gap-[40px]">
+            <div className="mx-auto w-full flex justify-center items-center gap-[8px] mb-[20px]">
+              <Image
+                src="/images/steam-logo-gamepage.png"
+                alt="Steam Logo"
+                width={40}
+                height={40}
+                className="w-[32px] h-[32px] sm:w-[40px] sm:h-[40px]"
+              />
+              <span className="text-[13px] leading-[15px] sm:text-[20px] sm:leading-[26px] font-medium">
+                Steam
+              </span>
+            </div>
+            <div className="flex flex-col w-full lg:h-[calc(100%-111px)] justify-between items-start gap-[16px] sm:gap-[20px]">
               <div className="flex flex-col gap-[16px] w-full">
                 <div
                   className="relative cursor-pointer w-full"
                   ref={editionRef}
                   onClick={() => setIsEditionOpen(!isEditionOpen)}>
+                  <label className="mb-[8px] block text-[16px] sm:text-[20px] leading-[20px] font-bold text-white">
+                    Edition
+                  </label>
                   <Input
-                    label="Select Edition"
                     type="text"
                     value={selectedEdition}
                     name="edition"
@@ -304,8 +324,10 @@ const GameHeaderContent: React.FC = () => {
                   className="relative cursor-pointer"
                   ref={platformRef}
                   onClick={() => setIsPlatformOpen(!isPlatformOpen)}>
+                  <label className="mb-[8px] block text-[16px] sm:text-[20px] leading-[20px] font-bold text-white">
+                    Platforms
+                  </label>
                   <Input
-                    label="Select Platform"
                     type="text"
                     value={selectedPlatform}
                     name="platform"
@@ -343,8 +365,10 @@ const GameHeaderContent: React.FC = () => {
                   className="relative cursor-pointer"
                   ref={regionRef}
                   onClick={() => setIsRegionOpen(!isRegionOpen)}>
+                  <label className="mb-[8px] block text-[16px] sm:text-[20px] leading-[20px] font-bold text-white">
+                    Key activation region
+                  </label>
                   <Input
-                    label="Key Activation Region"
                     type="text"
                     value={selectedRegion}
                     name="region"

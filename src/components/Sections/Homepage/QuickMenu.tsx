@@ -120,7 +120,7 @@ const QuickMenuSection: React.FC = () => {
   return (
     <section
       ref={sectionRef}
-      className="hide-scrollbar h-[44px] sm:h-[66px] mt-[-48px] md:mt-[-80px]">
+      className="hide-scrollbar h-[44px] sm:h-[66px] mt-[-48px] lg:mt-0">
       <div className="grid grid-cols-2 xs:flex xs:justify-between lg:grid lg:grid-cols-4 relative quick-menu w-full sm:w-[calc(100%+46px)] lg:w-[calc(100%+24px)] sm:ml-[-23px] lg:ml-[-12px] gap-x-[12px] sm:gap-0 lg:gap-[8px] xl:gap-[18px] h-full ">
         {Object.entries(menus).map(([key, { icon, label, categories }]) => (
           <div key={key} className="lg:relative lg:w-full quick-menu__button">

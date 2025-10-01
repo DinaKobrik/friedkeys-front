@@ -6,7 +6,7 @@ import Heading from "@/components/ui/Heading";
 export default function Custom404() {
   return (
     <main>
-      <section className="min-h-screen flex flex-col items-center justify-center py-[80px]">
+      <section className="min-h-[calc(100vh-520px)] flex flex-col items-center justify-center py-[80px]">
         <div className="font-usuzi-bold text-[120px] leading-[100px] sm:text-[240px] sm:leading-[240px] text-primary-main mb-[32px] sm:mb-[40px] flex justify-center items-center gap-[20px]">
           4
           <svg

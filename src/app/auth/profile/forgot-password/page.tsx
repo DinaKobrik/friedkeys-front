@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Heading from "@/components/ui/Heading";
 import Button from "@/components/ui/Button";
 import Text from "@/components/ui/Text";
@@ -12,15 +12,19 @@ export default function ForgotPassword() {
   const [isTouched, setIsTouched] = useState(false);
   const [isValid, setIsValid] = useState(true);
   const router = useRouter();
+  const emailRef = useRef<HTMLInputElement>(null);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
     setIsTouched(true);
+    setIsValid(true);
 
     // Проверка на пустое поле
     if (!email.trim()) {
       setIsValid(false);
+      emailRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      window.scrollBy(0, -80);
       return;
     }
 
@@ -28,20 +32,28 @@ export default function ForgotPassword() {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       setIsValid(false);
+      emailRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      window.scrollBy(0, -80);
       return;
     }
 
-    // Успешная отправка, переход на новую страницу
-    router.push("/auth/email-sent");
+    // Успешная валидация: сохранение email в localStorage и перенаправление
+    localStorage.setItem("forgotEmail", email);
+    router.push("/auth/profile/email-sent");
+
+    // Сброс полей и состояний
+    setEmail("");
+    setIsTouched(false);
+    setIsValid(true);
   };
 
   return (
-    <main className="mt-[40px]">
-      <section className="min-h-screen relative pt-[88px] flex flex-col justify-center items-center">
+    <main className="my-[40px]">
+      <section className="min-h-[calc(100vh-170px)] relative pt-[88px] flex flex-col justify-center items-center">
         <Button
           variant="secondary"
-          onClick={() => window.history.back()}
-          className="absolute top-0 left-0  max-w-[117px] sm:max-w-[163px] h-[40px] sm:h-[50px] flex justify-center items-center ml-[10px]">
+          onClick={() => router.push("/auth/profile/log-in")}
+          className="absolute top-0 left-0 max-w-[117px] sm:max-w-[163px] h-[40px] sm:h-[50px] flex justify-center items-center ml-[10px]">
           <svg
             width="14"
             height="22"
@@ -90,6 +102,7 @@ export default function ForgotPassword() {
             className="mb-[40px]"
             isTouched={isTouched}
             isValid={isValid}
+            ref={emailRef}
           />
           <Button
             variant="primary"

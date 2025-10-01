@@ -11,7 +11,7 @@ interface Review {
   gameId: number;
   username: string;
   liked: boolean;
-  review: string;
+  review: string[];
 }
 
 interface Game {
@@ -48,6 +48,7 @@ const GameReviewsSection: React.FC = () => {
   const [reviews, setReviews] = useState<Review[]>([]);
   const [games, setGames] = useState<Game[]>([]);
   const [loading, setLoading] = useState(true);
+  const [imageSrcs, setImageSrcs] = useState<{ [key: number]: string }>({});
 
   const fetchGames = useCallback(async () => {
     try {
@@ -56,6 +57,18 @@ const GameReviewsSection: React.FC = () => {
       const data = await response.json();
       if (Array.isArray(data)) {
         setGames(data);
+        setImageSrcs(
+          data.reduce(
+            (acc, game) => ({
+              ...acc,
+              [game.id]:
+                game.image && game.image.trim()
+                  ? game.image
+                  : "/images/no-image.jpg",
+            }),
+            {}
+          )
+        );
       } else {
         console.warn("Invalid games data format from API");
       }
@@ -78,22 +91,31 @@ const GameReviewsSection: React.FC = () => {
           gameId: 1,
           username: "GamingGuru",
           liked: true,
-          review:
-            "This game offers an incredible experience with stunning graphics that truly immerse you in its world. The attention to detail in the environments is remarkable, and the soundtrack enhances the atmosphere perfectly. The gameplay mechanics are smooth and engaging, providing hours of entertainment. However, there are some minor issues with optimization that can cause occasional lag. The multiplayer mode is a highlight, allowing for cooperative play that adds depth and excitement to every session.",
+          review: [
+            "This game offers an incredible experience with stunning graphics that truly immerse you in its world. The attention to detail in the environments is remarkable, and the soundtrack enhances the atmosphere perfectly.",
+            "The gameplay mechanics are smooth and engaging, providing hours of entertainment.",
+            "However, there are some minor issues with optimization that can cause occasional lag. The multiplayer mode is a highlight, allowing for cooperative play that adds depth and excitement to every session.",
+          ],
         },
         {
           gameId: 2,
           username: "PixelQueen",
           liked: false,
-          review:
-            "This game disappointed me with its slow pace and outdated controls that feel clunky and unresponsive. The story has some interesting moments, but the delivery is lackluster, making it hard to stay engaged. The graphics are decent but lack the polish of modern titles, and the lack of updates is noticeable. On the positive side, the single-player campaign offers a decent narrative, though it’s marred by technical issues that detract from the overall experience.",
+          review: [
+            "This game disappointed me with its slow pace and outdated controls that feel clunky and unresponsive. The story has some interesting moments, but the delivery is lackluster.",
+            "The graphics are decent but lack the polish of modern titles, and the lack of updates is noticeable.",
+            "On the positive side, the single-player campaign offers a decent narrative, though it’s marred by technical issues that detract from the overall experience.",
+          ],
         },
         {
           gameId: 3,
           username: "ShadowRiser",
           liked: true,
-          review:
-            "An absolutely addictive game that keeps you hooked with its rich world and deep character customization options. The combat system is fluid and rewarding, with a variety of weapons and skills to master. The open-world design encourages exploration, though some quests can feel repetitive after a while. The loading times are a bit frustrating, but the breathtaking visuals and immersive storyline more than make up for it.",
+          review: [
+            "An absolutely addictive game that keeps you hooked with its rich world and deep character customization options. The combat system is fluid and rewarding.",
+            "The open-world design encourages exploration, though some quests can feel repetitive after a while.",
+            "The loading times are a bit frustrating, but the breathtaking visuals and immersive storyline more than make up for it.",
+          ],
         },
       ];
       setReviews(initialReviews);
@@ -127,12 +149,18 @@ const GameReviewsSection: React.FC = () => {
               className="w-full h-full"
               aria-label={`View game ${game.title}`}>
               <Image
-                src={game.image}
+                src={imageSrcs[game.id] || "/images/no-image.jpg"}
                 alt={game.title}
                 width={520}
                 height={273}
-                className="object-cover w-full h-full"
+                className="object-cover w-full h-full rounded-[8px]"
                 loading="lazy"
+                onError={() =>
+                  setImageSrcs((prev) => ({
+                    ...prev,
+                    [game.id]: "/images/no-image.jpg",
+                  }))
+                }
               />
             </Link>
           </div>
@@ -188,16 +216,21 @@ const GameReviewsSection: React.FC = () => {
                 } w-[28px] h-[28px] sm:w-[40px] md:h-[40px] flex-shrink-0`}
               />
             </div>
-            <Text
-              className="line-clamp-[14] sm:line-clamp-[10]"
-              aria-label={`Review text: ${review.review}`}>
-              {review.review}
-            </Text>
+            <div className="flex flex-col gap-[16px] w-full line-clamp-[14] sm:line-clamp-[10] overflow-hidden">
+              {review.review.map((paragraph, idx) => (
+                <Text
+                  key={idx}
+                  className="text-[14px] sm:text-[16px] leading-[20px] sm:leading-[24px]"
+                  aria-label={`Review paragraph ${idx + 1}: ${paragraph}`}>
+                  {paragraph}
+                </Text>
+              ))}
+            </div>
           </div>
         </div>
       );
     });
-  }, [reviews, games]);
+  }, [reviews, games, imageSrcs]);
 
   if (loading) {
     return (
@@ -211,11 +244,12 @@ const GameReviewsSection: React.FC = () => {
     <section role="region" aria-label="Game Reviews Section">
       <div className="mb-[24px] sm:mb-[40px] flex justify-between items-center gap-[24px]">
         <Heading variant="h1" aria-label="Game Reviews Title">
-          Game Reviews
+          Gamer Reviews
         </Heading>
         <Button
           variant="secondary"
           className="max-w-[238px] mr-[10px] hidden md:block"
+          disabled
           onClick={() => {
             window.location.href = "/";
           }}>

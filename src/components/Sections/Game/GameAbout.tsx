@@ -41,9 +41,9 @@ const GameAbout: React.FC = () => {
 
   const formatReleaseDate = (dateString: string) => {
     const date = new Date(dateString);
-    return date.toLocaleDateString("en-US", {
-      month: "long",
+    return date.toLocaleDateString("en-GB", {
       day: "numeric",
+      month: "long",
       year: "numeric",
     });
   };
@@ -53,13 +53,22 @@ const GameAbout: React.FC = () => {
     { label: "Rating", value: game.rating },
     { label: "Release Date", value: formatReleaseDate(game.releaseDate) },
     { label: "Publisher", value: "—" },
-    { label: "Genre", value: game.genres.join(" ") },
+    {
+      label: "Genre",
+      value: (
+        <span className="inline-flex flex-wrap gap-x-4">
+          {game.genres.map((genre, index) => (
+            <span key={index}>{genre}</span>
+          ))}
+        </span>
+      ),
+    },
     { label: "Languages", value: "—" },
   ];
 
   return (
     <section className="grid grid-cols-1 xl:grid-cols-2 gap-[40px] items-start w-full">
-      <div>
+      <div className="2xl:max-w-[656px]">
         <Heading variant="h1" className="mb-[24px] sm:mb-[40px]">
           About
         </Heading>
@@ -99,7 +108,7 @@ const GameAbout: React.FC = () => {
           </div>
         </div>
       </div>
-      <div className="card-corner p-[40px] bg-2 flex justify-between gap-[10px]">
+      <div className="card-corner px-[16px] py-[20px] pb-[24px] sm:p-[40px] bg-2 flex justify-between gap-[10px]">
         <div className="grid grid-cols-[auto_1fr] items-start gap-[40px]">
           {aboutSpecs.map((spec, index) => (
             <React.Fragment key={index}>

@@ -90,7 +90,7 @@ const PlatformItem = ({
 
   return (
     <div
-      className={`about__platform md:bg-[#1010105A] p-0 sm:p-[32px] 2xl:p-[60px] ${outer} md:border-[2px] md:border-primary-main`}>
+      className={`about__platform md:bg-[#1010105A] p-0 sm:p-[32px] 2xl:p-[60px] ${outer} md:border-[1px] md:border-primary-main`}>
       <div
         className={`flex flex-col items-center justify-center gap-[16px] ${inner}`}>
         <div
@@ -103,7 +103,12 @@ const PlatformItem = ({
           }`}>
           <Icon />
         </div>
-        <Heading variant="h3">{name}</Heading>
+        <Heading variant="h2" className="hidden sm:block">
+          {name}
+        </Heading>
+        <Heading variant="h3" className="sm:hidden">
+          {name}
+        </Heading>
       </div>
     </div>
   );
@@ -122,8 +127,8 @@ const Platforms = () => {
         </Text>
       </div>
       <div className="about__platforms relative">
-        <div className="overflow-hidden">
-          <div className="grid grid-cols-4 sm:grid-cols-2 2xl:grid-cols-4 gap-[0px] sm:gap-[14px] md:gap-[37px] md:w-[calc(100%+120px)] md:translate-x-[-60px]">
+        <div className="overflow-hidden 2xl:h-[264px]">
+          <div className="grid mb-[2px] grid-cols-4 sm:grid-cols-2 2xl:grid-cols-4 gap-[0px] sm:gap-[14px] md:gap-[37px] md:w-[calc(100%+120px)] md:translate-x-[-60px]">
             <PlatformItem icon={PCIcon} name="PC" bgColor="" platform="pc" />
             <PlatformItem
               icon={PlayStationIcon}

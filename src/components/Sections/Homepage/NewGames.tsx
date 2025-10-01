@@ -34,7 +34,7 @@ const NewGames = () => {
   return (
     <section>
       <div className="mb-[24px] sm:mb-[40px] flex justify-between items-center">
-        <Heading variant="h1">New</Heading>
+        <Heading variant="h1">new</Heading>
         <Button
           variant="secondary"
           className="max-w-[238px] mr-[10px] hidden md:block"

@@ -6,7 +6,7 @@ import Heading from "@/components/ui/Heading";
 export default function Custom404() {
   return (
     <main>
-      <section className="min-h-screen py-[80px] flex flex-col items-center justify-center">
+      <section className="min-h-[calc(100vh-520px)] py-[80px] flex flex-col items-center justify-center">
         <div className="card-corner relative max-w-[792px] w-full mx-auto flex flex-col items-center justify-center bg-2 px-[16px] sm:px-[25px] py-[35px] sm:pt-[56px] sm:pb-[64px] md:px-[40px]">
           <div className="font-usuzi-halftone text-[98px] leading-[70px] sm:text-[128px] sm:leading-[128px] text-primary-main mb-[8px] sm:mb-[40px]">
             404

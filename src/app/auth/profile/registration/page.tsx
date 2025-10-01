@@ -1,13 +1,15 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Heading from "@/components/ui/Heading";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
 import Text from "@/components/ui/Text";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
-export default function Registration() {
+const Registration: React.FC = () => {
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -31,7 +33,14 @@ export default function Registration() {
   const [isValidBirthday, setIsValidBirthday] = useState(true);
   const [isValidCountry, setIsValidCountry] = useState(true);
 
-  const countryRef = useRef<HTMLDivElement>(null);
+  const emailRef = useRef<HTMLInputElement>(null);
+  const passwordRef = useRef<HTMLInputElement>(null);
+  const firstNameRef = useRef<HTMLInputElement>(null);
+  const lastNameRef = useRef<HTMLInputElement>(null);
+  const birthdayRef = useRef<HTMLInputElement>(null);
+  const countryRef = useRef<HTMLInputElement>(null);
+  const agreedRef = useRef<HTMLDivElement>(null);
+  const countryDropdownRef = useRef<HTMLDivElement>(null);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -51,51 +60,85 @@ export default function Registration() {
     setIsValidBirthday(true);
     setIsValidCountry(true);
 
+    // Проверка полей в порядке их появления в форме
     if (!email.trim()) {
       setIsValidEmail(false);
+      emailRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      window.scrollBy(0, -80); // Отступ для фиксированного хедера
+      return;
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setIsValidEmail(false);
+      emailRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      window.scrollBy(0, -80);
       return;
     }
     if (!password.trim()) {
       setIsValidPassword(false);
+      passwordRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+      window.scrollBy(0, -80);
       return;
     }
     if (!firstName.trim()) {
       setIsValidFirstName(false);
+      firstNameRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+      window.scrollBy(0, -80);
       return;
     }
     if (!lastName.trim()) {
       setIsValidLastName(false);
+      lastNameRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+      window.scrollBy(0, -80);
       return;
     }
     if (!birthday.trim()) {
       setIsValidBirthday(false);
+      birthdayRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+      window.scrollBy(0, -80);
       return;
     }
-    if (!country.trim()) {
-      setIsValidCountry(false);
-      return;
-    }
-    if (!isAgreed) {
-      return;
-    }
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      setIsValidEmail(false);
-      return;
-    }
-
     const today = new Date().toISOString().split("T")[0];
     const selectedDate = new Date(birthday);
     const todayDate = new Date(today);
     if (selectedDate > todayDate) {
       setIsValidBirthday(false);
+      birthdayRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+      window.scrollBy(0, -80);
+      return;
+    }
+    if (!country.trim()) {
+      setIsValidCountry(false);
+      countryRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+      window.scrollBy(0, -80);
+      return;
+    }
+    if (!isAgreed) {
+      agreedRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      window.scrollBy(0, -80);
       return;
     }
 
-    alert(
-      `Email: ${email}, Password: ${password}, First Name: ${firstName}, Last Name: ${lastName}, Birthday: ${birthday}, Country: ${country}, Agreed: ${isAgreed}`
-    );
+    // Перенаправление на страницу логина
+    router.push("/auth/profile/log-in");
 
     // Сброс всех полей и состояний после успешной отправки
     setEmail("");
@@ -113,6 +156,7 @@ export default function Registration() {
     setIsTouchedCountry(false);
     setIsTouchedAgreed(false);
   };
+
   // SVG для закрытого глаза
   const EyeClosed = () => (
     <svg
@@ -154,6 +198,7 @@ export default function Registration() {
       />
     </svg>
   );
+
   // SVG для открытого глаза
   const EyeOpen = () => (
     <svg
@@ -170,6 +215,7 @@ export default function Registration() {
       <circle cx="12" cy="12" r="3" fill="white" />
     </svg>
   );
+
   // SVG для календаря
   const CalendarIcon = () => (
     <svg
@@ -242,6 +288,7 @@ export default function Registration() {
       />
     </svg>
   );
+
   // SVG для стрелочки
   const ArrowIcon = () => (
     <svg
@@ -258,7 +305,8 @@ export default function Registration() {
       />
     </svg>
   );
-  // статичный список стран
+
+  // Статичный список стран
   const countries = [
     "United States",
     "United Kingdom",
@@ -275,8 +323,8 @@ export default function Registration() {
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
-        countryRef.current &&
-        !countryRef.current.contains(event.target as Node)
+        countryDropdownRef.current &&
+        !countryDropdownRef.current.contains(event.target as Node)
       ) {
         setIsCountryOpen(false);
       }
@@ -286,8 +334,8 @@ export default function Registration() {
   }, []);
 
   return (
-    <main className="mt-[40px]">
-      <section className="relative flex flex-col justify-center items-center min-h-screen pt-[60px] 2xl:pt-0">
+    <main className="my-[24px] sm:my-[40px]">
+      <section className="relative flex flex-col justify-center items-center pt-[72px] sm:pt-[80px] mainCustom:pt-0">
         <Button
           variant="secondary"
           onClick={() => window.history.back()}
@@ -336,6 +384,7 @@ export default function Registration() {
             autoComplete="off"
             isTouched={isTouchedEmail}
             isValid={isValidEmail}
+            ref={emailRef}
           />
           <Input
             label="Password"
@@ -354,7 +403,8 @@ export default function Registration() {
             className="mb-[24px]"
             autoComplete="new-password"
             isTouched={isTouchedPassword}
-            isValid={isValidPassword}>
+            isValid={isValidPassword}
+            ref={passwordRef}>
             <div
               onClick={() => setShowPassword(!showPassword)}
               className="absolute top-[50%] translate-y-[-50%] right-[16px]">
@@ -381,6 +431,7 @@ export default function Registration() {
             autoComplete="off"
             isTouched={isTouchedFirstName}
             isValid={isValidFirstName}
+            ref={firstNameRef}
           />
           <Input
             label="Last Name"
@@ -402,6 +453,7 @@ export default function Registration() {
             autoComplete="off"
             isTouched={isTouchedLastName}
             isValid={isValidLastName}
+            ref={lastNameRef}
           />
           <div className="relative mb-[24px]">
             <Input
@@ -425,14 +477,15 @@ export default function Registration() {
               className="mb-[0]"
               autoComplete="off"
               isTouched={isTouchedBirthday}
-              isValid={isValidBirthday}>
+              isValid={isValidBirthday}
+              ref={birthdayRef}>
               <div className="absolute top-[50%] translate-y-[-50%] right-[16px] cursor-pointer pointer-events-none">
                 <CalendarIcon />
               </div>
             </Input>
           </div>
           <div
-            ref={countryRef}
+            ref={countryDropdownRef}
             onClick={() => setIsCountryOpen(!isCountryOpen)}
             className="relative mb-[24px] cursor-pointer">
             <Input
@@ -455,12 +508,12 @@ export default function Registration() {
               autoComplete="off"
               readOnly
               isTouched={isTouchedCountry}
-              isValid={isValidCountry}>
+              isValid={isValidCountry}
+              ref={countryRef}>
               <div className="absolute top-[50%] translate-y-[-50%] right-[16px] cursor-pointer">
                 <ArrowIcon />
               </div>
             </Input>
-
             {isCountryOpen && (
               <div className="absolute top-[64px] sm:top-[84px] z-10 w-full bg-2 mt-[8px] max-h-[200px] overflow-y-auto custom-scrollbar">
                 {countries.map((countryName, index) => (
@@ -478,7 +531,11 @@ export default function Registration() {
               </div>
             )}
           </div>
-          <div className="flex items-center mb-[24px]">
+          <div
+            className={`flex items-center mb-[24px] ${
+              !isAgreed && isTouchedAgreed ? "border-red" : ""
+            }`}
+            ref={agreedRef}>
             <div
               className={`w-[24px] h-[24px] bg-transparent border-2 rounded-sm flex items-center justify-center mr-[16px] cursor-pointer ${
                 !isAgreed && isTouchedAgreed ? "border-red" : "border-white"
@@ -521,4 +578,6 @@ export default function Registration() {
       </section>
     </main>
   );
-}
+};
+
+export default Registration;

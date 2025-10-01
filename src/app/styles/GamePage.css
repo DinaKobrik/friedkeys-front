@@ -2,7 +2,7 @@
 
 .game__header {
   max-width: 1920px;
-  width: calc(100vw - 15px);
+  width: calc(100vw - 17px);
 }
 .game__header::before {
   content: "";
@@ -11,7 +11,7 @@
   top: 0;
   left: 50%;
   max-width: 1920px;
-  width: calc(100vw - 15px);
+  width: calc(100vw - 17px);
   height: 100%;
   background: linear-gradient(
     to bottom,
@@ -36,12 +36,6 @@
 .game__header-info {
   clip-path: polygon(7% 0%, 100% 0%, 100% 93%, 93% 100%, 0% 100%, 0% 7%);
 }
-@media (pointer: coarse) {
-  .game__header,
-  .game__header::before {
-    width: 100vw;
-  }
-}
 
 @media (max-width: 1920px) {
   .game__header,
@@ -49,12 +43,7 @@
     max-width: 1700px;
   }
 }
-@media (pointer: coarse) {
-  .game__header,
-  .game__header::before {
-    width: 100vw;
-  }
-}
+
 @media (max-width: 1920px) {
   .game__header,
   .game__header::before {
@@ -79,6 +68,12 @@
   (min-width: 1921px) and (pointer: coarse) {
   .game__header {
     left: -156px;
+  }
+}
+@media (pointer: coarse) {
+  .game__header,
+  .game__header::before {
+    width: 100vw;
   }
 }
 

@@ -51,8 +51,10 @@
 
 .btn-secondary:disabled {
   color: theme("colors.gray-60");
+  border: 1px solid theme("colors.primary-20");
 }
-
-.btn-secondary:disabled {
-  border-color: #999999;
+@media (pointer: fine) {
+  .btn-secondary:disabled:hover {
+    background: none;
+  }
 }

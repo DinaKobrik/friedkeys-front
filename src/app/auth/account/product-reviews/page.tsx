@@ -112,6 +112,7 @@ interface Review {
 const ProductReviews: React.FC = React.memo(() => {
   const [games, setGames] = useState<Game[]>([]);
   const [reviews, setReviews] = useState<Review[]>([]);
+  const [imageSrcs, setImageSrcs] = useState<{ [key: number]: string }>({});
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const reviewsPerPage = 3;
@@ -238,6 +239,21 @@ const ProductReviews: React.FC = React.memo(() => {
   }, [fetchGames]);
 
   useEffect(() => {
+    setImageSrcs(
+      games.reduce(
+        (acc, game) => ({
+          ...acc,
+          [game.id]:
+            game.image && game.image.trim()
+              ? game.image
+              : "/images/no-image.jpg",
+        }),
+        {}
+      )
+    );
+  }, [games]);
+
+  useEffect(() => {
     if (reviews.length > 0) {
       localStorage.setItem("reviews", JSON.stringify(reviews));
     }
@@ -280,16 +296,22 @@ const ProductReviews: React.FC = React.memo(() => {
             aria-label={`Review for ${game.title} from ${formatDate(
               review.date
             )}`}>
-            <div className="card-corner">
+            <div className="card-corner h-[160px] xs:h-[200px] sm:h-[240px] md:h-[300px] lg:h-[336px] xl:h-[280px]">
               <Link
                 href={`/all-games/${game.id}`}
                 className="w-full h-full"
                 aria-label={`View game ${game.title}`}>
                 <Image
-                  src={game.image}
+                  src={imageSrcs[game.id] || "/images/no-image.jpg"}
                   alt={game.title}
                   width={520}
                   height={280}
+                  onError={() =>
+                    setImageSrcs((prev) => ({
+                      ...prev,
+                      [game.id]: "/images/no-image.jpg",
+                    }))
+                  }
                   className="object-cover h-[160px] xs:h-[200px] sm:h-[240px] md:h-[300px] lg:h-full w-full"
                   loading="lazy"
                 />
@@ -384,6 +406,7 @@ const ProductReviews: React.FC = React.memo(() => {
     formatDate,
     handleDeleteReview,
     handleEditReview,
+    imageSrcs,
   ]);
 
   const handlePageChange = useCallback((page: number) => {

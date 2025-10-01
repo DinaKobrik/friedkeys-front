@@ -66,6 +66,14 @@ function AppFooter() {
               {`User's feedbacks`}
             </Link>
           </li>
+          <li>
+            <Link
+              href="/about"
+              aria-label="About us"
+              className="text-white text-[16px] sm:text-[24px] no-underline hover:text-primary-main focus:outline-none focus:text-primary-main  transition-colors duration-300 ease-in-out">
+              About us
+            </Link>
+          </li>
         </ul>
       </div>
       <div className="flex flex-wrap gap-[23px] sm:gap-[16px] items-start justify-center sm:pr-[80px] sm:justify-end sm:order-2">

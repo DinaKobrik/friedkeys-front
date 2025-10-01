@@ -52,11 +52,11 @@ export default function FailedPage() {
         <Heading variant="h2" className="mb-[16px] sm:mb-[40px]">
           Something went wrong
         </Heading>
-        <Text className="mb-[16px] sm:mb-[40px]">
-          We couldn’t complete the payment. Please check the details and try
-          again.
+        <Text className="mb-[16px] sm:mb-[40px] max-w-[520px] w-full">
+          We couldn’t complete the payment. Please check <br /> the details and
+          try again.
         </Text>
-        <div className="mb-[80px] w-full">
+        <div className="mb-[80px] w-full max-w-[520px]">
           <Text>Possible reasons:</Text>
           <ul className="pl-[20px] list-disc marker:text-current text-left">
             <li>
@@ -70,7 +70,7 @@ export default function FailedPage() {
             </li>
           </ul>
         </div>
-        <div className="flex flex-col md:flex-row gap-[8px] w-full justify-center max-w-[calc(100%-20px)] lg:max-w-[100%]">
+        <div className="flex flex-col md:flex-row gap-[20px] w-full justify-center max-w-[calc(100%-20px)] sm:max-w-[calc(100%-10px)] lg:max-w-[100%]">
           <Button variant="secondary" className="md:max-w-[175px]">
             Try Again
           </Button>

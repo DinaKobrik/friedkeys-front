@@ -196,7 +196,7 @@ const SupportPage: React.FC = () => {
   }, []);
 
   return (
-    <main className="min-h-screen mt-[24px] sm:mt-[80px]">
+    <main className="mt-[24px]  sm:mt-[80px]">
       <section>
         <Heading variant="h3" className="mb-[24px] sm:mb-[40px]">
           Home / support
@@ -206,8 +206,8 @@ const SupportPage: React.FC = () => {
         </Heading>
         <div className="flex flex-col gap-[16px] max-w-[792px] mx-auto w-full">
           <Text>
-            Please fill out the form below to submit your support request. We’ll
-            get back to you soon!
+            {`Let us know what's going on — we'll get back to you as soon as
+            possible`}
           </Text>
 
           <form
@@ -218,7 +218,7 @@ const SupportPage: React.FC = () => {
               ref={topicRef}
               onClick={() => setIsTopicOpen(!isTopicOpen)}>
               <Input
-                label="Select Topic"
+                label="Choose a topic"
                 type="text"
                 value={selectedTopic}
                 name="topic"
@@ -257,10 +257,11 @@ const SupportPage: React.FC = () => {
               ref={orderRef}
               onClick={() => setIsOrderOpen(!isOrderOpen)}>
               <Input
-                label="Select Order"
+                label="order number"
                 type="text"
                 value={selectedOrder}
                 name="order"
+                placeholder="—"
                 required
                 onChange={() => {}}
                 variant="straight"
@@ -309,14 +310,14 @@ const SupportPage: React.FC = () => {
               />
             </div>
 
-            <div className="flex flex-col gap-[8px] w-full mb-[32px] sm:mb-[40px]">
+            <div className="flex flex-col gap-[8px] w-full mb-[32px] sm:mb-[40px] py-[16px]">
               <Heading variant="h3">{`Upload a Screenshot (.png or .jpg)`}</Heading>
               <div className="grid grid-cols-1 md:grid-cols-5 md:h-[136px] py-[8px] justify-center items-center gap-[24px] md:gap-[50px]">
                 <Button
                   variant="secondary"
                   type="button"
                   onClick={() => fileInputRef.current?.click()}
-                  className="md:col-span-2">
+                  className="md:col-span-2 ml-[10px]">
                   Add Screenshot
                 </Button>
                 <input
@@ -358,10 +359,10 @@ const SupportPage: React.FC = () => {
             <Button
               variant="primary"
               type="submit"
-              className="max-w-[calc(100%-20px)]">
+              className="max-w-[calc(100%-20px)] sm:max-w-[520px] mb-[8px]">
               Submit Request
             </Button>
-            <Text>
+            <Text className="mb-[12px]">
               Our support team typically replies within a few hours. Thanks for
               your patience!
             </Text>

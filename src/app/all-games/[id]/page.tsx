@@ -57,7 +57,9 @@ const GameDetailPage: React.FC = () => {
         <GameFranchise />
         <GameGenre />
         <GameReviews />
-        {game && <CartButton game={game} />}
+        <section className="sm:hidden">
+          {game && <CartButton game={game} />}
+        </section>
       </main>
     </CartProvider>
   );

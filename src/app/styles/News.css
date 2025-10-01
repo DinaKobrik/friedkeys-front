@@ -1,11 +1,14 @@
 /* new */
-.new__image::before {
+.new__image {
+  width: calc(100vw - 17px);
+}
+.new__image-container::before {
   content: "";
   position: absolute;
   top: -60px;
   left: 50%;
   max-width: 1920px;
-  width: calc(100vw - 15px);
+  width: calc(100vw - 17px);
   height: calc(100% + 100px);
   background: linear-gradient(
     to bottom,
@@ -21,7 +24,8 @@
   z-index: 1;
 }
 @media (pointer: coarse) {
-  .new__image::before {
+  .new__image,
+  .new__image-container::before {
     width: 100vw;
   }
 }

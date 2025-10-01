@@ -66,13 +66,14 @@ const ReviewContent: React.FC = React.memo(() => {
   const searchParams = useSearchParams();
   const [games, setGames] = useState<Game[]>([]);
   const [game, setGame] = useState<Game | null>(null);
+  const [imageSrc, setImageSrc] = useState<string>("/images/no-image.jpg");
   const [liked, setLiked] = useState(false);
   const [reviewText, setReviewText] = useState("");
   const [pros, setPros] = useState<string>("");
   const [cons, setCons] = useState<string>("");
   const [gameId, setGameId] = useState<number>(1);
   const [isTouchedReview, setIsTouchedReview] = useState(false);
-  const [isValidReview, setIsValidReview] = useState(true);
+  const [isValidReview, setIsValidReview] = useState(false);
   const [isLg, setIsLg] = useState(false);
   const [order, setOrder] = useState<string>("123456789");
   const [originalReview, setOriginalReview] = useState<Review | null>(null);
@@ -129,6 +130,7 @@ const ReviewContent: React.FC = React.memo(() => {
         setPros(existingReview.pros || "");
         setCons(existingReview.cons || "");
         setOrder(existingReview.order || paramOrder);
+        setIsValidReview(existingReview.review?.trim().length > 0);
       } else {
         setOriginalReview(null);
         setLiked(paramLiked || false);
@@ -136,6 +138,7 @@ const ReviewContent: React.FC = React.memo(() => {
         setPros("");
         setCons("");
         setOrder(paramOrder);
+        setIsValidReview(false);
       }
 
       if (games.length > 0) {
@@ -144,6 +147,14 @@ const ReviewContent: React.FC = React.memo(() => {
       }
     }
   }, [searchParams, games]);
+
+  useEffect(() => {
+    if (game) {
+      setImageSrc(
+        game.image && game.image.trim() ? game.image : "/images/no-image.jpg"
+      );
+    }
+  }, [game]);
 
   const handleReviewChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const value = e.target.value;
@@ -184,7 +195,11 @@ const ReviewContent: React.FC = React.memo(() => {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    if (!isValidReview) return;
+    if (!reviewText.trim()) {
+      setIsTouchedReview(true);
+      setIsValidReview(false);
+      return;
+    }
 
     const savedReviews = localStorage.getItem("reviews") || "[]";
     const reviews = JSON.parse(savedReviews);
@@ -221,6 +236,14 @@ const ReviewContent: React.FC = React.memo(() => {
         originalReview.order ||
           `ORD${Math.floor(100000 + Math.random() * 900000)}`
       );
+    } else {
+      setLiked(false);
+      setReviewText("");
+      setPros("");
+      setCons("");
+      setOrder(`ORD${Math.floor(100000 + Math.random() * 900000)}`);
+      setIsTouchedReview(false);
+      setIsValidReview(false);
     }
     router.push("/auth/account/product-reviews");
   };
@@ -263,20 +286,22 @@ const ReviewContent: React.FC = React.memo(() => {
               role="region"
               aria-label={`Game image and title: ${game.title}`}>
               <Image
-                src={game.image}
+                src={imageSrc || "/images/no-image.jpg"}
                 alt={game.title}
                 width={568}
                 height={320}
-                className="absolute top-0 left-0 min-h-[226px] sm:min-h-[320px] filter blur-[20px] z-0 object-cover"
+                className="absolute top-0 left-0 h-[226px] sm:h-[320px] filter blur-[20px] z-0 object-cover"
                 loading="lazy"
+                onError={() => setImageSrc("/images/no-image.jpg")}
               />
               <Image
-                src={game.image}
+                src={imageSrc || "/images/no-image.jpg"}
                 alt={game.title}
                 width={520}
                 height={280}
-                className="relative z-10 min-h-[216px] sm:min-h-[280px] top-[5px] sm:top-[20px] mx-auto mb-[13px] sm:mb-[44px] object-cover"
+                className="new-clip relative z-10 h-[216px] sm:h-[280px] top-[5px] sm:top-[20px] mx-auto mb-[13px] sm:mb-[44px] object-cover"
                 loading="lazy"
+                onError={() => setImageSrc("/images/no-image.jpg")}
               />
               <Heading
                 variant="h3"
@@ -350,7 +375,7 @@ const ReviewContent: React.FC = React.memo(() => {
                 name="pros"
                 onChange={handleProsChange}
                 onKeyDown={(e) => handleKeyDown(e, "pros")}
-                placeholder="What did you like? (separate items with commas)"
+                placeholder="What did you like?"
                 className="w-full h-[104px] sm:h-[120px]"
                 variant="straight"
                 aria-label="Pros text area"
@@ -361,7 +386,7 @@ const ReviewContent: React.FC = React.memo(() => {
                 name="cons"
                 onChange={handleConsChange}
                 onKeyDown={(e) => handleKeyDown(e, "cons")}
-                placeholder="What could be better? (separate items with commas)"
+                placeholder="What could be better?"
                 className="w-full h-[104px] sm:h-[120px]"
                 variant="straight"
                 aria-label="Cons text area"
@@ -379,6 +404,7 @@ const ReviewContent: React.FC = React.memo(() => {
                 <Button
                   variant="primary"
                   type="submit"
+                  disabled={!isValidReview}
                   aria-label="Submit review">
                   Submit Review
                 </Button>

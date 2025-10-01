@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Button from "@/components/ui/Button";
 import Heading from "@/components/ui/Heading";
-import { CartProvider, useCart } from "@/components/Sections/Game/CartHandler";
+import { useCart } from "@/components/Sections/Game/CartHandler";
 
 interface Game {
   id: number;
@@ -20,13 +20,14 @@ interface Game {
   reviews?: number;
 }
 
-const RecommendationsBlockContent: React.FC = () => {
+const RecommendationsBlock: React.FC = () => {
   const [games, setGames] = useState<Game[]>([]);
   const { cartQuantities, setCartQuantities } = useCart();
   const [isFavorite, setIsFavorite] = useState<{ [key: number]: boolean }>({});
   const [isLessThan992, setIsLessThan992] = useState(false);
   const [isLessThan768, setIsLessThan768] = useState(false);
   const [isOneLine, setIsOneLine] = useState<{ [key: number]: boolean }>({});
+  const [imageSrcs, setImageSrcs] = useState<{ [key: number]: string }>({});
 
   const infoRefs = useRef<{ [key: number]: HTMLDivElement | null }>({});
 
@@ -91,6 +92,21 @@ const RecommendationsBlockContent: React.FC = () => {
     window.addEventListener("resize", checkLineCount);
     return () => window.removeEventListener("resize", checkLineCount);
   }, [games, isLessThan768]);
+
+  useEffect(() => {
+    setImageSrcs(
+      games.reduce(
+        (acc, game) => ({
+          ...acc,
+          [game.id]:
+            game.image && game.image.trim()
+              ? game.image
+              : "/images/no-image.jpg",
+        }),
+        {}
+      )
+    );
+  }, [games]);
 
   const toggleFavorite = useCallback(
     (gameId: number) => {
@@ -232,11 +248,17 @@ const RecommendationsBlockContent: React.FC = () => {
                         href={`/all-games/${game.id}`}
                         className="w-full h-full">
                         <Image
-                          src={game.image}
+                          src={imageSrcs[game.id] || "/images/no-image.jpg"}
                           alt={game.title}
                           width={520}
                           height={280}
                           className="object-cover w-full h-full"
+                          onError={() =>
+                            setImageSrcs((prev) => ({
+                              ...prev,
+                              [game.id]: "/images/no-image.jpg",
+                            }))
+                          }
                         />
                       </Link>
                     </div>
@@ -247,7 +269,7 @@ const RecommendationsBlockContent: React.FC = () => {
                       <div>
                         <div className="flex gap-[16px] items-start">
                           <p
-                            className={`hidden lg:block font-medium text-white h-auto text-[12px] sm:text-[20px] py-[4px] sm:py-[6px] px-[8px] bg-DLS ${
+                            className={`hidden lg:block font-medium text-white h-auto text-[12px] leading-[17px] sm:text-[20px] py-[4px] sm:py-[6px] px-[8px] bg-DLS ${
                               game.hasDlc ? "block" : "hidden sm:hidden"
                             }`}
                             aria-label={`DLC indicator for ${game.title}`}>
@@ -331,7 +353,7 @@ const RecommendationsBlockContent: React.FC = () => {
                                 aria-label={`Discount percentage: -${game.discount}%`}>
                                 -{game.discount}%
                               </span>
-                              <div className="flex flex-col">
+                              <div className="flex flex-col items-end">
                                 <span
                                   className="text-white font-bold text-[15px] sm:text-[28px] leading-[17px] sm:leading-[28px]"
                                   aria-label={`Discounted price: ${discountPrice}$`}>
@@ -360,7 +382,7 @@ const RecommendationsBlockContent: React.FC = () => {
                       }`}></div>
                   </div>
                 </div>
-                <div className="lg:mt-[12px] absolute lg:static bottom-[0px] right-0 md:bottom-[32px] md:right-[32px] mr-[10px] lg:mr-0">
+                <div className="lg:mt-[24px] absolute lg:static bottom-[0px] right-0 md:bottom-[32px] md:right-[32px] mr-[10px] lg:mr-0">
                   {cartQuantity === 0 ? (
                     <Button
                       variant="secondary"
@@ -450,14 +472,6 @@ const RecommendationsBlockContent: React.FC = () => {
         )}
       </div>
     </section>
-  );
-};
-
-const RecommendationsBlock: React.FC = () => {
-  return (
-    <CartProvider>
-      <RecommendationsBlockContent />
-    </CartProvider>
   );
 };
 

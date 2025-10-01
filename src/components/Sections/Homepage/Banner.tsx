@@ -19,6 +19,7 @@ const Banner: React.FC = () => {
       addedAt: number;
     };
   }>({});
+  const [imageSrc, setImageSrc] = useState<string>("/images/no-image.jpg");
 
   useEffect(() => {
     const fetchGames = async () => {
@@ -50,6 +51,13 @@ const Banner: React.FC = () => {
     discountDate: "",
     title: "Unknown Game",
   };
+
+  useEffect(() => {
+    setImageSrc(
+      game.image && game.image.trim() ? game.image : "/images/no-image.jpg"
+    );
+  }, [game.image]);
+
   const now = new Date();
   const isDiscountExpired =
     !game.discountDate ||
@@ -159,7 +167,7 @@ const Banner: React.FC = () => {
 
     return (
       <div
-        className={`sm:absolute z-50 bottom-[0] sm:bottom-[20%] left-[6px] sm:left-[46px] xl:left-[130px] ${
+        className={`sm:absolute z-50 bottom-[0] sm:bottom-[20%] left-[6px] sm:left-[46px] xl:left-[115px] ${
           discountPrice === null
             ? "bodyCustom:left-[237px]"
             : "bodyCustom:left-[157px]"
@@ -204,7 +212,7 @@ const Banner: React.FC = () => {
               </div>
             )}
             {selectedVariant === 2 && (
-              <div className=" sm:max-w-[520px] w-full mx-auto">
+              <div className=" sm:max-w-[455px] w-full mx-auto sm:mx-0 sm:ml-[30px]">
                 <Heading
                   variant="h1"
                   className="text-center mb-[6px] hidden sm:block">
@@ -246,7 +254,7 @@ const Banner: React.FC = () => {
               </div>
             )}
             {selectedVariant === 3 && (
-              <div className="flex flex-col gap-[8px] w-full max-w-[calc(100%-20px)] sm:max-w-[520px] mx-auto ml-[10px]">
+              <div className="flex flex-col gap-[8px] w-full max-w-[calc(100%-20px)] sm:max-w-[520px] mx-auto ml-[10px] sm:ml-0">
                 <div className="h-[42px] sm:h-[52px] flex w-full items-center gap-[8px] max-w-[100%]">
                   {PriceOriginalBlock}
                   {DiscountBadgeBlock}
@@ -277,7 +285,7 @@ const Banner: React.FC = () => {
                 ) : (
                   <Button
                     variant="primary"
-                    className="max-w-[calc(100%-20px)]"
+                    className="sm:max-w-[calc(100%-20px)]"
                     onClick={addToCart}>
                     Add to cart
                   </Button>
@@ -285,7 +293,7 @@ const Banner: React.FC = () => {
               </div>
             )}
             {selectedVariant === 4 && (
-              <div className="max-w-[calc(100%-20px)] sm:max-w-[383px] flex flex-col w-full gap-[8px] sm:gap-[16px] mx-[10px] sm:ml-0">
+              <div className="max-w-[calc(100%-20px)] sm:max-w-[383px] flex flex-col w-full gap-[8px] sm:gap-[16px] xs:mx-[10px] sm:ml-0">
                 <div className="grid grid-cols-2 lg:flex justify-between gap-[8px] xs:gap-[24px] items-center">
                   {DiscountBadgeBlock}
                   <Heading variant="h1" className="text-center hidden sm:block">
@@ -414,17 +422,18 @@ const Banner: React.FC = () => {
   return (
     <section className="relative banner__container w-full mx-auto">
       <div className="relative banner mx-auto mb-[32px] sm:mb-0">
-        {game.image && (
-          <Link href={`/all-games/${game.id}`} className="w-full h-full">
+        <Link href={`/all-games/${game.id}`} className="w-full h-full">
+          <div className="relative w-full aspect-[1920/806] min-h-[216px] sm:min-h-[360px]">
             <Image
-              src={game.image}
+              src={imageSrc}
               alt={game.title || "Game Banner"}
               width={1920}
-              height={500}
-              className="min-h-[216px] sm:min-h-[360px] h-full object-cover"
+              height={806}
+              className="w-full h-full object-cover"
+              onError={() => setImageSrc("/images/no-image.jpg")}
             />
-          </Link>
-        )}
+          </div>
+        </Link>
       </div>
       {renderPriceBlock()}
     </section>

@@ -54,7 +54,7 @@ const GameGenre: React.FC = () => {
       <div className="mb-[24px] sm:mb-[40px]">
         <Heading variant="h1">{genre}</Heading>
       </div>
-      <div className="w-full grid grid-flow-row grid-cols-2 lg:grid-cols-3 gap-[12px] sm:gap-[24px]">
+      <div className="w-full grid grid-flow-row grid-cols-2 lg:grid-cols-3 gap-[12px] sm:gap-x-[24px] sm:gap-y-[40px]">
         {games.length > 0 ? (
           games.map((game) => <GameCard key={game.id} game={game} />)
         ) : (

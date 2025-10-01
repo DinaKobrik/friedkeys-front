@@ -122,7 +122,7 @@ const Partners = () => {
         parseInt(
           wrapper.style.transform.replace("translateX(", "").replace("px)", "")
         ) || 0;
-      const sensitivity = 0.1;
+      const sensitivity = 0.3;
 
       const adjustedPosition = currentPosition + currentTranslate * sensitivity;
       wrapper.style.transform = `translateX(${adjustedPosition}px)`;
@@ -183,7 +183,7 @@ const Partners = () => {
       </Text>
       <div
         ref={sliderRef}
-        className="overflow-x-hidden max-w-[1920px] w-[100vw] xl:w-[calc(100vw-15px)] mainCustom:w-[calc(100%+81px)] bodyCustom:w-[calc(100vw-15px)]  mx-auto relative left-[-16px] sm:left-[-46px] bodyCustom:left-[-156px]">
+        className="overflow-x-hidden slider-track__container mainCustom:w-[calc(100%+81px)] bodyCustom:w-[calc(100vw-15px)] mx-auto relative left-[-16px] sm:left-[-46px] bodyCustom:left-[-156px]">
         <div className="absolute top-1/2 transform -translate-y-1/2 -translate-x-1/2 left-1/2 w-[calc(100%-32px)] sm:w-[calc(100%-92px)] bodyCustom:w-full hidden md:flex justify-between max-w-[1608px] mx-auto z-20">
           <button
             onClick={scrollLeft}
@@ -227,7 +227,6 @@ const Partners = () => {
             const altText =
               src.split("/").pop()?.replace(".png", "") ||
               `Partner ${index + 1}`;
-            const isPlayStation = src === "/images/partners/PlayStation.png";
             return (
               <div key={index} className="slide flex-shrink-0">
                 <div className="skew-x-[20deg] bg-[#1010105A] px-[50px] sm:px-[72px] xl:px-[93px]">
@@ -238,9 +237,7 @@ const Partners = () => {
                       width={0}
                       height={0}
                       sizes="100vw"
-                      className={`w-full h-full user-select-none ${
-                        isPlayStation ? "object-cover" : "object-contain"
-                      }`}
+                      className="w-full h-full user-select-none object-contain"
                       draggable="false"
                     />
                   </div>

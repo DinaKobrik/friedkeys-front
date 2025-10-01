@@ -23,6 +23,8 @@ const ChangeName: React.FC = React.memo(() => {
     lastName: "",
     birthday: "",
   });
+  const [showModal, setShowModal] = useState<boolean>(false);
+  const [fadeOut, setFadeOut] = useState<boolean>(false);
 
   const firstNameRef = useRef<HTMLInputElement>(null);
   const lastNameRef = useRef<HTMLInputElement>(null);
@@ -206,7 +208,14 @@ const ChangeName: React.FC = React.memo(() => {
         lastUpdated: formatLastUpdated(),
       };
       localStorage.setItem("userProfile", JSON.stringify(updatedData));
-      alert("Changes saved successfully!");
+      setShowModal(true);
+      setFadeOut(false);
+      setTimeout(() => {
+        setFadeOut(true);
+        setTimeout(() => {
+          setShowModal(false);
+        }, 300);
+      }, 2000);
     }
   }, [formData, validateForm]);
 
@@ -244,6 +253,8 @@ const ChangeName: React.FC = React.memo(() => {
               label="First Name"
               type="text"
               name="firstName"
+              primary
+              customCaret={true}
               value={formData.firstName}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                 setFormData({ ...formData, firstName: e.target.value })
@@ -261,6 +272,8 @@ const ChangeName: React.FC = React.memo(() => {
               label="Last Name"
               type="text"
               name="lastName"
+              primary
+              customCaret={true}
               value={formData.lastName}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                 setFormData({ ...formData, lastName: e.target.value })
@@ -278,6 +291,7 @@ const ChangeName: React.FC = React.memo(() => {
               label="Birthday"
               type="date"
               name="birthday"
+              primary
               value={formData.birthday}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                 setFormData({ ...formData, birthday: e.target.value })
@@ -312,6 +326,25 @@ const ChangeName: React.FC = React.memo(() => {
           </div>
         </div>
       </section>
+      {showModal && (
+        <div
+          className={`fixed z-50 top-0 left-0 w-full h-full flex justify-center items-center transition-opacity duration-300 ease-in-out ${
+            fadeOut ? "opacity-0" : "opacity-100"
+          }`}
+          aria-live="polite">
+          <div
+            className={`absolute w-full h-full bg-[#0000003A] backdrop-blur-sm transition-opacity duration-300 ease-in-out ${
+              fadeOut ? "opacity-0" : "opacity-100"
+            }`}></div>
+          <div
+            className={`relative border-[1px] overflow-hidden border-primary-main bg-2 px-[20px] py-[40px] max-w-[320px] flex justify-center items-center text-center transition-all duration-300 ease-in-out ${
+              fadeOut ? "scale-95 opacity-0" : "scale-100 opacity-100"
+            }`}>
+            <Heading variant="h3">Changes saved successfully</Heading>
+            <div className="h-[7px] w-[75%] sm:w-[50%] absolute bottom-0 left-[50%] bg-primary-main translate-x-[-50%] blur-[30px] z-0"></div>
+          </div>
+        </div>
+      )}
     </main>
   );
 });

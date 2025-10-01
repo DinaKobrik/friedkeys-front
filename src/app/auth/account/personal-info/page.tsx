@@ -249,7 +249,7 @@ const PersonalInfo: React.FC = React.memo(() => {
                 Email
               </Heading>
               <div
-                className="w-full border-1 border-primary-main relative text-white bg-2 focus:outline-none h-[48px] sm:h-[56px] flex items-center px-4"
+                className="w-full border-[1px] border-primary-20 relative text-white bg-2 focus:outline-none h-[48px] sm:h-[56px] flex items-center px-4"
                 role="region"
                 aria-label={`Email: ${userDataDisplay.email}`}>
                 {userDataDisplay.email}
@@ -269,7 +269,7 @@ const PersonalInfo: React.FC = React.memo(() => {
                 Password
               </Heading>
               <div
-                className="w-full border-1 border-primary-main relative text-white bg-2 focus:outline-none h-[48px] sm:h-[56px] flex items-center px-4"
+                className="w-full border-[1px] border-primary-20 relative text-white bg-2 focus:outline-none h-[48px] sm:h-[56px] flex items-center px-4"
                 role="region"
                 aria-label={`Password: ${userDataDisplay.password}`}>
                 {userDataDisplay.password}
@@ -289,7 +289,7 @@ const PersonalInfo: React.FC = React.memo(() => {
                 First Name
               </Heading>
               <div
-                className="w-full border-1 border-primary-main relative text-white bg-2 focus:outline-none h-[48px] sm:h-[56px] flex items-center px-4"
+                className="w-full border-[1px] border-primary-20 relative text-white bg-2 focus:outline-none h-[48px] sm:h-[56px] flex items-center px-4"
                 role="region"
                 aria-label={`First Name: ${userDataDisplay.firstName}`}>
                 {userDataDisplay.firstName}
@@ -309,7 +309,7 @@ const PersonalInfo: React.FC = React.memo(() => {
                 Last Name
               </Heading>
               <div
-                className="w-full border-1 border-primary-main relative text-white bg-2 focus:outline-none h-[48px] sm:h-[56px] flex items-center px-4"
+                className="w-full border-[1px] border-primary-20 relative text-white bg-2 focus:outline-none h-[48px] sm:h-[56px] flex items-center px-4"
                 role="region"
                 aria-label={`Last Name: ${userDataDisplay.lastName}`}>
                 {userDataDisplay.lastName}
@@ -329,7 +329,7 @@ const PersonalInfo: React.FC = React.memo(() => {
                 Birthday
               </Heading>
               <div
-                className="w-full border-1 border-primary-main relative text-white bg-2 focus:outline-none h-[48px] sm:h-[56px] flex items-center px-4"
+                className="w-full border-[1px] border-primary-20 relative text-white bg-2 focus:outline-none h-[48px] sm:h-[56px] flex items-center px-4"
                 role="region"
                 aria-label={`Birthday: ${userDataDisplay.birthday}`}>
                 {userDataDisplay.birthday}
@@ -343,7 +343,7 @@ const PersonalInfo: React.FC = React.memo(() => {
             </div>
           </div>
           <div
-            className="grid grid-cols-2 items-center w-full max-w-[calc(100%-20px)] mx-auto gap-[20px]"
+            className="grid grid-cols-2 items-center w-full max-w-[calc(100%-20px)] mx-auto sm:gap-[20px]"
             role="region"
             aria-label="Account Actions">
             <Button variant="secondary" aria-label="Log Out">
@@ -357,7 +357,7 @@ const PersonalInfo: React.FC = React.memo(() => {
             </Link>
           </div>
           <Text
-            className="text-center"
+            className="text-center mb-[40px]"
             aria-label={`Member since: ${userDataDisplay.lastUpdated}`}>
             Member since: {userDataDisplay.lastUpdated}
           </Text>

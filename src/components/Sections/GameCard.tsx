@@ -23,6 +23,9 @@ const GameCard: React.FC<GameCardProps> = ({
   const [isMobile, setIsMobile] = useState(false);
   const [discountTime, setDiscountTime] = useState<string | null>(null);
   const [isFavorite, setIsFavorite] = useState(false);
+  const [imageSrc, setImageSrc] = useState<string>(
+    game.image && game.image.trim() ? game.image : "/images/no-image.jpg"
+  );
 
   useEffect(() => {
     const handleResize = () => {
@@ -132,7 +135,7 @@ const GameCard: React.FC<GameCardProps> = ({
   return (
     <div className="w-full h-full flex flex-col relative min-w-[138px] xs:min-w-[175px] sm:min-w-[200px]">
       <div
-        className="favorite absolute w-[36px] h-[36px] sm:w-[48px] sm:h-[48px] right-0 top-0 z-10 flex justify-center items-center cursor-pointer"
+        className="favorite absolute w-[36px] h-[36px] sm:w-[48px] sm:h-[48px] right-0 top-[1px] z-10 flex justify-center items-center cursor-pointer"
         onClick={toggleFavorite}>
         <svg
           width="16.5"
@@ -159,10 +162,11 @@ const GameCard: React.FC<GameCardProps> = ({
               className="relative w-full h-[240px] max-h-[240px] md:h-[280px] md:max-h-[280px] lg:h-0 lg:max-h-none 
     lg:pb-[52.53%]">
               <Image
-                src={game.image}
+                src={imageSrc}
                 alt={game.title}
                 fill
                 className="object-cover"
+                onError={() => setImageSrc("/images/no-image.jpg")}
               />
               {showSaleTimer && discountTime && (
                 <div className="sale-time absolute bottom-0 left-0 text-sale text-[12px] leading-[14px] md:text-[19px] md:leading-[30px] p-[8px] sm:p-[16px] text-center w-full z-10">
@@ -203,7 +207,7 @@ const GameCard: React.FC<GameCardProps> = ({
                         {game.price}$
                       </span>
                       <span
-                        className={`absolute right-0 md:sticky md:right-auto md:bottom-auto text-white font-bold text-[13px] md:text-[18px] leading-[13px] sm:leading-[20px] py-[4px] px-[8px] md:py-[7px] md:px-[16px] rounded-[2px] bg-sale ${
+                        className={`absolute right-0 md:sticky md:right-auto md:bottom-auto text-white font-bold text-[13px] md:text-[18px] leading-[20px] py-[4px] px-[8px] md:py-[7px] md:px-[16px] rounded-[2px] bg-sale ${
                           showSaleTimer && discountTime
                             ? "bottom-[132px] sm:bottom-[160px]"
                             : "bottom-[102px] sm:bottom-[130px]"
@@ -223,7 +227,7 @@ const GameCard: React.FC<GameCardProps> = ({
           </div>
           {!hidePreOrder && game.preOrder && game.releaseDate && (
             <div className="block max-w-[284px] w-[calc(100%-20px)] mx-auto mt-[8px] sm:mt-[12px] py-[4px] px-[12px] skew-x-[-20deg] bg-primary-main rounded-[1px]">
-              <p className="skew-x-[20deg] text-center text-black text-[12px] leading-[12px] sm:text-[16px] sm:leading-[16px]">
+              <p className="font-semibold skew-x-[20deg] text-center text-black text-[12px] leading-[12px] sm:text-[16px] sm:leading-[16px]">
                 PRE-ORDER {formatReleaseDate(game.releaseDate)}
               </p>
             </div>

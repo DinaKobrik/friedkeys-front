@@ -22,6 +22,9 @@ const New: React.FC<NewProps> = ({
   const [isMobileLessThan768, setIsMobileLessThan768] = useState(false);
   const titleRef = useRef<HTMLDivElement>(null);
   const [descriptionLines, setDescriptionLines] = useState(2);
+  const [imageSrc, setImageSrc] = useState<string>(
+    news.image && news.image.trim() ? news.image : "/images/no-image.jpg"
+  );
 
   useEffect(() => {
     const handleResize = () => {
@@ -66,6 +69,24 @@ const New: React.FC<NewProps> = ({
     };
   }, [news.title, isVertical, isMobileLessThan768]);
 
+  const formattedDate = (() => {
+    try {
+      const date = new Date(news.date);
+      if (isNaN(date.getTime())) {
+        return news.date;
+      }
+      return date
+        .toLocaleDateString("ru-RU", {
+          day: "2-digit",
+          month: "2-digit",
+          year: "numeric",
+        })
+        .replace(/\//g, ".");
+    } catch {
+      return news.date;
+    }
+  })();
+
   return (
     <Link
       href={`/news/${news.id}`}
@@ -85,11 +106,12 @@ const New: React.FC<NewProps> = ({
               : "max-w-[520px] max-h-[248px]"
           }`}>
           <Image
-            src={news.image}
+            src={imageSrc}
             alt={news.title}
             width={300}
             height={200}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover rounded-[2px]"
+            onError={() => setImageSrc("/images/no-image.jpg")}
           />
         </div>
         <div
@@ -128,7 +150,7 @@ const New: React.FC<NewProps> = ({
             </p>
           </div>
           <p className="text-[#C1C1C1] text-[14px] leading-[16px] sm:text-[20px] sm:leading-[24px] text-end">
-            {news.date}
+            {formattedDate}
           </p>
 
           <div

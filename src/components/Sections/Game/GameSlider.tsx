@@ -332,7 +332,7 @@ const GameSlider: React.FC = () => {
             <video
               ref={videoRef}
               src={mediaItems[currentSlide]}
-              className="w-full h-full object-cover rounded-[2px]"
+              className="w-full h-full object-cover rounded-[8px]"
               muted
               onClick={togglePlay}
               preload="metadata"
@@ -348,7 +348,7 @@ const GameSlider: React.FC = () => {
                   viewBox="0 0 28 32"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
-                  className="w-[24px] h-[24px]">
+                  className="w-[24px] h-[24px] sm:w-[40px] sm:h-[40px]">
                   <path
                     fillRule="evenodd"
                     clipRule="evenodd"
@@ -362,7 +362,7 @@ const GameSlider: React.FC = () => {
             )}
             {(showControls || !isPlaying) && (
               <div
-                className="absolute bottom-[4px] left-[4px] right-[4px] flex gap-[12px] items-center transition-opacity duration-500"
+                className="absolute bottom-[4px] left-[4px] right-[4px] md:left-[16px] md:right-[16px] md:bottom-[16px] flex gap-[12px] items-center transition-opacity duration-500"
                 style={{ opacity: showControls ? 1 : 0 }}>
                 <button onClick={togglePlay}>
                   {isPlaying ? (
@@ -371,7 +371,8 @@ const GameSlider: React.FC = () => {
                       height="32"
                       viewBox="0 0 28 32"
                       fill="none"
-                      xmlns="http://www.w3.org/2000/svg">
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="w-[24px] h-[24px] sm:w-[40px] sm:h-[40px]">
                       <rect
                         x="8"
                         y="4"
@@ -399,7 +400,8 @@ const GameSlider: React.FC = () => {
                       height="32"
                       viewBox="0 0 28 32"
                       fill="none"
-                      xmlns="http://www.w3.org/2000/svg">
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="w-[24px] h-[24px] sm:w-[40px] sm:h-[40px]">
                       <path
                         fillRule="evenodd"
                         clipRule="evenodd"
@@ -444,7 +446,7 @@ const GameSlider: React.FC = () => {
             alt={`Slide ${currentSlide + 1}`}
             width={1064}
             height={880}
-            className="w-full h-full object-cover rounded-[2px] no-drag"
+            className="w-full h-full object-cover rounded-[8px] no-drag"
             draggable="false"
           />
         )}

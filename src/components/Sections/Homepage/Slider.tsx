@@ -19,6 +19,7 @@ const Slider: React.FC = () => {
   const [screenWidth, setScreenWidth] = useState<number>(
     typeof window !== "undefined" ? window.innerWidth : 1920
   );
+  const [imageSrcs, setImageSrcs] = useState<string[]>([]);
   const sliderRef = useRef<HTMLDivElement>(null);
   const ulRef = useRef<HTMLUListElement>(null);
   const intervalRef = useRef<number | null>(null);
@@ -31,6 +32,16 @@ const Slider: React.FC = () => {
         const data = await response.json();
         if (Array.isArray(data)) {
           setGames(data);
+          setImageSrcs(
+            data
+              .sort((a: Game, b: Game) => a.id - b.id)
+              .slice(0, 5)
+              .map((game: Game) =>
+                game.image && game.image.trim()
+                  ? game.image
+                  : "/images/no-image.jpg"
+              )
+          );
         } else {
           console.warn("Invalid games data format from API");
         }
@@ -57,7 +68,8 @@ const Slider: React.FC = () => {
       .slice(0, 5)
       .map((game: Game) => ({
         ...game,
-        image: game.image || "/placeholder.jpg",
+        image:
+          game.image && game.image.trim() ? game.image : "/images/no-image.jpg",
       }));
   }, [games]);
 
@@ -203,11 +215,18 @@ const Slider: React.FC = () => {
                 className="w-[100vw] home__slide bodyCustom:w-full flex-shrink-0 ">
                 <Link href={`/all-games/${game.id}`} className="w-full h-full">
                   <Image
-                    src={game.image}
+                    src={imageSrcs[index] || "/images/no-image.jpg"}
                     alt={game.title || "Game Slider"}
                     width={1920}
                     height={880}
                     className="w-full h-[216px] sm:h-[440px] md:h-[580px] xl:h-[880px] object-cover no-drag"
+                    onError={() =>
+                      setImageSrcs((prev) => {
+                        const newSrcs = [...prev];
+                        newSrcs[index] = "/images/no-image.jpg";
+                        return newSrcs;
+                      })
+                    }
                   />
                 </Link>
               </li>

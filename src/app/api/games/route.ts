@@ -27,7 +27,12 @@ export async function GET(request: Request) {
   }
   log(`Games data length: ${(gamesData as Game[]).length}`);
 
-  let filteredGames = [...(gamesData as Game[])];
+  let filteredGames = [...(gamesData as Game[])].map((game) => ({
+    ...game,
+    image:
+      game.image && game.image.trim() ? game.image : "/images/no-image.jpg",
+  }));
+
   const genre = searchParams.get("genre")?.split(",");
   if (genre && genre.length > 0 && genre.some((g) => g.trim())) {
     log(`Applying genre filter: ${genre}`);

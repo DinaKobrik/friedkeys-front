@@ -75,6 +75,8 @@ const PaymentContent = () => {
   const { cartQuantities, setCartQuantities } = useCart();
   const [selectedAdress, setSelectedAdress] = useState("");
   const [isAddressOpen, setIsAddressOpen] = useState(false);
+  const [isTouchedAddress, setIsTouchedAddress] = useState(false);
+  const [isPayClicked, setIsPayClicked] = useState(false);
   const [discountCode, setDiscountCode] = useState("");
   const [giftCard, setGiftCard] = useState("");
   const [cartGames, setCartGames] = useState<Game[]>([]);
@@ -83,10 +85,10 @@ const PaymentContent = () => {
   const gamesPerPage = 5;
   const [editingCartKey, setEditingCartKey] = useState<string | null>(null);
   const [newQuantity, setNewQuantity] = useState(0);
-  const [paymentMethod, setPaymentMethod] = useState<string>("");
+  const [paymentMethod, setPaymentMethod] = useState("");
+  const paymentMethodRef = useRef<HTMLDivElement>(null);
 
   const [order, setOrder] = useState<Record<string, CartItem>>({}); // eslint-disable-line @typescript-eslint/no-unused-vars
-
   /* eslint-disable @typescript-eslint/no-unused-vars */
   const [orderData, setOrderData] = useState<{
     total: number;
@@ -96,22 +98,19 @@ const PaymentContent = () => {
   } | null>(null);
   /* eslint-enable @typescript-eslint/no-unused-vars */
 
-  // Варианты дизайна списка игр
-  const [displayMode, setDisplayMode] = useState(2); // eslint-disable-line @typescript-eslint/no-unused-vars
-  const paymentMethodRef = useRef<HTMLDivElement>(null);
-
+  const [displayMode, setDisplayMode] = useState(1); // eslint-disable-line @typescript-eslint/no-unused-vars
   const addresses = [
-    "France (VAT 20%",
-    "Germany (VAT 19%",
-    "United Kingdom (VAT 20%",
-    "Italy (VAT 22%",
-    "Spain (VAT 21%",
-    "Canada (GST 5%",
-    "Australia (GST 10%",
-    "Japan (VAT 10%",
-    "Brazil (VAT 17%",
-    "Netherlands (VAT 21%",
-    "Sweden (VAT 25%",
+    "France (VAT 20%)",
+    "Germany (VAT 19%)",
+    "United Kingdom (VAT 20%)",
+    "Italy (VAT 22%)",
+    "Spain (VAT 21%)",
+    "Canada (GST 5%)",
+    "Australia (GST 10%)",
+    "Japan (VAT 10%)",
+    "Brazil (VAT 17%)",
+    "Netherlands (VAT 21%)",
+    "Sweden (VAT 25%)",
   ];
 
   useEffect(() => {
@@ -593,6 +592,8 @@ const PaymentContent = () => {
   }, []);
 
   const handlePay = () => {
+    setIsPayClicked(true);
+    setIsTouchedAddress(true);
     if (!selectedAdress) {
       adressRef.current?.scrollIntoView({ behavior: "smooth" });
       return;
@@ -612,6 +613,7 @@ const PaymentContent = () => {
     const time = now.toLocaleTimeString("en-US", {
       hour: "2-digit",
       minute: "2-digit",
+      hour12: false,
     });
     const newOrderData = {
       total,
@@ -636,9 +638,7 @@ const PaymentContent = () => {
       viewBox="0 0 10 18"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className={`transition-transform duration-300 ${
-        isAddressOpen ? "rotate-90" : ""
-      }`}>
+      className={`rotate-90`}>
       <path
         d="M1.5 2L8.5 9L1.5 16"
         stroke="white"
@@ -648,9 +648,11 @@ const PaymentContent = () => {
     </svg>
   );
 
+  const isAddressValid = selectedAdress.trim() !== "" || !isTouchedAddress;
+
   return (
     <section>
-      <div className="flex flex-col xl:flex-row gap-[20px] sm:gap-[23px]">
+      <div className="flex flex-col xl:flex-row gap-[56px] sm:gap-[23px]">
         <div className="flex-1 flex flex-col gap-[56px] lg:gap-[64px]">
           <div>
             <Heading
@@ -665,17 +667,25 @@ const PaymentContent = () => {
               className="relative cursor-pointer max-w-[calc(100%-20px)] mx-auto">
               <Input
                 type="text"
+                placeholder="VAT"
                 value={selectedAdress}
                 name="address"
                 variant="skewed"
-                onChange={(e) => setSelectedAdress(e.target.value)}
+                onChange={(e) => {
+                  setSelectedAdress(e.target.value);
+                  setIsTouchedAddress(true);
+                }}
                 required
-                errorMessage={!selectedAdress ? "Fill in the field" : undefined}
+                errorMessage={
+                  isTouchedAddress && !selectedAdress.trim()
+                    ? "Fill in the field"
+                    : ""
+                }
                 className="mb-[0] cursor-pointer"
                 autoComplete="off"
                 readOnly
-                isTouched={!selectedAdress}
-                isValid={!!selectedAdress}>
+                isTouched={isTouchedAddress}
+                isValid={isAddressValid}>
                 <div className="absolute skew-x-[20deg] top-[50%] translate-y-[-50%] right-[16px] cursor-pointer">
                   {ArrowDownIcon}
                 </div>
@@ -687,14 +697,13 @@ const PaymentContent = () => {
                       address.match(/(\d+)%/)?.[1] || "0"
                     );
                     const vatAmount = subtotal * (vatPercentage / 100);
-                    const displayValue = `${address} +${vatAmount.toFixed(
-                      2
-                    )}$)`;
+                    const displayValue = `${address} +${vatAmount.toFixed(2)}$`;
                     return (
                       <div
                         key={index}
                         onClick={() => {
                           setSelectedAdress(displayValue);
+                          setIsTouchedAddress(true);
                           setIsAddressOpen(false);
                         }}
                         className="px-[20px] py-[12px] cursor-pointer hover:bg-primary-10">
@@ -709,6 +718,7 @@ const PaymentContent = () => {
           <div ref={paymentMethodRef}>
             <PaymentMethod
               onMethodSelect={(method) => setPaymentMethod(method)}
+              isPayClicked={isPayClicked}
             />
           </div>
         </div>
@@ -834,7 +844,7 @@ const PaymentContent = () => {
                 {total.toFixed(2)}$
               </span>
             </div>
-            <div className="fixed bottom-[60px] left-0 sm:static z-[2000] flex items-center gap-[16px] w-full p-[16px] sm:p-0 border-t-[1px] border-primary-main sm:border-none bg-2 sm:bg-transparent">
+            <div className="fixed bottom-[60px] left-0 sm:static z-[2000] sm:z-10 flex items-center gap-[16px] w-full p-[16px] sm:p-0 border-t-[1px] border-primary-main sm:border-none bg-2 sm:bg-transparent">
               <span className="sm:hidden text-white font-bold font-usuzi-condensed text-[22px] leading-[22px] sm:text-[28px] sm:leading-[28px]">
                 {total.toFixed(2)}$
               </span>

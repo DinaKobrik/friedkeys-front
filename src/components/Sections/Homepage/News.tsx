@@ -74,7 +74,7 @@ const News: React.FC = () => {
       </div>
       <Button
         variant="primary"
-        className="max-w-[calc(100%-10px)] sm:max-w-[255px]"
+        className="max-w-[calc(100%-20px)] sm:max-w-[255px]"
         onClick={() => router.push("/news")}>
         Read all
       </Button>

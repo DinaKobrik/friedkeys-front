@@ -23,7 +23,10 @@
 
 .menu--mobile__link:focus svg path,
 .menu--mobile__link:focus svg rect,
-.menu--mobile__link:focus svg circle {
+.menu--mobile__link:focus svg circle,
+.menu--mobile__link--active svg rect,
+.menu--mobile__link--active svg circle,
+.menu--mobile__link--active svg path {
   stroke: #4ef432;
 }
 

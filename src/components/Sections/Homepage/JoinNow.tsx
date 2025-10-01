@@ -65,7 +65,7 @@ const JoinNow = () => {
           <Button
             variant="primary"
             onClick={() => {
-              window.location.href = "/auth/log-in";
+              window.location.href = "/auth/profile/log-in";
             }}>
             sign up
           </Button>

@@ -51,7 +51,7 @@ export default function SuccessPage() {
         </Heading>
         <Button
           variant="primary"
-          className="max-w-[254px]"
+          className="max-w-[calc(100%-20px)] sm:max-w-[254px]"
           onClick={() => (window.location.href = "/cart/game-activation")}>
           Game activation
         </Button>

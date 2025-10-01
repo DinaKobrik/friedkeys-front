@@ -7,7 +7,7 @@ import Image from "next/image";
 export default function Custom404() {
   return (
     <main>
-      <section className="min-h-screen flex flex-col items-center justify-center py-[80px]">
+      <section className="min-h-[calc(100vh-520px)] flex flex-col items-center justify-center py-[80px]">
         <Image src="/images/404.png" alt="404" width={512} height={332} />
         <div className="font-usuzi-bold text-[70px] leading-[45px] sm:text-[96px] sm:leading-[60px] text-primary-main mb-[32px] sm:mb-[40px]">
           404

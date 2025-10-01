@@ -6,8 +6,8 @@ import Button from "@/components/ui/Button";
 const Custom404 = () => {
   return (
     <main>
-      <section className="mx-auto relative z-10 py-[80px]">
-        <div className="custom404 relative flex justify-center px-0 md:py-[215px] max-w-[680px] mx-auto w-full py-[43px]">
+      <section className="min-h-[calc(100vh-520px)] flex justify-center items-center mx-auto relative z-10 py-[80px]">
+        <div className="custom404 relative flex justify-center px-0 max-w-[680px] mx-auto w-full py-[43px]">
           <svg
             width="100%"
             height="100%"

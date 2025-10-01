@@ -1,8 +1,6 @@
 import "./globals.css";
-import AppFooter from "@/components/Partials/AppFooter";
-import AppHeader from "@/components/Partials/AppHeader";
-import BottomBar from "@/components/Partials/BottomBar";
 import { Metadata } from "next";
+import ClientLayout from "@/components/ClientLayout";
 
 export const metadata: Metadata = {
   title: "Friedkeys",
@@ -31,12 +29,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="max-w-[1700px] mx-auto px-[16px] sm:px-[46px] font-inter bg-main text-white font-medium">
-        <AppHeader />
-        {children}
-        <footer>
-          <AppFooter />
-          <BottomBar />
-        </footer>
+        <ClientLayout>{children}</ClientLayout>
       </body>
     </html>
   );

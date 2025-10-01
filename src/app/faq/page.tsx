@@ -1,4 +1,4 @@
-"use client"; // Пометка клиентского компонента для обработки событий
+"use client";
 
 import React, { useState } from "react";
 import Heading from "@/components/ui/Heading";
@@ -91,6 +91,9 @@ const FAQPage = () => {
   return (
     <main className="mt-[24px] sm:mt-[80px]">
       <section>
+        <Heading variant="h3" className="mb-[24px] sm:mb-[40px]">
+          Home / faqs
+        </Heading>
         <Heading variant="h1" className="mb-[24px] sm:mb-[80px]">
           Frequently Asked Questions
         </Heading>

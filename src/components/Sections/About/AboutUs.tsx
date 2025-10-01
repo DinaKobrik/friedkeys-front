@@ -12,9 +12,10 @@ const AboutUs = () => {
           About us
         </Heading>
         <Text>
-          FriedKeys is where great games meet great deals. We’re a team of
-          passionate gamers who believe that everyone deserves fast, affordable,
-          and secure access to the games they love.
+          FriedKeys is where great games meet great deals.
+          <br />
+          We’re a team of passionate gamers who believe that everyone deserves
+          fast, affordable, and secure access to the games they love.
           <br />
           <br />
           At FriedKeys, we believe great games shouldn’t come with a high price

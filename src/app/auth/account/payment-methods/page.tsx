@@ -108,7 +108,7 @@ const PaymentMethodsPage = React.memo(() => {
       return (
         <div
           key={card.id}
-          className="mb-[16px] last:mb-0 flex items-center justify-between"
+          className="mb-[16px] last:mb-0 gap-[8px] flex items-center justify-between"
           role="region"
           aria-label={`Credit card ${card.name} ending in ${lastFour}`}>
           <div className="flex items-center gap-[16px]">
@@ -143,14 +143,14 @@ const PaymentMethodsPage = React.memo(() => {
   }, [creditCards, handleDeleteCard]);
 
   return (
-    <main className="min-h-screen mt-[24px] sm:mt-[80px]">
+    <main className="mt-[24px] sm:mt-[80px] mb-[80px]">
       <Suspense fallback={<div>Loading menu...</div>}>
         <AccountMenu activeLink="/auth/account/payment-methods" />
       </Suspense>
-      <section>
+      <section className="">
         <Heading
           variant="h1"
-          className="mt-[40px] mb-[24px] sm:mt-[80px] sm:mb-[48px]"
+          className="mt-[40px] mb-[24px] sm:mt-[104px] sm:mb-[48px]"
           aria-label="Payment Methods Section">
           Payment Methods
         </Heading>
@@ -162,7 +162,7 @@ const PaymentMethodsPage = React.memo(() => {
             <div className="max-w-[520px] w-full mx-auto flex flex-col justify-between h-full">
               <Heading
                 variant="h2"
-                className="mb-[24px] sm:mb-[32px] text-center"
+                className="mb-[24px] sm:mb-[32px] text-center lg:text-start"
                 aria-label="Debit / Credit Card Section">
                 Debit / Credit Card
               </Heading>
@@ -186,13 +186,13 @@ const PaymentMethodsPage = React.memo(() => {
             <div className="max-w-[520px] w-full mx-auto flex flex-col justify-between h-full">
               <Heading
                 variant="h2"
-                className="mb-[24px] sm:mb-[32px] text-center"
+                className="mb-[24px] sm:mb-[32px] text-center lg:text-start"
                 aria-label="Wallet Section">
                 wallet
               </Heading>
               <Heading
                 variant="h1"
-                className="mb-[24px] sm:mb-[32px] text-center"
+                className="mb-[24px] sm:mb-[32px] text-center lg:text-start"
                 aria-label="Wallet Balance">
                 120.38 $
               </Heading>
@@ -215,7 +215,7 @@ const PaymentMethodsPage = React.memo(() => {
             <div className="max-w-[520px] w-full mx-auto flex flex-col justify-between h-full">
               <Heading
                 variant="h2"
-                className="mb-[40px] text-center"
+                className="mb-[40px] text-center lg:text-start"
                 aria-label="Paypal Section">
                 paypal
               </Heading>
@@ -238,7 +238,7 @@ const PaymentMethodsPage = React.memo(() => {
             <div className="max-w-[520px] w-full mx-auto flex flex-col justify-between h-full">
               <Heading
                 variant="h2"
-                className="mb-[40px] text-center"
+                className="mb-[40px] text-center lg:text-start"
                 aria-label="Crypto Section">
                 Crypto
               </Heading>

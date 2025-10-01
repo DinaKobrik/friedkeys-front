@@ -38,6 +38,8 @@ const GameList: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [gamesPerPage, setGamesPerPage] = useState(12);
   const [localSearchQuery, setLocalSearchQuery] = useState("");
+  const [isMinPriceFocused, setIsMinPriceFocused] = useState(false);
+  const [isMaxPriceFocused, setIsMaxPriceFocused] = useState(false);
 
   const genres = [
     "Action",
@@ -75,6 +77,21 @@ const GameList: React.FC = () => {
     "z-a",
   ];
   const [isMobile, setIsMobile] = useState(false);
+
+  // Проверка, пусты ли все фильтры
+  const areFiltersEmpty = () => {
+    return (
+      filters.genre.length === 0 &&
+      filters.platform === "" &&
+      filters.system === "" &&
+      filters.hasDiscount === false &&
+      filters.dlcFilter === "Games & DLS" &&
+      filters.minPrice === "" &&
+      filters.maxPrice === "" &&
+      sort === "" &&
+      activeFilter === null
+    );
+  };
 
   // Инициализация фильтров и активного фильтра из URL с немедленной фильтрацией
   useEffect(() => {
@@ -131,7 +148,7 @@ const GameList: React.FC = () => {
 
   useEffect(() => {
     const handleResize = () => {
-      setGamesPerPage(window.innerWidth < 991 ? 8 : 12);
+      setGamesPerPage(window.innerWidth < 991 ? 8 : 9);
     };
     handleResize();
     window.addEventListener("resize", handleResize);
@@ -279,7 +296,7 @@ const GameList: React.FC = () => {
   // Динамический top
   const calculateTopStyle = () => {
     if (isMobile && isFiltersVisible) {
-      const baseTop = windowWidth >= 640 ? 82 : 64;
+      const baseTop = windowWidth >= 576 ? 114 : 64;
       const scrollY = typeof window !== "undefined" ? window.scrollY : 0;
       const adjustedTop = Math.max(baseTop - scrollY, 0);
       return { top: `${adjustedTop}px` };
@@ -342,12 +359,13 @@ const GameList: React.FC = () => {
       currentActiveFilter
     );
 
-    // Сортировку
+    // Сортировка
     filteredGames = applySort(filteredGames, sort);
 
     setGames(filteredGames);
     setCurrentPage(1);
   };
+
   return (
     <section className="game-list mt-[24px] sm:mt-[56px] relative">
       <Heading variant="h1" className="block lg:hidden mb-[8px] text-center">
@@ -364,32 +382,34 @@ const GameList: React.FC = () => {
           </button>
           <button
             onClick={() => handleFilterClick("pre-orders")}
-            className={`category focus:outline-none  py-[8px] px-[15px] sm:py-[16px] sm:px-[30px] text-[20px] leading-[24px] sm:text-[38px] sm:leading-[44px] font-usuzi-condensed text-white uppercase ${
+            className={`category focus:outline-none py-[8px] px-[15px] sm:py-[16px] sm:px-[30px] text-[20px] leading-[24px] sm:text-[38px] sm:leading-[44px] font-usuzi-condensed text-white uppercase ${
               activeFilter === "pre-orders" ? "category--active" : ""
             }`}>
             Pre-orders
           </button>
           <button
             onClick={() => handleFilterClick("sale")}
-            className={`category focus:outline-none  py-[8px] px-[15px] sm:py-[16px] sm:px-[30px] text-[20px] leading-[24px] sm:text-[38px] sm:leading-[44px] font-usuzi-condensed text-white uppercase ${
+            className={`category focus:outline-none py-[8px] px-[15px] sm:py-[16px] sm:px-[30px] text-[20px] leading-[24px] sm:text-[38px] sm:leading-[44px] font-usuzi-condensed text-white uppercase ${
               activeFilter === "sale" ? "category--active" : ""
             }`}>
             Sale
           </button>
         </div>
       </div>
-      <div className="game-count flex justify-between lg:justify-start items-center mb-[24px]">
+      <div className="game-count flex justify-between lg:justify-start items-center mb-[24px] lg:mb-[56px]">
         {isMobile && (
           <div className="skew-x-[-20deg] bg-2 h-[42px] sm:h-[58px] flex ml-[10px]">
             <button
               onClick={toggleFilters}
-              className="filter-list focus:outline-none skew-x-[20deg] py-[12px] px-[38px] sm:py-[16px] sm:px-[30px] w-full text-white flex justify-between items-center text-[15px] leading-[17px]  sm:text-[34px] font-usuzi-condensed uppercase">
+              className="filter-list focus:outline-none skew-x-[20deg] py-[12px] px-[38px] sm:py-[16px] sm:px-[30px] w-full text-white flex justify-between items-center text-[15px] leading-[17px] sm:text-[34px] font-usuzi-condensed uppercase">
               Filters
               {(sort ||
                 filters.system ||
                 filters.platform ||
                 filters.genre.length > 0 ||
-                filters.dlcFilter !== "Games & DLS") && (
+                filters.dlcFilter !== "Games & DLS" ||
+                filters.minPrice ||
+                filters.maxPrice) && (
                 <div className="flex items-center">
                   <span className="ml-2 flex items-center justify-center w-5 h-5 bg-primary-main text-black rounded-full text-xs">
                     {[
@@ -398,6 +418,7 @@ const GameList: React.FC = () => {
                       filters.platform ? 1 : 0,
                       filters.genre.length,
                       filters.dlcFilter !== "Games & DLS" ? 1 : 0,
+                      filters.minPrice || filters.maxPrice ? 1 : 0,
                     ].reduce((a, b) => a + b, 0)}
                   </span>
                 </div>
@@ -413,7 +434,7 @@ const GameList: React.FC = () => {
         </div>
       </div>
       <div
-        className={`w-full lg:w-auto overflow-y-auto lg:overflow-visible h-auto lg:h-auto px-[16px] lg:px-0 fixed left-0 right-0 lg:sticky
+        className={`w-full lg:w-auto overflow-y-auto lg:overflow-visible h-auto lg:h-auto px-[16px] sm:px-[46px] custom-scrollbar lg:px-0 fixed left-0 right-0 lg:sticky
       bg-main lg:bg-transparent z-50 lg:z-20 ${
         !isMobile ? "block" : isFiltersVisible ? "block" : "hidden"
       }`}
@@ -424,15 +445,15 @@ const GameList: React.FC = () => {
         <div>
           <div className="flex justify-between items-center lg:hidden mb-[20px] mt-[24px]">
             <h3 className="text-[32px] font-usuzi-condensed text-white uppercase">
-              Fliters
+              Filters
             </h3>
             <span
               onClick={() => setIsFiltersVisible(false)}
-              className="text-white p-[8px] cursor-pointer ">
+              className="text-white p-[8px] cursor-pointer">
               ✖
             </span>
           </div>
-          <div className=" w-full grid cols-1 lg:grid-cols-3 xl:grid-cols-5 lg:justify-between items-center gap-[20px] mb-[20px] lg:mb-[40px]">
+          <div className="w-full grid cols-1 lg:grid-cols-3 xl:grid-cols-5 lg:justify-between items-center gap-[20px] mb-[20px] lg:mb-[40px]">
             <div className="relative w-full" ref={sortRef}>
               <div
                 className={`skew-x-[0deg] lg:skew-x-[-20deg] bg-2 w-full h-[58px] flex ${
@@ -798,9 +819,12 @@ const GameList: React.FC = () => {
               Price
             </h3>
             <div className="price-filters flex flex-col lg:flex-row justify-center items-center gap-[18px]">
-              <div className=" w-full overflow-hidden lg:overflow-visible">
+              <div className="w-full overflow-hidden lg:overflow-visible">
                 <div className="w-[calc(100%+20px)] grid grid-cols-2 gap-[18px] ml-[-10px]">
-                  <div className="relative lg:max-w-[260px]">
+                  <div
+                    className={`relative price-filters__left ${
+                      isMinPriceFocused ? "price-filters__left--active" : ""
+                    } lg:max-w-[260px]`}>
                     <Input
                       variant="skewed"
                       textAlign="right"
@@ -809,13 +833,18 @@ const GameList: React.FC = () => {
                       value={filters.minPrice}
                       onChange={(e) =>
                         setFilters({ ...filters, minPrice: e.target.value })
-                      }>
+                      }
+                      onFocus={() => setIsMinPriceFocused(true)}
+                      onBlur={() => setIsMinPriceFocused(false)}>
                       <span className="absolute skew-x-[20deg] left-[38px] top-1/2 transform -translate-y-1/2 text-gray-68">
                         from
                       </span>
                     </Input>
                   </div>
-                  <div className="relative w-full lg:max-w-[260px]">
+                  <div
+                    className={`relative price-filters__right ${
+                      isMaxPriceFocused ? "price-filters__right--active" : ""
+                    } lg:max-w-[260px]`}>
                     <Input
                       variant="skewed"
                       textAlign="right"
@@ -824,7 +853,9 @@ const GameList: React.FC = () => {
                       value={filters.maxPrice}
                       onChange={(e) =>
                         setFilters({ ...filters, maxPrice: e.target.value })
-                      }>
+                      }
+                      onFocus={() => setIsMaxPriceFocused(true)}
+                      onBlur={() => setIsMaxPriceFocused(false)}>
                       <span className="absolute skew-x-[20deg] left-[38px] top-1/2 transform -translate-y-1/2 text-gray-68">
                         to
                       </span>
@@ -834,7 +865,10 @@ const GameList: React.FC = () => {
               </div>
               <div className="relative w-full max-w-[calc(100%-20px)] lg:max-w-[260px] lg:ml-[34px]">
                 <div className="w-full">
-                  <Button variant="secondary" onClick={resetFilters}>
+                  <Button
+                    variant="secondary"
+                    onClick={resetFilters}
+                    disabled={areFiltersEmpty()}>
                     Reset Filters
                   </Button>
                 </div>

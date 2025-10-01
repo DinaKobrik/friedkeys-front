@@ -10,7 +10,7 @@ import Button from "@/components/ui/Button";
 interface Game {
   id: number;
   title: string;
-  image: string;
+  image?: string;
   price: number;
   discount?: number;
   discountDate?: string;
@@ -19,6 +19,7 @@ interface Game {
 const GameEditionsSection: React.FC = () => {
   const params = useParams();
   const [game, setGame] = useState<Game | null>(null);
+  const [imageSrc, setImageSrc] = useState<string>("/images/no-image.jpg");
   const [loading, setLoading] = useState(true);
   const [isFavorite, setIsFavorite] = useState(false);
   const [cartQuantities, setCartQuantities] = useState<{
@@ -58,10 +59,15 @@ const GameEditionsSection: React.FC = () => {
   }, [fetchGame]);
 
   useEffect(() => {
-    const storedFavorites = localStorage.getItem("favoriteGames");
-    if (storedFavorites && game) {
-      const favoriteIds = JSON.parse(storedFavorites);
-      setIsFavorite(favoriteIds.includes(game.id));
+    if (game) {
+      setImageSrc(
+        game.image && game.image.trim() ? game.image : "/images/no-image.jpg"
+      );
+      const storedFavorites = localStorage.getItem("favoriteGames");
+      if (storedFavorites) {
+        const favoriteIds = JSON.parse(storedFavorites);
+        setIsFavorite(favoriteIds.includes(game.id));
+      }
     }
   }, [game]);
 
@@ -178,7 +184,7 @@ const GameEditionsSection: React.FC = () => {
         variant="h1"
         className="mb-[24px] sm:mb-[40px]"
         aria-label="Game Editions Title">
-        Game Editions
+        Editions
       </Heading>
       <div className="flex w-full overflow-scroll hide-scrollbar h-full gap-[12px] sm:gap-[24px]">
         {editions.map((edition, index) => {
@@ -211,18 +217,19 @@ const GameEditionsSection: React.FC = () => {
                   />
                 </svg>
               </div>
-              <div className="card-corner game__editions-img w-[calc(100%-2px)] md:w-[calc(100%-4px)] h-[200px] sm:h-[280px] relative flex-shrink-0">
+              <div className="card-corner game__editions-img w-[calc(100%-2px)] md:w-[calc(100%-4px)] h-[160px] sm:h-[280px] relative flex-shrink-0">
                 <Image
-                  src={game.image}
+                  src={imageSrc || "/images/no-image.jpg"}
                   alt={`${game.title} ${edition.type} Edition`}
                   width={520}
                   height={280}
                   className="object-cover w-full h-full m-[1px] md:m-[3px]"
                   loading="lazy"
+                  onError={() => setImageSrc("/images/no-image.jpg")}
                 />
               </div>
               <div className="bg-2 p-[20px] pb-[32px] h-full flex flex-col justify-between gap-[16px]">
-                <div className="mb-[80px]">
+                <div className="mb-[40px] sm:mb-[80px]">
                   <Heading
                     variant="h3"
                     className="mb-[20px]"

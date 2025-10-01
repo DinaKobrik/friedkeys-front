@@ -43,7 +43,7 @@ export default function ResetPassword() {
     }
 
     // Успешная смена пароля, переход на новую страницу
-    router.push("/auth/password-changed");
+    router.push("/auth/profile/password-changed");
 
     // Очистка полей
     setNewPassword("");
@@ -110,8 +110,8 @@ export default function ResetPassword() {
   );
 
   return (
-    <main className="mt-[40px]">
-      <section className="flex flex-col justify-center items-center min-h-screen">
+    <main className="my-[40px]">
+      <section className="flex flex-col justify-center items-center min-h-[calc(100vh-170px)]">
         <Heading variant="h1" className="mb-[24px] sm:mb-[32px] text-center">
           Reset Password
         </Heading>

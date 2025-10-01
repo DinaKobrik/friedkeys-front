@@ -1,21 +1,33 @@
 "use client";
 
+import React, { useState, useEffect } from "react";
 import Heading from "@/components/ui/Heading";
 import Button from "@/components/ui/Button";
 import Text from "@/components/ui/Text";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
-const EmailVerify = () => {
+const EmailSent: React.FC = () => {
+  const router = useRouter();
+  const [email, setEmail] = useState<string>("example@mail.com");
+
+  useEffect(() => {
+    const storedEmail = localStorage.getItem("forgotEmail");
+    if (storedEmail) {
+      setEmail(storedEmail);
+    }
+  }, []);
+
   return (
-    <main className="mt-[40px]">
-      <section className="min-h-screen flex flex-col justify-center items-center max-w-[792px] mx-auto">
-        <Heading variant="h1" className="mb-[24px] sm:mb-[32px]">
-          Verify Your Email
+    <main className="my-[40px]">
+      <section className="min-h-[calc(100vh-170px)] flex flex-col justify-center items-center max-w-[792px] mx-auto">
+        <Heading variant="h1" className="mb-[24px] sm:mb-[32px] text-center">
+          Email Sent
         </Heading>
         <Text className="mb-[32px] sm:mb-[56px]">
           We’ve sent a password reset link to your email{" "}
-          <Link href="mailto:example@mail.com" className="font-bold text-white">
-            example@mail.com
+          <Link href={`mailto:${email}`} className="font-bold text-white">
+            {email}
           </Link>
           .
           <br />
@@ -30,9 +42,7 @@ const EmailVerify = () => {
         <div className="flex flex-col sm:flex-row gap-[20px] w-full max-w-[calc(100%-20px)] mx-auto">
           <Button
             variant="secondary"
-            onClick={() => {
-              window.location.href = "/auth/log-in";
-            }}
+            onClick={() => router.push("/auth/profile/log-in")}
             className="max-w-[502px]">
             Back to Login
           </Button>
@@ -44,4 +54,5 @@ const EmailVerify = () => {
     </main>
   );
 };
-export default EmailVerify;
+
+export default EmailSent;

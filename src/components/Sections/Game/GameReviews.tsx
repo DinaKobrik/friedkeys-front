@@ -1,9 +1,11 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo, useCallback } from "react";
 import Heading from "@/components/ui/Heading";
 import Text from "@/components/ui/Text";
 import Button from "@/components/ui/Button";
+import { Suspense } from "react";
+const Pagination = React.lazy(() => import("@/components/ui/Pagination"));
 
 interface Review {
   username: string;
@@ -15,6 +17,104 @@ interface Review {
   likes: number;
   dislikes: number;
 }
+
+const reviews: Review[] = [
+  {
+    username: "GamerX123",
+    liked: true,
+    review:
+      "This game is absolutely amazing with its stunning graphics and an incredibly engaging storyline that keeps you hooked for hours. The attention to detail in the visuals is breathtaking, and the narrative depth adds a layer of immersion that's hard to find elsewhere!",
+    pros: [
+      "The graphics are so detailed that they enhance the overall gaming experience significantly.",
+      "The storyline provides a captivating journey with unexpected twists and turns.",
+      "The gameplay mechanics are smooth and intuitive, making it enjoyable for all players.",
+    ],
+    cons: [
+      "There are occasional bugs that can disrupt the flow of the game.",
+      "The price feels a bit high for the content offered at this stage.",
+    ],
+    date: "10.09.2025",
+    likes: 45,
+    dislikes: 5,
+  },
+  {
+    username: "PlayerOne",
+    liked: false,
+    review:
+      "I found this game not worth the hype, as the performance issues are quite noticeable, especially during intense action sequences. The frame drops and lag make it frustrating to play for extended periods.",
+    pros: [
+      "The sound design is exceptional, creating an immersive audio experience.",
+    ],
+    cons: [
+      "The performance issues are significant and need urgent optimization.",
+      "There are several bugs that affect the gameplay experience negatively.",
+      "The controls can be clunky and unresponsive at times.",
+    ],
+    date: "12.09.2025",
+    likes: 52,
+    dislikes: 18,
+  },
+  {
+    username: "ShadowNinja",
+    liked: true,
+    review:
+      "This game is really enjoyable, especially with its fantastic multiplayer mode that allows for exciting battles with friends. The community aspect adds a lot of replay value to the experience!",
+    pros: [
+      "The multiplayer mode offers thrilling and competitive gameplay.",
+      "The design of the game world is visually appealing and well-crafted.",
+    ],
+    cons: ["The loading times can be quite long, which breaks the pacing."],
+    date: "08.09.2025",
+    likes: 30,
+    dislikes: 3,
+  },
+  {
+    username: "CoolCat99",
+    liked: true,
+    review: [
+      "A true masterpiece that I highly recommend to everyone! The combination of stunning graphics, beautiful music, and endless replay value makes it a must-play for any gaming enthusiast.",
+      "The attention to detail in the game world is remarkable, with immersive environments that pull you into the story. Every level feels unique, enhancing the overall experience.",
+      "The character development and plot twists keep you engaged from start to finish. It's a rare game that balances gameplay and narrative so well!",
+    ],
+    pros: [
+      "The graphics are stunning and elevate the visual quality significantly.",
+      "The music enhances the atmosphere and keeps you engaged.",
+      "The replay value is excellent due to varied gameplay options.",
+    ],
+    cons: [],
+    date: "14.09.2025",
+    likes: 60,
+    dislikes: 2,
+  },
+  {
+    username: "SilentWolf",
+    liked: false,
+    review:
+      "This game was disappointing, as I expected much more from the developers. The story feels underdeveloped, and the optimization issues make it hard to enjoy fully.",
+    pros: [],
+    cons: [
+      "The story lacks depth and fails to engage the player.",
+      "The optimization is poor, leading to frequent crashes.",
+    ],
+    date: "17.09.2025",
+    likes: 8,
+    dislikes: 25,
+  },
+  {
+    username: "SunnyDay",
+    liked: true,
+    review:
+      "This game is fun and addictive, perfect for casual gaming sessions! The ease of picking it up and playing makes it ideal for relaxing after a long day.",
+    pros: [
+      "The ease of use makes it accessible for all skill levels.",
+      "The fun factor keeps you coming back for more.",
+    ],
+    cons: ["The campaign feels a bit short and ends too quickly."],
+    date: "15.09.2025",
+    likes: 35,
+    dislikes: 4,
+  },
+];
 
 const LikeIcon = ({ className }: { className?: string }) => (
   <svg
@@ -118,7 +218,11 @@ const ReviewCard = ({
             {review.username}
           </div>
         </div>
-        <LikeIcon className={`${!review.liked ? "rotate-180" : ""}`} />
+        <LikeIcon
+          className={`sm:w-[40px] sm:h-[40px] ${
+            !review.liked ? "rotate-180" : ""
+          }`}
+        />
       </div>
     </div>
     {Array.isArray(review.review) ? (
@@ -164,13 +268,13 @@ const ReviewCard = ({
           Is this review helpful?
         </p>
         <div className="flex gap-[8px] sm:gap-[16px] items-center flex-shrink-0 ml-[10px]">
-          <div className="py-[6px] px-[12px] lg:py-[13px] lg:px-[30px] lg:skew-x-[-20deg] bg-primary-20">
-            <span className="lg:skew-x-[20deg] block font-semibold text-[14px] leading-[20px] sm:text-[20px] sm:leading-[26px]">
+          <div className="py-[11px] px-[24px] lg:py-[13px] lg:px-[30px] skew-x-[-20deg] bg-primary-20">
+            <span className="skew-x-[20deg] block font-semibold text-[14px] leading-[20px] sm:text-[20px] sm:leading-[26px]">
               Yes {review.likes}
             </span>
           </div>
-          <div className="py-[6px] px-[12px] lg:py-[13px] lg:px-[30px] lg:skew-x-[-20deg] bg-red-20">
-            <span className="lg:skew-x-[20deg] block font-semibold text-[14px] leading-[20px] sm:text-[20px] sm:leading-[26px]">
+          <div className="py-[11px] px-[24px] lg:py-[13px] lg:px-[30px] skew-x-[-20deg] bg-red-20">
+            <span className="skew-x-[20deg] block font-semibold text-[14px] leading-[20px] sm:text-[20px] sm:leading-[26px]">
               No {review.dislikes}
             </span>
           </div>
@@ -184,103 +288,11 @@ const ReviewCard = ({
 );
 
 const GameReviews: React.FC = () => {
-  const reviews: Review[] = [
-    {
-      username: "GamerX123",
-      liked: true,
-      review:
-        "This game is absolutely amazing with its stunning graphics and an incredibly engaging storyline that keeps you hooked for hours. The attention to detail in the visuals is breathtaking, and the narrative depth adds a layer of immersion that's hard to find elsewhere!",
-      pros: [
-        "The graphics are so detailed that they enhance the overall gaming experience significantly.",
-        "The storyline provides a captivating journey with unexpected twists and turns.",
-        "The gameplay mechanics are smooth and intuitive, making it enjoyable for all players.",
-      ],
-      cons: [
-        "There are occasional bugs that can disrupt the flow of the game.",
-        "The price feels a bit high for the content offered at this stage.",
-      ],
-      date: "10.09.2025",
-      likes: 45,
-      dislikes: 5,
-    },
-    {
-      username: "PlayerOne",
-      liked: false,
-      review:
-        "I found this game not worth the hype, as the performance issues are quite noticeable, especially during intense action sequences. The frame drops and lag make it frustrating to play for extended periods.",
-      pros: [
-        "The sound design is exceptional, creating an immersive audio experience.",
-      ],
-      cons: [
-        "The performance issues are significant and need urgent optimization.",
-        "There are several bugs that affect the gameplay experience negatively.",
-        "The controls can be clunky and unresponsive at times.",
-      ],
-      date: "12.09.2025",
-      likes: 52,
-      dislikes: 18,
-    },
-    {
-      username: "ShadowNinja",
-      liked: true,
-      review:
-        "This game is really enjoyable, especially with its fantastic multiplayer mode that allows for exciting battles with friends. The community aspect adds a lot of replay value to the experience!",
-      pros: [
-        "The multiplayer mode offers thrilling and competitive gameplay.",
-        "The design of the game world is visually appealing and well-crafted.",
-      ],
-      cons: ["The loading times can be quite long, which breaks the pacing."],
-      date: "08.09.2025",
-      likes: 30,
-      dislikes: 3,
-    },
-    {
-      username: "CoolCat99",
-      liked: true,
-      review: [
-        "A true masterpiece that I highly recommend to everyone! The combination of stunning graphics, beautiful music, and endless replay value makes it a must-play for any gaming enthusiast.",
-        "The attention to detail in the game world is remarkable, with immersive environments that pull you into the story. Every level feels unique, enhancing the overall experience.",
-        "The character development and plot twists keep you engaged from start to finish. It's a rare game that balances gameplay and narrative so well!",
-      ],
-      pros: [
-        "The graphics are stunning and elevate the visual quality significantly.",
-        "The music enhances the atmosphere and keeps you engaged.",
-        "The replay value is excellent due to varied gameplay options.",
-      ],
-      cons: [],
-      date: "14.09.2025",
-      likes: 60,
-      dislikes: 2,
-    },
-    {
-      username: "SilentWolf",
-      liked: false,
-      review:
-        "This game was disappointing, as I expected much more from the developers. The story feels underdeveloped, and the optimization issues make it hard to enjoy fully.",
-      pros: [],
-      cons: [
-        "The story lacks depth and fails to engage the player.",
-        "The optimization is poor, leading to frequent crashes.",
-      ],
-      date: "17.09.2025",
-      likes: 8,
-      dislikes: 25,
-    },
-    {
-      username: "SunnyDay",
-      liked: true,
-      review:
-        "This game is fun and addictive, perfect for casual gaming sessions! The ease of picking it up and playing makes it ideal for relaxing after a long day.",
-      pros: [
-        "The ease of use makes it accessible for all skill levels.",
-        "The fun factor keeps you coming back for more.",
-      ],
-      cons: ["The campaign feels a bit short and ends too quickly."],
-      date: "15.09.2025",
-      likes: 35,
-      dislikes: 4,
-    },
-  ];
+  const [isAllReviews, setIsAllReviews] = useState(false);
+  const [isMinimum, setIsMinimum] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [reviewsPerPage, setReviewsPerPage] = useState(2);
+  const [isLg, setIsLg] = useState(false);
 
   // Процент положительных отзывов
   const totalReviews = reviews.length;
@@ -289,33 +301,73 @@ const GameReviews: React.FC = () => {
   const percentageLiked =
     totalReviews > 0 ? Math.round((likedReviews / totalReviews) * 100) : 0;
 
-  // Фильтрация лучших отзывов (по likes)
-  const bestReviews = [...reviews]
-    .sort((a, b) => b.likes - a.likes)
-    .slice(0, 2);
+  // Фильтрация и сортировка отзывов
+  const sortedReviews = useMemo(() => {
+    return isMinimum
+      ? [...reviews].sort((a, b) => b.likes - a.likes)
+      : [...reviews].sort(
+          (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+        );
+  }, [isMinimum]);
 
-  // Фильтрация последних отзывов (по дате)
-  const recentReviews = [...reviews]
-    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-    .slice(0, 2);
+  const paginatedReviews = useMemo(() => {
+    if (!isAllReviews) {
+      return sortedReviews
+        .slice(0, 2)
+        .map((review: Review, index: number) => (
+          <ReviewCard key={index} review={review} bgColor="bg-2" />
+        ));
+    }
+    const startIdx = (currentPage - 1) * reviewsPerPage;
+    const endIdx = currentPage * reviewsPerPage;
+    return sortedReviews
+      .slice(startIdx, endIdx)
+      .map((review: Review, index: number) => (
+        <ReviewCard key={index} review={review} bgColor="bg-2" />
+      ));
+  }, [sortedReviews, isAllReviews, currentPage, reviewsPerPage]);
 
-  const [isMinimum, setIsMinimum] = useState(true);
+  const paginatedRecentReviews = useMemo(() => {
+    const recent = [...reviews].sort(
+      (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+    );
+    return recent
+      .slice(0, 2)
+      .map((review: Review, index: number) => (
+        <ReviewCard key={index} review={review} bgColor="bg-3" />
+      ));
+  }, []);
 
-  const handleSpecToggle = (type: "minimum" | "recommended") => {
-    setIsMinimum(type === "minimum");
-  };
+  const totalPages = useMemo(
+    () => Math.ceil(sortedReviews.length / reviewsPerPage),
+    [sortedReviews.length, reviewsPerPage]
+  );
+
+  const handlePageChange = useCallback((page: number) => {
+    setCurrentPage(page);
+    document
+      .querySelector(".reviews-grid")
+      ?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, []);
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth > 992 && !isMinimum) {
+      const isLarge = window.innerWidth >= 992;
+      setReviewsPerPage(isLarge ? 4 : 2);
+      setIsLg(isLarge);
+      if (isLarge && !isMinimum) {
         setIsMinimum(true);
       }
     };
-
     handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, [isMinimum]);
+
+  const handleAllReviewsToggle = () => {
+    setIsAllReviews(true);
+    setCurrentPage(1);
+  };
 
   return (
     <section>
@@ -330,7 +382,7 @@ const GameReviews: React.FC = () => {
             {percentageLiked}%
           </span>
           <div className="flex flex-col gap-[4px] sm:gap-[12px]">
-            <span className="text-green font-usuzi-condensed sm:text-[32px] sm:leading-[40px]">
+            <span className="text-green font-usuzi-condensed text-[18px] xs:text-[20px] leading-[24px] sm:text-[32px] sm:leading-[40px]">
               Highly Recommended
             </span>
             <span className="text-white text-[15px] leading-[19px] sm:text-[20px] sm:leading-[26px]">
@@ -339,36 +391,39 @@ const GameReviews: React.FC = () => {
           </div>
         </div>
         <div className="flex items-center gap-[18px]">
-          <div className=" py-[6px] px-[30px] border-[1px] border-primary-main skew-x-[-20deg]">
-            <span className="flex items-center gap-[8px] skew-x-[20deg]">
-              <LikeIcon />
+          <div className="py-[6px] px-[30px] h-[42px] sm:h-[52px] border-[1px] border-primary-main skew-x-[-20deg]">
+            <span className="flex items-center gap-[8px] skew-x-[20deg] ">
+              <LikeIcon className="sm:w-[40px] sm:h-[40px]" />
               {likedReviews}
             </span>
           </div>
-          <div className=" py-[6px] px-[30px] border-[1px] border-red skew-x-[-20deg]">
+          <div className="py-[6px] px-[30px] h-[42px] sm:h-[52px] border-[1px] border-red skew-x-[-20deg]">
             <span className="flex items-center gap-[8px] skew-x-[20deg]">
-              <LikeIcon className="rotate-180" />
+              <LikeIcon className="sm:w-[40px] sm:h-[40px] rotate-180" />
               {dislikedReviews}
             </span>
           </div>
         </div>
       </div>
       <div className="flex w-full items-start gap-[24px] mb-[24px]">
-        <div className="lg:max-w-[58%] flex-shrink-0 w-full">
-          <div className="w-full overflow-hidden mb-[32px] lg:hidden">
+        <div
+          className={`${
+            isAllReviews ? "lg:max-w-[100%]" : "lg:max-w-[58%]"
+          } flex-shrink-0 w-full`}>
+          <div className="w-full overflow-hidden mb-[24px] lg:hidden">
             <div className="grid grid-cols-2 skew-x-[-20deg] gap-[10px] w-[calc(100%+24px)] ml-[-12px] mx-auto">
               <button
-                className={`bg-DLS block border-primary-main py-[12px] px-[6px] font-usuzi-condensed text-[17px] leading-[19px] sm:text-[26px] sm:leading-[28px] text-white ${
+                className={`bg-DLS block border-primary-main py-[12px] px-[6px] font-usuzi-condensed text-[15px] xs:text-[17px] leading-[19px] sm:text-[26px] sm:leading-[28px] text-white ${
                   isMinimum ? "border-[1px] configurations__button" : ""
                 }`}
-                onClick={() => handleSpecToggle("minimum")}>
+                onClick={() => setIsMinimum(true)}>
                 <span className="block skew-x-[20deg]">Best reviews</span>
               </button>
               <button
-                className={`bg-DLS block border-primary-main py-[12px] px-[6px] font-usuzi-condensed text-[17px] leading-[19px] sm:text-[26px] sm:leading-[28px] text-white ${
+                className={`bg-DLS block border-primary-main py-[12px] px-[6px] font-usuzi-condensed text-[15px] xs:text-[17px] leading-[19px] sm:text-[26px] sm:leading-[28px] text-white ${
                   !isMinimum ? "border-[1px] configurations__button" : ""
                 }`}
-                onClick={() => handleSpecToggle("recommended")}>
+                onClick={() => setIsMinimum(false)}>
                 <span className="block skew-x-[20deg]">Recent reviews</span>
               </button>
             </div>
@@ -378,28 +433,44 @@ const GameReviews: React.FC = () => {
             className="mb-[24px] text-center lg:text-left hidden lg:block">
             {isMinimum ? "Best reviews" : "Recent reviews"}
           </Heading>
-          <div className="flex flex-col gap-[24px] w-full">
-            {(isMinimum ? bestReviews : recentReviews).map((review, index) => (
-              <ReviewCard key={index} review={review} bgColor="bg-2" />
-            ))}
+          <div
+            className={`reviews-grid ${
+              isAllReviews ? "grid grid-cols-1 xl:grid-cols-2" : "flex flex-col"
+            } gap-[24px] w-full`}>
+            <Suspense fallback={<div>Loading reviews...</div>}>
+              {paginatedReviews}
+            </Suspense>
           </div>
         </div>
-        <div className="hidden lg:block">
+        <div
+          className={`${isAllReviews || !isLg ? "hidden" : "hidden lg:block"}`}>
           <Heading variant="h2" className="mb-[24px]">
             Recent reviews
           </Heading>
           <div className="flex flex-col gap-[24px] w-full">
-            {recentReviews.map((review, index) => (
-              <ReviewCard key={index} review={review} bgColor="bg-3" />
-            ))}
+            <Suspense fallback={<div>Loading reviews...</div>}>
+              {paginatedRecentReviews}
+            </Suspense>
           </div>
         </div>
       </div>
-      <Button
-        variant="primary"
-        className="max-w-[calc(100%-20px)] sm:max-w-[440px] mx-auto">
-        Read all reviews ({totalReviews})
-      </Button>
+      {!isAllReviews && (
+        <Button
+          variant="primary"
+          className="max-w-[calc(100%-20px)] sm:max-w-[440px] mx-auto transition-all duration-300 bg-primary-main hover:bg-primary-main/80"
+          onClick={handleAllReviewsToggle}>
+          Read all reviews ({totalReviews})
+        </Button>
+      )}
+      {isAllReviews && totalPages > 1 && (
+        <Suspense fallback={<div>Loading pagination...</div>}>
+          <Pagination
+            totalPages={totalPages}
+            currentPage={currentPage}
+            handlePageChange={handlePageChange}
+          />
+        </Suspense>
+      )}
     </section>
   );
 };

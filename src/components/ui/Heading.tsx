@@ -1,11 +1,11 @@
 import React from "react";
 
-const baseStyles = "uppercase text-white m-0";
+const baseStyles = "text-white m-0";
 
 const headingStyles = {
   h1: `${baseStyles} font-usuzi text-[24px] leading-[26px] sm:text-[42px] sm:leading-[48px] lg:text-[64px] lg:leading-[72px]`,
-  h2: `${baseStyles} font-usuzi-condensed text-[20px] leading-[24px] sm:text-[38px] sm:leading-[44px] `,
-  h3: `${baseStyles} font-usuzi-condensed text-[16px] leading-[16px] sm:text-[26px] sm:leading-[28px]`,
+  h2: `${baseStyles} uppercase font-usuzi-condensed text-[20px] leading-[24px] sm:text-[38px] sm:leading-[44px] `,
+  h3: `${baseStyles} uppercase font-usuzi-condensed text-[16px] leading-[16px] sm:text-[26px] sm:leading-[28px]`,
 };
 
 interface HeadingProps {

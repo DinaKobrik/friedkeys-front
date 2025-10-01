@@ -1,11 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Heading from "@/components/ui/Heading";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function LogIn() {
   const [email, setEmail] = useState("");
@@ -15,6 +16,10 @@ export default function LogIn() {
   const [isTouchedPassword, setIsTouchedPassword] = useState(false);
   const [isValidEmail, setIsValidEmail] = useState(true);
   const [isValidPassword, setIsValidPassword] = useState(true);
+
+  const router = useRouter();
+  const emailRef = useRef<HTMLInputElement>(null);
+  const passwordRef = useRef<HTMLInputElement>(null);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -29,26 +34,39 @@ export default function LogIn() {
     // Проверка на пустые поля
     if (!email.trim()) {
       setIsValidEmail(false);
-      return;
-    }
-    if (!password.trim()) {
-      setIsValidPassword(false);
+      emailRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      window.scrollBy(0, -80); // Отступ для фиксированного хедера
       return;
     }
 
-    // Базовая валидация email
+    // Проверка формата email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       setIsValidEmail(false);
+      emailRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      window.scrollBy(0, -80);
       return;
     }
 
-    // Успешная отправка данных на сервер
-    alert(`Email: ${email}, Password: ${password}`);
+    if (!password.trim()) {
+      setIsValidPassword(false);
+      passwordRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+      window.scrollBy(0, -80);
+      return;
+    }
 
-    // Сброс полей после успешной отправки
+    // Успешная валидация: сохранение email в localStorage и перенаправление
+    localStorage.setItem("logInEmail", email);
+    router.push("/auth/profile/email-verification");
+
+    // Сброс полей
     setEmail("");
     setPassword("");
+    setIsTouchedEmail(false);
+    setIsTouchedPassword(false);
   };
 
   // SVG для закрытого глаза
@@ -119,8 +137,8 @@ export default function LogIn() {
   ];
 
   return (
-    <main className="mt-[40px]">
-      <section className="min-h-screen flex flex-col justify-center items-center max-w-[520px] mx-auto">
+    <main className="my-[40px]">
+      <section className="flex flex-col justify-center items-center max-w-[520px] mx-auto">
         <Heading variant="h1" className="mb-[24px] sm:mb-[32px] text-center">
           Log In
         </Heading>
@@ -147,6 +165,7 @@ export default function LogIn() {
             autoComplete="off"
             isTouched={isTouchedEmail}
             isValid={isValidEmail}
+            ref={emailRef}
           />
           <Input
             label="Password"
@@ -167,7 +186,8 @@ export default function LogIn() {
             className="mb-[8px]"
             autoComplete="new-password"
             isTouched={isTouchedPassword}
-            isValid={isValidPassword}>
+            isValid={isValidPassword}
+            ref={passwordRef}>
             <div
               onClick={() => setShowPassword(!showPassword)}
               className="absolute top-[50%] translate-y-[-50%] right-[16px]">
@@ -175,11 +195,14 @@ export default function LogIn() {
             </div>
           </Input>
           <Link
-            href="../auth/forgot-password/"
+            href="./forgot-password/"
             className="block text-primary-main text-[15px] leading-[15px] sm:text-[20px] sm:leading-[20px] mb-[24px]">
             Forgot password
           </Link>
-          <Button variant="primary" type="submit" className="max-w-[502px]">
+          <Button
+            variant="primary"
+            type="submit"
+            className="max-w-[calc(100%-20px)] sm:max-w-[502px]">
             Log In
           </Button>
         </form>
@@ -189,7 +212,7 @@ export default function LogIn() {
           </Heading>
           <div className="h-[7px] w-full absolute top-[50%] left-[50%] bg-primary-main translate-x-[-50%] translate-y-[-50%] blur-[12px] z-[-1]"></div>
         </div>
-        <div className="max-w-[520px] w-full h-[80px] overflow-hidden relative mb-[40px]">
+        <div className="max-w-[520px] w-full h-[80px] overflow-hidden relative sm:mb-[40px]">
           <div className="flex items-center justify-center gap-[12px] sm:gap-[18px] w-[calc(100%+40px)] sm:w-[560px] mx-auto absolute left-[50%] translate-x-[-50%] top-0">
             {socialLinks.map((link, index) => (
               <Link
@@ -208,7 +231,7 @@ export default function LogIn() {
           </div>
         </div>
         <Link
-          href="/auth/registration"
+          href="/auth/profile/registration"
           className="text-white text-[15px] leading-[15px] sm:text-[20px] sm:leading-[20px] text-center">
           No account yet?
         </Link>

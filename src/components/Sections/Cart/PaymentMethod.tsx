@@ -4,12 +4,17 @@ import React, { useState, useEffect, useMemo } from "react";
 import Heading from "@/components/ui/Heading";
 import Image from "next/image";
 import Input from "@/components/ui/Input";
+import Text from "@/components/ui/Text";
 
 interface PaymentMethodProps {
   onMethodSelect?: (method: string) => void;
+  isPayClicked?: boolean;
 }
 
-const PaymentMethod = ({ onMethodSelect }: PaymentMethodProps) => {
+const PaymentMethod = ({
+  onMethodSelect,
+  isPayClicked = false,
+}: PaymentMethodProps) => {
   const [checkboxStates, setCheckboxStates] = useState<{
     [key: string]: boolean;
   }>({});
@@ -18,10 +23,21 @@ const PaymentMethod = ({ onMethodSelect }: PaymentMethodProps) => {
   const [cardholderName, setCardholderName] = useState("");
   const [expiryDate, setExpiryDate] = useState("");
   const [securityNumber, setSecurityNumber] = useState("");
+  const [touchedFields, setTouchedFields] = useState<{
+    cardNumber: boolean;
+    cardholderName: boolean;
+    expiryDate: boolean;
+    securityNumber: boolean;
+  }>({
+    cardNumber: false,
+    cardholderName: false,
+    expiryDate: false,
+    securityNumber: false,
+  });
 
   const paymentMethods = useMemo(
     () => [
-      { name: "PayPal", fee: "(+4.98$)" },
+      { name: "PayPal", fee: "(+0.00$)" },
       { name: "Card", fee: "" },
       { name: "Crypto", fee: "" },
       { name: "Wallet", fee: "" },
@@ -56,6 +72,7 @@ const PaymentMethod = ({ onMethodSelect }: PaymentMethodProps) => {
     const value = e.target.value.replace(/\D/g, "");
     if (value.length <= 16) {
       setCardNumber(value);
+      setTouchedFields((prev) => ({ ...prev, cardNumber: true }));
     }
   };
 
@@ -64,6 +81,7 @@ const PaymentMethod = ({ onMethodSelect }: PaymentMethodProps) => {
   ) => {
     const value = e.target.value.replace(/[^a-zA-Z\s]/g, "");
     setCardholderName(value);
+    setTouchedFields((prev) => ({ ...prev, cardholderName: true }));
   };
 
   const handleExpiryDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -73,6 +91,7 @@ const PaymentMethod = ({ onMethodSelect }: PaymentMethodProps) => {
       value = value.slice(0, 2) + " / " + value.slice(2, 4);
     }
     setExpiryDate(value);
+    setTouchedFields((prev) => ({ ...prev, expiryDate: true }));
   };
 
   const handleSecurityNumberChange = (
@@ -81,17 +100,61 @@ const PaymentMethod = ({ onMethodSelect }: PaymentMethodProps) => {
     const value = e.target.value.replace(/\D/g, "");
     if (value.length <= 3) {
       setSecurityNumber(value);
+      setTouchedFields((prev) => ({ ...prev, securityNumber: true }));
     }
   };
 
+  const isCardNumberValid = cardNumber.length === 16;
+  const isCardholderNameValid =
+    cardholderName.length > 0 && !/[^a-zA-Z\s]/.test(cardholderName);
+  const isExpiryDateValid =
+    expiryDate.length === 7 && /^\d{2}\s\/\s\d{2}$/.test(expiryDate);
+  const isSecurityNumberValid = securityNumber.length === 3;
+
+  const shouldShowCardErrors = isPayClicked && selectedMethod === "Card";
+
   return (
     <section>
-      <Heading
-        variant="h1"
-        className="mb-[16px] sm:mb-[40px]"
-        aria-label="Payment Method">
-        Payment Method
-      </Heading>
+      <div className="mb-[16px] sm:mb-[40px]">
+        <Heading variant="h1" aria-label="Payment Method">
+          Payment Method
+        </Heading>
+        {isPayClicked && selectedMethod === null && (
+          <Text className="mt-[8px] flex items-center gap-[16px]">
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg">
+              <path
+                fillRule="evenodd"
+                clipRule="evenodd"
+                d="M12 2.75C17.108 2.75 21.25 6.891 21.25 12C21.25 17.108 17.108 21.25 12 21.25C6.891 21.25 2.75 17.108 2.75 12C2.75 6.891 6.891 2.75 12 2.75Z"
+                stroke="#D64431"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+              <path
+                d="M11.9951 8.2041V12.6231"
+                stroke="#D64431"
+                strokeWidth="1.5"
+                strokeLinecap="square"
+                strokeLinejoin="round"
+              />
+              <path
+                d="M11.995 15.7959H12.005"
+                stroke="#D64431"
+                strokeWidth="1.5"
+                strokeLinecap="square"
+                strokeLinejoin="round"
+              />
+            </svg>
+            Please select a payment method
+          </Text>
+        )}
+      </div>
       <div className="flex w-full flex-col gap-[16px] sm:gap-[32px]">
         {paymentMethods.map((method, index) => {
           const checkboxId = `save-${method.name}`;
@@ -176,15 +239,17 @@ const PaymentMethod = ({ onMethodSelect }: PaymentMethodProps) => {
                       onChange={handleCardNumberChange}
                       required
                       errorMessage={
-                        cardNumber.length !== 16 && cardNumber.length > 0
+                        shouldShowCardErrors && !isCardNumberValid
                           ? "Must be exactly 16 digits"
                           : undefined
                       }
                       className="mb-[0]"
                       autoComplete="off"
                       backgroundClass="bg-3"
-                      isTouched={cardNumber.length > 0}
-                      isValid={cardNumber.length === 16}
+                      isTouched={
+                        touchedFields.cardNumber || shouldShowCardErrors
+                      }
+                      isValid={isCardNumberValid}
                     />
                     <Input
                       type="text"
@@ -196,19 +261,17 @@ const PaymentMethod = ({ onMethodSelect }: PaymentMethodProps) => {
                       onChange={handleCardholderNameChange}
                       required
                       errorMessage={
-                        cardholderName.length > 0 &&
-                        /[^a-zA-Z\s]/.test(cardholderName)
+                        shouldShowCardErrors && !isCardholderNameValid
                           ? "Only letters and spaces allowed"
                           : undefined
                       }
                       className="mb-[0]"
                       autoComplete="off"
                       backgroundClass="bg-3"
-                      isTouched={cardholderName.length > 0}
-                      isValid={
-                        cardholderName.length > 0 &&
-                        !/[^a-zA-Z\s]/.test(cardholderName)
+                      isTouched={
+                        touchedFields.cardholderName || shouldShowCardErrors
                       }
+                      isValid={isCardholderNameValid}
                     />
                     <Input
                       type="text"
@@ -220,18 +283,17 @@ const PaymentMethod = ({ onMethodSelect }: PaymentMethodProps) => {
                       onChange={handleExpiryDateChange}
                       required
                       errorMessage={
-                        expiryDate.length < 5 && expiryDate.length > 0
+                        shouldShowCardErrors && !isExpiryDateValid
                           ? "Must be 4 digits"
                           : undefined
                       }
                       className="mb-[0]"
                       autoComplete="off"
                       backgroundClass="bg-3"
-                      isTouched={expiryDate.length > 0}
-                      isValid={
-                        expiryDate.length === 7 &&
-                        /^\d{2}\s\/\s\d{2}$/.test(expiryDate)
+                      isTouched={
+                        touchedFields.expiryDate || shouldShowCardErrors
                       }
+                      isValid={isExpiryDateValid}
                     />
                     <Input
                       type="text"
@@ -243,15 +305,17 @@ const PaymentMethod = ({ onMethodSelect }: PaymentMethodProps) => {
                       onChange={handleSecurityNumberChange}
                       required
                       errorMessage={
-                        securityNumber.length > 0 && securityNumber.length !== 3
+                        shouldShowCardErrors && !isSecurityNumberValid
                           ? "Must be exactly 3 digits"
                           : undefined
                       }
                       className="mb-[0]"
                       autoComplete="off"
                       backgroundClass="bg-3"
-                      isTouched={securityNumber.length > 0}
-                      isValid={securityNumber.length === 3}
+                      isTouched={
+                        touchedFields.securityNumber || shouldShowCardErrors
+                      }
+                      isValid={isSecurityNumberValid}
                     />
                   </div>
                 </div>

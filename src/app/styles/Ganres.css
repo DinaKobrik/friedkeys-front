@@ -40,7 +40,7 @@
     #fed200 87%
   );
   width: 50%;
-  height: 50%;
+  height: 100%;
   border-radius: 50%;
   filter: blur(50px);
 }
@@ -95,28 +95,28 @@
 .ganer::after {
   content: "";
   position: absolute;
-  top: 2px;
+  top: 1px;
   z-index: 10;
-  height: calc(100% - 4px);
+  height: calc(100% - 2px);
 }
 .ganer:nth-child(8n + 1)::after {
   left: 50px;
-  border-left: 2px solid theme("colors.primary-main");
+  border-left: 1px solid theme("colors.primary-main");
   transform: skew(-20deg);
 }
 .ganer:nth-child(8n + 5)::after {
   left: 50px;
-  border-left: 2px solid theme("colors.primary-main");
+  border-left: 1px solid theme("colors.primary-main");
   transform: skew(20deg);
 }
 .ganer:nth-child(8n + 4)::after {
-  right: 46px;
-  border-right: 2px solid theme("colors.primary-main");
+  right: 48px;
+  border-right: 1px solid theme("colors.primary-main");
   transform: skew(-20deg);
 }
 .ganer:nth-child(8n)::after {
-  right: 46px;
-  border-right: 2px solid theme("colors.primary-main");
+  right: 48px;
+  border-right: 1px solid theme("colors.primary-main");
   transform: skew(20deg);
 }
 @media (max-width: 1439px) {
@@ -189,13 +189,13 @@
     transform: skew(20deg);
   }
   .ganer:nth-child(6n + 3)::after {
-    right: 46px;
+    right: 48px;
     left: auto;
     border-right: 2px solid theme("colors.primary-main");
     transform: skew(-20deg);
   }
   .ganer:nth-child(6n)::after {
-    right: 46px;
+    right: 48px;
     left: auto;
     border-right: 2px solid theme("colors.primary-main");
     transform: skew(20deg);
@@ -278,14 +278,14 @@
   }
 
   .ganer:nth-child(4n + 2)::after {
-    right: 46px;
+    right: 47px;
     left: auto;
     border-right: 2px solid theme("colors.primary-main");
     transform: skew(-20deg);
   }
 
   .ganer:nth-child(4n)::after {
-    right: 46px;
+    right: 47px;
     left: auto;
     border-right: 2px solid theme("colors.primary-main");
     transform: skew(20deg);

@@ -22,11 +22,11 @@ export default function About() {
       <AboutUs />
       <Stats />
       <Platforms />
-      <section className="flex flex-col gap-[16px] sm:gap-[24px]">
+      <section className="flex flex-col gap-[16px] sm:gap-[40px]">
         <Heading variant="h2">Players Love FriedKeys — Here’s Why</Heading>
         <UsersFeedbacks
           initialReviews={3}
-          containerClassName="flex overflow-scroll hide-scrollbar gap-[4px] sm:gap-[24px] w-full"
+          containerClassName="flex overflow-scroll hide-scrollbar gap-[4px] sm:gap-[12px] lg:gap-[24px] w-full"
         />
         <Button
           variant="secondary"

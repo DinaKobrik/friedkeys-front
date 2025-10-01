@@ -49,8 +49,17 @@ const Header = () => {
       window.removeEventListener("clearSearchField", handleClearSearch);
   }, []);
 
+  // Функция для определения активного класса
+  const getLinkClass = (href: string) => {
+    const isActive =
+      href === "/" ? pathname === "/" : pathname.startsWith(href);
+    return `menu--mobile__link focus:outline-none cursor-pointer flex justify-center items-center px-[8px] py-[18px] w-full ${
+      isActive ? "menu--mobile__link--active" : ""
+    }`;
+  };
+
   return (
-    <header className="py-[14px] flex justify-between items-center gap-[10px]">
+    <header className="py-[14px] flex justify-between items-center gap-[10px] sm:mt-[32px]">
       <Logo />
       <div className="w-full search hidden xl:flex max-w-[380px] 2xl:max-w-[636px] h-[48px] bg-2 border-[1px] border-primary-main skew-x-[-20deg] relative">
         <form onSubmit={handleSubmit} className="w-full">
@@ -210,7 +219,7 @@ const Header = () => {
         aria-label="Mobile navigation menu">
         <Link
           href="/"
-          className="menu--mobile__link focus:outline-none cursor-pointer flex justify-center items-center px-[8px] py-[18px] w-full"
+          className={getLinkClass("/")}
           aria-label="Home mobile link">
           <svg
             width="24"
@@ -230,7 +239,7 @@ const Header = () => {
         </Link>
         <Link
           href="/all-games"
-          className="menu--mobile__link focus:outline-none cursor-pointer flex justify-center items-center px-[8px] py-[18px] w-full"
+          className={getLinkClass("/all-games")}
           aria-label="Categories mobile link">
           <svg
             width="25"
@@ -283,7 +292,7 @@ const Header = () => {
         </Link>
         <Link
           href="/search"
-          className="menu--mobile__link focus:outline-none cursor-pointer flex justify-center items-center px-[8px] py-[18px] w-full"
+          className={getLinkClass("/search")}
           aria-label="Search mobile link">
           <svg
             width="25"
@@ -310,7 +319,7 @@ const Header = () => {
         </Link>
         <Link
           href="/cart/shopping-cart"
-          className="menu--mobile__link focus:outline-none cursor-pointer flex justify-center items-center px-[8px] py-[18px] w-full"
+          className={getLinkClass("/cart/")}
           aria-label="Cart mobile link">
           <svg
             width="25"
@@ -352,7 +361,7 @@ const Header = () => {
         </Link>
         <Link
           href="/auth/account/personal-info"
-          className="menu--mobile__link focus:outline-none cursor-pointer flex justify-center items-center px-[8px] py-[18px] w-full"
+          className={getLinkClass("/auth/account/")}
           aria-label="Profile mobile link">
           <svg
             width="24"

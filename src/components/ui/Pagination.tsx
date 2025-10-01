@@ -15,7 +15,7 @@ const Pagination: React.FC<PaginationProps> = ({
   return (
     <>
       {totalPages > 1 && (
-        <div className="w-full grid justify-items-center justify-center items-center grid-cols-[repeat(auto-fit,40px)] sm:grid-cols-[repeat(auto-fit,75px)] gap-[18px] my-0 mx-auto">
+        <div className="w-full grid justify-items-center justify-center items-center grid-cols-[repeat(auto-fit,45px)] xs:grid-cols-[repeat(auto-fit,60px)] sm:grid-cols-[repeat(auto-fit,75px)] gap-[8px] xs:gap-[5px] sm:gap-[18px] my-0 mx-auto">
           {totalPages > 5 &&
             (currentPage === 1 ? (
               <>

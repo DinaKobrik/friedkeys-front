@@ -130,6 +130,34 @@
   -webkit-user-select: none;
 }
 
+/* caret */
+
+.custom-caret {
+  position: absolute;
+  top: 50%;
+  left: 20px;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 32px;
+  background: theme("colors.primary-main");
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  background: theme("colors.2");
+  padding: 4px;
+  margin-right: 8px;
+  cursor: pointer;
+  opacity: 0.1;
+  pointer-events: auto;
+}
+
 /* game-card */
 
 .favorite::before {
@@ -227,9 +255,20 @@
   background-color: theme("colors.primary-10");
 }
 
+/* slider-track */
+
+.slider-track__container {
+  max-width: 1920px;
+  width: calc(100vw - 17px);
+}
 .slider-track {
   will-change: transform;
   backface-visibility: hidden;
+}
+@media (pointer: coarse) {
+  .slider-track__container {
+    width: 100vw;
+  }
 }
 
 /* account__link */
@@ -257,12 +296,13 @@
 
 /* orders */
 .orders-grid {
-  grid-template-columns: 1.5fr 1.5fr repeat(4, 1fr);
+  grid-template-columns: 1.2fr 1.5fr 1.3fr 1fr 1.2fr 1fr;
 }
 .order-grid {
-  grid-template-columns: 1.5fr 1.5fr repeat(4, 1fr);
+  grid-template-columns: 1.6fr 1.3fr 1.2fr 1.1fr 1.1fr 1fr;
 }
 @media (max-width: 1199px) {
+  .orders-grid,
   .order-grid {
     grid-template-columns: 1fr;
   }

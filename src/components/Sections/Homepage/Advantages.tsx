@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+
+import React, { useState, useEffect } from "react";
 
 const Advantages: React.FC = () => {
   const BASE_STYLES = {
@@ -11,6 +13,7 @@ const Advantages: React.FC = () => {
 
   const CONTENT_ITEMS = [
     {
+      originalIndex: 0,
       svg: (
         <svg
           width="64"
@@ -61,6 +64,7 @@ const Advantages: React.FC = () => {
       text: "A huge selection of games for PC and consoles",
     },
     {
+      originalIndex: 1,
       svg: (
         <svg
           width="65"
@@ -85,6 +89,7 @@ const Advantages: React.FC = () => {
       text: "Instant key delivery 24/7",
     },
     {
+      originalIndex: 2,
       svg: (
         <svg
           width="64"
@@ -124,6 +129,7 @@ const Advantages: React.FC = () => {
       text: "Great prices and regular discounts",
     },
     {
+      originalIndex: 3,
       svg: (
         <svg
           width="65"
@@ -150,6 +156,7 @@ const Advantages: React.FC = () => {
       text: "Only official and licensed games",
     },
     {
+      originalIndex: 4,
       svg: (
         <svg
           width="64"
@@ -189,32 +196,57 @@ const Advantages: React.FC = () => {
     },
   ];
 
+  const [isBelowLg, setIsBelowLg] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 1199px)");
+    const handleMediaChange = (e: MediaQueryListEvent | MediaQueryList) => {
+      setIsBelowLg(e.matches);
+    };
+
+    handleMediaChange(mediaQuery);
+    mediaQuery.addEventListener("change", handleMediaChange);
+    return () => mediaQuery.removeEventListener("change", handleMediaChange);
+  }, []);
+
+  const orderedItems = isBelowLg
+    ? [
+        CONTENT_ITEMS[0],
+        CONTENT_ITEMS[1],
+        CONTENT_ITEMS[3],
+        CONTENT_ITEMS[4],
+        CONTENT_ITEMS[2],
+      ]
+    : CONTENT_ITEMS;
+
   return (
     <section className="advantages__wrapper">
       <div className="w-full overflow-hidden">
         <div className={`${BASE_STYLES.advantages} advantages`}>
-          {CONTENT_ITEMS.map((item, index) => (
+          {orderedItems.map((item) => (
             <div
-              key={index}
+              key={item.originalIndex}
               className={`${BASE_STYLES.bgAdvantages} ${
-                index === 0 || index === 1 || index === 4
+                item.originalIndex === 0 ||
+                item.originalIndex === 1 ||
+                item.originalIndex === 2
                   ? "skew-x-[20deg]"
-                  : index === 2 || index === 3
+                  : item.originalIndex === 4 || item.originalIndex === 3
                   ? "skew-x-[-20deg] xl:skew-x-[20deg]"
                   : ""
-              } ${index === 4 ? "col-span-2 xl:col-span-1" : ""}`}>
+              } ${item.originalIndex === 2 ? "col-span-2 xl:col-span-1" : ""}`}>
               <div
                 className={`${BASE_STYLES.advantage} ${
-                  index === 0
+                  item.originalIndex === 0
                     ? "skew-x-[-20deg] px-[40px] pl-[90px] 2xl:px-[30px] 2xl:pl-[90px]"
-                    : index === 1
+                    : item.originalIndex === 1
                     ? "skew-x-[-20deg] px-[25px] pr-[85px] sm:pl-[40px] 2xl:px-[50px] xl:pr-[40px]"
-                    : index === 2
-                    ? "skew-x-[20deg] xl:skew-x-[-20deg] px-[25px] pl-[85px] sm:pr-[40px] xl:px-[50px]"
-                    : index === 3
-                    ? "skew-x-[20deg] xl:skew-x-[-20deg] px-[25px] pr-[85px] sm:pl-[40px] xl:px-[50px]"
-                    : index === 4
-                    ? "skew-x-[-20deg] px-[50px] pr-[75px] 2xl:px-[30px] 2xl:pr-[90px]"
+                    : item.originalIndex === 2
+                    ? "skew-x-[-20deg] xl:skew-x-[-20deg] px-[50px] pr-[75px] xl:px-[50px] mainCustom:px-[65px]"
+                    : item.originalIndex === 3
+                    ? "skew-x-[20deg] xl:skew-x-[-20deg] px-[25px] pl-[85px] sm:pr-[40px] xl:px-[50px] mainCustom:px-[65px]"
+                    : item.originalIndex === 4
+                    ? "skew-x-[20deg] xl:skew-x-[-20deg] px-[25px] pr-[85px] sm:pl-[40px] 2xl:px-[30px] 2xl:pr-[90px] mainCustom:px-[65px] mainCustom:pr-[105px]"
                     : ""
                 }`}>
                 {React.cloneElement(item.svg, { className: BASE_STYLES.svg })}

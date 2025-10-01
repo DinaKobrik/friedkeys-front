@@ -83,3 +83,27 @@
 .custom-scrollbar::-webkit-scrollbar-button {
   display: none;
 }
+@media (max-width: 992px) {
+  .price-filters__left:hover::before,
+  .price-filters__left--active::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 10px;
+    height: 100%;
+    width: 1px;
+    background: theme("colors.primary-main");
+    z-index: 20;
+  }
+  .price-filters__right:hover::before,
+  .price-filters__right--active::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 10px;
+    height: 100%;
+    width: 1px;
+    background: theme("colors.primary-main");
+    z-index: 20;
+  }
+}

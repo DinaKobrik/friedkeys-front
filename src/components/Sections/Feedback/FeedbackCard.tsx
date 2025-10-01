@@ -6,7 +6,7 @@ const ReviewCard: React.FC = () => {
   return (
     <div className="card-corner flex flex-col p-[16px] sm:p-[20px] bg-2 min-w-[175px]">
       <div className="flex flex-col 2xl:flex-row items-center sm:items-start 2xl:items-center justify-between gap-[16px] mb-[16px]">
-        <div className="flex items-center justify-start w-full gap-[16px]">
+        <div className="flex items-center justify-start w-full gap-[8px] sm:gap-[16px]">
           <div className="w-[44px] h-[44px] sm:w-[64px] sm:h-[64px] bg-3 rounded-full flex justify-center items-center flex-shrink-0">
             <svg
               width="40"

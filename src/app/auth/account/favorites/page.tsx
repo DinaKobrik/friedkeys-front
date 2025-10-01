@@ -78,7 +78,7 @@ const FavoritesComponent = React.memo(() => {
   }, []);
 
   const handleResize = useCallback(() => {
-    setReviewsPerPage(window.innerWidth < 991 ? 8 : 12);
+    setReviewsPerPage(window.innerWidth < 991 ? 4 : 6);
   }, []);
 
   useEffect(() => {

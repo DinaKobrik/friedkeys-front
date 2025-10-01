@@ -14,8 +14,9 @@ import Button from "@/components/ui/Button";
 import Pagination from "@/components/ui/Pagination";
 import CartMenu from "@/components/Sections/Cart/CartMenu";
 import CartRecommendations from "@/components/Sections/Cart/CartRecommendations";
+import TotalPrice from "@/components/Sections/Cart/TotalPrice";
+import { CartProvider, useCart } from "@/components/Sections/Game/CartHandler";
 
-// SVG для избранного
 const FavoriteIcon = ({ isFavorite }: { isFavorite: boolean }) => (
   <svg
     width="16.5"
@@ -35,7 +36,6 @@ const FavoriteIcon = ({ isFavorite }: { isFavorite: boolean }) => (
   </svg>
 );
 
-// SVG для удаления
 const DeleteIcon = ({ className }: { className?: string }) => (
   <svg
     width="32"
@@ -66,7 +66,6 @@ const DeleteIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
-// SVG для стрелки вниз
 const DownArrowIcon = () => (
   <svg
     width="18"
@@ -83,7 +82,6 @@ const DownArrowIcon = () => (
   </svg>
 );
 
-// SVG для Steam
 const SteamIcon = () => (
   <svg
     width="40"
@@ -99,7 +97,6 @@ const SteamIcon = () => (
   </svg>
 );
 
-// SVG для Microsoft
 const MicrosoftIcon = () => (
   <svg
     width="40"
@@ -115,7 +112,6 @@ const MicrosoftIcon = () => (
   </svg>
 );
 
-// SVG для PlayStation
 const PlayStationIcon = () => (
   <svg
     width="37"
@@ -141,35 +137,25 @@ interface Game {
   isFavorite?: boolean;
 }
 
-interface CartItem {
-  quantity: number;
-  edition: string;
-  platform: string;
-  region: string;
-  addedAt: number;
-}
-
 interface Source {
   name: string;
   svg: React.ReactNode;
 }
 
-const CartPage: React.FC = () => {
-  const [cartItems, setCartItems] = useState<{ [key: string]: CartItem }>({});
+const CartContent: React.FC = () => {
+  const { cartQuantities, setCartQuantities } = useCart();
   const [cartGames, setCartGames] = useState<Game[]>([]);
+  const [gameCache, setGameCache] = useState<{ [id: number]: Game }>({});
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
+  const [imageSrcs, setImageSrcs] = useState<{ [key: number]: string }>({});
   const gamesPerPage = 5;
-  const [dropdownOpen, setDropdownOpen] = useState<{ [key: string]: boolean }>(
-    {}
-  );
-  const [selectedQuantity, setSelectedQuantity] = useState<{
-    [key: string]: number;
-  }>({});
+  const [editingCartKey, setEditingCartKey] = useState<string | null>(null);
+  const [newQuantity, setNewQuantity] = useState(0);
   const [isMinimum, setIsMinimum] = useState(false);
   const [isOneLine, setIsOneLine] = useState<{ [key: string]: boolean }>({});
 
-  const dropdownRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
+  const quantityRefs = useRef<{ [key: string]: HTMLInputElement | null }>({});
   const infoRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
 
   useEffect(() => {
@@ -190,45 +176,36 @@ const CartPage: React.FC = () => {
     []
   );
 
-  const fetchGameById = useCallback(async (id: number) => {
-    try {
-      const response = await fetch(`/api/games?type=game&id=${id}`);
-      if (!response.ok) throw new Error("Failed to fetch game");
-      const data = await response.json();
-      if (Array.isArray(data)) {
-        const foundGame = data.find((g) => g.id === id);
-        return foundGame || null;
-      } else if (data.id) {
-        return data;
+  const fetchGameById = useCallback(
+    async (id: number) => {
+      if (gameCache[id]) {
+        return gameCache[id];
       }
-      return null;
-    } catch (error) {
-      console.error(`Failed to fetch game with id ${id}:`, error);
-      return null;
-    }
-  }, []);
+      try {
+        const response = await fetch(`/api/games?type=game&id=${id}`);
+        if (!response.ok) throw new Error("Failed to fetch game");
+        const data = await response.json();
+        const game = Array.isArray(data)
+          ? data.find((g) => g.id === id)
+          : data.id
+          ? data
+          : null;
+        if (game) {
+          setGameCache((prev) => ({ ...prev, [id]: game }));
+        }
+        return game;
+      } catch (error) {
+        console.error(`Failed to fetch game with id ${id}:`, error);
+        return null;
+      }
+    },
+    [gameCache]
+  );
 
   useEffect(() => {
-    const loadCart = async () => {
-      const cartData = localStorage.getItem("cart");
-      const cartQuantities = cartData ? JSON.parse(cartData) : {};
-
-      const updatedCart = Object.keys(cartQuantities).reduce((acc, id) => {
-        const item = cartQuantities[id];
-        if (item && typeof item === "object") {
-          acc[id] = {
-            quantity: item.quantity || 0,
-            edition: item.edition || "Standard",
-            platform: item.platform || "PC",
-            region: item.region || "US",
-            addedAt: item.addedAt || Date.now(),
-          };
-        }
-        return acc;
-      }, {} as { [key: string]: CartItem });
-      setCartItems(updatedCart);
-
-      const gameIds = Object.keys(updatedCart)
+    const loadCartGames = async () => {
+      setLoading(true);
+      const gameIds = Object.keys(cartQuantities)
         .map((key) => Number(key.split("_")[0]))
         .filter((id, index, self) => self.indexOf(id) === index);
       if (gameIds.length > 0) {
@@ -249,27 +226,49 @@ const CartPage: React.FC = () => {
       setLoading(false);
     };
 
-    loadCart();
-  }, [fetchGameById]);
+    loadCartGames();
+  }, [cartQuantities, fetchGameById]);
+
+  useEffect(() => {
+    setImageSrcs(
+      cartGames.reduce(
+        (acc, game) => ({
+          ...acc,
+          [game.id]:
+            game.image && game.image.trim()
+              ? game.image
+              : "/images/no-image.jpg",
+        }),
+        {}
+      )
+    );
+  }, [cartGames]);
 
   useEffect(() => {
     const checkLineCount = () => {
-      Object.keys(cartItems).forEach((cartKey) => {
+      const newIsOneLine: { [key: string]: boolean } = {};
+      Object.keys(cartQuantities).forEach((cartKey) => {
         const ref = infoRefs.current[cartKey];
         if (ref) {
           const height = ref.getBoundingClientRect().height;
           const isSingleLine = height <= (isMinimum ? 41 : 30);
-          setIsOneLine((prev) => ({ ...prev, [cartKey]: isSingleLine }));
+          newIsOneLine[cartKey] = isSingleLine;
+        } else {
+          newIsOneLine[cartKey] = true;
         }
       });
+      setIsOneLine(newIsOneLine);
     };
 
-    checkLineCount();
+    const timer = setTimeout(checkLineCount, 0);
     window.addEventListener("resize", checkLineCount);
-    return () => window.removeEventListener("resize", checkLineCount);
-  }, [cartItems, isMinimum]);
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener("resize", checkLineCount);
+    };
+  }, [cartQuantities, isMinimum]);
 
-  const toggleFavorite = (e: React.MouseEvent, gameId: number) => {
+  const toggleFavorite = useCallback((e: React.MouseEvent, gameId: number) => {
     e.stopPropagation();
     const storedFavorites = localStorage.getItem("favoriteGames");
     let favoriteIds = storedFavorites ? JSON.parse(storedFavorites) : [];
@@ -286,131 +285,106 @@ const CartPage: React.FC = () => {
         game.id === gameId ? { ...game, isFavorite: !game.isFavorite } : game
       )
     );
-  };
+  }, []);
 
-  const updateQuantity = (gameId: number, change: number, cartKey: string) => {
-    setCartItems((prev) => {
-      const currentItem = prev[cartKey] || {
-        quantity: 0,
-        edition: "Standard",
-        platform: "PC",
-        region: "US",
-        addedAt: Date.now(),
-      };
-      const newQuantity = Math.max(0, currentItem.quantity + change);
-
-      if (newQuantity === 0) {
-        const newCartItems = { ...prev };
-        delete newCartItems[cartKey];
-        localStorage.setItem("cart", JSON.stringify(newCartItems));
-      } else {
-        const newCartItems = {
-          ...prev,
-          [cartKey]: {
-            ...currentItem,
-            quantity: newQuantity,
-          },
+  const updateQuantity = useCallback(
+    (gameId: number, change: number, cartKey: string) => {
+      setCartQuantities((prev) => {
+        const currentItem = prev[cartKey] || {
+          quantity: 0,
+          edition: "Standard",
+          platform: "PC",
+          region: "US",
+          addedAt: Date.now(),
         };
-        localStorage.setItem("cart", JSON.stringify(newCartItems));
-      }
+        const newQuantity = Math.max(0, currentItem.quantity + change);
 
-      setSelectedQuantity((prev) => ({ ...prev, [cartKey]: newQuantity }));
-      setDropdownOpen((prev) => ({ ...prev, [cartKey]: false }));
-      return {
-        ...prev,
-        [cartKey]: {
-          ...currentItem,
-          quantity: newQuantity,
-        },
-      };
-    });
-  };
-
-  const removeFromCart = (gameId: number, cartKey: string) => {
-    setCartItems((prev) => {
-      const newCartItems = { ...prev };
-      delete newCartItems[cartKey];
-      localStorage.setItem("cart", JSON.stringify(newCartItems));
-      return newCartItems;
-    });
-  };
-
-  const toggleDropdown = (cartKey: string) => {
-    setDropdownOpen((prev) => {
-      const newDropdownOpen = { ...prev };
-      for (const key in newDropdownOpen) {
-        if (key !== cartKey) {
-          newDropdownOpen[key] = false;
+        if (newQuantity === 0) {
+          const newCartQuantities = { ...prev };
+          delete newCartQuantities[cartKey];
+          return newCartQuantities;
+        } else {
+          return {
+            ...prev,
+            [cartKey]: {
+              ...currentItem,
+              quantity: newQuantity,
+              addedAt: Date.now(),
+            },
+          };
         }
+      });
+    },
+    [setCartQuantities]
+  );
+
+  const removeFromCart = useCallback(
+    (gameId: number, cartKey: string) => {
+      setCartQuantities((prev) => {
+        const newCartQuantities = { ...prev };
+        delete newCartQuantities[cartKey];
+        return newCartQuantities;
+      });
+    },
+    [setCartQuantities]
+  );
+
+  const handleQuantityChange = useCallback(
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    (e: React.ChangeEvent<HTMLInputElement>, cartKey: string) => {
+      const value = e.target.value.replace(/^0+/, "") || "";
+      const numValue = value === "" ? 0 : parseInt(value) || 0;
+      setNewQuantity(numValue);
+    },
+    []
+  );
+
+  const handleQuantityBlur = useCallback(
+    (gameId: number, cartKey: string, currentQuantity: number) => {
+      const finalQuantity = Math.max(1, newQuantity);
+      if (finalQuantity !== currentQuantity) {
+        updateQuantity(gameId, finalQuantity - currentQuantity, cartKey);
       }
-      return { ...newDropdownOpen, [cartKey]: !prev[cartKey] };
-    });
-  };
+      setEditingCartKey(null);
+      setNewQuantity(finalQuantity);
+    },
+    [newQuantity, updateQuantity]
+  );
+
+  const handleQuantityKeyDown = useCallback(
+    (
+      e: React.KeyboardEvent<HTMLInputElement>,
+      gameId: number,
+      cartKey: string,
+      currentQuantity: number
+    ) => {
+      if (e.key === "Enter") {
+        handleQuantityBlur(gameId, cartKey, currentQuantity);
+      }
+    },
+    [handleQuantityBlur]
+  );
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      const anyOpen = Object.values(dropdownOpen).some(Boolean);
-      if (!anyOpen) return;
-
-      for (const cartKey in dropdownOpen) {
-        const ref = dropdownRefs.current[cartKey];
-        const button = document.querySelector(
-          `[data-cart-key="${cartKey}"]`
-        ) as HTMLElement;
-        if (
-          ref &&
-          button &&
-          !ref.contains(event.target as Node) &&
-          !button.contains(event.target as Node)
-        ) {
-          setDropdownOpen((prev) => ({ ...prev, [cartKey]: false }));
+      if (editingCartKey) {
+        const ref = quantityRefs.current[editingCartKey];
+        if (ref && !ref.contains(event.target as Node)) {
+          const [gameId] = editingCartKey.split("_").map(Number);
+          const currentQuantity = cartQuantities[editingCartKey]?.quantity || 1;
+          handleQuantityBlur(gameId, editingCartKey, currentQuantity);
         }
       }
     };
 
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [dropdownOpen]);
-
-  const calculateTotal = () => {
-    let officialPrice = 0; // Итоговая сумма без скидок
-    let totalDiscount = 0; // Общая сумма скидок
-
-    Object.entries(cartItems).forEach(([cartKey, item]) => {
-      const gameId = Number(cartKey.split("_")[0]);
-      const game = cartGames.find((g) => g.id === gameId);
-      if (game) {
-        const quantity = item.quantity;
-        const originalPrice = game.price * quantity; // Исходная цена за количество
-        officialPrice += originalPrice;
-
-        const isDiscountExpired =
-          game.discountDate &&
-          new Date(game.discountDate).getTime() < new Date().getTime();
-
-        if (game.discount && !isDiscountExpired) {
-          const discountAmount =
-            ((game.price * (game.discount || 0)) / 100) * quantity;
-          totalDiscount += discountAmount;
-        }
-      }
-    });
-
-    const subtotal = officialPrice - totalDiscount;
-
-    return {
-      officialPrice: officialPrice.toFixed(2),
-      totalDiscount: totalDiscount.toFixed(2),
-      subtotal: subtotal.toFixed(2),
-    };
-  };
-
-  const { officialPrice, totalDiscount, subtotal } = calculateTotal();
+  }, [editingCartKey, cartQuantities, handleQuantityBlur]);
 
   const paginatedGames = useMemo(() => {
     const startIdx = (currentPage - 1) * gamesPerPage;
     const endIdx = currentPage * gamesPerPage;
-    const cartEntries = Object.entries(cartItems)
+    const cartEntries = Object.entries(cartQuantities)
       .filter(([, item]) => item.quantity > 0)
       .sort(([, a], [, b]) => b.addedAt - a.addedAt);
     return cartEntries
@@ -442,7 +416,7 @@ const CartPage: React.FC = () => {
             className="flex w-full items-center gap-[12px] sm:gap-[16px] h-[125px] sm:h-[280px]"
             role="region"
             aria-label={`${game.title} ${edition} Cart Item`}>
-            <div className="card-corner relative flex-shrink-0 h-full max-w-[81px] sm:max-w-[180px] lg:max-w-[320px] mainCustom:max-w-[520px]">
+            <div className="card-corner relative w-full flex-shrink-0 h-full max-w-[81px] sm:max-w-[180px] lg:max-w-[320px] mainCustom:max-w-[520px]">
               <div
                 className="favorite absolute w-[36px] h-[36px] sm:w-[48px] sm:h-[48px] right-0 top-0 z-10 flex justify-center items-center cursor-pointer"
                 onClick={(e) => toggleFavorite(e, game.id)}>
@@ -450,12 +424,18 @@ const CartPage: React.FC = () => {
               </div>
               <Link href={`/all-games/${game.id}`} className="w-full h-full">
                 <Image
-                  src={game.image}
+                  src={imageSrcs[game.id] || "/images/no-image.jpg"}
                   alt={game.title}
                   width={520}
                   height={280}
                   className="object-cover w-full h-full"
                   loading="lazy"
+                  onError={() =>
+                    setImageSrcs((prev) => ({
+                      ...prev,
+                      [game.id]: "/images/no-image.jpg",
+                    }))
+                  }
                 />
               </Link>
             </div>
@@ -483,7 +463,7 @@ const CartPage: React.FC = () => {
                     infoRefs.current[cartKey] = el;
                   }}
                   className={`flex items-center flex-wrap line-clamp-2 justify-${
-                    isOneLine[cartKey] ? "between" : "start"
+                    isOneLine[cartKey] ?? true ? "between" : "start"
                   } w-full gap-[8px] md:gap-[20px] gap-y-[3px]`}>
                   <span className="text-white text-[13px] leading-[15px] sm:text-[20px] whitespace-nowrap">
                     {edition}
@@ -523,37 +503,39 @@ const CartPage: React.FC = () => {
                       +
                     </Button>
                   </div>
-                  <div className="relative lg:hidden w-full">
-                    <Button
-                      variant="secondary"
-                      className="max-w-[90px] h-[40px] sm:h-[48px] flex items-center justify-center px-[30px] flex-shrink-0 mr-0"
-                      data-cart-key={cartKey}
-                      onClick={() => toggleDropdown(cartKey)}>
-                      <span className="text-white text-[18px] font-bold mr-[8px]">
-                        {selectedQuantity[cartKey] || quantity}
-                      </span>
-                      <DownArrowIcon />
-                    </Button>
-                    {dropdownOpen[cartKey] && (
-                      <div
-                        ref={(el) => {
-                          dropdownRefs.current[cartKey] = el;
-                        }}
-                        className="absolute top-[40px] sm:top-[48px] bottom-auto md:top-auto md:bottom-[48px] right-[7px] md:right-[-7px] w-[90px] h-[120px] overflow-y-auto custom-scrollbar bg-3 z-50">
-                        {Array.from({ length: 10 }, (_, i) => i + 1).map(
-                          (num) => (
-                            <div
-                              key={num}
-                              className="px-4 py-2 text-white text-[14px] font-bold text-center cursor-pointer"
-                              onClick={() =>
-                                updateQuantity(gameId, num - quantity, cartKey)
-                              }>
-                              {num}
-                            </div>
-                          )
-                        )}
-                      </div>
-                    )}
+                  <div className="relative flex justify-end lg:hidden w-full">
+                    <div
+                      className="max-w-[90px] h-[40px] sm:h-[48px] flex items-center justify-between px-[10px] sm:px-[15px] flex-shrink-0 mr-0 bg-3 border-[1px] border-DLS rounded-[2px] cursor-pointer skew-x-[-20deg] border-primary-main"
+                      onClick={() => {
+                        setEditingCartKey(cartKey);
+                        setNewQuantity(quantity);
+                      }}>
+                      {editingCartKey === cartKey ? (
+                        <input
+                          type="number"
+                          value={newQuantity}
+                          onChange={(e) => handleQuantityChange(e, cartKey)}
+                          onBlur={() =>
+                            handleQuantityBlur(gameId, cartKey, quantity)
+                          }
+                          onKeyDown={(e) =>
+                            handleQuantityKeyDown(e, gameId, cartKey, quantity)
+                          }
+                          autoFocus
+                          className="font-usuzi-condensed max-w-[40px] text-center bg-transparent skew-x-[20deg] no-arrows focus:outline-none text-[18px] leading-[19px] sm:text-[26px] sm:leading-[28px] font-bold"
+                          ref={(el) => {
+                            quantityRefs.current[cartKey] = el;
+                          }}
+                        />
+                      ) : (
+                        <>
+                          <span className="font-usuzi-condensed block my-0 mx-auto rounded-[2px] cursor-pointer text-[18px] leading-[19px] sm:text-[26px] sm:leading-[28px] uppercase text-center px-[12px] py-[12px] w-full focus:outline-none skew-x-[20deg] text-white font-bold">
+                            {quantity}
+                          </span>
+                          <DownArrowIcon />
+                        </>
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -566,24 +548,31 @@ const CartPage: React.FC = () => {
     cartGames,
     currentPage,
     gamesPerPage,
-    cartItems,
-    dropdownOpen,
-    selectedQuantity,
+    cartQuantities,
+    editingCartKey,
+    newQuantity,
     sources,
     isMinimum,
     isOneLine,
+    imageSrcs,
+    removeFromCart,
+    updateQuantity,
+    toggleFavorite,
+    handleQuantityChange,
+    handleQuantityBlur,
+    handleQuantityKeyDown,
   ]);
 
   const totalPages = useMemo(
-    () => Math.ceil(Object.keys(cartItems).length / gamesPerPage),
-    [cartItems, gamesPerPage]
+    () => Math.ceil(Object.keys(cartQuantities).length / gamesPerPage),
+    [cartQuantities, gamesPerPage]
   );
 
   const handlePageChange = useCallback((page: number) => {
     setCurrentPage(page);
   }, []);
 
-  if (loading) {
+  if (loading && cartGames.length === 0) {
     return (
       <Heading variant="h3" className="text-center py-10" aria-live="polite">
         Loading...
@@ -592,121 +581,55 @@ const CartPage: React.FC = () => {
   }
 
   return (
-    <main>
+    <>
       <CartMenu activeItem="shopping-cart" />
-      <section className="mb-[56px] md:mb-[120px]">
-        <Heading
-          variant="h1"
-          className="mb-[24px] sm:mb-[40px]"
-          aria-label="Cart">
-          Cart
-        </Heading>
-        <div className="flex flex-col 2xl:flex-row gap-[24px]">
-          <div className="flex-1 flex flex-col gap-[16px]">
-            {Object.keys(cartItems).length === 0 ? (
-              <p className="text-gray-68">Your cart is empty</p>
-            ) : (
-              paginatedGames
-            )}
+      <main>
+        <section className="mb-[56px] md:mb-[120px]">
+          <Heading
+            variant="h1"
+            className="mb-[24px] sm:mb-[40px]"
+            aria-label="Cart">
+            Cart
+          </Heading>
+          <div className="flex flex-col 2xl:flex-row gap-[24px]">
+            <div className="flex-1 flex flex-col gap-[16px]">
+              {Object.keys(cartQuantities).length === 0 ? (
+                <p className="text-gray-68">Your cart is empty</p>
+              ) : (
+                paginatedGames
+              )}
+            </div>
+            <div className="hidden 2xl:block">
+              <TotalPrice
+                cartQuantities={cartQuantities}
+                cartGames={cartGames}
+              />
+            </div>
           </div>
+          {totalPages > 1 && (
+            <div className="mt-[24px] sm:mt-[56px]">
+              <Pagination
+                totalPages={totalPages}
+                currentPage={currentPage}
+                handlePageChange={handlePageChange}
+              />
+            </div>
+          )}
+        </section>
+        <CartRecommendations />
+        <div className="2xl:hidden">
+          <TotalPrice cartQuantities={cartQuantities} cartGames={cartGames} />
+        </div>
+      </main>
+    </>
+  );
+};
 
-          <div className="w-full hidden 2xl:w-[384px] px-[12px] 2xl:flex flex-col gap-[16px]">
-            <Heading
-              variant="h2"
-              className="mb-[32px]"
-              aria-label="Total Price">
-              Total Price
-            </Heading>
-            <div className="flex flex-col w-full gap-[20px] pb-[20px] border-b-4 border-[#4C4C4C]">
-              <div className="flex w-full justify-between items-center gap-[10px]">
-                <span className="uppercase m-0 text-gray-68 font-usuzi-condensed text-[16px] leading-[16px] sm:text-[26px] sm:leading-[28px]">
-                  Official price
-                </span>
-                <span className="text-gray-68 font-bold text-[20px] leading-[24px]">
-                  {officialPrice}$
-                </span>
-              </div>
-              <div className="flex w-full justify-between items-center gap-[10px]">
-                <span className="uppercase m-0 text-gray-68 font-usuzi-condensed text-[16px] leading-[16px] sm:text-[26px] sm:leading-[28px]">
-                  Discount
-                </span>
-                <span className="text-gray-68 font-bold text-[20px] leading-[24px]">
-                  {totalDiscount}$
-                </span>
-              </div>
-            </div>
-            <div className="flex w-full justify-between items-center gap-[10px] mb-[68px]">
-              <span className="uppercase m-0 text-white font-usuzi-condensed text-[16px] leading-[16px] sm:text-[28px] sm:leading-[28px]">
-                Subtotal
-              </span>
-              <span className="text-white font-bold text-[28px] leading-[28px]">
-                {subtotal}$
-              </span>
-            </div>
-            <Button
-              variant="primary"
-              onClick={() => (window.location.href = "/cart/payment")}>
-              Continue
-            </Button>
-          </div>
-        </div>
-        {totalPages > 1 && (
-          <div className="mt-[24px] sm:mt-[56px]">
-            <Pagination
-              totalPages={totalPages}
-              currentPage={currentPage}
-              handlePageChange={handlePageChange}
-            />
-          </div>
-        )}
-      </section>
-      <CartRecommendations />
-      <div className="w-full 2xl:hidden px-[12px] flex flex-col gap-[16px]">
-        <Heading
-          variant="h2"
-          className="mb-[20px] sm:mb-[32px]"
-          aria-label="Total Price">
-          Total Price
-        </Heading>
-        <div className="flex flex-col w-full gap-[20px] pb-[20px] border-b-4 border-[#4C4C4C]">
-          <div className="flex w-full justify-between items-center gap-[10px]">
-            <span className="uppercase m-0 text-gray-68 font-usuzi-condensed text-[16px] leading-[16px] sm:text-[26px] sm:leading-[28px]">
-              Official price
-            </span>
-            <span className="text-gray-68 font-bold text-[15px] leading-[15px] sm:text-[20px] sm:leading-[24px]">
-              {officialPrice}$
-            </span>
-          </div>
-          <div className="flex w-full justify-between items-center gap-[10px]">
-            <span className="uppercase m-0 text-gray-68 font-usuzi-condensed text-[16px] leading-[16px] sm:text-[26px] sm:leading-[28px]">
-              Discount
-            </span>
-            <span className="text-gray-68 font-bold text-[15px] leading-[15px] sm:text-[20px] sm:leading-[24px]">
-              {totalDiscount}$
-            </span>
-          </div>
-        </div>
-        <div className="flex w-full justify-between items-center gap-[10px] sm:mb-[68px]">
-          <span className="uppercase m-0 text-white font-usuzi-condensed text-[16px] leading-[16px] sm:text-[28px] sm:leading-[28px]">
-            Subtotal
-          </span>
-          <span className="text-white font-bold text-[20px] leading-[24px] sm:text-[28px] sm:leading-[28px]">
-            {subtotal}$
-          </span>
-        </div>
-        <div className="fixed bottom-[60px] left-0 sm:static z-[2000] flex items-center gap-[16px] w-full p-[16px] sm:p-0 border-t-[1px] border-primary-main sm:border-none bg-2 sm:bg-transparent">
-          <span className=" sm:hidden text-white font-bold font-usuzi-condensed text-[22px] leading-[22px] sm:text-[28px] sm:leading-[28px]">
-            {subtotal}$
-          </span>
-          <Button
-            variant="primary"
-            className="max-w-[calc(100%-20px)] mr-[10px] sm:mx-auto"
-            onClick={() => (window.location.href = "/cart/payment")}>
-            Continue
-          </Button>
-        </div>
-      </div>
-    </main>
+const CartPage: React.FC = () => {
+  return (
+    <CartProvider>
+      <CartContent />
+    </CartProvider>
   );
 };
 
