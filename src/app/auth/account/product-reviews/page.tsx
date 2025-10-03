@@ -106,6 +106,7 @@ interface Review {
   likes: number;
   dislikes: number;
   date: string;
+  time: string;
   order: string;
 }
 
@@ -143,7 +144,18 @@ const ProductReviews: React.FC = React.memo(() => {
   useEffect(() => {
     const savedReviews = localStorage.getItem("reviews");
     if (savedReviews) {
-      setReviews(JSON.parse(savedReviews));
+      const parsedReviews: Review[] = JSON.parse(savedReviews);
+      const updatedReviews = parsedReviews.map((review) => ({
+        ...review,
+        time: review.time || "00:00:00",
+      }));
+      setReviews(
+        updatedReviews.sort(
+          (a, b) =>
+            new Date(`${b.date}T${b.time}`).getTime() -
+            new Date(`${a.date}T${a.time}`).getTime()
+        )
+      );
     } else {
       const initialReviews: Review[] = [
         {
@@ -156,6 +168,7 @@ const ProductReviews: React.FC = React.memo(() => {
           likes: 15,
           dislikes: 2,
           date: "2020-09-05",
+          time: "12:00:00",
           order: "FK-20250603-1241",
         },
         {
@@ -168,6 +181,7 @@ const ProductReviews: React.FC = React.memo(() => {
           likes: 5,
           dislikes: 10,
           date: "2021-03-15",
+          time: "12:01:00",
           order: "FK-20250603-1242",
         },
         {
@@ -179,7 +193,8 @@ const ProductReviews: React.FC = React.memo(() => {
           cons: "Frustrating loading times, Repetitive quests",
           likes: 20,
           dislikes: 1,
-          date: "2022-07-10",
+          date: "2021-03-15",
+          time: "12:00:00",
           order: "FK-20250603-1243",
         },
         {
@@ -192,6 +207,7 @@ const ProductReviews: React.FC = React.memo(() => {
           likes: 12,
           dislikes: 3,
           date: "2023-01-20",
+          time: "12:03:00",
           order: "FK-20250603-1244",
         },
         {
@@ -204,6 +220,7 @@ const ProductReviews: React.FC = React.memo(() => {
           likes: 8,
           dislikes: 7,
           date: "2023-06-15",
+          time: "12:04:00",
           order: "FK-20250603-1245",
         },
         {
@@ -216,6 +233,7 @@ const ProductReviews: React.FC = React.memo(() => {
           likes: 18,
           dislikes: 2,
           date: "2024-02-10",
+          time: "12:05:00",
           order: "FK-20250603-1246",
         },
         {
@@ -228,9 +246,14 @@ const ProductReviews: React.FC = React.memo(() => {
           likes: 6,
           dislikes: 9,
           date: "2024-09-01",
+          time: "12:06:00",
           order: "FK-20250603-1247",
         },
-      ];
+      ].sort(
+        (a, b) =>
+          new Date(`${b.date}T${b.time}`).getTime() -
+          new Date(`${a.date}T${a.time}`).getTime()
+      );
       setReviews(initialReviews);
       localStorage.setItem("reviews", JSON.stringify(initialReviews));
     }
@@ -472,7 +495,8 @@ const ProductReviews: React.FC = React.memo(() => {
         <Button
           variant="primary"
           className="max-w-[calc(100%-20px)] sm:max-w-[500px]"
-          aria-label="Leave a review for a game">
+          aria-label="Leave a review for a game"
+          onClick={() => (window.location.href = "/auth/account/orders")}>
           leave a review for the game
         </Button>
       </section>

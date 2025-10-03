@@ -1,6 +1,12 @@
 "use client";
 
-import React, { useState, useEffect, useMemo, useCallback } from "react";
+import React, {
+  useState,
+  useEffect,
+  useMemo,
+  useCallback,
+  useRef,
+} from "react";
 import Image from "next/image";
 import Heading from "@/components/ui/Heading";
 import Text from "@/components/ui/Text";
@@ -27,7 +33,8 @@ const LikeIcon = ({ className }: { className?: string }) => (
     viewBox="0 0 32 32"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
-    className={className}>
+    className={className}
+    aria-hidden="true">
     <path
       fillRule="evenodd"
       clipRule="evenodd"
@@ -49,6 +56,16 @@ const GameReviewsSection: React.FC = () => {
   const [games, setGames] = useState<Game[]>([]);
   const [loading, setLoading] = useState(true);
   const [imageSrcs, setImageSrcs] = useState<{ [key: number]: string }>({});
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
+  const [dynamicMargin, setDynamicMargin] = useState<string>("0px");
+  const [dynamicPadding, setDynamicPadding] = useState<string>("0px");
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [windowSize, setWindowSize] = useState<number>(
+    typeof window !== "undefined" ? window.innerWidth : 0
+  );
 
   const fetchGames = useCallback(async () => {
     try {
@@ -129,6 +146,73 @@ const GameReviewsSection: React.FC = () => {
     }
   }, [reviews]);
 
+  const updateDynamicStyles = () => {
+    const windowWidth = window.innerWidth;
+    let calculatedOffset: number;
+
+    if (windowWidth < 1700) {
+      if (windowWidth < 576) {
+        calculatedOffset = 16;
+      } else {
+        calculatedOffset = 46;
+      }
+      setDynamicMargin(`-${calculatedOffset}px`);
+      setDynamicPadding(`${calculatedOffset}px`);
+    } else {
+      calculatedOffset = 0;
+      setDynamicMargin("0px");
+      setDynamicPadding("0px");
+    }
+
+    setWindowSize(windowWidth);
+  };
+
+  useEffect(() => {
+    updateDynamicStyles();
+    window.addEventListener("resize", updateDynamicStyles);
+    return () => window.removeEventListener("resize", updateDynamicStyles);
+  }, []);
+
+  const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!scrollContainerRef.current) return;
+    setIsDragging(true);
+    setStartX(e.pageX - scrollContainerRef.current.offsetLeft);
+    setScrollLeft(scrollContainerRef.current.scrollLeft);
+    scrollContainerRef.current.style.cursor = "grabbing";
+  };
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!isDragging || !scrollContainerRef.current) return;
+    e.preventDefault();
+    const x = e.pageX - scrollContainerRef.current.offsetLeft;
+    const walk = (x - startX) * 1.5;
+    scrollContainerRef.current.scrollLeft = scrollLeft - walk;
+  };
+
+  const handleMouseUpOrLeave = () => {
+    if (!scrollContainerRef.current) return;
+    setIsDragging(false);
+    scrollContainerRef.current.style.cursor = "grab";
+  };
+
+  const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
+    if (!scrollContainerRef.current) return;
+    setIsDragging(true);
+    setStartX(e.touches[0].pageX - scrollContainerRef.current.offsetLeft);
+    setScrollLeft(scrollContainerRef.current.scrollLeft);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
+    if (!isDragging || !scrollContainerRef.current) return;
+    const x = e.touches[0].pageX - scrollContainerRef.current.offsetLeft;
+    const walk = (x - startX) * 1.5;
+    scrollContainerRef.current.scrollLeft = scrollLeft - walk;
+  };
+
+  const handleTouchEnd = () => {
+    setIsDragging(false);
+  };
+
   const reviewItems = useMemo(() => {
     return reviews.slice(0, 3).map((review, index) => {
       const game = games.find((g) => g.id === review.gameId);
@@ -150,7 +234,7 @@ const GameReviewsSection: React.FC = () => {
               aria-label={`View game ${game.title}`}>
               <Image
                 src={imageSrcs[game.id] || "/images/no-image.jpg"}
-                alt={game.title}
+                alt={`Cover image for ${game.title}`}
                 width={520}
                 height={273}
                 className="object-cover w-full h-full rounded-[8px]"
@@ -168,17 +252,21 @@ const GameReviewsSection: React.FC = () => {
             <div
               className={`h-[20px] w-[50%] absolute top-0 left-[50%] ${
                 !review.liked ? "bg-red" : "bg-primary-main"
-              } translate-x-[-50%] blur-[50px] z-0`}></div>
+              } translate-x-[-50%] blur-[50px] z-0`}
+              aria-hidden="true"></div>
             <div className="flex items-center justify-between gap-[16px] w-full">
               <div className="flex items-center justify-start w-full gap-[16px]">
-                <div className="w-[44px] h-[44px] sm:w-[64px] sm:h-[64px] bg-3 rounded-full flex justify-center items-center flex-shrink-0">
+                <div
+                  className="w-[44px] h-[44px] sm:w-[64px] sm:h-[64px] bg-3 rounded-full flex justify-center items-center flex-shrink-0"
+                  aria-hidden="true">
                   <svg
                     width="40"
                     height="40"
                     viewBox="0 0 40 40"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
-                    className="w-[28px] h-[28px] sm:w-[40px] sm:h-[40px]">
+                    className="w-[28px] h-[28px] sm:w-[40px] sm:h-[40px]"
+                    aria-hidden="true">
                     <circle
                       cx="20.0026"
                       cy="19.9999"
@@ -206,7 +294,9 @@ const GameReviewsSection: React.FC = () => {
                     />
                   </svg>
                 </div>
-                <div className="text-white font-bold text-[15px] sm:text-[20px] overflow-hidden text-ellipsis whitespace-nowrap">
+                <div
+                  className="text-white font-bold text-[15px] sm:text-[20px] overflow-hidden text-ellipsis whitespace-nowrap"
+                  aria-label={`Username: ${review.username}`}>
                   {review.username}
                 </div>
               </div>
@@ -214,6 +304,9 @@ const GameReviewsSection: React.FC = () => {
                 className={`${
                   !review.liked ? "rotate-180" : ""
                 } w-[28px] h-[28px] sm:w-[40px] md:h-[40px] flex-shrink-0`}
+                aria-label={
+                  review.liked ? "Positive review" : "Negative review"
+                }
               />
             </div>
             <div className="flex flex-col gap-[16px] w-full line-clamp-[14] sm:line-clamp-[10] overflow-hidden">
@@ -221,7 +314,9 @@ const GameReviewsSection: React.FC = () => {
                 <Text
                   key={idx}
                   className="text-[14px] sm:text-[16px] leading-[20px] sm:leading-[24px]"
-                  aria-label={`Review paragraph ${idx + 1}: ${paragraph}`}>
+                  aria-label={`Review paragraph ${idx + 1} by ${
+                    review.username
+                  }: ${paragraph}`}>
                   {paragraph}
                 </Text>
               ))}
@@ -252,12 +347,29 @@ const GameReviewsSection: React.FC = () => {
           disabled
           onClick={() => {
             window.location.href = "/";
-          }}>
+          }}
+          aria-label="View all games (currently disabled)">
           see all games
         </Button>
       </div>
-      <div className="flex overflow-scroll hide-scrollbar gap-[12px] sm:gap-[24px]">
-        {reviewItems}
+      <div
+        className="mx-auto relative max-w-[1920px] overflow-hidden"
+        style={{ marginLeft: dynamicMargin, marginRight: dynamicMargin }}>
+        <div
+          ref={scrollContainerRef}
+          className="flex overflow-scroll hide-scrollbar gap-[12px] sm:gap-[16px] lg:gap-[24px] cursor-grab select-none"
+          role="region"
+          aria-label="Game reviews carousel"
+          style={{ paddingLeft: dynamicPadding, paddingRight: dynamicPadding }}
+          onMouseDown={handleMouseDown}
+          onMouseMove={handleMouseMove}
+          onMouseUp={handleMouseUpOrLeave}
+          onMouseLeave={handleMouseUpOrLeave}
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}>
+          {reviewItems}
+        </div>
       </div>
     </section>
   );

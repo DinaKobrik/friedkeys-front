@@ -98,7 +98,7 @@ const PaymentContent = () => {
   } | null>(null);
   /* eslint-enable @typescript-eslint/no-unused-vars */
 
-  const [displayMode, setDisplayMode] = useState(1); // eslint-disable-line @typescript-eslint/no-unused-vars
+  const [displayMode, setDisplayMode] = useState(2); // eslint-disable-line @typescript-eslint/no-unused-vars
   const addresses = [
     "France (VAT 20%)",
     "Germany (VAT 19%)",

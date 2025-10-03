@@ -129,7 +129,7 @@ const FavoritesComponent = React.memo(() => {
             {favoriteGames.length} games
           </div>
         </div>
-        <div className="favorites-grid grid grid-cols-2 lg:grid-cols-3 gap-[12px]">
+        <div className="favorites-grid grid grid-cols-2 lg:grid-cols-3 gap-[12px] sm:-[16px] lg:gap-[24px]">
           <Suspense fallback={<div>Loading games...</div>}>
             {paginatedGames}
           </Suspense>

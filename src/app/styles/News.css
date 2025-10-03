@@ -10,6 +10,15 @@
   max-width: 1920px;
   width: calc(100vw - 17px);
   height: calc(100% + 100px);
+  background: -webkit-linear-gradient(
+    to bottom,
+    theme("colors.main") 0%,
+    theme("colors.main") 7%,
+    rgba(0, 0, 0, 0) 20%,
+    rgba(0, 0, 0, 0) 80%,
+    theme("colors.main") 93%,
+    theme("colors.main") 100%
+  );
   background: linear-gradient(
     to bottom,
     theme("colors.main") 0%,
@@ -20,6 +29,8 @@
     theme("colors.main") 100%
   );
   background-size: 1920px auto;
+  -webkit-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
   transform: translateX(-50%);
   z-index: 1;
 }
@@ -30,5 +41,13 @@
   }
 }
 .new-clip {
+  -webkit-clip-path: polygon(
+    5% 0%,
+    100% 0%,
+    100% 90%,
+    95% 100%,
+    0% 100%,
+    0% 10%
+  );
   clip-path: polygon(5% 0%, 100% 0%, 100% 90%, 95% 100%, 0% 100%, 0% 10%);
 }

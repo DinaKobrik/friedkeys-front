@@ -1,11 +1,15 @@
 @media (pointer: fine) {
   .input-status:hover {
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
     border-radius: 2px;
     border: 1px solid theme("colors.primary-main");
   }
 }
 
 .input-status:focus-within {
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
   border-radius: 2px;
   border: 2px solid theme("colors.primary-main");
 }
@@ -17,6 +21,8 @@
   left: -4px;
   right: -4px;
   bottom: -4px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
   border-radius: 2px;
   z-index: -1;
   border: 1px dashed white;

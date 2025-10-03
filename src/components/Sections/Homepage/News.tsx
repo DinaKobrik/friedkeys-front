@@ -63,19 +63,29 @@ const News: React.FC = () => {
   });
 
   return (
-    <section>
-      <Heading variant="h1" className="mb-[24px] sm:mb-[40px]">
+    <section role="region" aria-label="News Section">
+      <Heading
+        variant="h1"
+        className="mb-[24px] sm:mb-[40px]"
+        aria-label="News Title">
         news
       </Heading>
       <div className="grid grid-cols-1 gap-[24px] mb-[24px] sm:mb-[40px]">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-[24px]">
-          {newsItems}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-[24px]" role="list">
+          {newsItems.length > 0 ? (
+            newsItems
+          ) : (
+            <p className="text-gray-68" aria-live="polite">
+              Loading news...
+            </p>
+          )}
         </div>
       </div>
       <Button
         variant="primary"
         className="max-w-[calc(100%-20px)] sm:max-w-[255px]"
-        onClick={() => router.push("/news")}>
+        onClick={() => router.push("/news")}
+        aria-label="Read all news articles">
         Read all
       </Button>
     </section>

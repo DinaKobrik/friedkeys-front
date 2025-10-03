@@ -16,7 +16,7 @@ const CartMenu: React.FC<CartMenuProps> = ({ activeItem = "shopping" }) => {
 
   return (
     <nav className="w-full my-[24px] sm:my-[80px]">
-      <div className=" box-border overflow-hidden relative cart-menu w-[calc(100%+36px)] min-h-[46px] sm:min-h-[68px] ml-[-18px] gap-[4px] xs:gap-[8px] md:gap-[18px]  text-center">
+      <div className=" box-border overflow-hidden relative cart-menu w-[calc(100%+36px)] min-h-[46px] sm:min-h-[68px] ml-[-18px] gap-[4px] xs:gap-[8px] md:gap-[18px]  text-center pb-[2px]">
         {menuItems.map((item) => (
           <Link
             key={item.id}

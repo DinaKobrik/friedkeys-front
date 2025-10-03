@@ -168,7 +168,7 @@ const PaymentMethod = ({
                 onClick={() => handleMethodClick(method.name)}>
                 <div className="flex-shrink-0 bg-2 px-[11px] py-[24px] sm:px-[20px] sm:py-[29px] w-[82px] sm:w-[180px] md:w-[248px] flex justify-center items-center">
                   <Image
-                    src={`/images/payment/${method.name}.png`}
+                    src={`/images/payment/${method.name.toLowerCase()}.png`}
                     alt={`${method.name} payment method`}
                     width={200}
                     height={100}

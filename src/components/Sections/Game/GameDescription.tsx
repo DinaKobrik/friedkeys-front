@@ -1,12 +1,18 @@
 "use client";
 
-import React, { useRef } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import Heading from "@/components/ui/Heading";
 import Text from "@/components/ui/Text";
 
 const GameDescription: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [dynamicMargin, setDynamicMargin] = useState<string>("0px");
+  const [dynamicPadding, setDynamicPadding] = useState<string>("0px");
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [windowSize, setWindowSize] = useState<number>(
+    typeof window !== "undefined" ? window.innerWidth : 0
+  );
 
   const gameData = [
     {
@@ -40,6 +46,42 @@ const GameDescription: React.FC = () => {
         "Experience the fifth feature, featuring an expansive open world with diverse biomes, intricate quest lines, hidden treasures, and a dynamic weather system that enhances the realism and strategic depth of the gameplay.",
     },
   ];
+
+  const updateDynamicStyles = () => {
+    const windowWidth = window.innerWidth;
+    const scrollbarWidthValue =
+      window.innerWidth - document.documentElement.clientWidth;
+    const isTouchDevice = navigator.maxTouchPoints > 0;
+
+    let calculatedOffset: number;
+    if (windowWidth < 576) {
+      calculatedOffset = 16;
+      setDynamicMargin(`-${calculatedOffset}px`);
+    } else if (windowWidth >= 576 && windowWidth < 1700) {
+      calculatedOffset = 46;
+      setDynamicMargin(`-${calculatedOffset}px`);
+    } else if (windowWidth >= 1607 && windowWidth <= 1609) {
+      calculatedOffset = 146;
+      setDynamicMargin(`-${calculatedOffset}px`);
+    } else if (windowWidth > 1608 && windowWidth <= 1920) {
+      calculatedOffset = isTouchDevice
+        ? (windowWidth - 1608) / 2
+        : (windowWidth - scrollbarWidthValue - 1608) / 2;
+      setDynamicMargin(`-${calculatedOffset}px`);
+    } else {
+      calculatedOffset = 146;
+      setDynamicMargin("-146px");
+    }
+
+    setDynamicPadding(`${calculatedOffset}px`);
+    setWindowSize(windowWidth);
+  };
+
+  useEffect(() => {
+    updateDynamicStyles();
+    window.addEventListener("resize", updateDynamicStyles);
+    return () => window.removeEventListener("resize", updateDynamicStyles);
+  }, []);
 
   const handleDragStart = (e: React.MouseEvent | React.TouchEvent) => {
     if (!containerRef.current) return;
@@ -104,33 +146,38 @@ const GameDescription: React.FC = () => {
         Description
       </Heading>
       <div
-        ref={containerRef}
-        className="flex gap-[12px] sm:gap-[24px] overflow-x-auto scrollbar-hide custom-scrollbar-h items-start pb-[28px] sm:pb-[60px]"
-        onMouseDown={handleDragStart}
-        onMouseUp={handleDragEnd}
-        onMouseLeave={handleDragEnd}
-        onTouchStart={handleDragStart}
-        onTouchEnd={handleDragEnd}>
-        {gameData.map((item, index) => (
-          <div
-            key={index}
-            className="flex-shrink-0 w-[268px] sm:w-[394px] lg:w-[520px]">
-            <div className="card-corner h-[160px] sm:h-[220px] lg:h-[280px] relative mb-[16px] sm:mb-[32px]">
-              <Image
-                src={item.photo}
-                alt={item.subtitle}
-                width={520}
-                height={280}
-                className="object-cover h-full w-full"
-                draggable="false"
-              />
+        className="mx-auto description__custom-scroll relative max-w-[1920px] overflow-hidden"
+        style={{ marginLeft: dynamicMargin, marginRight: dynamicMargin }}>
+        <div
+          ref={containerRef}
+          className="flex gap-[12px] sm:gap-[24px] overflow-x-auto scrollbar-hide custom-scrollbar-h items-start pb-[28px] sm:pb-[60px]"
+          style={{ paddingLeft: dynamicPadding, paddingRight: dynamicPadding }}
+          onMouseDown={handleDragStart}
+          onMouseUp={handleDragEnd}
+          onMouseLeave={handleDragEnd}
+          onTouchStart={handleDragStart}
+          onTouchEnd={handleDragEnd}>
+          {gameData.map((item, index) => (
+            <div
+              key={index}
+              className="flex-shrink-0 w-[268px] sm:w-[394px] lg:w-[520px]">
+              <div className="card-corner h-[160px] sm:h-[220px] lg:h-[280px] relative mb-[16px] sm:mb-[32px]">
+                <Image
+                  src={item.photo}
+                  alt={item.subtitle}
+                  width={520}
+                  height={280}
+                  className="object-cover h-full w-full"
+                  draggable="false"
+                />
+              </div>
+              <Heading variant="h3" className="mb-[8px] sm:mb-[16px]">
+                {item.subtitle}
+              </Heading>
+              <Text>{item.description}</Text>
             </div>
-            <Heading variant="h3" className="mb-[8px] sm:mb-[16px]">
-              {item.subtitle}
-            </Heading>
-            <Text>{item.description}</Text>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </section>
   );

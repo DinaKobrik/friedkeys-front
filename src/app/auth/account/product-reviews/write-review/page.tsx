@@ -58,6 +58,7 @@ interface Review {
   likes: number;
   dislikes: number;
   date: string;
+  time: string;
   order: string;
 }
 
@@ -124,7 +125,10 @@ const ReviewContent: React.FC = React.memo(() => {
       );
 
       if (existingReview) {
-        setOriginalReview(existingReview);
+        setOriginalReview({
+          ...existingReview,
+          time: existingReview.time || "00:00:00",
+        });
         setLiked(existingReview.liked);
         setReviewText(existingReview.review || "");
         setPros(existingReview.pros || "");
@@ -209,9 +213,10 @@ const ReviewContent: React.FC = React.memo(() => {
       review: reviewText,
       pros,
       cons,
-      likes: 0,
-      dislikes: 0,
+      likes: originalReview ? originalReview.likes : 0,
+      dislikes: originalReview ? originalReview.dislikes : 0,
       date: new Date().toISOString().split("T")[0],
+      time: new Date().toTimeString().slice(0, 8),
       order,
     };
 

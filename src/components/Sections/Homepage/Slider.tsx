@@ -16,13 +16,58 @@ const Slider: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
-  const [screenWidth, setScreenWidth] = useState<number>(
-    typeof window !== "undefined" ? window.innerWidth : 1920
-  );
+  const [dynamicMargin, setDynamicMargin] = useState<string>("0px");
+  const [dynamicPadding, setDynamicPadding] = useState<string>("0px");
+  const [calculatedOffset, setCalculatedOffset] = useState<number>(146);
   const [imageSrcs, setImageSrcs] = useState<string[]>([]);
+  const [windowSize, setWindowSize] = useState<number>(
+    typeof window !== "undefined" ? window.innerWidth : 0
+  );
   const sliderRef = useRef<HTMLDivElement>(null);
   const ulRef = useRef<HTMLUListElement>(null);
   const intervalRef = useRef<number | null>(null);
+
+  const updateDynamicStyles = () => {
+    const windowWidth = window.innerWidth;
+    const scrollbarWidthValue =
+      window.innerWidth - document.documentElement.clientWidth;
+    const isTouchDevice = navigator.maxTouchPoints > 0;
+
+    let calculatedOffset: number;
+    if (windowWidth < 576) {
+      calculatedOffset = 16;
+      setDynamicMargin(`-${calculatedOffset}px`);
+    } else if (windowWidth >= 576 && windowWidth < 1700) {
+      calculatedOffset = 46;
+      setDynamicMargin(`-${calculatedOffset}px`);
+    } else if (windowWidth >= 1607 && windowWidth <= 1609) {
+      calculatedOffset = 146;
+      setDynamicMargin(`-${calculatedOffset}px`);
+    } else if (windowWidth > 1608 && windowWidth <= 1920) {
+      calculatedOffset = isTouchDevice
+        ? (windowWidth - scrollbarWidthValue - 1608) / 2
+        : (windowWidth - scrollbarWidthValue - 1608) / 2;
+      setDynamicMargin(`-${calculatedOffset}px`);
+    } else {
+      calculatedOffset = 146;
+      setDynamicMargin("-146px");
+    }
+
+    setCalculatedOffset(calculatedOffset);
+    setDynamicPadding(`${calculatedOffset}px`);
+    setWindowSize(windowWidth);
+  };
+
+  const debounce = <T extends (...args: unknown[]) => void>(
+    func: T,
+    wait: number
+  ) => {
+    let timeout: NodeJS.Timeout;
+    return (...args: Parameters<T>) => {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => func(...args), wait);
+    };
+  };
 
   useEffect(() => {
     const fetchGames = async () => {
@@ -54,12 +99,10 @@ const Slider: React.FC = () => {
 
     fetchGames();
 
-    const handleResize = () => {
-      setScreenWidth(window.innerWidth);
-    };
-
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    updateDynamicStyles();
+    const debouncedUpdate = debounce(updateDynamicStyles, 100);
+    window.addEventListener("resize", debouncedUpdate);
+    return () => window.removeEventListener("resize", debouncedUpdate);
   }, []);
 
   const topGames = useMemo(() => {
@@ -78,9 +121,13 @@ const Slider: React.FC = () => {
       if (ulRef.current && sliderRef.current && topGames.length > 0) {
         requestAnimationFrame(() => {
           if (ulRef.current && sliderRef.current) {
-            const slideWidth = sliderRef.current.offsetWidth;
+            const scrollbarWidthValue =
+              window.innerWidth - document.documentElement.clientWidth;
+            const slideWidth = window.innerWidth - scrollbarWidthValue;
             ulRef.current.style.width = `${slideWidth * topGames.length}px`;
-            ulRef.current.style.transform = `translateX(-${slideWidth}px)`;
+            ulRef.current.style.transform = `translateX(-${
+              slideWidth + calculatedOffset
+            }px)`;
             const lastSlide = ulRef.current.lastElementChild;
             if (lastSlide) {
               ulRef.current.insertBefore(lastSlide, ulRef.current.firstChild);
@@ -102,13 +149,15 @@ const Slider: React.FC = () => {
         resizeObserver.unobserve(currentSliderRef);
       }
     };
-  }, [topGames, screenWidth]);
+  }, [topGames, calculatedOffset, windowSize]);
 
   const moveLeft = () => {
     if (!ulRef.current || !sliderRef.current) return;
-    const slideWidth = sliderRef.current.offsetWidth;
+    const scrollbarWidthValue =
+      window.innerWidth - document.documentElement.clientWidth;
+    const slideWidth = window.innerWidth - scrollbarWidthValue;
     ulRef.current.style.transition = "transform 0.2s ease-in-out";
-    ulRef.current.style.transform = `translateX(0)`;
+    ulRef.current.style.transform = `translateX(-${calculatedOffset}px)`;
     setTimeout(() => {
       if (ulRef.current) {
         const lastSlide = ulRef.current.lastElementChild;
@@ -116,7 +165,9 @@ const Slider: React.FC = () => {
           ulRef.current.insertBefore(lastSlide, ulRef.current.firstChild);
         }
         ulRef.current.style.transition = "none";
-        ulRef.current.style.transform = `translateX(-${slideWidth}px)`;
+        ulRef.current.style.transform = `translateX(-${
+          slideWidth + calculatedOffset
+        }px)`;
       }
     }, 200);
     resetAutoScroll();
@@ -124,9 +175,13 @@ const Slider: React.FC = () => {
 
   const moveRight = () => {
     if (!ulRef.current || !sliderRef.current) return;
-    const slideWidth = sliderRef.current.offsetWidth;
+    const scrollbarWidthValue =
+      window.innerWidth - document.documentElement.clientWidth;
+    const slideWidth = window.innerWidth - scrollbarWidthValue;
     ulRef.current.style.transition = "transform 0.2s ease-in-out";
-    ulRef.current.style.transform = `translateX(-${slideWidth * 2}px)`;
+    ulRef.current.style.transform = `translateX(-${
+      slideWidth * 2 + calculatedOffset
+    }px)`;
     setTimeout(() => {
       if (ulRef.current) {
         const firstSlide = ulRef.current.firstElementChild;
@@ -134,7 +189,9 @@ const Slider: React.FC = () => {
           ulRef.current.appendChild(firstSlide);
         }
         ulRef.current.style.transition = "none";
-        ulRef.current.style.transform = `translateX(-${slideWidth}px)`;
+        ulRef.current.style.transform = `translateX(-${
+          slideWidth + calculatedOffset
+        }px)`;
       }
     }, 200);
     resetAutoScroll();
@@ -160,9 +217,13 @@ const Slider: React.FC = () => {
       ulRef.current.style.transition = "transform 0.2s ease-in-out";
       moveLeft();
     } else {
-      const slideWidth = sliderRef.current.offsetWidth;
+      const scrollbarWidthValue =
+        window.innerWidth - document.documentElement.clientWidth;
+      const slideWidth = window.innerWidth - scrollbarWidthValue;
       ulRef.current.style.transition = "transform 0.2s ease-in-out";
-      ulRef.current.style.transform = `translateX(-${slideWidth}px)`;
+      ulRef.current.style.transform = `translateX(-${
+        slideWidth + calculatedOffset
+      }px)`;
     }
     resetAutoScroll();
   };
@@ -178,29 +239,25 @@ const Slider: React.FC = () => {
     intervalRef.current = intervalId;
   };
 
-  useEffect(() => {
-    if (topGames.length <= 1 || !ulRef.current || !sliderRef.current) return;
-
-    const autoScroll = () => {
-      moveRight();
-    };
-
-    const intervalId = setInterval(autoScroll, 3000) as unknown as number;
-    intervalRef.current = intervalId;
-
-    return () => {
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current);
-      }
-    };
-  }, [topGames, screenWidth]); // eslint-disable-line react-hooks/exhaustive-deps
-
   return (
-    <section className="relative home__slider w-full max-w-[1920px] mx-auto">
+    <section
+      key={windowSize}
+      className="mx-auto home__slider relative max-w-[1920px] overflow-hidden"
+      style={{ marginLeft: dynamicMargin, marginRight: dynamicMargin }}
+      role="region"
+      aria-label="Game Slider Section">
       {loading ? (
-        <p className="text-center py-10 text-gray-68">Loading slider...</p>
+        <p className="text-center py-10 text-gray-68" aria-live="polite">
+          Loading slider...
+        </p>
       ) : topGames.length > 0 ? (
-        <div className="relative overflow-hidden" ref={sliderRef}>
+        <div
+          className="relative overflow-hidden"
+          ref={sliderRef}
+          style={{
+            paddingLeft: dynamicPadding,
+            paddingRight: dynamicPadding,
+          }}>
           <ul
             className="flex transition-transform duration-500 ease-in-out"
             ref={ulRef}
@@ -208,18 +265,30 @@ const Slider: React.FC = () => {
             onMouseUp={handleDragEnd}
             onMouseLeave={handleDragEnd}
             onTouchStart={handleDragStart}
-            onTouchEnd={handleDragEnd}>
+            onTouchEnd={handleDragEnd}
+            role="listbox"
+            aria-label="Game slides">
             {topGames.map((game: Game, index: number) => (
               <li
                 key={index}
-                className="w-[100vw] home__slide bodyCustom:w-full flex-shrink-0 ">
-                <Link href={`/all-games/${game.id}`} className="w-full h-full">
+                className="w-[100vw] home__slide flex-shrink-0"
+                style={{
+                  width: `calc(100vw - ${
+                    window.innerWidth - document.documentElement.clientWidth
+                  }px)`,
+                }}
+                aria-label={`Slide for ${game.title}`}>
+                <Link
+                  href={`/all-games/${game.id}`}
+                  className="w-full h-full"
+                  aria-label={`View game ${game.title}`}>
                   <Image
                     src={imageSrcs[index] || "/images/no-image.jpg"}
-                    alt={game.title || "Game Slider"}
+                    alt={`Cover image for ${game.title}`}
                     width={1920}
                     height={880}
-                    className="w-full h-[216px] sm:h-[440px] md:h-[580px] xl:h-[880px] object-cover no-drag"
+                    className="w-full h-[216px] sm:h-[440px] md:h-[540px] xl:h-[880px] object-cover no-drag"
+                    loading="lazy"
                     onError={() =>
                       setImageSrcs((prev) => {
                         const newSrcs = [...prev];
@@ -234,14 +303,16 @@ const Slider: React.FC = () => {
           </ul>
           <button
             onClick={moveLeft}
-            className="absolute ml-[16px] sm:ml-[46px] bodyCustom:ml-[54px] left-0 top-1/2 transform -translate-y-1/2 w-[64px] h-[64px] hidden md:flex justify-center items-center p-[16px] rounded-full bg-DLS backdrop-blur-[10px] z-10"
-            aria-label="Scroll left">
+            className="absolute left-0 top-1/2 transform -translate-y-1/2 w-[64px] h-[64px] hidden md:flex justify-center items-center p-[16px] rounded-full bg-DLS backdrop-blur-[10px] z-10"
+            style={{ marginLeft: dynamicPadding }}
+            aria-label="Previous slide">
             <svg
               width="12"
               height="22"
               viewBox="0 0 12 22"
               fill="none"
-              xmlns="http://www.w3.org/2000/svg">
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true">
               <path
                 d="M10.6641 20.3334L1.33073 11.0001L10.6641 1.66675"
                 stroke="white"
@@ -252,14 +323,16 @@ const Slider: React.FC = () => {
           </button>
           <button
             onClick={moveRight}
-            className="absolute mr-[16px] sm:mr-[46px] bodyCustom:mr-[54px] right-0 top-1/2 transform -translate-y-1/2 w-[64px] h-[64px] hidden md:flex justify-center items-center p-[16px] rounded-full bg-DLS backdrop-blur-[10px] z-10"
-            aria-label="Scroll right">
+            className="absolute right-0 top-1/2 transform -translate-y-1/2 w-[64px] h-[64px] hidden md:flex justify-center items-center p-[16px] rounded-full bg-DLS backdrop-blur-[10px] z-10"
+            style={{ marginRight: dynamicPadding }}
+            aria-label="Next slide">
             <svg
               width="12"
               height="22"
               viewBox="0 0 12 22"
               fill="none"
-              xmlns="http://www.w3.org/2000/svg">
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true">
               <path
                 d="M1.33588 1.66675L10.6693 11.0001L1.33588 20.3334"
                 stroke="white"

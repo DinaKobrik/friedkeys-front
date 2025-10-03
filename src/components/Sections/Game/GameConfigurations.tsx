@@ -50,57 +50,90 @@ const GameConfigurations: React.FC = () => {
   }, [isMinimum]);
 
   return (
-    <section>
-      <Heading variant="h1" className="mb-[24px] sm:mb-[40px]">
+    <section role="region" aria-label="Game Configurations Section">
+      <Heading
+        variant="h1"
+        className="mb-[24px] sm:mb-[40px]"
+        aria-label="Game Configurations Title">
         Configurations
       </Heading>
       <div className="grid grid-cols-1 lg:grid-cols-2 items-start gap-[24px]">
-        <div className="bg-2 card-corner p-[24px] pb-[40px] sm:p-[40px] lg:p-[24px] xl:p-[40px] sm:pt-[32px] h-full">
+        <div
+          className="bg-2 card-corner p-[24px] pb-[40px] sm:p-[40px] lg:p-[24px] xl:p-[40px] sm:pt-[32px] h-full"
+          role="region"
+          aria-label={
+            isMinimum
+              ? "Minimum System Requirements"
+              : "Recommended System Requirements"
+          }>
           <div className="w-full overflow-hidden mb-[32px] lg:hidden">
-            <div className="grid grid-cols-2 skew-x-[-20deg] gap-[10px] w-[calc(100%+24px)] ml-[-12px] mx-auto">
+            <div className="grid grid-cols-2 skew-x-[-20deg] gap-[10px] w-[calc(100%+24px)] ml-[-12px] mx-auto pb-[2px]">
               <button
-                className={`bg-DLS block border-primary-main py-[12px] px-[6px] font-usuzi-condensed text-[17px] leading-[19px] sm:text-[26px] sm:leading-[28px] text-white ${
+                className={`bg-DLS block border-primary-main py-[12px] px-[6px] font-usuzi-condensed text-[13px] xs:text-[17px] leading-[19px] sm:text-[26px] sm:leading-[28px] text-white ${
                   isMinimum ? "border-[1px] configurations__button" : ""
                 }`}
-                onClick={() => handleSpecToggle("minimum")}>
+                onClick={() => handleSpecToggle("minimum")}
+                aria-label="Show minimum system requirements">
                 <span className="block skew-x-[20deg]">Minimum</span>
               </button>
               <button
-                className={`bg-DLS block border-primary-main py-[12px] px-[6px] font-usuzi-condensed text-[17px] leading-[19px] sm:text-[26px] sm:leading-[28px] text-white ${
+                className={`bg-DLS block border-primary-main py-[12px] px-[6px] font-usuzi-condensed text-[13px] xs:text-[17px] leading-[19px] sm:text-[26px] sm:leading-[28px] text-white ${
                   !isMinimum ? "border-[1px] configurations__button" : ""
                 }`}
-                onClick={() => handleSpecToggle("recommended")}>
+                onClick={() => handleSpecToggle("recommended")}
+                aria-label="Show recommended system requirements">
                 <span className="block skew-x-[20deg]">Recommended</span>
               </button>
             </div>
           </div>
           <Heading
             variant="h2"
-            className="mb-[32px] text-center hidden lg:block">
+            className="mb-[32px] text-center hidden lg:block"
+            aria-label={isMinimum ? "Minimum Specs" : "Recommended Specs"}>
             {isMinimum ? "Minimum Specs" : "Recommended Specs"}
           </Heading>
-          <div className="grid grid-cols-[auto_1fr] gap-x-[20px] gap-y-[24px]">
+          <div
+            className="grid grid-cols-[auto_1fr] gap-x-[20px] gap-y-[24px]"
+            role="list">
             {(isMinimum ? minimumSpecs : recommendedSpecs).map(
               (spec, index) => (
                 <React.Fragment key={index}>
-                  <Text className="font-bold">{spec.category}</Text>
-                  <Text>{spec.value}</Text>
+                  <Text
+                    className="font-bold"
+                    aria-label={`Category: ${spec.category}`}>
+                    {spec.category}
+                  </Text>
+                  <Text aria-label={`${spec.category}: ${spec.value}`}>
+                    {spec.value}
+                  </Text>
                 </React.Fragment>
               )
             )}
           </div>
         </div>
-        <div className="bg-2 card-corner p-[24px] pb-[40px] sm:p-[40px] lg:p-[24px] xl:p-[40px] sm:pt-[32px] h-full hidden lg:block">
+        <div
+          className="bg-2 card-corner p-[24px] pb-[40px] sm:p-[40px] lg:p-[24px] xl:p-[40px] sm:pt-[32px] h-full hidden lg:block"
+          role="region"
+          aria-label="Recommended System Requirements">
           <Heading
             variant="h2"
-            className="mb-[32px] text-center hidden lg:block">
+            className="mb-[32px] text-center hidden lg:block"
+            aria-label="Recommended Specs">
             Recommended Specs
           </Heading>
-          <div className="grid grid-cols-[auto_1fr] gap-x-[20px] gap-y-[24px]">
+          <div
+            className="grid grid-cols-[auto_1fr] gap-x-[20px] gap-y-[24px]"
+            role="list">
             {recommendedSpecs.map((spec, index) => (
               <React.Fragment key={index}>
-                <Text className="font-bold">{spec.category}</Text>
-                <Text>{spec.value}</Text>
+                <Text
+                  className="font-bold"
+                  aria-label={`Category: ${spec.category}`}>
+                  {spec.category}
+                </Text>
+                <Text aria-label={`${spec.category}: ${spec.value}`}>
+                  {spec.value}
+                </Text>
               </React.Fragment>
             ))}
           </div>

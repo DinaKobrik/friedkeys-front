@@ -95,11 +95,11 @@ const AccountMenu: React.FC<{ activeLink?: string }> = React.memo(
 
     return (
       <section
-        className="mb-[24px] mt-[24px] sm:mt-[80px] relative"
+        className=" mb-[24px] mt-[24px] sm:mt-[80px] relative"
         role="region"
         aria-label="Account Menu Navigation">
         <div
-          className="flex justify-between items-center bg-2 w-[100vw] relative left-[-16px] sm:left-[-46px] py-[8px] sm:py-[16px] px-[16px] sm:px-[46px] lg:hidden"
+          className="flex justify-between account-menu items-center bg-2 account-menu relative left-[-16px] sm:left-[-46px] py-[8px] sm:py-[16px] px-[16px] sm:px-[46px] lg:hidden"
           role="banner">
           <Heading variant="h2" aria-label="Account Menu Title">
             account Menu

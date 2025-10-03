@@ -44,20 +44,34 @@ const GameFranchise: React.FC = () => {
     fetchGame();
   }, [params]);
 
-  if (loading) return <Heading variant="h3">Loading...</Heading>;
+  if (loading)
+    return (
+      <Heading variant="h3" aria-live="polite">
+        Loading...
+      </Heading>
+    );
 
   return (
-    <section>
-      <Heading variant="h1" className="mb-[24px] sm:mb-[40px]">
+    <section role="region" aria-label="Game Franchise Section">
+      <Heading
+        variant="h1"
+        className="mb-[24px] sm:mb-[40px]"
+        aria-label={`${game?.title || "Unknown Game"} Franchise Title`}>
         {game?.title || "Unknown Game"} Franchise
       </Heading>
-      <div className="flex overflow-scroll hide-scrollbar w-full gap-[8px] sm:gap-[24px] mt-[24px] sm:mt-[40px]">
+      <div
+        className="flex overflow-scroll hide-scrollbar w-full gap-[12px] sm:-[16px] lg:gap-x-[24px] mt-[24px] sm:mt-[40px]"
+        role="list">
         {game ? (
-          <div className="flex-shrink-0 max-w-[175px] sm:min-w-[200px] sm:max-w-[340px] lg:max-w-[520px] w-full">
+          <div
+            className="flex-shrink-0 max-w-[175px] sm:min-w-[200px] sm:max-w-[340px] lg:max-w-[520px] w-full"
+            role="listitem">
             <GameCard key={game.id} game={game} />
           </div>
         ) : (
-          <p className="text-center text-gray-68">No game data available...</p>
+          <p className="text-center text-gray-68" aria-live="polite">
+            No game data available...
+          </p>
         )}
       </div>
     </section>

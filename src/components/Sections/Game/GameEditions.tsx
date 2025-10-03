@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { useParams } from "next/navigation";
 import Image from "next/image";
 import Heading from "@/components/ui/Heading";
@@ -22,13 +22,20 @@ const GameEditionsSection: React.FC = () => {
   const [imageSrc, setImageSrc] = useState<string>("/images/no-image.jpg");
   const [loading, setLoading] = useState(true);
   const [isFavorite, setIsFavorite] = useState(false);
-  const [cartQuantities, setCartQuantities] = useState<{
-    [key: number]: number;
-  }>({});
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const [dynamicMargin, setDynamicMargin] = useState<string>("0px");
+  const [dynamicPadding, setDynamicPadding] = useState<string>("0px");
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [windowSize, setWindowSize] = useState<number>(
+    typeof window !== "undefined" ? window.innerWidth : 0
+  );
 
   const fetchGame = useCallback(async () => {
     const id = params?.id as string;
-    if (!id) return;
+    if (!id) {
+      console.log("[GameEditionsDebug] No game ID found in params");
+      return;
+    }
 
     try {
       setLoading(true);
@@ -53,9 +60,6 @@ const GameEditionsSection: React.FC = () => {
 
   useEffect(() => {
     fetchGame();
-
-    const cartData = localStorage.getItem("cart");
-    setCartQuantities(cartData ? JSON.parse(cartData) : {});
   }, [fetchGame]);
 
   useEffect(() => {
@@ -86,6 +90,11 @@ const GameEditionsSection: React.FC = () => {
 
     localStorage.setItem("favoriteGames", JSON.stringify(favoriteIds));
     setIsFavorite(!isFavorite);
+    console.log(
+      `[GameEditionsDebug] Favorite toggled for game ${game.id}: ${
+        isFavorite ? "removed" : "added"
+      }`
+    );
 
     try {
       const response = await fetch("/api/games", {
@@ -102,40 +111,101 @@ const GameEditionsSection: React.FC = () => {
     }
   };
 
-  const addToCart = () => {
-    if (!game) return;
-    const gameId = game.id;
-    setCartQuantities((prev) => {
-      const newQuantities = {
-        ...prev,
-        [gameId]: (prev[gameId] || 0) + 1,
-      };
-      localStorage.setItem("cart", JSON.stringify(newQuantities));
-      return newQuantities;
-    });
+  const updateDynamicStyles = () => {
+    if (typeof window === "undefined") return;
+    const windowWidth = window.innerWidth;
+    const scrollbarWidthValue =
+      window.innerWidth - document.documentElement.clientWidth;
+    const isTouchDevice = navigator.maxTouchPoints > 0;
+    let calculatedOffset: number;
+
+    if (windowWidth < 576) {
+      calculatedOffset = 16;
+      setDynamicMargin(`-${calculatedOffset}px`);
+      setDynamicPadding(`${calculatedOffset}px`);
+    } else if (windowWidth >= 576 && windowWidth < 1700) {
+      calculatedOffset = 46;
+      setDynamicMargin(`-${calculatedOffset}px`);
+      setDynamicPadding(`${calculatedOffset}px`);
+    } else if (windowWidth >= 1607 && windowWidth <= 1609) {
+      calculatedOffset = 146;
+      setDynamicMargin(`-${calculatedOffset}px`);
+      setDynamicPadding(`${calculatedOffset}px`);
+    } else if (windowWidth > 1608 && windowWidth <= 1920) {
+      calculatedOffset = isTouchDevice
+        ? (windowWidth - 1608) / 2
+        : (windowWidth - scrollbarWidthValue - 1608) / 2;
+      setDynamicMargin(`-${calculatedOffset}px`);
+      setDynamicPadding(`${calculatedOffset}px`);
+    } else {
+      calculatedOffset = 146;
+      setDynamicMargin(`-${calculatedOffset}px`);
+      setDynamicPadding(`${calculatedOffset}px`);
+    }
+
+    setWindowSize(windowWidth);
   };
 
-  const updateQuantity = (gameId: number, delta: number) => {
-    setCartQuantities((prev) => {
-      const newQuantity = Math.max(0, (prev[gameId] || 0) + delta);
+  useEffect(() => {
+    updateDynamicStyles();
+    window.addEventListener("resize", updateDynamicStyles);
+    return () => window.removeEventListener("resize", updateDynamicStyles);
+  }, []);
 
-      if (newQuantity === 0) {
-        const newQuantities = { ...prev };
-        delete newQuantities[gameId];
-        localStorage.setItem("cart", JSON.stringify(newQuantities));
-        return newQuantities;
+  const handleDragStart = (
+    e: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>
+  ) => {
+    if (!containerRef.current) return;
+    let startX: number;
+    if ("touches" in e) {
+      startX = e.touches[0].clientX;
+    } else {
+      startX = (e as React.MouseEvent).clientX;
+    }
+    const scrollLeft = containerRef.current.scrollLeft;
+    const handleMouseMove = (moveEvent: MouseEvent) => {
+      const currentX = moveEvent.clientX;
+      const walk = (currentX - startX) * 2;
+      if (containerRef.current) {
+        containerRef.current.scrollLeft = scrollLeft - walk;
       }
-
-      const newQuantities = {
-        ...prev,
-        [gameId]: newQuantity,
-      };
-      localStorage.setItem("cart", JSON.stringify(newQuantities));
-      return newQuantities;
-    });
+    };
+    const handleTouchMove = (moveEvent: TouchEvent) => {
+      const currentX = moveEvent.touches[0].clientX;
+      const walk = (currentX - startX) * 2;
+      if (containerRef.current) {
+        containerRef.current.scrollLeft = scrollLeft - walk;
+      }
+    };
+    const handleDragEndDocument = () => {
+      document.removeEventListener("mousemove", handleMouseMove);
+      document.removeEventListener("touchmove", handleTouchMove);
+      document.removeEventListener("mouseup", handleDragEndDocument);
+      document.removeEventListener("touchend", handleDragEndDocument);
+      if (containerRef.current) {
+        containerRef.current.style.cursor = "grab";
+        containerRef.current.style.userSelect = "auto";
+      }
+    };
+    if ("touches" in e) {
+      document.addEventListener("touchmove", handleTouchMove, {
+        passive: false,
+      });
+      document.addEventListener("touchend", handleDragEndDocument);
+    } else {
+      document.addEventListener("mousemove", handleMouseMove);
+      document.addEventListener("mouseup", handleDragEndDocument);
+    }
+    containerRef.current.style.cursor = "grabbing";
+    containerRef.current.style.userSelect = "none";
   };
 
-  const cartQuantity = game ? cartQuantities[game.id] || 0 : 0;
+  const handleDragEnd = () => {
+    if (containerRef.current) {
+      containerRef.current.style.cursor = "grab";
+      containerRef.current.style.userSelect = "auto";
+    }
+  };
 
   if (loading || !game) {
     return (
@@ -186,27 +256,42 @@ const GameEditionsSection: React.FC = () => {
         aria-label="Game Editions Title">
         Editions
       </Heading>
-      <div className="flex w-full overflow-scroll hide-scrollbar h-full gap-[12px] sm:gap-[24px]">
-        {editions.map((edition, index) => {
-          const isInCart = cartQuantity > 0;
-
-          return (
+      <div
+        className="mx-auto relative max-w-[1920px] overflow-hidden"
+        style={{ marginLeft: dynamicMargin, marginRight: dynamicMargin }}>
+        <div
+          ref={containerRef}
+          className="flex w-full overflow-scroll hide-scrollbar h-full gap-[12px] sm:gap-[24px]"
+          role="list"
+          style={{ paddingLeft: dynamicPadding, paddingRight: dynamicPadding }}
+          onMouseDown={handleDragStart}
+          onMouseUp={handleDragEnd}
+          onMouseLeave={handleDragEnd}
+          onTouchStart={handleDragStart}
+          onTouchEnd={handleDragEnd}>
+          {editions.map((edition, index) => (
             <div
               key={index}
               className="flex flex-col relative game__editions-card border-[1px] border-transparent justify-between gap-[8px] flex-shrink-0 w-[268px] sm:w-[400px] lg:w-[520px]"
-              role="region"
+              role="listitem"
               aria-label={`${edition.type} Edition Details`}>
               <div
                 className="favorite absolute w-[36px] h-[36px] sm:w-[48px] sm:h-[48px] right-[2px] top-[1px] md:right-[4px] md:top-[3px] z-10 flex justify-center items-center cursor-pointer"
-                onClick={toggleFavorite}>
+                onClick={toggleFavorite}
+                role="button"
+                aria-label={
+                  isFavorite
+                    ? `Remove ${game.title} from favorites`
+                    : `Add ${game.title} to favorites`
+                }
+                aria-pressed={isFavorite}>
                 <svg
                   width="16.5"
                   height="21"
                   className="sm:w-[22px] sm:h-[28px]"
                   viewBox="0 0 22 28"
                   fill={isFavorite ? "#FFFF25" : "none"}
-                  xmlns="http://www.w3.org/2000/svg"
-                  onClick={toggleFavorite}>
+                  xmlns="http://www.w3.org/2000/svg">
                   <path
                     fillRule="evenodd"
                     clipRule="evenodd"
@@ -236,9 +321,12 @@ const GameEditionsSection: React.FC = () => {
                     aria-label={`${edition.type} Edition`}>
                     {edition.type} Edition
                   </Heading>
-                  <ul className="list-disc pl-[20px]">
+                  <ul className="list-disc pl-[20px]" role="list">
                     {edition.advantages.map((advantage, idx) => (
-                      <li key={idx} aria-label={`Advantage: ${advantage}`}>
+                      <li
+                        key={idx}
+                        role="listitem"
+                        aria-label={`Advantage: ${advantage}`}>
                         <Text>{advantage}</Text>
                       </li>
                     ))}
@@ -252,61 +340,45 @@ const GameEditionsSection: React.FC = () => {
                     !isDiscountExpired ? (
                       <>
                         <div className="flex items-center gap-[4px] lg:gap-[16px] flex-col lg:flex-row">
-                          <span className="line-through font-usuzi-condensed text-gray-68 font-bold text-[20px] sm:text-[32px] leading-[16px] sm:leading-[30px]">
+                          <span
+                            className="line-through font-usuzi-condensed text-gray-68 font-bold text-[20px] sm:text-[32px] leading-[16px] sm:leading-[30px]"
+                            aria-label={`Original price: ${game.price} dollars`}>
                             {game.price}$
                           </span>
-                          <span className="text-white font-usuzi-condensed font-bold text-[24px] leading-[22px] sm:text-[32px] py-[4px] px-[8px] md:py-[6px] md:px-[16px] rounded-[2px] bg-sale">
+                          <span
+                            className="text-white font-usuzi-condensed font-bold text-[24px] leading-[22px] sm:text-[32px] py-[4px] px-[8px] md:py-[6px] md:px-[16px] rounded-[2px] bg-sale"
+                            aria-label={`Discount of ${game.discount}%`}>
                             -{game.discount}%
                           </span>
                         </div>
-                        <span className="text-white font-usuzi-condensed text-center font-bold text-[32px] sm:text-[48px] leading-[28px] sm:leading-[37px]">
+                        <span
+                          className="text-white font-usuzi-condensed text-center font-bold text-[32px] sm:text-[48px] leading-[28px] sm:leading-[37px]"
+                          aria-label={`Discounted price: ${discountPrice} dollars`}>
                           {discountPrice}$
                         </span>
                       </>
                     ) : (
-                      <span className="text-white font-usuzi-condensed text-center w-full font-bold text-[32px] sm:text-[48px] leading-[28px] sm:leading-[37px]">
+                      <span
+                        className="text-white font-usuzi-condensed text-center w-full font-bold text-[32px] sm:text-[48px] leading-[28px] sm:leading-[37px]"
+                        aria-label={`Price: ${game.price} dollars`}>
                         {game.price}$
                       </span>
                     )}
                   </div>
                   <div className="w-full">
-                    {isInCart ? (
-                      <div className="flex w-full justify-center items-center">
-                        <div className="font-usuzi-condensed hidden sm:block text-[24px] leading-[26px] text-center w-full">
-                          in the cart
-                        </div>
-                        <div className="flex items-center gap-[24px] flex-shrink-0 w-full max-w-[202px]">
-                          <Button
-                            variant="secondary"
-                            className="max-w-[64px] h-[48px] flex items-center justify-center flex-shrink-0"
-                            onClick={() => updateQuantity(game.id, -1)}>
-                            -
-                          </Button>
-                          <span className="text-white text-[18px] font-bold">
-                            {cartQuantity}
-                          </span>
-                          <Button
-                            variant="secondary"
-                            className="max-w-[64px] h-[48px] flex items-center justify-center flex-shrink-0"
-                            onClick={() => updateQuantity(game.id, 1)}>
-                            +
-                          </Button>
-                        </div>
-                      </div>
-                    ) : (
-                      <Button
-                        variant="primary"
-                        className="max-w-[calc(100%-20px)]"
-                        onClick={() => addToCart()}>
-                        Add to Cart
-                      </Button>
-                    )}
+                    <Button
+                      variant="primary"
+                      className="max-w-[calc(100%-20px)]"
+                      disabled={true}
+                      aria-label={`Add ${game.title} ${edition.type} Edition to cart (disabled)`}>
+                      Add to Cart
+                    </Button>
                   </div>
                 </div>
               </div>
             </div>
-          );
-        })}
+          ))}
+        </div>
       </div>
     </section>
   );

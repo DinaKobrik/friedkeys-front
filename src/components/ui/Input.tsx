@@ -10,6 +10,7 @@ import React, {
   forwardRef,
   FocusEvent,
   KeyboardEvent,
+  useCallback,
 } from "react";
 import Text from "@/components/ui/Text";
 
@@ -95,20 +96,45 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
     }, [value, required, effectiveIsTouched, isValid]);
 
     // Функция для вычисления позиции каретки
-    const updateCaretPosition = () => {
+    const updateCaretPosition = useCallback(() => {
       if (!inputRef.current) return;
 
       const input = inputRef.current;
-      const text = input.value.substring(0, input.selectionStart || 0);
-      const canvas = document.createElement("canvas");
-      const context = canvas.getContext("2d");
-      if (!context) return;
+      const selectionStart = input.selectionStart || 0;
+      const paddingLeft = parseFloat(getComputedStyle(input).paddingLeft) || 20;
+      const paddingRight =
+        parseFloat(getComputedStyle(input).paddingRight) || 20;
+      const maxCaretPosition = input.offsetWidth - paddingRight;
 
-      context.font = getComputedStyle(input).font || "16px sans-serif";
-      const textWidth = context.measureText(text).width;
-      const paddingLeft = parseFloat(getComputedStyle(input).paddingLeft) || 20; // Соответствует px-[20px]
-      setCaretPosition(textWidth + paddingLeft);
-    };
+      let textWidth: number;
+
+      if (type === "password") {
+        const span = document.createElement("span");
+        span.style.font = getComputedStyle(input).font || "16px sans-serif";
+        span.style.visibility = "hidden";
+        span.style.position = "absolute";
+        span.style.whiteSpace = "pre";
+        span.textContent = "•".repeat(selectionStart);
+        document.body.appendChild(span);
+        textWidth = span.offsetWidth;
+        document.body.removeChild(span);
+      } else {
+        const canvas = document.createElement("canvas");
+        const context = canvas.getContext("2d");
+        if (!context) {
+          textWidth = selectionStart * 10;
+        } else {
+          const text = input.value.substring(0, selectionStart);
+          context.font = getComputedStyle(input).font || "16px sans-serif";
+          textWidth = context.measureText(text).width;
+        }
+      }
+      const newCaretPosition = Math.min(
+        textWidth + paddingLeft,
+        maxCaretPosition
+      );
+      setCaretPosition(newCaretPosition);
+    }, [type]);
 
     const handleFocus = (e: FocusEvent<HTMLInputElement>) => {
       updateCaretPosition();
@@ -150,7 +176,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
       } else {
         setShowCaret(false);
       }
-    }, [value, isFocused]);
+    }, [value, isFocused, updateCaretPosition]);
 
     const wrapperBaseStyles = "relative w-full";
     const containerBaseStyles =

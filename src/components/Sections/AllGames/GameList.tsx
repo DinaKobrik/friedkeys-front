@@ -888,7 +888,7 @@ const GameList: React.FC = () => {
           </Button>
         </div>
       </div>
-      <div className="grid grid-cols-2 lg:grid-cols-3 gap-[12px] sm:gap-[24px] mb-[24px] md:mb-[56px]">
+      <div className="grid grid-cols-2 lg:grid-cols-3 gap-[12px] sm:gap-[16px] lg:gap-[24px] mb-[24px] md:mb-[56px]">
         {paginatedGames.length > 0 ? (
           paginatedGames.map((game) => (
             <GameCard

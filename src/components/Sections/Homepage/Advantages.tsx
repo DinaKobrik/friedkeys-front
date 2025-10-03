@@ -20,7 +20,8 @@ const Advantages: React.FC = () => {
           height="64"
           viewBox="0 0 64 64"
           fill="none"
-          xmlns="http://www.w3.org/2000/svg">
+          xmlns="http://www.w3.org/2000/svg"
+          aria-label="Icon for a huge selection of games">
           <path
             d="M23.0455 32.6184V42.3457"
             stroke="#4EF432"
@@ -71,7 +72,8 @@ const Advantages: React.FC = () => {
           height="64"
           viewBox="0 0 65 64"
           fill="none"
-          xmlns="http://www.w3.org/2000/svg">
+          xmlns="http://www.w3.org/2000/svg"
+          aria-label="Icon for instant key delivery">
           <path
             d="M57.2957 7.205L42.6563 56.7946H42.5897L28.616 35.8844L7.70575 21.9107V21.8333L57.2084 7.1145L57.2957 7.205Z"
             stroke="#4EF432"
@@ -96,7 +98,8 @@ const Advantages: React.FC = () => {
           height="65"
           viewBox="0 0 64 65"
           fill="none"
-          xmlns="http://www.w3.org/2000/svg">
+          xmlns="http://www.w3.org/2000/svg"
+          aria-label="Icon for great prices and discounts">
           <path
             d="M25.7552 38.1909L37.6875 26.2585"
             stroke="#4EF432"
@@ -136,7 +139,8 @@ const Advantages: React.FC = () => {
           height="64"
           viewBox="0 0 65 64"
           fill="none"
-          xmlns="http://www.w3.org/2000/svg">
+          xmlns="http://www.w3.org/2000/svg"
+          aria-label="Icon for official and licensed games">
           <path
             d="M25.5312 28.5224L30.5766 33.5758L40.9712 23.1758"
             stroke="#4EF432"
@@ -163,7 +167,8 @@ const Advantages: React.FC = () => {
           height="64"
           viewBox="0 0 64 64"
           fill="none"
-          xmlns="http://www.w3.org/2000/svg">
+          xmlns="http://www.w3.org/2000/svg"
+          aria-label="Icon for support readiness">
           <path
             fillRule="evenodd"
             clipRule="evenodd"
@@ -220,9 +225,9 @@ const Advantages: React.FC = () => {
     : CONTENT_ITEMS;
 
   return (
-    <section className="advantages__wrapper">
+    <section className="advantages__wrapper" aria-label="Advantages Section">
       <div className="w-full overflow-hidden">
-        <div className={`${BASE_STYLES.advantages} advantages`}>
+        <div className={`${BASE_STYLES.advantages} advantages`} role="list">
           {orderedItems.map((item) => (
             <div
               key={item.originalIndex}
@@ -234,7 +239,8 @@ const Advantages: React.FC = () => {
                   : item.originalIndex === 4 || item.originalIndex === 3
                   ? "skew-x-[-20deg] xl:skew-x-[20deg]"
                   : ""
-              } ${item.originalIndex === 2 ? "col-span-2 xl:col-span-1" : ""}`}>
+              } ${item.originalIndex === 2 ? "col-span-2 xl:col-span-1" : ""}`}
+              role="listitem">
               <div
                 className={`${BASE_STYLES.advantage} ${
                   item.originalIndex === 0
@@ -248,9 +254,14 @@ const Advantages: React.FC = () => {
                     : item.originalIndex === 4
                     ? "skew-x-[20deg] xl:skew-x-[-20deg] px-[25px] pr-[85px] sm:pl-[40px] 2xl:px-[30px] 2xl:pr-[90px] mainCustom:px-[65px] mainCustom:pr-[105px]"
                     : ""
-                }`}>
+                }`}
+                aria-labelledby={`advantage-${item.originalIndex}`}>
                 {React.cloneElement(item.svg, { className: BASE_STYLES.svg })}
-                <span className={BASE_STYLES.text}>{item.text}</span>
+                <span
+                  className={BASE_STYLES.text}
+                  id={`advantage-${item.originalIndex}`}>
+                  {item.text}
+                </span>
               </div>
             </div>
           ))}

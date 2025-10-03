@@ -170,27 +170,38 @@ const CartButton: React.FC<{ game: Game | null }> = ({ game }) => {
   if (!game) return null;
 
   return (
-    <div className="sm:static fixed bottom-0 left-0 p-4 z-[10000] flex flex-row sm:flex-col w-full items-center justify-center gap-4 bg-main sm:bg-transparent border-t-[1px] sm:border-none border-primary-main">
-      <div className="flex flex-shrink-0 gap-[1px] sm:hidden sm:gap-[20px] items-end ">
+    <div
+      className="sm:static fixed bottom-0 left-0 p-4 z-[10000] flex flex-row sm:flex-col w-full items-center justify-center gap-4 bg-main sm:bg-transparent border-t-[1px] sm:border-none border-primary-main"
+      role="region"
+      aria-label="Cart Actions for Game">
+      <div className="flex flex-shrink-0 gap-[1px] sm:hidden sm:gap-[20px] items-end">
         {discountPrice &&
         game.discount &&
         game.discount > 0 &&
         !isDiscountExpired ? (
           <div className="flex items-center gap-[16px]">
-            <span className="text-white font-usuzi-condensed font-bold text-[18px] leading-[18px] py-[4px] px-[8px] rounded-[2px] bg-sale">
+            <span
+              className="text-white font-usuzi-condensed font-bold text-[18px] leading-[18px] py-[4px] px-[8px] rounded-[2px] bg-sale"
+              aria-label={`Discount of ${game.discount}%`}>
               -{game.discount}%
             </span>
             <div className="flex items-end gap-[2px] flex-col">
-              <span className="text-white font-usuzi-condensed text-center w-full font-bold text-[22px] leading-[22px]">
+              <span
+                className="text-white font-usuzi-condensed text-center w-full font-bold text-[22px] leading-[22px]"
+                aria-label={`Discounted price: ${discountPrice} dollars`}>
                 {discountPrice}$
               </span>
-              <span className="line-through font-usuzi-condensed text-gray-68 font-bold text-[18px] leading-[16px]">
+              <span
+                className="line-through font-usuzi-condensed text-gray-68 font-bold text-[18px] leading-[16px]"
+                aria-label={`Original price: ${game.price} dollars`}>
                 {game.price}$
               </span>
             </div>
           </div>
         ) : (
-          <span className="text-white font-usuzi-condensed text-center w-full font-bold text-[22px] leading-[22px]">
+          <span
+            className="text-white font-usuzi-condensed text-center w-full font-bold text-[22px] leading-[22px]"
+            aria-label={`Price: ${game.price} dollars`}>
             {game.price}$
           </span>
         )}
@@ -202,19 +213,27 @@ const CartButton: React.FC<{ game: Game | null }> = ({ game }) => {
         !isDiscountExpired ? (
           <>
             <div className="flex items-center gap-[16px] flex-col sm:flex-row">
-              <span className="line-through font-usuzi-condensed text-gray-68 font-bold text-[20px] sm:text-[32px] leading-[16px] sm:leading-[30px]">
+              <span
+                className="line-through font-usuzi-condensed text-gray-68 font-bold text-[20px] sm:text-[32px] leading-[16px] sm:leading-[30px]"
+                aria-label={`Original price: ${game.price} dollars`}>
                 {game.price}$
               </span>
-              <span className="text-white font-usuzi-condensed font-bold text-[24px] leading-[22px] py-[4px] px-[8px] md:py-[6px] md:px-[16px] rounded-[2px] bg-sale">
+              <span
+                className="text-white font-usuzi-condensed font-bold text-[24px] leading-[22px] py-[4px] px-[8px] md:py-[6px] md:px-[16px] rounded-[2px] bg-sale"
+                aria-label={`Discount of ${game.discount}%`}>
                 -{game.discount}%
               </span>
             </div>
-            <span className="text-white font-usuzi-condensed text-center font-bold text-[32px] sm:text-[48px] leading-[28px] sm:leading-[37px]">
+            <span
+              className="text-white font-usuzi-condensed text-center font-bold text-[32px] sm:text-[48px] leading-[28px] sm:leading-[37px]"
+              aria-label={`Discounted price: ${discountPrice} dollars`}>
               {discountPrice}$
             </span>
           </>
         ) : (
-          <span className="text-white font-usuzi-condensed text-center w-full font-bold text-[32px] sm:text-[48px] leading-[28px] sm:leading-[37px]">
+          <span
+            className="text-white font-usuzi-condensed text-center w-full font-bold text-[32px] sm:text-[48px] leading-[28px] sm:leading-[37px]"
+            aria-label={`Price: ${game.price} dollars`}>
             {game.price}$
           </span>
         )}
@@ -223,28 +242,38 @@ const CartButton: React.FC<{ game: Game | null }> = ({ game }) => {
         <Button
           variant="primary"
           className="max-w-[245px] w-full sm:max-w-[calc(100%-20px)]"
-          onClick={addToCart}>
+          onClick={addToCart}
+          aria-label={`Add ${game.title} to cart`}>
           Add to Cart
         </Button>
       ) : (
-        <div className="flex sm:w-full h-[42px] sm:h-[52px] items-center gap-6 w-full max-w-[202px] sm:max-w-[100%] sm:justify-center">
-          <div className="hidden sm:block font-usuzi-condensed text-[24px] leading-[26px] text-center w-full">
+        <div
+          className="flex sm:w-full h-[42px] sm:h-[52px] items-center gap-6 w-full max-w-[202px] sm:max-w-[100%] sm:justify-center"
+          role="group"
+          aria-label="Cart quantity controls">
+          <div
+            className="hidden sm:block font-usuzi-condensed text-[24px] leading-[26px] text-center w-full"
+            aria-hidden="true">
             in the cart
           </div>
           <div className="flex items-center gap-6 w-full max-w-[202px]">
             <Button
               variant="secondary"
               className="max-w-[64px] h-[48px] flex items-center justify-center"
-              onClick={() => updateQuantity(cartKey, -1)}>
+              onClick={() => updateQuantity(cartKey, -1)}
+              aria-label={`Decrease quantity of ${game.title} in cart`}>
               -
             </Button>
-            <span className="text-white text-[18px] font-bold">
+            <span
+              className="text-white text-[18px] font-bold"
+              aria-label={`Current quantity of ${game.title} in cart: ${cartQuantity}`}>
               {cartQuantity}
             </span>
             <Button
               variant="secondary"
               className="max-w-[64px] h-[48px] flex items-center justify-center"
-              onClick={() => updateQuantity(cartKey, 1)}>
+              onClick={() => updateQuantity(cartKey, 1)}
+              aria-label={`Increase quantity of ${game.title} in cart`}>
               +
             </Button>
           </div>

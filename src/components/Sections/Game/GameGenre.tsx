@@ -45,20 +45,31 @@ const GameGenre: React.FC = () => {
     fetchGames();
   }, [params]);
 
-  if (loading) return <Heading variant="h3">Loading...</Heading>;
+  if (loading)
+    return (
+      <Heading variant="h3" aria-live="polite">
+        Loading...
+      </Heading>
+    );
 
   const genre = games.length > 0 ? games[0].genres[0] : "Unknown Genre";
 
   return (
-    <section>
+    <section role="region" aria-label="Game Genre Section">
       <div className="mb-[24px] sm:mb-[40px]">
-        <Heading variant="h1">{genre}</Heading>
+        <Heading variant="h1" aria-label={`${genre} Games Title`}>
+          {genre}
+        </Heading>
       </div>
-      <div className="w-full grid grid-flow-row grid-cols-2 lg:grid-cols-3 gap-[12px] sm:gap-x-[24px] sm:gap-y-[40px]">
+      <div
+        className="w-full grid grid-flow-row grid-cols-2 lg:grid-cols-3 gap-[12px] sm:-[16px] lg:gap-x-[24px] sm:gap-y-[40px]"
+        role="list">
         {games.length > 0 ? (
           games.map((game) => <GameCard key={game.id} game={game} />)
         ) : (
-          <p className="text-center text-gray-68">No games available...</p>
+          <p className="text-center text-gray-68" aria-live="polite">
+            No games available...
+          </p>
         )}
       </div>
     </section>

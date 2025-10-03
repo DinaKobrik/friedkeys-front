@@ -5,6 +5,23 @@
   left: 0;
   width: 100%;
   height: 100%;
+  background: -webkit-repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent 12%,
+    theme("colors.primary-main") 12%,
+    theme("colors.primary-main") 16%,
+    transparent 16%,
+    transparent 48%,
+    theme("colors.primary-main") 48%,
+    theme("colors.primary-main") 52%,
+    transparent 52%,
+    transparent 84%,
+    theme("colors.primary-main") 84%,
+    theme("colors.primary-main") 88%,
+    transparent 88%,
+    transparent 100%
+  );
   background: repeating-linear-gradient(
     to bottom,
     transparent 0,
@@ -22,9 +39,12 @@
     transparent 88%,
     transparent 100%
   );
+  -webkit-filter: blur(90px);
   filter: blur(90px);
 }
 .ganer:hover .ganer-text span {
+  -webkit-transform: skew(-5deg);
+  -ms-transform: skew(-5deg);
   transform: skew(-5deg);
 }
 .ganer:hover .ganer-text span::before {
@@ -32,7 +52,15 @@
   position: absolute;
   top: 50%;
   left: 50%;
+  -webkit-transform: translateX(-50%) translateY(-50%);
+  -ms-transform: translateX(-50%) translateY(-50%);
   transform: translateX(-50%) translateY(-50%);
+  background: -webkit-radial-gradient(
+    circle,
+    #2019e3 0%,
+    theme("colors.primary-main") 42%,
+    #fed200 87%
+  );
   background: radial-gradient(
     circle,
     #2019e3 0%,
@@ -41,7 +69,10 @@
   );
   width: 50%;
   height: 100%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
   border-radius: 50%;
+  -webkit-filter: blur(50px);
   filter: blur(50px);
 }
 .ganer::before {
@@ -57,6 +88,8 @@
 .ganer:nth-child(8n + 2),
 .ganer:nth-child(8n + 3),
 .ganer:nth-child(8n + 4) {
+  -webkit-transform: skew(20deg);
+  -ms-transform: skew(20deg);
   transform: skew(20deg);
   left: -50px;
 }
@@ -64,6 +97,8 @@
 .ganer:nth-child(8n + 6) .ganer-text span,
 .ganer:nth-child(8n + 7) .ganer-text span,
 .ganer:nth-child(8n) .ganer-text span {
+  -webkit-transform: skew(20deg);
+  -ms-transform: skew(20deg);
   transform: skew(20deg);
 }
 
@@ -71,6 +106,8 @@
 .ganer:nth-child(8n + 6),
 .ganer:nth-child(8n + 7),
 .ganer:nth-child(8n) {
+  -webkit-transform: skew(-20deg);
+  -ms-transform: skew(-20deg);
   transform: skew(-20deg);
   left: -50px;
 }
@@ -78,18 +115,24 @@
 .ganer:nth-child(8n + 2) .ganer-text span,
 .ganer:nth-child(8n + 3) .ganer-text span,
 .ganer:nth-child(8n + 4) .ganer-text span {
+  -webkit-transform: skew(-20deg);
+  -ms-transform: skew(-20deg);
   transform: skew(-20deg);
 }
 .ganer:nth-child(8n + 1):hover .ganer-text span,
 .ganer:nth-child(8n + 2):hover .ganer-text span,
 .ganer:nth-child(8n + 3):hover .ganer-text span,
 .ganer:nth-child(8n + 4):hover .ganer-text span {
+  -webkit-transform: skew(-30deg);
+  -ms-transform: skew(-30deg);
   transform: skew(-30deg);
 }
 .ganer:nth-child(8n + 5):hover .ganer-text span,
 .ganer:nth-child(8n + 6):hover .ganer-text span,
 .ganer:nth-child(8n + 7):hover .ganer-text span,
 .ganer:nth-child(8n):hover .ganer-text span {
+  -webkit-transform: skew(10deg);
+  -ms-transform: skew(10deg);
   transform: skew(10deg);
 }
 .ganer::after {
@@ -102,25 +145,54 @@
 .ganer:nth-child(8n + 1)::after {
   left: 50px;
   border-left: 1px solid theme("colors.primary-main");
+  -webkit-transform: skew(-20deg);
+  -ms-transform: skew(-20deg);
   transform: skew(-20deg);
 }
 .ganer:nth-child(8n + 5)::after {
   left: 50px;
   border-left: 1px solid theme("colors.primary-main");
+  -webkit-transform: skew(20deg);
+  -ms-transform: skew(20deg);
   transform: skew(20deg);
 }
 .ganer:nth-child(8n + 4)::after {
   right: 48px;
   border-right: 1px solid theme("colors.primary-main");
+  -webkit-transform: skew(-20deg);
+  -ms-transform: skew(-20deg);
   transform: skew(-20deg);
 }
 .ganer:nth-child(8n)::after {
   right: 48px;
   border-right: 1px solid theme("colors.primary-main");
+  -webkit-transform: skew(20deg);
+  -ms-transform: skew(20deg);
   transform: skew(20deg);
 }
 @media (max-width: 1439px) {
   .ganres__wrapper::before {
+    background: -webkit-repeating-linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent 10%,
+      theme("colors.primary-main") 10%,
+      theme("colors.primary-main") 14%,
+      transparent 14%,
+      transparent 36%,
+      theme("colors.primary-main") 36%,
+      theme("colors.primary-main") 40%,
+      transparent 40%,
+      transparent 61%,
+      theme("colors.primary-main") 61%,
+      theme("colors.primary-main") 65%,
+      transparent 65%,
+      transparent 88%,
+      theme("colors.primary-main") 88%,
+      theme("colors.primary-main") 92%,
+      transparent 92%,
+      transparent 100%
+    );
     background: repeating-linear-gradient(
       to bottom,
       transparent 0,
@@ -147,57 +219,77 @@
   .ganer:nth-child(6n + 1),
   .ganer:nth-child(6n + 2),
   .ganer:nth-child(6n + 3) {
+    -webkit-transform: skew(20deg);
+    -ms-transform: skew(20deg);
     transform: skew(20deg);
     left: -50px;
   }
   .ganer:nth-child(6n + 4) .ganer-text span,
   .ganer:nth-child(6n + 5) .ganer-text span,
   .ganer:nth-child(6n) .ganer-text span {
+    -webkit-transform: skew(20deg);
+    -ms-transform: skew(20deg);
     transform: skew(20deg);
   }
   .ganer:nth-child(6n + 4),
   .ganer:nth-child(6n + 5),
   .ganer:nth-child(6n) {
+    -webkit-transform: skew(-20deg);
+    -ms-transform: skew(-20deg);
     transform: skew(-20deg);
     left: -50px;
   }
   .ganer:nth-child(6n + 1) .ganer-text span,
   .ganer:nth-child(6n + 2) .ganer-text span,
   .ganer:nth-child(6n + 3) .ganer-text span {
+    -webkit-transform: skew(-20deg);
+    -ms-transform: skew(-20deg);
     transform: skew(-20deg);
   }
   .ganer:nth-child(6n + 1):hover .ganer-text span,
   .ganer:nth-child(6n + 2):hover .ganer-text span,
   .ganer:nth-child(6n + 3):hover .ganer-text span {
+    -webkit-transform: skew(-30deg);
+    -ms-transform: skew(-30deg);
     transform: skew(-30deg);
   }
   .ganer:nth-child(6n + 4):hover .ganer-text span,
   .ganer:nth-child(6n + 5):hover .ganer-text span,
   .ganer:nth-child(6n):hover .ganer-text span {
+    -webkit-transform: skew(10deg);
+    -ms-transform: skew(10deg);
     transform: skew(10deg);
   }
   .ganer:nth-child(6n + 1)::after {
     left: 50px;
     right: auto;
     border-left: 2px solid theme("colors.primary-main");
+    -webkit-transform: skew(-20deg);
+    -ms-transform: skew(-20deg);
     transform: skew(-20deg);
   }
   .ganer:nth-child(6n + 4)::after {
     left: 50px;
     right: auto;
     border-left: 2px solid theme("colors.primary-main");
+    -webkit-transform: skew(20deg);
+    -ms-transform: skew(20deg);
     transform: skew(20deg);
   }
   .ganer:nth-child(6n + 3)::after {
     right: 48px;
     left: auto;
     border-right: 2px solid theme("colors.primary-main");
+    -webkit-transform: skew(-20deg);
+    -ms-transform: skew(-20deg);
     transform: skew(-20deg);
   }
   .ganer:nth-child(6n)::after {
     right: 48px;
     left: auto;
     border-right: 2px solid theme("colors.primary-main");
+    -webkit-transform: skew(20deg);
+    -ms-transform: skew(20deg);
     transform: skew(20deg);
   }
   .ganer:nth-child(3n + 2)::after {
@@ -206,6 +298,35 @@
 }
 @media (max-width: 1199px) {
   .ganres__wrapper::before {
+    background: -webkit-repeating-linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent 6%,
+      theme("colors.primary-main") 6%,
+      theme("colors.primary-main") 10%,
+      transparent 10%,
+      transparent 23%,
+      theme("colors.primary-main") 23%,
+      theme("colors.primary-main") 27%,
+      transparent 27%,
+      transparent 40%,
+      theme("colors.primary-main") 40%,
+      theme("colors.primary-main") 44%,
+      transparent 44%,
+      transparent 56%,
+      theme("colors.primary-main") 56%,
+      theme("colors.primary-main") 60%,
+      transparent 60%,
+      transparent 73%,
+      theme("colors.primary-main") 73%,
+      theme("colors.primary-main") 77%,
+      transparent 77%,
+      transparent 90%,
+      theme("colors.primary-main") 90%,
+      theme("colors.primary-main") 94%,
+      transparent 94%,
+      transparent 100%
+    );
     background: repeating-linear-gradient(
       to bottom,
       transparent 0,
@@ -239,34 +360,48 @@
 
   .ganer:nth-child(4n + 1),
   .ganer:nth-child(4n + 2) {
+    -webkit-transform: skew(20deg);
+    -ms-transform: skew(20deg);
     transform: skew(20deg);
     left: -50px;
   }
   .ganer:nth-child(4n) .ganer-text span,
   .ganer:nth-child(4n + 3) .ganer-text span {
+    -webkit-transform: skew(20deg);
+    -ms-transform: skew(20deg);
     transform: skew(20deg);
   }
   .ganer:nth-child(4n),
   .ganer:nth-child(4n + 3) {
+    -webkit-transform: skew(-20deg);
+    -ms-transform: skew(-20deg);
     transform: skew(-20deg);
     left: -50px;
   }
   .ganer:nth-child(4n + 1) .ganer-text span,
   .ganer:nth-child(4n + 2) .ganer-text span {
+    -webkit-transform: skew(-20deg);
+    -ms-transform: skew(-20deg);
     transform: skew(-20deg);
   }
   .ganer:nth-child(4n + 1):hover .ganer-text span,
   .ganer:nth-child(4n + 2):hover .ganer-text span {
+    -webkit-transform: skew(-30deg);
+    -ms-transform: skew(-30deg);
     transform: skew(-30deg);
   }
   .ganer:nth-child(4n + 3):hover .ganer-text span,
   .ganer:nth-child(4n):hover .ganer-text span {
+    -webkit-transform: skew(10deg);
+    -ms-transform: skew(10deg);
     transform: skew(10deg);
   }
   .ganer:nth-child(4n + 1)::after {
     left: 50px;
     right: auto;
     border-left: 2px solid theme("colors.primary-main");
+    -webkit-transform: skew(-20deg);
+    -ms-transform: skew(-20deg);
     transform: skew(-20deg);
   }
 
@@ -274,6 +409,8 @@
     left: 50px;
     right: auto;
     border-left: 2px solid theme("colors.primary-main");
+    -webkit-transform: skew(20deg);
+    -ms-transform: skew(20deg);
     transform: skew(20deg);
   }
 
@@ -281,6 +418,8 @@
     right: 47px;
     left: auto;
     border-right: 2px solid theme("colors.primary-main");
+    -webkit-transform: skew(-20deg);
+    -ms-transform: skew(-20deg);
     transform: skew(-20deg);
   }
 
@@ -288,6 +427,8 @@
     right: 47px;
     left: auto;
     border-right: 2px solid theme("colors.primary-main");
+    -webkit-transform: skew(20deg);
+    -ms-transform: skew(20deg);
     transform: skew(20deg);
   }
 }
@@ -301,9 +442,13 @@
     padding: 27px 25px;
   }
   .ganer:nth-child(2n + 1) .ganer-text {
+    -webkit-justify-content: flex-end;
+    -ms-flex-pack: end;
     justify-content: flex-end;
   }
   .ganer:nth-child(2n) .ganer-text {
+    -webkit-justify-content: flex-start;
+    -ms-flex-pack: start;
     justify-content: flex-start;
   }
 }

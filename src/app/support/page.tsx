@@ -73,6 +73,8 @@ const SupportPage: React.FC = () => {
   const [screenshots, setScreenshots] = useState<string[]>([]);
   const [isTopicOpen, setIsTopicOpen] = useState(false);
   const [isOrderOpen, setIsOrderOpen] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [fadeOut, setFadeOut] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isTouchDevice, setIsTouchDevice] = useState(false);
   const topicRef = useRef<HTMLDivElement>(null);
@@ -83,6 +85,10 @@ const SupportPage: React.FC = () => {
   const [isValidOrder, setIsValidOrder] = useState(true);
   const [isTouchedMessage, setIsTouchedMessage] = useState(false);
   const [isValidMessage, setIsValidMessage] = useState(true);
+
+  const addDebugLog = (message: string) => {
+    console.log(`[SupportDebug] ${message}`);
+  };
 
   const handleTopicSelect = (topic: string) => {
     setSelectedTopic(topic);
@@ -162,7 +168,15 @@ const SupportPage: React.FC = () => {
     setSelectedOrder("");
     setMessage("");
     setScreenshots([]);
-    alert("Support request submitted successfully!");
+    addDebugLog("Support request submitted, showing modal");
+    setShowModal(true);
+    setFadeOut(false);
+    setTimeout(() => {
+      setFadeOut(true);
+      setTimeout(() => {
+        setShowModal(false);
+      }, 300);
+    }, 2000);
   };
 
   useEffect(() => {
@@ -196,7 +210,7 @@ const SupportPage: React.FC = () => {
   }, []);
 
   return (
-    <main className="mt-[24px]  sm:mt-[80px]">
+    <main className="mt-[24px] sm:mt-[80px]">
       <section>
         <Heading variant="h3" className="mb-[24px] sm:mb-[40px]">
           Home / support
@@ -317,7 +331,7 @@ const SupportPage: React.FC = () => {
                   variant="secondary"
                   type="button"
                   onClick={() => fileInputRef.current?.click()}
-                  className="md:col-span-2 ml-[10px]">
+                  className="md:col-span-2 ml-[10px] max-w-[calc(100%-20px)] md:max-w-[100%]">
                   Add Screenshot
                 </Button>
                 <input
@@ -369,6 +383,27 @@ const SupportPage: React.FC = () => {
           </form>
         </div>
       </section>
+      {showModal && (
+        <div
+          className={`fixed z-50 top-0 left-0 w-full h-full flex justify-center items-center transition-opacity duration-500 ease-in-out ${
+            fadeOut ? "opacity-0" : "opacity-100"
+          }`}
+          aria-live="polite">
+          <div
+            className={`absolute w-full h-full bg-[#0000003A] backdrop-blur-sm transition-opacity duration-300 ease-in-out ${
+              fadeOut ? "opacity-0" : "opacity-100"
+            }`}></div>
+          <div
+            className={`relative border-[1px] overflow-hidden border-primary-main bg-2 px-[20px] py-[40px] max-w-[320px] flex justify-center items-center text-center transition-all duration-300 ease-in-out ${
+              fadeOut ? "scale-95 opacity-0" : "scale-100 opacity-100"
+            }`}>
+            <Heading variant="h3">
+              Support request submitted successfully
+            </Heading>
+            <div className="h-[7px] w-[75%] sm:w-[50%] absolute bottom-0 left-[50%] bg-primary-main translate-x-[-50%] blur-[30px] z-0"></div>
+          </div>
+        </div>
+      )}
     </main>
   );
 };

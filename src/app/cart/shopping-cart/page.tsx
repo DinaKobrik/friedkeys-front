@@ -290,14 +290,8 @@ const CartContent: React.FC = () => {
   const updateQuantity = useCallback(
     (gameId: number, change: number, cartKey: string) => {
       setCartQuantities((prev) => {
-        const currentItem = prev[cartKey] || {
-          quantity: 0,
-          edition: "Standard",
-          platform: "PC",
-          region: "US",
-          addedAt: Date.now(),
-        };
-        const newQuantity = Math.max(0, currentItem.quantity + change);
+        const currentItem = prev[cartKey];
+        const newQuantity = Math.max(0, (currentItem?.quantity || 0) + change);
 
         if (newQuantity === 0) {
           const newCartQuantities = { ...prev };
@@ -309,7 +303,7 @@ const CartContent: React.FC = () => {
             [cartKey]: {
               ...currentItem,
               quantity: newQuantity,
-              addedAt: Date.now(),
+              addedAt: currentItem?.addedAt || Date.now(),
             },
           };
         }

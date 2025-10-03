@@ -18,6 +18,8 @@
   left: -4px;
   right: -4px;
   bottom: -4px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
   border-radius: 2px;
   border: 1px dashed white;
 }
@@ -45,6 +47,8 @@
   left: -4px;
   right: -4px;
   bottom: -4px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
   border-radius: 2px;
   border: 1px dashed white;
 }

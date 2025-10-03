@@ -53,7 +53,7 @@ const initialMockOrders: Order[] = [
     totalPrice: "0.00",
     items: {
       "24_Standard_PC_US": {
-        quantity: 1,
+        quantity: 6,
         edition: "Standard",
         platform: "PC",
         region: "US",

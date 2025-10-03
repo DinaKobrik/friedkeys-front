@@ -249,13 +249,13 @@ const PersonalInfo: React.FC = React.memo(() => {
                 Email
               </Heading>
               <div
-                className="w-full border-[1px] border-primary-20 relative text-white bg-2 focus:outline-none h-[48px] sm:h-[56px] flex items-center px-4"
+                className="w-full px-[20px] line-clamp-1 text-clip text-overflow overflow-hidden py-[16px] border-[1px] border-primary-20 relative text-white bg-2 focus:outline-none h-[48px] sm:h-[56px] flex items-center"
                 role="region"
                 aria-label={`Email: ${userDataDisplay.email}`}>
                 {userDataDisplay.email}
                 <Link
                   href="/auth/account/edit-email"
-                  className="absolute top-[12px] right-[12px] sm:top-[16px] sm:right-[16px]"
+                  className="absolute top-[1px] bg-2 p-[11px] sm:p-[15px] border-r-primary-20 right-0"
                   aria-label="Edit Email">
                   {EditIcon}
                 </Link>
@@ -269,13 +269,13 @@ const PersonalInfo: React.FC = React.memo(() => {
                 Password
               </Heading>
               <div
-                className="w-full border-[1px] border-primary-20 relative text-white bg-2 focus:outline-none h-[48px] sm:h-[56px] flex items-center px-4"
+                className="w-full px-[20px] line-clamp-1 text-clip text-overflow overflow-hidden py-[16px] border-[1px] border-primary-20 relative text-white bg-2 focus:outline-none h-[48px] sm:h-[56px] flex items-center"
                 role="region"
                 aria-label={`Password: ${userDataDisplay.password}`}>
                 {userDataDisplay.password}
                 <Link
                   href="/auth/account/edit-password"
-                  className="absolute top-[12px] right-[12px] sm:top-[16px] sm:right-[16px]"
+                  className="absolute top-[1px] bg-2 p-[11px] sm:p-[15px] border-r-primary-20 right-0"
                   aria-label="Edit Password">
                   {EditIcon}
                 </Link>
@@ -289,13 +289,13 @@ const PersonalInfo: React.FC = React.memo(() => {
                 First Name
               </Heading>
               <div
-                className="w-full border-[1px] border-primary-20 relative text-white bg-2 focus:outline-none h-[48px] sm:h-[56px] flex items-center px-4"
+                className="w-full px-[20px] line-clamp-1 text-clip text-overflow overflow-hidden py-[16px] border-[1px] border-primary-20 relative text-white bg-2 focus:outline-none h-[48px] sm:h-[56px] flex items-center"
                 role="region"
                 aria-label={`First Name: ${userDataDisplay.firstName}`}>
                 {userDataDisplay.firstName}
                 <Link
                   href="/auth/account/edit-name"
-                  className="absolute top-[12px] right-[12px] sm:top-[16px] sm:right-[16px]"
+                  className="absolute top-[1px] bg-2 p-[11px] sm:p-[15px] border-r-primary-20 right-0"
                   aria-label="Edit First Name">
                   {EditIcon}
                 </Link>
@@ -309,13 +309,13 @@ const PersonalInfo: React.FC = React.memo(() => {
                 Last Name
               </Heading>
               <div
-                className="w-full border-[1px] border-primary-20 relative text-white bg-2 focus:outline-none h-[48px] sm:h-[56px] flex items-center px-4"
+                className="w-full px-[20px] line-clamp-1 text-clip text-overflow overflow-hidden py-[16px] border-[1px] border-primary-20 relative text-white bg-2 focus:outline-none h-[48px] sm:h-[56px] flex items-center"
                 role="region"
                 aria-label={`Last Name: ${userDataDisplay.lastName}`}>
                 {userDataDisplay.lastName}
                 <Link
                   href="/auth/account/edit-name"
-                  className="absolute top-[12px] right-[12px] sm:top-[16px] sm:right-[16px]"
+                  className="absolute top-[1px] bg-2 p-[11px] sm:p-[15px] border-r-primary-20 right-0"
                   aria-label="Edit Last Name">
                   {EditIcon}
                 </Link>
@@ -329,13 +329,13 @@ const PersonalInfo: React.FC = React.memo(() => {
                 Birthday
               </Heading>
               <div
-                className="w-full border-[1px] border-primary-20 relative text-white bg-2 focus:outline-none h-[48px] sm:h-[56px] flex items-center px-4"
+                className="w-full px-[20px] line-clamp-1 text-clip text-overflow overflow-hidden py-[16px] border-[1px] border-primary-20 relative text-white bg-2 focus:outline-none h-[48px] sm:h-[56px] flex items-center"
                 role="region"
                 aria-label={`Birthday: ${userDataDisplay.birthday}`}>
                 {userDataDisplay.birthday}
                 <Link
                   href="/auth/account/edit-name"
-                  className="absolute top-[12px] right-[12px] sm:top-[16px] sm:right-[16px]"
+                  className="absolute top-[1px] bg-2 p-[11px] sm:p-[15px] border-r-primary-20 right-0"
                   aria-label="Edit Birthday">
                   {CalendarIcon}
                 </Link>

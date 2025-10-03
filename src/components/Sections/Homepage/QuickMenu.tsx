@@ -121,7 +121,7 @@ const QuickMenuSection: React.FC = () => {
     <section
       ref={sectionRef}
       className="hide-scrollbar h-[44px] sm:h-[66px] mt-[-48px] lg:mt-0">
-      <div className="grid grid-cols-2 xs:flex xs:justify-between lg:grid lg:grid-cols-4 relative quick-menu w-full sm:w-[calc(100%+46px)] lg:w-[calc(100%+24px)] sm:ml-[-23px] lg:ml-[-12px] gap-x-[12px] sm:gap-0 lg:gap-[8px] xl:gap-[18px] h-full ">
+      <div className="grid grid-cols-2 xs:flex xs:justify-between lg:grid lg:grid-cols-4 relative quick-menu w-full sm:w-[calc(100%+46px)] lg:w-[calc(100%+24px)] sm:ml-[-23px] lg:ml-[-12px] gap-x-[12px] sm:gap-0 lg:gap-[8px] xl:gap-[18px] h-full">
         {Object.entries(menus).map(([key, { icon, label, categories }]) => (
           <div key={key} className="lg:relative lg:w-full quick-menu__button">
             <button
@@ -136,7 +136,11 @@ const QuickMenuSection: React.FC = () => {
             </button>
             {activeMenu === key && (
               <div
-                className="quick-menu__menu w-full flex flex-col bg-2 p-[12px] sm:p-[24px] lg:p-[32px] min-w-[280px] lg:max-w-[400px] absolute top-[92px] xs:top-[60px] lg:top-[84px] left-0 z-[900]"
+                className={`quick-menu__menu w-full flex flex-col bg-2 p-[12px] sm:p-[24px] lg:p-[32px] min-w-[300px] lg:max-w-[400px] absolute top-[92px] xs:top-[60px] lg:top-[84px] ${
+                  key === "Nintendo"
+                    ? "min-w-[240px] left-0 lg:-left-[70px] xl:-left-[40px] 2xl:left-0"
+                    : "left-0"
+                } z-[900]`}
                 role="menu">
                 {categories.map((category) => (
                   <Heading variant="h3" key={category}>
@@ -144,7 +148,7 @@ const QuickMenuSection: React.FC = () => {
                       role="menuitem"
                       href={`#${category.toLowerCase().replace(/\s+/g, "-")}`}
                       aria-label={`Go to ${category} category`}
-                      className="quick-menu__link--active relative w-full block py-[10px] focus:outline-none	">
+                      className="quick-menu__link--active relative w-full block py-[10px] focus:outline-none">
                       {category}
                     </a>
                   </Heading>

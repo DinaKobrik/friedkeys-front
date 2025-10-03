@@ -22,18 +22,21 @@ const Genres = () => {
   ];
 
   return (
-    <section>
-      <Heading variant="h1" className="mb-[40px]">
+    <section role="region" aria-label="Genres Section">
+      <Heading variant="h1" className="mb-[40px]" aria-label="Genres Title">
         Genres
       </Heading>
       <div className="ganres__wrapper relative mb-[40px]">
         <div className="ganres__container overflow-hidden max-w-[calc(100%+2px)]">
-          <div className="ganres relative grid grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 2xl:gap-[40px] xl:gap-[20px] gap-[8px] w-[calc(100%+100px)]">
+          <div
+            className="ganres relative grid grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 2xl:gap-[40px] xl:gap-[20px] gap-[8px] w-[calc(100%+100px)]"
+            role="list">
             {genres.map((genre, index) => (
               <Link
                 href={`/all-games?genre=${encodeURIComponent(genre.name)}`}
                 key={index}
                 className="ganer cursor-pointer relative flex justify-center items-center overflow-hidden w-[calc(100%-2px)]"
+                role="listitem"
                 aria-label={`Go to ${genre.name} genre page in catalog`}>
                 <div className="ganer-text font-usuzi-halftone flex justify-center items-center relative overflow-hidden w-[calc(100%-3px)] h-[calc(100%-2px)] py-[27px] px-[25px] sm:px-[35px] lg:py-[108px] lg:px-[68px] bg-2 text-[16px] xs:text-[20px] leading-[26px] lg:text-[38px] lg:leading-[44px] uppercase text-white z-10">
                   <span className="relative transition-all duration-500 ease-in-out">
