@@ -172,156 +172,164 @@ const ReviewCard = ({
 }: {
   review: Review;
   bgColor: string;
-}) => (
-  <div
-    className={`card-corner flex flex-col p-[16px] sm:p-[20px] ${bgColor} min-w-[175px]`}
-    role="article"
-    aria-label={`Review by ${review.username}`}>
+}) => {
+  const reviewContent = Array.isArray(review.review)
+    ? review.review
+    : typeof review.review === "string"
+    ? [review.review]
+    : [];
+
+  return (
     <div
-      className={`h-[15px] w-[75%] sm:w-[50%] absolute top-0 left-[50%] translate-x-[-50%] blur-[30px] z-0 rounded-full ${
-        review.liked ? "bg-primary-main" : "bg-red"
-      }`}
-      aria-hidden="true"></div>
-    <div>
-      <div className="flex items-center justify-between gap-[16px] mb-[32px]">
-        <div className="flex items-center justify-start w-full gap-[16px]">
-          <div
-            className="w-[44px] h-[44px] sm:w-[64px] sm:h-[64px] flex justify-center items-center flex-shrink-0"
-            aria-hidden="true">
-            <svg
-              width="40"
-              height="40"
-              viewBox="0 0 40 40"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              className="w-[28px] h-[28px] sm:w-[40px] sm:h-[40px]">
-              <circle
-                cx="20.0026"
-                cy="19.9999"
-                r="15.4167"
-                stroke="#4EF432"
-                strokeWidth="2.5"
-              />
-              <path
-                d="M19.0601 13.7957L15.8672 24.6177L16.1693 25.1209H22.1571"
-                stroke="#4EF432"
-                strokeWidth="2.5"
-                strokeLinecap="square"
-              />
-              <path
-                d="M27.3125 18.623H27.3292"
-                stroke="#4EF432"
-                strokeWidth="2.5"
-                strokeLinecap="square"
-              />
-              <path
-                d="M11.5547 18.623H11.5714"
-                stroke="#4EF432"
-                strokeWidth="2.5"
-                strokeLinecap="square"
-              />
-            </svg>
+      className={`card-corner flex flex-col p-[16px] sm:p-[20px] ${bgColor} min-w-[175px]`}
+      role="article"
+      aria-label={`Review by ${review.username}`}>
+      <div
+        className={`h-[15px] w-[75%] sm:w-[50%] absolute top-0 left-[50%] translate-x-[-50%] blur-[30px] z-0 rounded-full ${
+          review.liked ? "bg-primary-main" : "bg-red"
+        }`}
+        aria-hidden="true"></div>
+      <div>
+        <div className="flex items-center justify-between gap-[16px] mb-[32px]">
+          <div className="flex items-center justify-start w-full gap-[16px]">
+            <div
+              className="w-[44px] h-[44px] sm:w-[64px] sm:h-[64px] flex justify-center items-center flex-shrink-0"
+              aria-hidden="true">
+              <svg
+                width="40"
+                height="40"
+                viewBox="0 0 40 40"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                className="w-[28px] h-[28px] sm:w-[40px] sm:h-[40px]">
+                <circle
+                  cx="20.0026"
+                  cy="19.9999"
+                  r="15.4167"
+                  stroke="#4EF432"
+                  strokeWidth="2.5"
+                />
+                <path
+                  d="M19.0601 13.7957L15.8672 24.6177L16.1693 25.1209H22.1571"
+                  stroke="#4EF432"
+                  strokeWidth="2.5"
+                  strokeLinecap="square"
+                />
+                <path
+                  d="M27.3125 18.623H27.3292"
+                  stroke="#4EF432"
+                  strokeWidth="2.5"
+                  strokeLinecap="square"
+                />
+                <path
+                  d="M11.5547 18.623H11.5714"
+                  stroke="#4EF432"
+                  strokeWidth="2.5"
+                  strokeLinecap="square"
+                />
+              </svg>
+            </div>
+            <div
+              className="text-white font-bold text-[15px] sm:text-[20px] overflow-hidden text-ellipsis whitespace-nowrap"
+              aria-label={`Username: ${review.username}`}>
+              {review.username}
+            </div>
           </div>
-          <div
-            className="text-white font-bold text-[15px] sm:text-[20px] overflow-hidden text-ellipsis whitespace-nowrap"
-            aria-label={`Username: ${review.username}`}>
-            {review.username}
-          </div>
+          <LikeIcon
+            className={`sm:w-[40px] sm:h-[40px] ${
+              !review.liked ? "rotate-180" : ""
+            }`}
+            aria-label={review.liked ? "Positive review" : "Negative review"}
+          />
         </div>
-        <LikeIcon
-          className={`sm:w-[40px] sm:h-[40px] ${
-            !review.liked ? "rotate-180" : ""
-          }`}
-          aria-label={review.liked ? "Positive review" : "Negative review"}
-        />
       </div>
-    </div>
-    {Array.isArray(review.review) ? (
-      review.review.map((paragraph: string, index: number) => (
-        <Text
-          key={index}
-          className={
-            index === review.review.length - 1 ? "mb-[24px]" : "mb-[16px]"
-          }
-          aria-label={`Review paragraph ${index + 1}`}>
-          {paragraph}
+      {reviewContent.length > 0 ? (
+        reviewContent.map((paragraph: string, index: number) => (
+          <Text
+            key={index}
+            className={
+              index === reviewContent.length - 1 ? "mb-[24px]" : "mb-[16px]"
+            }
+            aria-label={`Review paragraph ${index + 1}`}>
+            {paragraph}
+          </Text>
+        ))
+      ) : (
+        <Text className="mb-[24px]" aria-label="No review text available">
+          No review text available.
         </Text>
-      ))
-    ) : (
-      <Text className="mb-[24px]" aria-label="Review text">
-        {review.review}
-      </Text>
-    )}
-    <div className={review.pros.length > 0 ? "mb-[24px]" : ""}>
-      <ul className="flex flex-col w-full gap-[12px]" role="list">
-        {review.pros.map((pro: string, i: number) => (
-          <li
-            key={i}
-            className="flex items-start gap-[8px]"
-            role="listitem"
-            aria-label={`Pro: ${pro}`}>
-            <span
-              className="flex justify-center items-center w-[20px] h-[20px] sm:w-[24px] sm:h-[24px]"
-              aria-hidden="true">
-              <PlusIcon />
-            </span>
-            <Text>{pro}</Text>
-          </li>
-        ))}
-      </ul>
-    </div>
-    <div className={review.cons.length > 0 ? "mb-[32px]" : ""}>
-      <ul className="flex flex-col w-full gap-[12px]" role="list">
-        {review.cons.map((con: string, i: number) => (
-          <li
-            key={i}
-            className="flex items-start gap-[8px]"
-            role="listitem"
-            aria-label={`Con: ${con}`}>
-            <span
-              className="flex justify-center items-center w-[20px] h-[20px] sm:w-[24px] sm:h-[24px]"
-              aria-hidden="true">
-              <MinusIcon />
-            </span>
-            <Text>{con}</Text>
-          </li>
-        ))}
-      </ul>
-    </div>
-    <div className="flex flex-col 2xl:flex-row 2xl:items-center gap-[8px] sm:gap-[16px] justify-between w-full">
-      <div className="flex flex-col 2xl:flex-row gap-[8px] sm:gap-[16px] 2xl:items-center flex-shrink-0">
-        <p
-          className="text-[14px] leading-[20px] sm:text-[20px] font-medium text-white"
-          aria-label="Is this review helpful question">
-          Is this review helpful?
-        </p>
-        <div className="flex gap-[8px] sm:gap-[16px] items-center flex-shrink-0 ml-[10px]">
-          <div
-            className="py-[11px] px-[24px] lg:py-[13px] lg:px-[30px] skew-x-[-20deg] bg-primary-20"
-            role="button"
-            aria-label={`Mark review as helpful, ${review.likes} likes`}>
-            <span className="skew-x-[20deg] block font-semibold text-[14px] leading-[20px] sm:text-[20px] sm:leading-[26px]">
-              Yes {review.likes}
-            </span>
-          </div>
-          <div
-            className="py-[11px] px-[24px] lg:py-[13px] lg:px-[30px] skew-x-[-20deg] bg-red-20"
-            role="button"
-            aria-label={`Mark review as not helpful, ${review.dislikes} dislikes`}>
-            <span className="skew-x-[20deg] block font-semibold text-[14px] leading-[20px] sm:text-[20px] sm:leading-[26px]">
-              No {review.dislikes}
-            </span>
+      )}
+      <div className={review.pros.length > 0 ? "mb-[24px]" : ""}>
+        <ul className="flex flex-col w-full gap-[12px]" role="list">
+          {review.pros.map((pro: string, i: number) => (
+            <li
+              key={i}
+              className="flex items-start gap-[8px]"
+              role="listitem"
+              aria-label={`Pro: ${pro}`}>
+              <span
+                className="flex justify-center items-center w-[20px] h-[20px] sm:w-[24px] sm:h-[24px]"
+                aria-hidden="true">
+                <PlusIcon />
+              </span>
+              <Text>{pro}</Text>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div className={review.cons.length > 0 ? "mb-[32px]" : ""}>
+        <ul className="flex flex-col w-full gap-[12px]" role="list">
+          {review.cons.map((con: string, i: number) => (
+            <li
+              key={i}
+              className="flex items-start gap-[8px]"
+              role="listitem"
+              aria-label={`Con: ${con}`}>
+              <span
+                className="flex justify-center items-center w-[20px] h-[20px] sm:w-[24px] sm:h-[24px]"
+                aria-hidden="true">
+                <MinusIcon />
+              </span>
+              <Text>{con}</Text>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div className="flex flex-col 2xl:flex-row 2xl:items-center gap-[8px] sm:gap-[16px] justify-between w-full">
+        <div className="flex flex-col 2xl:flex-row gap-[8px] sm:gap-[16px] 2xl:items-center flex-shrink-0">
+          <p
+            className="text-[14px] leading-[20px] sm:text-[20px] font-medium text-white"
+            aria-label="Is this review helpful question">
+            Is this review helpful?
+          </p>
+          <div className="flex gap-[8px] sm:gap-[16px] items-center flex-shrink-0 ml-[10px]">
+            <div
+              className="py-[11px] px-[24px] lg:py-[13px] lg:px-[30px] skew-x-[-20deg] bg-primary-20"
+              role="button"
+              aria-label={`Mark review as helpful, ${review.likes} likes`}>
+              <span className="skew-x-[20deg] block font-semibold text-[14px] leading-[20px] sm:text-[20px] sm:leading-[26px]">
+                Yes {review.likes}
+              </span>
+            </div>
+            <div
+              className="py-[11px] px-[24px] lg:py-[13px] lg:px-[30px] skew-x-[-20deg] bg-red-20"
+              role="button"
+              aria-label={`Mark review as not helpful, ${review.dislikes} dislikes`}>
+              <span className="skew-x-[20deg] block font-semibold text-[14px] leading-[20px] sm:text-[20px] sm:leading-[26px]">
+                No {review.dislikes}
+              </span>
+            </div>
           </div>
         </div>
+        <p
+          className="text-gray-68 text-[12px] leading-[16px] sm:text-[17px] sm:leading-[21px] text-end"
+          aria-label={`Review date: ${review.date}`}>
+          {review.date}
+        </p>
       </div>
-      <p
-        className="text-gray-68 text-[12px] leading-[16px] sm:text-[17px] sm:leading-[21px] text-end"
-        aria-label={`Review date: ${review.date}`}>
-        {review.date}
-      </p>
     </div>
-  </div>
-);
+  );
+};
 
 const GameReviews: React.FC = () => {
   const [isAllReviews, setIsAllReviews] = useState(false);
