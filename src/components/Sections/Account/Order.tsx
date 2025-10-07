@@ -129,7 +129,6 @@ const Order: React.FC<OrderProps> = React.memo(
     return (
       <div
         className={`${baseClass} ${backgroundClass} 2xl:cursor-pointer`}
-        role="region"
         aria-label={`Order details for ID ${id}, placed on ${date} at ${time}`}
         onClick={handleCardClick}>
         <div className="flex justify-between py-[4px] border-b-[1px] border-3 xl:border-none">

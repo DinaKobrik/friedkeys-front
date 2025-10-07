@@ -244,7 +244,6 @@ const Slider: React.FC = () => {
       key={windowSize}
       className="mx-auto home__slider relative max-w-[1920px] overflow-hidden"
       style={{ marginLeft: dynamicMargin, marginRight: dynamicMargin }}
-      role="region"
       aria-label="Game Slider Section">
       {loading ? (
         <p className="text-center py-10 text-gray-68" aria-live="polite">
@@ -266,7 +265,6 @@ const Slider: React.FC = () => {
             onMouseLeave={handleDragEnd}
             onTouchStart={handleDragStart}
             onTouchEnd={handleDragEnd}
-            role="listbox"
             aria-label="Game slides">
             {topGames.map((game: Game, index: number) => (
               <li

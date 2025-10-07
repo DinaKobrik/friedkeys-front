@@ -24,7 +24,9 @@ const GameCard: React.FC<GameCardProps> = ({
   const [discountTime, setDiscountTime] = useState<string | null>(null);
   const [isFavorite, setIsFavorite] = useState(false);
   const [imageSrc, setImageSrc] = useState<string>(
-    game.image && game.image.trim() ? game.image : "/images/no-image.jpg"
+    game.image && game.image.trim() && game.image.startsWith("/images/")
+      ? game.image
+      : "/images/no-image.jpg"
   );
 
   useEffect(() => {
@@ -96,7 +98,6 @@ const GameCard: React.FC<GameCardProps> = ({
 
     updateDiscountTime();
     const interval = setInterval(updateDiscountTime, 1000);
-
     return () => clearInterval(interval);
   }, [game.discountDate, game.discount]);
 
@@ -128,23 +129,27 @@ const GameCard: React.FC<GameCardProps> = ({
         await response.json();
       }
     } catch (error) {
-      console.error("Failed to fetch updated games:", error);
+      throw new Error(`Failed to fetch updated games: ${error}`);
     }
   };
 
   return (
-    <div className="w-full h-full flex flex-col relative min-w-[138px] xs:min-w-[175px] sm:min-w-[200px]">
+    <div
+      className="w-full h-full flex flex-col relative min-w-[138px] xs:min-w-[175px] sm:min-w-[200px]"
+      role="listitem"
+      aria-label={`Game: ${game.title}`}>
       <div
         className="favorite absolute w-[36px] h-[36px] sm:w-[48px] sm:h-[48px] right-0 top-[1px] z-10 flex justify-center items-center cursor-pointer"
-        onClick={toggleFavorite}>
+        onClick={toggleFavorite}
+        role="button"
+        aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}>
         <svg
           width="16.5"
           height="21"
           className="sm:w-[22px] sm:h-[28px]"
           viewBox="0 0 22 28"
           fill={isFavorite ? "#FFFF25" : "none"}
-          xmlns="http://www.w3.org/2000/svg"
-          onClick={toggleFavorite}>
+          xmlns="http://www.w3.org/2000/svg">
           <path
             fillRule="evenodd"
             clipRule="evenodd"
@@ -158,15 +163,14 @@ const GameCard: React.FC<GameCardProps> = ({
       <Link href={`/all-games/${game.id}`} className="w-full h-full">
         <div>
           <div className="card-corner game-card bg-2 relative h-full flex flex-col justify-between">
-            <div
-              className="relative w-full h-[240px] max-h-[240px] md:h-[280px] md:max-h-[280px] lg:h-0 lg:max-h-none 
-    lg:pb-[52.53%]">
+            <div className="relative w-full h-[240px] max-h-[240px] md:h-[280px] md:max-h-[280px] lg:h-0 lg:max-h-none lg:pb-[52.53%]">
               <Image
                 src={imageSrc}
                 alt={game.title}
                 fill
                 className="object-cover"
                 onError={() => setImageSrc("/images/no-image.jpg")}
+                loading="lazy"
               />
               {showSaleTimer && discountTime && (
                 <div className="sale-time absolute bottom-0 left-0 text-sale text-[12px] leading-[14px] md:text-[19px] md:leading-[30px] p-[8px] sm:p-[16px] text-center w-full z-10">
@@ -193,7 +197,6 @@ const GameCard: React.FC<GameCardProps> = ({
                   }`}>
                   DLS
                 </p>
-
                 <div className="flex flex-col sm:flex-row gap-[1px] sm:gap-[20px] lg:gap-[7px] xl:gap-[20px] items-end mr-auto w-full">
                   {discountPrice &&
                   game.discount &&

@@ -86,10 +86,6 @@ const SupportPage: React.FC = () => {
   const [isTouchedMessage, setIsTouchedMessage] = useState(false);
   const [isValidMessage, setIsValidMessage] = useState(true);
 
-  const addDebugLog = (message: string) => {
-    console.log(`[SupportDebug] ${message}`);
-  };
-
   const handleTopicSelect = (topic: string) => {
     setSelectedTopic(topic);
     setIsTopicOpen(false);
@@ -168,7 +164,6 @@ const SupportPage: React.FC = () => {
     setSelectedOrder("");
     setMessage("");
     setScreenshots([]);
-    addDebugLog("Support request submitted, showing modal");
     setShowModal(true);
     setFadeOut(false);
     setTimeout(() => {

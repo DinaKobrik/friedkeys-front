@@ -84,7 +84,7 @@ const AccountMenu: React.FC<{ activeLink?: string }> = React.memo(
     }, [isClient, windowWidth, isMenuVisible, menuOffset]);
 
     const menuClassName = useMemo(() => {
-      return `overflow-y-auto lg:overflow-visible px-[16px] lg:px-0 py-[16px] lg:py-0 absolute lg:static left-0 right-0 bg-2 lg:bg-transparent z-50 lg:z-20 w-[100vw] lg:w-auto left-[-16px] sm:left-[-46px] ${
+      return `custom-scrollbar overflow-y-auto lg:overflow-visible px-[16px] lg:px-0 py-[16px] lg:py-0 absolute lg:static left-0 right-0 bg-2 lg:bg-transparent z-50 lg:z-20 w-[100vw] lg:w-auto left-[-16px] sm:left-[-46px] ${
         windowWidth >= 991 ? "flex h-auto" : isMenuVisible ? "block" : "hidden"
       } ${
         windowWidth < 991 && isMenuVisible
@@ -96,11 +96,8 @@ const AccountMenu: React.FC<{ activeLink?: string }> = React.memo(
     return (
       <section
         className=" mb-[24px] mt-[24px] sm:mt-[80px] relative"
-        role="region"
         aria-label="Account Menu Navigation">
-        <div
-          className="flex justify-between account-menu items-center bg-2 account-menu relative left-[-16px] sm:left-[-46px] py-[8px] sm:py-[16px] px-[16px] sm:px-[46px] lg:hidden"
-          role="banner">
+        <div className="flex justify-between items-center bg-2 account-menu relative left-[-16px] sm:left-[-46px] py-[8px] sm:py-[16px] px-[16px] sm:px-[46px] lg:hidden">
           <Heading variant="h2" aria-label="Account Menu Title">
             account Menu
           </Heading>
@@ -132,9 +129,8 @@ const AccountMenu: React.FC<{ activeLink?: string }> = React.memo(
           className={menuClassName}
           style={{ height: calculateDynamicHeight }}
           id="account-menu-content"
-          role="navigation"
           aria-label="Account Menu Items">
-          <div className="flex flex-col w-full lg:flex-row bg-2 lg:bg-transparent items-center justify-start lg:justify-center 2xl:justify-between flex-wrap gap-[16px] lg:gap-[20px]">
+          <div className="flex flex-col w-full custom-scrollbar lg:flex-row bg-2 lg:bg-transparent items-center justify-start lg:justify-center 2xl:justify-between flex-wrap gap-[16px] lg:gap-[20px]">
             <Heading variant="h2">
               <Link
                 href="/auth/account/personal-info"

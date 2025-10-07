@@ -76,6 +76,8 @@ const PaymentContent = () => {
   const [selectedAdress, setSelectedAdress] = useState("");
   const [isAddressOpen, setIsAddressOpen] = useState(false);
   const [isTouchedAddress, setIsTouchedAddress] = useState(false);
+  const [isTouchedDiscountCode, setIsTouchedDiscountCode] = useState(false);
+  const [isTouchedGiftCard, setIsTouchedGiftCard] = useState(false);
   const [isPayClicked, setIsPayClicked] = useState(false);
   const [discountCode, setDiscountCode] = useState("");
   const [giftCard, setGiftCard] = useState("");
@@ -254,7 +256,8 @@ const PaymentContent = () => {
       SAVE20: 0.2,
       SAVE25: 0.25,
     };
-    if (discountCode in validPromoCodes) {
+    const isValidPromoCode = discountCode in validPromoCodes;
+    if (isValidPromoCode) {
       promoDiscount =
         subtotal *
         validPromoCodes[discountCode as keyof typeof validPromoCodes];
@@ -266,8 +269,8 @@ const PaymentContent = () => {
       GIFT50: 50,
       GIFT100: 100,
     };
-
-    if (giftCard in validGiftCards) {
+    const isValidGiftCard = giftCard in validGiftCards;
+    if (isValidGiftCard) {
       const discountValue =
         validGiftCards[giftCard as keyof typeof validGiftCards];
       giftCardDiscount =
@@ -290,6 +293,8 @@ const PaymentContent = () => {
       giftCardDiscount,
       total,
       vatPercentage,
+      isValidPromoCode,
+      isValidGiftCard,
     };
   };
 
@@ -301,6 +306,8 @@ const PaymentContent = () => {
     giftCardDiscount,
     total,
     vatPercentage,
+    isValidPromoCode,
+    isValidGiftCard,
   } = calculateTotals();
 
   const paginatedGames = useMemo(() => {
@@ -594,6 +601,8 @@ const PaymentContent = () => {
   const handlePay = () => {
     setIsPayClicked(true);
     setIsTouchedAddress(true);
+    setIsTouchedDiscountCode(true);
+    setIsTouchedGiftCard(true);
     if (!selectedAdress) {
       adressRef.current?.scrollIntoView({ behavior: "smooth" });
       return;
@@ -756,9 +765,20 @@ const PaymentContent = () => {
             type="text"
             backgroundClass="bg-3"
             value={discountCode}
-            onChange={(e) => setDiscountCode(e.target.value)}
+            onChange={(e) => {
+              setDiscountCode(e.target.value);
+              setIsTouchedDiscountCode(true);
+            }}
+            onBlur={() => setIsTouchedDiscountCode(true)}
             variant="straight"
-            autoComplete="off">
+            autoComplete="off"
+            errorMessage={
+              isTouchedDiscountCode && discountCode && !isValidPromoCode
+                ? "Invalid code"
+                : ""
+            }
+            isTouched={isTouchedDiscountCode}
+            isValid={discountCode === "" || isValidPromoCode}>
             <div className="absolute top-[50%] translate-y-[-50%] right-[18px] cursor-pointer">
               <svg
                 width="10"
@@ -780,9 +800,20 @@ const PaymentContent = () => {
             type="text"
             backgroundClass="bg-3"
             value={giftCard}
-            onChange={(e) => setGiftCard(e.target.value)}
+            onChange={(e) => {
+              setGiftCard(e.target.value);
+              setIsTouchedGiftCard(true);
+            }}
+            onBlur={() => setIsTouchedGiftCard(true)}
             variant="straight"
-            autoComplete="off">
+            autoComplete="off"
+            errorMessage={
+              isTouchedGiftCard && giftCard && !isValidGiftCard
+                ? "Invalid code"
+                : ""
+            }
+            isTouched={isTouchedGiftCard}
+            isValid={giftCard === "" || isValidGiftCard}>
             <div className="absolute top-[50%] translate-y-[-50%] right-[18px] cursor-pointer">
               <svg
                 width="10"
@@ -817,14 +848,26 @@ const PaymentContent = () => {
                   {vat.toFixed(2)}$
                 </span>
               </div>
-              <div className="flex w-full justify-between items-center gap-[10px]">
-                <span className="uppercase m-0 text-gray-68 font-usuzi-condensed text-[16px] leading-[16px] sm:text-[26px] sm:leading-[28px]">
-                  Discount
-                </span>
-                <span className="text-gray-68 font-bold text-[17px] leading-[19px] sm:text-[20px] sm:leading-[24px]">
-                  -{(totalDiscount + promoDiscount).toFixed(2)}$
-                </span>
-              </div>
+              {totalDiscount > 0 && (
+                <div className="flex w-full justify-between items-center gap-[10px]">
+                  <span className="uppercase m-0 text-gray-68 font-usuzi-condensed text-[16px] leading-[16px] sm:text-[26px] sm:leading-[28px]">
+                    Discount
+                  </span>
+                  <span className="text-gray-68 font-bold text-[17px] leading-[19px] sm:text-[20px] sm:leading-[24px]">
+                    -{totalDiscount.toFixed(2)}$
+                  </span>
+                </div>
+              )}
+              {promoDiscount > 0 && (
+                <div className="flex w-full justify-between items-center gap-[10px]">
+                  <span className="uppercase m-0 text-gray-68 font-usuzi-condensed text-[16px] leading-[16px] sm:text-[26px] sm:leading-[28px]">
+                    Discount Code
+                  </span>
+                  <span className="text-gray-68 font-bold text-[17px] leading-[19px] sm:text-[20px] sm:leading-[24px]">
+                    -{promoDiscount.toFixed(2)}$
+                  </span>
+                </div>
+              )}
               {giftCardDiscount > 0 && (
                 <div className="flex w-full justify-between items-center gap-[10px]">
                   <span className="uppercase m-0 text-gray-68 font-usuzi-condensed text-[16px] leading-[16px] sm:text-[26px] sm:leading-[28px]">

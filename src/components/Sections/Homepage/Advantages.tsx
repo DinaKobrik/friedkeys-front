@@ -202,11 +202,13 @@ const Advantages: React.FC = () => {
   ];
 
   const [isBelowLg, setIsBelowLg] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(max-width: 1199px)");
     const handleMediaChange = (e: MediaQueryListEvent | MediaQueryList) => {
       setIsBelowLg(e.matches);
+      setLoading(false);
     };
 
     handleMediaChange(mediaQuery);
@@ -224,10 +226,20 @@ const Advantages: React.FC = () => {
       ]
     : CONTENT_ITEMS;
 
+  if (loading) {
+    return (
+      <section className="advantages__wrapper" aria-label="Advantages Section">
+        <p className="text-center text-gray-68" aria-live="polite">
+          Loading advantages...
+        </p>
+      </section>
+    );
+  }
+
   return (
     <section className="advantages__wrapper" aria-label="Advantages Section">
       <div className="w-full overflow-hidden">
-        <div className={`${BASE_STYLES.advantages} advantages`} role="list">
+        <div className={`${BASE_STYLES.advantages} advantages`}>
           {orderedItems.map((item) => (
             <div
               key={item.originalIndex}
@@ -239,8 +251,7 @@ const Advantages: React.FC = () => {
                   : item.originalIndex === 4 || item.originalIndex === 3
                   ? "skew-x-[-20deg] xl:skew-x-[20deg]"
                   : ""
-              } ${item.originalIndex === 2 ? "col-span-2 xl:col-span-1" : ""}`}
-              role="listitem">
+              } ${item.originalIndex === 2 ? "col-span-2 xl:col-span-1" : ""}`}>
               <div
                 className={`${BASE_STYLES.advantage} ${
                   item.originalIndex === 0

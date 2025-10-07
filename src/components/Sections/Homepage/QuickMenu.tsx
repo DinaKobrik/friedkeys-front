@@ -11,7 +11,12 @@ interface MenuItem {
 
 const QuickMenuSection: React.FC = () => {
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
   const sectionRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    setLoading(false);
+  }, []);
 
   const menus: Record<string, MenuItem> = {
     PC: {
@@ -117,6 +122,16 @@ const QuickMenuSection: React.FC = () => {
     setActiveMenu((prev) => (prev === menuKey ? null : menuKey));
   };
 
+  if (loading) {
+    return (
+      <section className="hide-scrollbar h-[44px] sm:h-[66px] mt-[-48px] lg:mt-0">
+        <p className="text-center text-gray-68" aria-live="polite">
+          Loading menu...
+        </p>
+      </section>
+    );
+  }
+
   return (
     <section
       ref={sectionRef}
@@ -140,12 +155,10 @@ const QuickMenuSection: React.FC = () => {
                   key === "Nintendo"
                     ? "min-w-[240px] left-0 lg:-left-[70px] xl:-left-[40px] 2xl:left-0"
                     : "left-0"
-                } z-[900]`}
-                role="menu">
+                } z-[900]`}>
                 {categories.map((category) => (
                   <Heading variant="h3" key={category}>
                     <a
-                      role="menuitem"
                       href={`#${category.toLowerCase().replace(/\s+/g, "-")}`}
                       aria-label={`Go to ${category} category`}
                       className="quick-menu__link--active relative w-full block py-[10px] focus:outline-none">

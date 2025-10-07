@@ -316,10 +316,7 @@ const GameSlider: React.FC = () => {
   }, [currentSlide, mediaItems]);
 
   return (
-    <section
-      className="relative"
-      role="region"
-      aria-label="Game Media Slider Section">
+    <section className="relative" aria-label="Game Media Slider Section">
       <Heading
         variant="h1"
         className="mb-[24px] sm:mb-[40px]"
@@ -334,7 +331,6 @@ const GameSlider: React.FC = () => {
         onMouseLeave={(e) => handleDragEnd(e, true)}
         onTouchStart={(e) => handleDragStart(e, true)}
         onTouchEnd={(e) => handleDragEnd(e, true)}
-        role="region"
         aria-label={`Current slide ${currentSlide + 1} of ${totalSlides}`}>
         {mediaItems[currentSlide].endsWith(".mp4") ? (
           <div className="relative w-full h-full">
@@ -375,7 +371,6 @@ const GameSlider: React.FC = () => {
               <div
                 className="absolute bottom-[4px] left-[4px] right-[4px] md:left-[16px] md:right-[16px] md:bottom-[16px] flex gap-[12px] items-center transition-opacity duration-500"
                 style={{ opacity: showControls ? 1 : 0 }}
-                role="region"
                 aria-label="Video controls">
                 <button
                   onClick={togglePlay}
@@ -434,7 +429,6 @@ const GameSlider: React.FC = () => {
                 <div
                   className="flex-1 cursor-pointer py-4"
                   onClick={handleSeek}
-                  role="slider"
                   aria-label="Seek video"
                   aria-valuemin={0}
                   aria-valuemax={duration}
@@ -480,13 +474,12 @@ const GameSlider: React.FC = () => {
           />
         )}
       </div>
-      <div className="relative" role="region" aria-label="Thumbnail Slider">
+      <div className="relative" aria-label="Thumbnail Slider">
         <div ref={containerRef} className="overflow-hidden">
           <div
             ref={sliderRef}
             className="flex gap-[12px] sm:gap-[24px] transition-transform duration-300 ease-in-out"
             style={{ width: `${totalSlides * (slideWidth + gap)}px` }}
-            role="listbox"
             aria-label="Thumbnail selection">
             {mediaItems.map((item, index) => (
               <div
@@ -499,7 +492,6 @@ const GameSlider: React.FC = () => {
                 onMouseLeave={(e) => handleDragEnd(e, false)}
                 onTouchStart={(e) => handleDragStart(e, false)}
                 onTouchEnd={(e) => handleDragEnd(e, false)}
-                role="option"
                 aria-selected={currentSlide === index}
                 aria-label={`Select slide ${index + 1}`}>
                 {item.endsWith(".mp4") ? (

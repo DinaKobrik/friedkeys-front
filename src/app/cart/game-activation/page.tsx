@@ -145,6 +145,7 @@ const GameActivationPage: React.FC = () => {
   const [imageSrcs, setImageSrcs] = useState<{ [key: number]: string }>({});
   const gamesPerPage = 5;
   const [isMinimum, setIsMinimum] = useState(false);
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
   const [showKeys, setShowKeys] = useState<{ [key: string]: boolean }>({});
   const [orderData, setOrderData] = useState<{
     total: number;
@@ -172,12 +173,20 @@ const GameActivationPage: React.FC = () => {
   );
 
   useEffect(() => {
-    const handleResize = () => {
-      setIsMinimum(window.innerWidth > 768);
+    const checkTouchDevice = () => {
+      const isTouch = "ontouchstart" in window || navigator.maxTouchPoints > 0;
+      setIsTouchDevice(isTouch);
     };
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    checkTouchDevice();
+  }, []);
+
+  useEffect(() => {
+    const checkScreenWidth = () => {
+      setIsMinimum(window.innerWidth < 768);
+    };
+    checkScreenWidth();
+    window.addEventListener("resize", checkScreenWidth);
+    return () => window.removeEventListener("resize", checkScreenWidth);
   }, []);
 
   const sources = useMemo(
@@ -390,18 +399,17 @@ const GameActivationPage: React.FC = () => {
         const handleKeyToggle = () => {
           setShowKeys((prev) => ({
             ...prev,
-            [entries[0].cartKey + "_" + index]:
-              !prev[entries[0].cartKey + "_" + index],
+            [`${entries[0].cartKey}-${index}`]:
+              !prev[`${entries[0].cartKey}-${index}`],
           }));
         };
 
         return (
           <div
-            key={`${entries[0].cartKey}_${index}`}
+            key={`${entries[0].cartKey}-${index}`}
             className="flex flex-col gap-[4px] sm:gap-[8px] w-full">
             <div
               className="flex w-full items-center gap-[12px] sm:gap-[16px] h-[125px] sm:h-[280px]"
-              role="region"
               aria-label={`${game.title} ${edition} Activation Card ${
                 index + 1
               }`}>
@@ -431,7 +439,7 @@ const GameActivationPage: React.FC = () => {
 
               <div
                 className={`flex flex-col w-full justify-between h-full md:p-[32px] md:pt-[24px] md:bg-2 ${
-                  isMinimum ? "card-corner" : ""
+                  isMinimum ? "" : "card-corner"
                 } max-w-[calc(100% - 100px)] sm:max-w-[calc(100% - 200px)]`}>
                 <div className="w-full">
                   <div className="grid grid-cols-3 md:grid-cols-4 w-full items-center justify-between gap-[12px] mb-[12px] sm:mb-[23px]">
@@ -467,11 +475,11 @@ const GameActivationPage: React.FC = () => {
                     <div className="flex justify-center items-center skew-x-[20deg] gap-[8px] md:gap-[18px]">
                       <span
                         className={`${
-                          showKeys[entries[0].cartKey + "_" + index]
+                          showKeys[`${entries[0].cartKey}-${index}`]
                             ? "text-[11px] xs:text-[13px] md:text-[20px] xs:leading-[13px] md:leading-[20px]"
                             : "text-[16px] leading-[16px] xs:text-[23px] xs:leading-[23px] md:text-[30px] md:leading-[30px]"
                         }`}>
-                        {showKeys[entries[0].cartKey + "_" + index]
+                        {showKeys[`${entries[0].cartKey}-${index}`]
                           ? activationKey
                           : "•••••• – •••••• – ••••••"}
                       </span>
@@ -481,9 +489,11 @@ const GameActivationPage: React.FC = () => {
                         viewBox="0 0 32 32"
                         fill="none"
                         xmlns="http://www.w3.org/2000/svg"
-                        className={`hidden md:block cursor-pointer flex-shrink-0 ${
-                          showKeys[entries[0].cartKey + "_" + index]
-                            ? "md:hidden"
+                        className={`cursor-pointer flex-shrink-0 w-[20px] h-[20px] md:w-[32px] md:h-[32px] ${
+                          isTouchDevice ? "hidden" : ""
+                        } ${
+                          showKeys[`${entries[0].cartKey}-${index}`]
+                            ? "hidden"
                             : ""
                         }`}
                         onClick={handleKeyToggle}>
@@ -498,8 +508,10 @@ const GameActivationPage: React.FC = () => {
                         viewBox="0 0 18 21"
                         fill="none"
                         xmlns="http://www.w3.org/2000/svg"
-                        className={`md:hidden cursor-pointer flex-shrink-0 ${
-                          showKeys[entries[0].cartKey + "_" + index]
+                        className={`cursor-pointer flex-shrink-0 w-[20px] h-[20px] md:w-[32px] md:h-[32px] ${
+                          isTouchDevice ? "" : "hidden"
+                        } ${
+                          showKeys[`${entries[0].cartKey}-${index}`]
                             ? "hidden"
                             : ""
                         }`}
@@ -556,11 +568,12 @@ const GameActivationPage: React.FC = () => {
     gamesPerPage,
     orderItems,
     sources,
-    isMinimum,
+    isTouchDevice,
     router,
     activationKeys,
     showKeys,
     imageSrcs,
+    isMinimum,
   ]);
 
   const totalPages = useMemo(

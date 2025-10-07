@@ -109,7 +109,6 @@ const PaymentMethodsPage = React.memo(() => {
         <div
           key={card.id}
           className="mb-[16px] last:mb-0 gap-[8px] flex items-center justify-between"
-          role="region"
           aria-label={`Credit card ${card.name} ending in ${lastFour}`}>
           <div className="flex items-center gap-[16px]">
             <Image
@@ -155,10 +154,7 @@ const PaymentMethodsPage = React.memo(() => {
           Payment Methods
         </Heading>
         <div className="grid grid-cols-1 lg:grid-cols-2 lg:grid-rows-2 gap-[24px] mb-[24px] sm:mb-[56px]">
-          <div
-            className={baseStyle}
-            role="region"
-            aria-label="Credit Cards Section">
+          <div className={baseStyle} aria-label="Credit Cards Section">
             <div className="max-w-[520px] w-full mx-auto flex flex-col justify-between h-full">
               <Heading
                 variant="h2"
@@ -182,7 +178,7 @@ const PaymentMethodsPage = React.memo(() => {
             </div>
           </div>
 
-          <div className={baseStyle} role="region" aria-label="Wallet Section">
+          <div className={baseStyle} aria-label="Wallet Section">
             <div className="max-w-[520px] w-full mx-auto flex flex-col justify-between h-full">
               <Heading
                 variant="h2"
@@ -211,7 +207,7 @@ const PaymentMethodsPage = React.memo(() => {
             </div>
           </div>
 
-          <div className={baseStyle} role="region" aria-label="Paypal Section">
+          <div className={baseStyle} aria-label="Paypal Section">
             <div className="max-w-[520px] w-full mx-auto flex flex-col justify-between h-full">
               <Heading
                 variant="h2"
@@ -234,7 +230,7 @@ const PaymentMethodsPage = React.memo(() => {
             </div>
           </div>
 
-          <div className={baseStyle} role="region" aria-label="Crypto Section">
+          <div className={baseStyle} aria-label="Crypto Section">
             <div className="max-w-[520px] w-full mx-auto flex flex-col justify-between h-full">
               <Heading
                 variant="h2"

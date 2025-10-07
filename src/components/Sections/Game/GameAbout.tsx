@@ -76,7 +76,6 @@ const GameAbout: React.FC = () => {
   return (
     <section
       className="grid grid-cols-1 xl:grid-cols-2 gap-[40px] items-start w-full"
-      role="region"
       aria-label="Game About Section">
       <div className="2xl:max-w-[656px]">
         <Heading
@@ -102,7 +101,6 @@ const GameAbout: React.FC = () => {
       </div>
       <div
         className="relative md:hidden mx-auto pb-[45px] sm:pb-[70px] mb:pb-0 mt-[39px]"
-        role="region"
         aria-label="Game Rating for Mobile">
         <Image
           src="/images/bg-steam.png"
@@ -131,16 +129,12 @@ const GameAbout: React.FC = () => {
       </div>
       <div
         className="card-corner px-[16px] py-[20px] pb-[24px] sm:p-[40px] bg-2 flex justify-between gap-[10px]"
-        role="region"
         aria-label="Game Specifications and Rating">
-        <div
-          className="grid grid-cols-[auto_1fr] items-start gap-[40px]"
-          role="list">
+        <div className="grid grid-cols-[auto_1fr] items-start gap-[40px]">
           {aboutSpecs.map((spec, index) => (
             <React.Fragment key={index}>
               <div
                 className="text-[15px] leading-[20px] sm:text-[20px] sm:leading-[26px] font-bold text-white"
-                role="listitem"
                 aria-label={`${spec.label}`}>
                 {spec.label}
               </div>
@@ -157,7 +151,6 @@ const GameAbout: React.FC = () => {
         </div>
         <div
           className="relative hidden md:block"
-          role="region"
           aria-label="Game Rating for Desktop">
           <Image
             src="/images/bg-steam.png"

@@ -315,7 +315,6 @@ const ProductReviews: React.FC = React.memo(() => {
           <div
             key={globalIndex}
             className="grid grid-cols-1 lg:grid-cols-3 gap-[8px] sm:gap-[24px]"
-            role="region"
             aria-label={`Review for ${game.title} from ${formatDate(
               review.date
             )}`}>
@@ -448,17 +447,12 @@ const ProductReviews: React.FC = React.memo(() => {
   }
 
   return (
-    <main
-      className="mt-[24px] sm:mt-[80px]"
-      role="main"
-      aria-label="Product Reviews Page">
+    <main className="mt-[24px] sm:mt-[80px]" aria-label="Product Reviews Page">
       <Suspense fallback={<div>Loading menu...</div>}>
         <AccountMenu activeLink="/auth/account/product-reviews" />
       </Suspense>
-      <section role="region" aria-label="Product Reviews Section">
-        <div
-          className="flex items-center justify-between mb-[48px] mt-[40px] sm:mt-[80px]"
-          role="banner">
+      <section aria-label="Product Reviews Section">
+        <div className="flex items-center justify-between mb-[48px] mt-[40px] sm:mt-[80px]">
           <Heading
             variant="h1"
             className="text-center lg:text-left w-full"
@@ -481,7 +475,6 @@ const ProductReviews: React.FC = React.memo(() => {
         ) : (
           <div
             className="favorites-grid grid grid-cols-1 gap-[16px] sm:gap-[24px] mb-[24px] sm:mb-[48px]"
-            role="region"
             aria-label="Reviews List">
             {paginatedReviews}
             <Pagination

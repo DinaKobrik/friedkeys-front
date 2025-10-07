@@ -96,7 +96,7 @@ const New: React.FC<NewProps> = ({
          ${
            isVertical
              ? "grid-cols-1 grid-rows-2 xs:grid-rows-3 md:grid-rows-2 xl:grid-rows-3 h-full"
-             : "grid-cols-3"
+             : "grid-cols-3 h-[80px] sm:h-[160px] md:h-[248px]"
          }
         `}>
         <div
@@ -118,7 +118,7 @@ const New: React.FC<NewProps> = ({
           className={`w-full relative flex flex-col justify-between col-span-2 ${
             isVertical
               ? "py-[24px] px-[20px] bg-2"
-              : "md:py-[24px] md:px-[20px] md:bg-2 h-[80px] sm:h-[160px] md:h-[248px]"
+              : "md:py-[24px] md:px-[20px] md:bg-2"
           } ${!isVertical && isMobileLessThan768 ? "" : "card-corner"}`}>
           <div>
             <div

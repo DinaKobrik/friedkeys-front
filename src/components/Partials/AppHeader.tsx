@@ -215,7 +215,6 @@ const Header = () => {
       </Link>
       <div
         className="flex xl:hidden fixed bottom-0 left-1/2 transform -translate-x-1/2 z-[1000] w-full justify-around bg-3"
-        role="navigation"
         aria-label="Mobile navigation menu">
         <Link
           href="/"

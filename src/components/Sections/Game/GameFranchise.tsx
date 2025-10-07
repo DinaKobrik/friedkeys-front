@@ -52,20 +52,16 @@ const GameFranchise: React.FC = () => {
     );
 
   return (
-    <section role="region" aria-label="Game Franchise Section">
+    <section aria-label="Game Franchise Section">
       <Heading
         variant="h1"
         className="mb-[24px] sm:mb-[40px]"
         aria-label={`${game?.title || "Unknown Game"} Franchise Title`}>
         {game?.title || "Unknown Game"} Franchise
       </Heading>
-      <div
-        className="flex overflow-scroll hide-scrollbar w-full gap-[12px] sm:-[16px] lg:gap-x-[24px] mt-[24px] sm:mt-[40px]"
-        role="list">
+      <div className="flex overflow-scroll hide-scrollbar w-full gap-[12px] sm:-[16px] lg:gap-x-[24px] mt-[24px] sm:mt-[40px]">
         {game ? (
-          <div
-            className="flex-shrink-0 max-w-[175px] sm:min-w-[200px] sm:max-w-[340px] lg:max-w-[520px] w-full"
-            role="listitem">
+          <div className="flex-shrink-0 max-w-[175px] sm:min-w-[200px] sm:max-w-[340px] lg:max-w-[520px] w-full">
             <GameCard key={game.id} game={game} />
           </div>
         ) : (

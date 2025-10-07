@@ -15,64 +15,59 @@ export default function About() {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [dynamicMargin, setDynamicMargin] = useState<string>("0px");
   const [dynamicPadding, setDynamicPadding] = useState<string>("0px");
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [windowSize, setWindowSize] = useState<number>(
-    typeof window !== "undefined" ? window.innerWidth : 0
-  );
-
-  // === dynamic offset до 1920px ===
-  const updateDynamicStyles = () => {
-    if (typeof window === "undefined") return;
-    const windowWidth = window.innerWidth;
-    const scrollbarWidthValue =
-      window.innerWidth - document.documentElement.clientWidth;
-    const isTouchDevice = navigator.maxTouchPoints > 0;
-    let calculatedOffset: number;
-
-    if (windowWidth < 576) {
-      calculatedOffset = 16;
-      setDynamicMargin(`-${calculatedOffset}px`);
-      setDynamicPadding(`${calculatedOffset}px`);
-    } else if (windowWidth >= 576 && windowWidth < 1700) {
-      calculatedOffset = 46;
-      setDynamicMargin(`-${calculatedOffset}px`);
-      setDynamicPadding(`${calculatedOffset}px`);
-    } else if (windowWidth >= 1607 && windowWidth <= 1609) {
-      calculatedOffset = 146;
-      setDynamicMargin(`-${calculatedOffset}px`);
-      setDynamicPadding(`${calculatedOffset}px`);
-    } else if (windowWidth > 1608 && windowWidth <= 1920) {
-      calculatedOffset = isTouchDevice
-        ? (windowWidth - 1608) / 2
-        : (windowWidth - scrollbarWidthValue - 1608) / 2;
-      setDynamicMargin(`-${calculatedOffset}px`);
-      setDynamicPadding(`${calculatedOffset}px`);
-    } else {
-      calculatedOffset = 146;
-      setDynamicMargin(`-${calculatedOffset}px`);
-      setDynamicPadding(`${calculatedOffset}px`);
-    }
-
-    setWindowSize(windowWidth);
-  };
+  const [isTouchDevice, setIsTouchDevice] = useState<boolean>(false);
 
   useEffect(() => {
+    const detectTouchDevice = () => {
+      const isTouch =
+        navigator.maxTouchPoints > 0 ||
+        window.matchMedia("(pointer: coarse)").matches;
+      setIsTouchDevice(isTouch);
+    };
+
+    const updateDynamicStyles = () => {
+      if (typeof window === "undefined") return;
+      const windowWidth = window.innerWidth;
+      const scrollbarWidthValue =
+        window.innerWidth - document.documentElement.clientWidth;
+      let calculatedOffset: number;
+
+      if (windowWidth < 576) {
+        calculatedOffset = 16;
+        setDynamicMargin(`-${calculatedOffset}px`);
+        setDynamicPadding(`${calculatedOffset}px`);
+      } else if (windowWidth >= 576 && windowWidth < 1700) {
+        calculatedOffset = 46;
+        setDynamicMargin(`-${calculatedOffset}px`);
+        setDynamicPadding(`${calculatedOffset}px`);
+      } else if (windowWidth >= 1607 && windowWidth <= 1609) {
+        calculatedOffset = 146;
+        setDynamicMargin(`-${calculatedOffset}px`);
+        setDynamicPadding(`${calculatedOffset}px`);
+      } else if (windowWidth > 1608 && windowWidth <= 1920) {
+        calculatedOffset = isTouchDevice
+          ? (windowWidth - 1608) / 2
+          : (windowWidth - scrollbarWidthValue - 1608) / 2;
+        setDynamicMargin(`-${calculatedOffset}px`);
+        setDynamicPadding(`${calculatedOffset}px`);
+      } else {
+        calculatedOffset = 146;
+        setDynamicMargin(`-${calculatedOffset}px`);
+        setDynamicPadding(`${calculatedOffset}px`);
+      }
+    };
+
+    detectTouchDevice();
     updateDynamicStyles();
     window.addEventListener("resize", updateDynamicStyles);
     return () => window.removeEventListener("resize", updateDynamicStyles);
-  }, []);
+  }, [isTouchDevice]);
 
-  const handleDragStart = (
-    e: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>
-  ) => {
-    if (!containerRef.current) return;
-    let startX: number;
-    if ("touches" in e) {
-      startX = e.touches[0].clientX;
-    } else {
-      startX = (e as React.MouseEvent).clientX;
-    }
+  const handleDragStart = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!containerRef.current || isTouchDevice) return;
+    const startX = e.clientX;
     const scrollLeft = containerRef.current.scrollLeft;
+
     const handleMouseMove = (moveEvent: MouseEvent) => {
       const currentX = moveEvent.clientX;
       const walk = (currentX - startX) * 2;
@@ -80,59 +75,50 @@ export default function About() {
         containerRef.current.scrollLeft = scrollLeft - walk;
       }
     };
-    const handleTouchMove = (moveEvent: TouchEvent) => {
-      const currentX = moveEvent.touches[0].clientX;
-      const walk = (currentX - startX) * 2;
-      if (containerRef.current) {
-        containerRef.current.scrollLeft = scrollLeft - walk;
-      }
-    };
+
     const handleDragEndDocument = () => {
       document.removeEventListener("mousemove", handleMouseMove);
-      document.removeEventListener("touchmove", handleTouchMove);
       document.removeEventListener("mouseup", handleDragEndDocument);
-      document.removeEventListener("touchend", handleDragEndDocument);
       if (containerRef.current) {
         containerRef.current.style.cursor = "grab";
         containerRef.current.style.userSelect = "auto";
       }
     };
-    if ("touches" in e) {
-      document.addEventListener("touchmove", handleTouchMove, {
-        passive: false,
-      });
-      document.addEventListener("touchend", handleDragEndDocument);
-    } else {
-      document.addEventListener("mousemove", handleMouseMove);
-      document.addEventListener("mouseup", handleDragEndDocument);
-    }
+
+    document.addEventListener("mousemove", handleMouseMove);
+    document.addEventListener("mouseup", handleDragEndDocument);
     containerRef.current.style.cursor = "grabbing";
     containerRef.current.style.userSelect = "none";
   };
 
   const handleDragEnd = () => {
-    if (containerRef.current) {
-      containerRef.current.style.cursor = "grab";
-      containerRef.current.style.userSelect = "auto";
-    }
+    if (!containerRef.current || isTouchDevice) return;
+    containerRef.current.style.cursor = "grab";
+    containerRef.current.style.userSelect = "auto";
   };
 
   return (
     <main className="flex flex-col justify-around gap-[48px] sm:gap-[80px] mt-[24px] sm:mt-[80px]">
-      <section>
-        <Heading variant="h3" className="mb-[24px] sm:mb-[40px]">
+      <section aria-label="About FriedKeys Header">
+        <Heading
+          variant="h3"
+          className="mb-[24px] sm:mb-[40px]"
+          aria-label="Navigation breadcrumb">
           Home / About FriedKeys
         </Heading>
-        <Heading variant="h1">About FriedKeys</Heading>
+        <Heading variant="h1" aria-label="About FriedKeys Title">
+          About FriedKeys
+        </Heading>
       </section>
       <AboutUs />
       <Stats />
       <Platforms />
       <section
-        role="region"
         aria-label="User Feedbacks Section"
         className="flex flex-col gap-[16px] sm:gap-[40px]">
-        <Heading variant="h2">Players Love FriedKeys — Here’s Why</Heading>
+        <Heading variant="h2" aria-label="Players Love FriedKeys Title">
+          Players Love FriedKeys — Here’s Why
+        </Heading>
         <div
           className="mx-auto relative max-w-[1920px] overflow-hidden"
           style={{ marginLeft: dynamicMargin, marginRight: dynamicMargin }}>
@@ -141,11 +127,17 @@ export default function About() {
             containerClassName="flex overflow-scroll hide-scrollbar gap-[4px] sm:gap-[12px] lg:gap-[24px] w-full"
             containerRef={containerRef}
             dynamicPadding={dynamicPadding}
-            onMouseDown={handleDragStart}
-            onMouseUp={handleDragEnd}
-            onMouseLeave={handleDragEnd}
-            onTouchStart={handleDragStart}
-            onTouchEnd={handleDragEnd}
+            containerStyle={{
+              cursor: isTouchDevice ? "auto" : "grab",
+              userSelect: isTouchDevice ? "auto" : "none",
+            }}
+            {...(!isTouchDevice
+              ? {
+                  onMouseDown: handleDragStart,
+                  onMouseUp: handleDragEnd,
+                  onMouseLeave: handleDragEnd,
+                }
+              : {})}
           />
         </div>
         <Button
@@ -153,7 +145,8 @@ export default function About() {
           onClick={() => {
             window.location.href = "/feedback";
           }}
-          className="max-w-[270px] sm:max-w-[376px]">
+          className="max-w-[270px] sm:max-w-[376px]"
+          aria-label="View all user feedbacks">
           see all User&apos;s feedbacks
         </Button>
       </section>

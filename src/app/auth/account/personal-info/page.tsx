@@ -219,13 +219,12 @@ const PersonalInfo: React.FC = React.memo(() => {
   }, [userData]);
 
   return (
-    <main role="main" aria-label="Personal Information Page">
+    <main aria-label="Personal Information Page">
       <Suspense fallback={<div>Loading menu...</div>}>
         <AccountMenu activeLink="/auth/account/personal-info" />
       </Suspense>
       <section
         className="flex flex-col gap-[24px] sm:gap-[48px] mt-[40px] sm:mt-[80px]"
-        role="region"
         aria-label="Personal Information Section">
         <Heading
           variant="h1"
@@ -235,11 +234,9 @@ const PersonalInfo: React.FC = React.memo(() => {
         </Heading>
         <div
           className="max-w-[520px] mx-auto w-full flex flex-col gap-[24px] sm:gap-[48px]"
-          role="region"
           aria-label="User Details Container">
           <div
             className="flex flex-col w-full gap-[16px]"
-            role="region"
             aria-label="User Information Fields">
             <div>
               <Heading
@@ -250,7 +247,6 @@ const PersonalInfo: React.FC = React.memo(() => {
               </Heading>
               <div
                 className="w-full px-[20px] line-clamp-1 text-clip text-overflow overflow-hidden py-[16px] border-[1px] border-primary-20 relative text-white bg-2 focus:outline-none h-[48px] sm:h-[56px] flex items-center"
-                role="region"
                 aria-label={`Email: ${userDataDisplay.email}`}>
                 {userDataDisplay.email}
                 <Link
@@ -270,7 +266,6 @@ const PersonalInfo: React.FC = React.memo(() => {
               </Heading>
               <div
                 className="w-full px-[20px] line-clamp-1 text-clip text-overflow overflow-hidden py-[16px] border-[1px] border-primary-20 relative text-white bg-2 focus:outline-none h-[48px] sm:h-[56px] flex items-center"
-                role="region"
                 aria-label={`Password: ${userDataDisplay.password}`}>
                 {userDataDisplay.password}
                 <Link
@@ -290,7 +285,6 @@ const PersonalInfo: React.FC = React.memo(() => {
               </Heading>
               <div
                 className="w-full px-[20px] line-clamp-1 text-clip text-overflow overflow-hidden py-[16px] border-[1px] border-primary-20 relative text-white bg-2 focus:outline-none h-[48px] sm:h-[56px] flex items-center"
-                role="region"
                 aria-label={`First Name: ${userDataDisplay.firstName}`}>
                 {userDataDisplay.firstName}
                 <Link
@@ -310,7 +304,6 @@ const PersonalInfo: React.FC = React.memo(() => {
               </Heading>
               <div
                 className="w-full px-[20px] line-clamp-1 text-clip text-overflow overflow-hidden py-[16px] border-[1px] border-primary-20 relative text-white bg-2 focus:outline-none h-[48px] sm:h-[56px] flex items-center"
-                role="region"
                 aria-label={`Last Name: ${userDataDisplay.lastName}`}>
                 {userDataDisplay.lastName}
                 <Link
@@ -330,7 +323,6 @@ const PersonalInfo: React.FC = React.memo(() => {
               </Heading>
               <div
                 className="w-full px-[20px] line-clamp-1 text-clip text-overflow overflow-hidden py-[16px] border-[1px] border-primary-20 relative text-white bg-2 focus:outline-none h-[48px] sm:h-[56px] flex items-center"
-                role="region"
                 aria-label={`Birthday: ${userDataDisplay.birthday}`}>
                 {userDataDisplay.birthday}
                 <Link
@@ -344,7 +336,6 @@ const PersonalInfo: React.FC = React.memo(() => {
           </div>
           <div
             className="grid grid-cols-2 items-center w-full max-w-[calc(100%-20px)] mx-auto sm:gap-[20px]"
-            role="region"
             aria-label="Account Actions">
             <Button variant="secondary" aria-label="Log Out">
               log out

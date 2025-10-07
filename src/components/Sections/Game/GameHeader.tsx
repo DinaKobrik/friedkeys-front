@@ -253,7 +253,6 @@ const GameHeaderContent: React.FC = () => {
   return (
     <section
       className="relative pt-[40px] lg:pt-0"
-      role="region"
       aria-label="Game Header Section">
       <Heading
         variant="h3"
@@ -317,7 +316,6 @@ const GameHeaderContent: React.FC = () => {
             className={`${isMinimum ? "game__header-info" : "card-corner"}
             max-w-[520px] xl:max-w-[100%] 2xl:max-w-[520px] w-full lg:h-full mx-auto relative z-50 bg-2 p-[16px] pt-[24px] pb-[40px] sm:p-[40px] sm:pt-[32px] lg:p-[20px] xl:p-[40px] xl:pt-[32px]
             ${isRegionOpen ? "h-[calc(100%+44px)] sm:h-auto lg:h-full" : ""}`}
-            role="region"
             aria-label="Game Information and Options">
             <div className="flex items-center w-full justify-between gap-[8px] mb-[20px]">
               <div
@@ -328,7 +326,6 @@ const GameHeaderContent: React.FC = () => {
               <div
                 className="w-[36px] h-[36px] sm:w-[48px] sm:h-[48px] flex justify-center items-center cursor-pointer"
                 onClick={toggleFavorite}
-                role="button"
                 aria-label={
                   isFavorite
                     ? `Remove ${game.title} from favorites`
@@ -358,7 +355,6 @@ const GameHeaderContent: React.FC = () => {
                 className="relative cursor-pointer w-full"
                 ref={editionRef}
                 onClick={() => setIsEditionOpen(!isEditionOpen)}
-                role="region"
                 aria-label="Edition Selection">
                 <label
                   className="mb-[8px] block text-[16px] sm:text-[20px] leading-[20px] font-bold text-white"
@@ -392,14 +388,12 @@ const GameHeaderContent: React.FC = () => {
                 {isEditionOpen && (
                   <div
                     className="absolute top-[64px] sm:top-[84px] z-50 w-full bg-3 mt-[8px] max-h-[130px] overflow-y-auto custom-scrollbar"
-                    role="listbox"
                     aria-label="Edition options">
                     {editions.map((edition) => (
                       <div
                         key={edition}
                         className="px-[20px] py-[12px] cursor-pointer hover:bg-primary-10"
                         onClick={() => handleEditionSelect(edition)}
-                        role="option"
                         aria-selected={selectedEdition === edition}>
                         {edition}
                       </div>
@@ -411,7 +405,6 @@ const GameHeaderContent: React.FC = () => {
                 className="relative cursor-pointer"
                 ref={platformRef}
                 onClick={() => setIsPlatformOpen(!isPlatformOpen)}
-                role="region"
                 aria-label="Platform Selection">
                 <label
                   className="mb-[8px] block text-[16px] sm:text-[20px] leading-[20px] font-bold text-white"
@@ -445,14 +438,12 @@ const GameHeaderContent: React.FC = () => {
                 {isPlatformOpen && (
                   <div
                     className="absolute top-[64px] sm:top-[84px] z-50 w-full bg-3 mt-[8px] max-h-[130px] overflow-y-auto custom-scrollbar"
-                    role="listbox"
                     aria-label="Platform options">
                     {platforms.map((platform) => (
                       <div
                         key={platform}
                         className="px-[20px] py-[12px] cursor-pointer hover:bg-primary-10"
                         onClick={() => handlePlatformSelect(platform)}
-                        role="option"
                         aria-selected={selectedPlatform === platform}>
                         {platform}
                       </div>
@@ -464,7 +455,6 @@ const GameHeaderContent: React.FC = () => {
                 className="relative cursor-pointer"
                 ref={regionRef}
                 onClick={() => setIsRegionOpen(!isRegionOpen)}
-                role="region"
                 aria-label="Region Selection">
                 <label
                   className="mb-[8px] block text-[16px] sm:text-[20px] leading-[20px] font-bold text-white"
@@ -496,14 +486,12 @@ const GameHeaderContent: React.FC = () => {
                 {isRegionOpen && (
                   <div
                     className="absolute top-[64px] sm:top-[84px] z-50 w-full bg-3 mt-[8px] max-h-[130px] overflow-y-auto custom-scrollbar"
-                    role="listbox"
                     aria-label="Region options">
                     {regions.map((region) => (
                       <div
                         key={region}
                         className="px-[20px] py-[12px] cursor-pointer hover:bg-primary-10"
                         onClick={() => handleRegionSelect(region)}
-                        role="option"
                         aria-selected={selectedRegion === region}>
                         {region}
                       </div>

@@ -408,7 +408,6 @@ const CartContent: React.FC = () => {
           <div
             key={cartKey}
             className="flex w-full items-center gap-[12px] sm:gap-[16px] h-[125px] sm:h-[280px]"
-            role="region"
             aria-label={`${game.title} ${edition} Cart Item`}>
             <div className="card-corner relative w-full flex-shrink-0 h-full max-w-[81px] sm:max-w-[180px] lg:max-w-[320px] mainCustom:max-w-[520px]">
               <div

@@ -9,10 +9,7 @@ const GameDescription: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [dynamicMargin, setDynamicMargin] = useState<string>("0px");
   const [dynamicPadding, setDynamicPadding] = useState<string>("0px");
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [windowSize, setWindowSize] = useState<number>(
-    typeof window !== "undefined" ? window.innerWidth : 0
-  );
+  const [isTouchDevice, setIsTouchDevice] = useState<boolean>(false);
 
   const gameData = [
     {
@@ -47,52 +44,52 @@ const GameDescription: React.FC = () => {
     },
   ];
 
-  const updateDynamicStyles = () => {
-    const windowWidth = window.innerWidth;
-    const scrollbarWidthValue =
-      window.innerWidth - document.documentElement.clientWidth;
-    const isTouchDevice = navigator.maxTouchPoints > 0;
-
-    let calculatedOffset: number;
-    if (windowWidth < 576) {
-      calculatedOffset = 16;
-      setDynamicMargin(`-${calculatedOffset}px`);
-    } else if (windowWidth >= 576 && windowWidth < 1700) {
-      calculatedOffset = 46;
-      setDynamicMargin(`-${calculatedOffset}px`);
-    } else if (windowWidth >= 1607 && windowWidth <= 1609) {
-      calculatedOffset = 146;
-      setDynamicMargin(`-${calculatedOffset}px`);
-    } else if (windowWidth > 1608 && windowWidth <= 1920) {
-      calculatedOffset = isTouchDevice
-        ? (windowWidth - 1608) / 2
-        : (windowWidth - scrollbarWidthValue - 1608) / 2;
-      setDynamicMargin(`-${calculatedOffset}px`);
-    } else {
-      calculatedOffset = 146;
-      setDynamicMargin("-146px");
-    }
-
-    setDynamicPadding(`${calculatedOffset}px`);
-    setWindowSize(windowWidth);
-  };
-
   useEffect(() => {
+    const detectTouchDevice = () => {
+      const isTouch =
+        navigator.maxTouchPoints > 0 ||
+        window.matchMedia("(pointer: coarse)").matches;
+      setIsTouchDevice(isTouch);
+    };
+
+    const updateDynamicStyles = () => {
+      const windowWidth = window.innerWidth;
+      const scrollbarWidthValue =
+        window.innerWidth - document.documentElement.clientWidth;
+      let calculatedOffset: number;
+
+      if (windowWidth < 576) {
+        calculatedOffset = 16;
+        setDynamicMargin(`-${calculatedOffset}px`);
+      } else if (windowWidth >= 576 && windowWidth < 1700) {
+        calculatedOffset = 46;
+        setDynamicMargin(`-${calculatedOffset}px`);
+      } else if (windowWidth >= 1607 && windowWidth <= 1609) {
+        calculatedOffset = 146;
+        setDynamicMargin(`-${calculatedOffset}px`);
+      } else if (windowWidth > 1608 && windowWidth <= 1920) {
+        calculatedOffset = isTouchDevice
+          ? (windowWidth - 1608) / 2
+          : (windowWidth - scrollbarWidthValue - 1608) / 2;
+        setDynamicMargin(`-${calculatedOffset}px`);
+      } else {
+        calculatedOffset = 146;
+        setDynamicMargin("-146px");
+      }
+
+      setDynamicPadding(`${calculatedOffset}px`);
+    };
+
+    detectTouchDevice();
     updateDynamicStyles();
     window.addEventListener("resize", updateDynamicStyles);
     return () => window.removeEventListener("resize", updateDynamicStyles);
-  }, []);
+  }, [isTouchDevice]);
 
-  const handleDragStart = (e: React.MouseEvent | React.TouchEvent) => {
-    if (!containerRef.current) return;
+  const handleDragStart = (e: React.MouseEvent) => {
+    if (!containerRef.current || isTouchDevice) return;
 
-    let startX: number;
-    if ("touches" in e) {
-      startX = e.touches[0].clientX;
-    } else {
-      startX = e.clientX;
-    }
-
+    const startX = e.clientX;
     const scrollLeft = containerRef.current.scrollLeft;
 
     const handleMouseMove = (moveEvent: MouseEvent) => {
@@ -103,46 +100,33 @@ const GameDescription: React.FC = () => {
       }
     };
 
-    const handleTouchMove = (moveEvent: TouchEvent) => {
-      const currentX = moveEvent.touches[0].clientX;
-      const walk = (currentX - startX) * 2;
-      if (containerRef.current) {
-        containerRef.current.scrollLeft = scrollLeft - walk;
-      }
-    };
-
     const handleDragEnd = () => {
       document.removeEventListener("mousemove", handleMouseMove);
-      document.removeEventListener("touchmove", handleTouchMove);
       document.removeEventListener("mouseup", handleDragEnd);
-      document.removeEventListener("touchend", handleDragEnd);
       if (containerRef.current) {
         containerRef.current.style.cursor = "grab";
         containerRef.current.style.userSelect = "auto";
       }
     };
 
-    if ("touches" in e) {
-      document.addEventListener("touchmove", handleTouchMove);
-      document.addEventListener("touchend", handleDragEnd);
-    } else {
-      document.addEventListener("mousemove", handleMouseMove);
-      document.addEventListener("mouseup", handleDragEnd);
-    }
+    document.addEventListener("mousemove", handleMouseMove);
+    document.addEventListener("mouseup", handleDragEnd);
     containerRef.current.style.cursor = "grabbing";
     containerRef.current.style.userSelect = "none";
   };
 
   const handleDragEnd = () => {
-    if (containerRef.current) {
-      containerRef.current.style.cursor = "grab";
-      containerRef.current.style.userSelect = "auto";
-    }
+    if (!containerRef.current || isTouchDevice) return;
+    containerRef.current.style.cursor = "grab";
+    containerRef.current.style.userSelect = "auto";
   };
 
   return (
-    <section>
-      <Heading variant="h1" className="mb-[24px] sm:mb-[40px]">
+    <section aria-label="Game Description Section">
+      <Heading
+        variant="h1"
+        className="mb-[24px] sm:mb-[40px]"
+        aria-label="Game Description Title">
         Description
       </Heading>
       <div
@@ -151,16 +135,24 @@ const GameDescription: React.FC = () => {
         <div
           ref={containerRef}
           className="flex gap-[12px] sm:gap-[24px] overflow-x-auto scrollbar-hide custom-scrollbar-h items-start pb-[28px] sm:pb-[60px]"
-          style={{ paddingLeft: dynamicPadding, paddingRight: dynamicPadding }}
-          onMouseDown={handleDragStart}
-          onMouseUp={handleDragEnd}
-          onMouseLeave={handleDragEnd}
-          onTouchStart={handleDragStart}
-          onTouchEnd={handleDragEnd}>
+          style={{
+            paddingLeft: dynamicPadding,
+            paddingRight: dynamicPadding,
+            cursor: isTouchDevice ? "auto" : "grab",
+            userSelect: isTouchDevice ? "auto" : "none",
+          }}
+          {...(!isTouchDevice
+            ? {
+                onMouseDown: handleDragStart,
+                onMouseUp: handleDragEnd,
+                onMouseLeave: handleDragEnd,
+              }
+            : {})}>
           {gameData.map((item, index) => (
             <div
               key={index}
-              className="flex-shrink-0 w-[268px] sm:w-[394px] lg:w-[520px]">
+              className="flex-shrink-0 w-[268px] sm:w-[394px] lg:w-[520px]"
+              aria-label={`Feature: ${item.subtitle}`}>
               <div className="card-corner h-[160px] sm:h-[220px] lg:h-[280px] relative mb-[16px] sm:mb-[32px]">
                 <Image
                   src={item.photo}
@@ -169,12 +161,18 @@ const GameDescription: React.FC = () => {
                   height={280}
                   className="object-cover h-full w-full"
                   draggable="false"
+                  loading="lazy"
                 />
               </div>
-              <Heading variant="h3" className="mb-[8px] sm:mb-[16px]">
+              <Heading
+                variant="h3"
+                className="mb-[8px] sm:mb-[16px]"
+                aria-label={`Subtitle: ${item.subtitle}`}>
                 {item.subtitle}
               </Heading>
-              <Text>{item.description}</Text>
+              <Text aria-label={`Description: ${item.description}`}>
+                {item.description}
+              </Text>
             </div>
           ))}
         </div>

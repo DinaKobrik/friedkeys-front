@@ -1,13 +1,30 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Button from "@/components/ui/Button";
 
 const JoinNow = () => {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setLoading(false);
+  }, []);
+
+  if (loading) {
+    return (
+      <section
+        className="joinnow mx-auto relative z-10"
+        aria-label="Join Now Section">
+        <p className="text-center text-gray-68" aria-live="polite">
+          Loading sign up...
+        </p>
+      </section>
+    );
+  }
+
   return (
     <section
       className="joinnow mx-auto relative z-10"
-      role="region"
       aria-label="Join Now Section">
       <div className="joinnow-wrapper relative flex justify-center px-0 md:py-[215px] max-w-[680px] mx-auto w-full py-[43px]">
         <svg

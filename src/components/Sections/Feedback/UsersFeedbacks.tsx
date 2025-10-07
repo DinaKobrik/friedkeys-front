@@ -7,6 +7,7 @@ interface UsersFeedbacksProps {
   containerClassName?: string;
   containerRef?: RefObject<HTMLDivElement>;
   dynamicPadding?: string;
+  containerStyle?: React.CSSProperties;
   onMouseDown?: (e: React.MouseEvent<HTMLDivElement>) => void;
   onMouseUp?: () => void;
   onMouseLeave?: () => void;
@@ -19,6 +20,7 @@ const UsersFeedbacks: React.FC<UsersFeedbacksProps> = ({
   containerClassName = "",
   containerRef,
   dynamicPadding,
+  containerStyle,
   onMouseDown,
   onMouseUp,
   onMouseLeave,
@@ -27,21 +29,20 @@ const UsersFeedbacks: React.FC<UsersFeedbacksProps> = ({
 }) => {
   const [reviews, setReviews] = useState<number[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [reviewsPerPage, setReviewsPerPage] = useState(14);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [reviewsPerPage, setReviewsPerPage] = useState(14); // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [filters, setFilters] = useState({
-    /* будущие фильтры */ search: "",
+    search: "",
   });
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Моки для теста
+    // Mock reviews for testing
     const mockReviews = Array.from({ length: initialReviews }, (_, i) => i);
     setReviews(mockReviews);
     setLoading(false);
   }, [initialReviews]);
 
-  // Количества отзывов
+  // Responsive reviews per page
   useEffect(() => {
     const handleResize = () => {
       setReviewsPerPage(window.innerWidth < 991 ? 14 : 15);
@@ -51,7 +52,7 @@ const UsersFeedbacks: React.FC<UsersFeedbacksProps> = ({
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // Расчет количества страниц и пагинация
+  // Pagination
   const totalPages = Math.ceil(reviews.length / reviewsPerPage);
   const paginatedReviews = reviews
     .slice((currentPage - 1) * reviewsPerPage, currentPage * reviewsPerPage)
@@ -65,22 +66,25 @@ const UsersFeedbacks: React.FC<UsersFeedbacksProps> = ({
   };
 
   const applyFilters = () => {
-    // Логика фильтрации
+    // Filter logic (future implementation)
   };
 
   useEffect(() => {
     applyFilters();
   }, [filters]);
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <div aria-live="polite">Loading...</div>;
 
   return (
-    <section className="users-feedbacks">
+    <section className="users-feedbacks" aria-label="User Feedbacks">
       <div
         className={`${containerClassName}`}
-        style={{ paddingLeft: dynamicPadding, paddingRight: dynamicPadding }}
+        style={{
+          paddingLeft: dynamicPadding,
+          paddingRight: dynamicPadding,
+          ...containerStyle,
+        }}
         ref={containerRef}
-        role="list"
         onMouseDown={onMouseDown}
         onMouseUp={onMouseUp}
         onMouseLeave={onMouseLeave}
@@ -89,7 +93,9 @@ const UsersFeedbacks: React.FC<UsersFeedbacksProps> = ({
         {paginatedReviews.length > 0 ? (
           paginatedReviews
         ) : (
-          <p className="text-[32px] font-usuzi-condensed text-white uppercase col-span-3 text-center">
+          <p
+            className="text-[32px] font-usuzi-condensed text-white uppercase col-span-3 text-center"
+            aria-live="polite">
             No reviews found.
           </p>
         )}

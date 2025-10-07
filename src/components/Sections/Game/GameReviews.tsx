@@ -182,7 +182,6 @@ const ReviewCard = ({
   return (
     <div
       className={`card-corner flex flex-col p-[16px] sm:p-[20px] ${bgColor} min-w-[175px]`}
-      role="article"
       aria-label={`Review by ${review.username}`}>
       <div
         className={`h-[15px] w-[75%] sm:w-[50%] absolute top-0 left-[50%] translate-x-[-50%] blur-[30px] z-0 rounded-full ${
@@ -260,12 +259,11 @@ const ReviewCard = ({
         </Text>
       )}
       <div className={review.pros.length > 0 ? "mb-[24px]" : ""}>
-        <ul className="flex flex-col w-full gap-[12px]" role="list">
+        <ul className="flex flex-col w-full gap-[12px]">
           {review.pros.map((pro: string, i: number) => (
             <li
               key={i}
               className="flex items-start gap-[8px]"
-              role="listitem"
               aria-label={`Pro: ${pro}`}>
               <span
                 className="flex justify-center items-center w-[20px] h-[20px] sm:w-[24px] sm:h-[24px]"
@@ -278,12 +276,11 @@ const ReviewCard = ({
         </ul>
       </div>
       <div className={review.cons.length > 0 ? "mb-[32px]" : ""}>
-        <ul className="flex flex-col w-full gap-[12px]" role="list">
+        <ul className="flex flex-col w-full gap-[12px]">
           {review.cons.map((con: string, i: number) => (
             <li
               key={i}
               className="flex items-start gap-[8px]"
-              role="listitem"
               aria-label={`Con: ${con}`}>
               <span
                 className="flex justify-center items-center w-[20px] h-[20px] sm:w-[24px] sm:h-[24px]"
@@ -305,7 +302,6 @@ const ReviewCard = ({
           <div className="flex gap-[8px] sm:gap-[16px] items-center flex-shrink-0 ml-[10px]">
             <div
               className="py-[11px] px-[24px] lg:py-[13px] lg:px-[30px] skew-x-[-20deg] bg-primary-20"
-              role="button"
               aria-label={`Mark review as helpful, ${review.likes} likes`}>
               <span className="skew-x-[20deg] block font-semibold text-[14px] leading-[20px] sm:text-[20px] sm:leading-[26px]">
                 Yes {review.likes}
@@ -313,7 +309,6 @@ const ReviewCard = ({
             </div>
             <div
               className="py-[11px] px-[24px] lg:py-[13px] lg:px-[30px] skew-x-[-20deg] bg-red-20"
-              role="button"
               aria-label={`Mark review as not helpful, ${review.dislikes} dislikes`}>
               <span className="skew-x-[20deg] block font-semibold text-[14px] leading-[20px] sm:text-[20px] sm:leading-[26px]">
                 No {review.dislikes}
@@ -414,7 +409,7 @@ const GameReviews: React.FC = () => {
   };
 
   return (
-    <section role="region" aria-label="Game Reviews Section">
+    <section aria-label="Game Reviews Section">
       <Heading
         variant="h1"
         className="mb-[24px] sm:mb-[40px]"
@@ -423,7 +418,6 @@ const GameReviews: React.FC = () => {
       </Heading>
       <div
         className="card-corner bg-2 py-[32px] px-[16px] sm:px-[40px] flex flex-col lg:flex-row items-center justify-between gap-[24px] mb-[24px] sm:mb-[40px] relative"
-        role="region"
         aria-label="Review Summary">
         <div
           className="h-[15px] w-[75%] sm:w-[50%] absolute bottom-0 left-[50%] translate-x-[-50%] blur-[30px] z-0 rounded-full bg-primary-main"
@@ -471,7 +465,6 @@ const GameReviews: React.FC = () => {
           className={`${
             isAllReviews ? "lg:max-w-[100%]" : "lg:max-w-[58%]"
           } flex-shrink-0 w-full`}
-          role="region"
           aria-label={isMinimum ? "Best Reviews" : "Recent Reviews"}>
           <div className="w-full overflow-hidden mb-[24px] lg:hidden">
             <div className="grid grid-cols-2 skew-x-[-20deg] gap-[10px] w-[calc(100%+24px)] ml-[-12px] mx-auto pb-[2px]">
@@ -506,8 +499,7 @@ const GameReviews: React.FC = () => {
           <div
             className={`reviews-grid ${
               isAllReviews ? "grid grid-cols-1 xl:grid-cols-2" : "flex flex-col"
-            } gap-[24px] w-full`}
-            role="list">
+            } gap-[24px] w-full`}>
             <Suspense
               fallback={<div aria-live="polite">Loading reviews...</div>}>
               {paginatedReviews}
@@ -516,7 +508,6 @@ const GameReviews: React.FC = () => {
         </div>
         <div
           className={`${isAllReviews || !isLg ? "hidden" : "hidden lg:block"}`}
-          role="region"
           aria-label="Recent Reviews">
           <Heading
             variant="h2"
@@ -524,7 +515,7 @@ const GameReviews: React.FC = () => {
             aria-label="Recent Reviews Title">
             Recent reviews
           </Heading>
-          <div className="flex flex-col gap-[24px] w-full" role="list">
+          <div className="flex flex-col gap-[24px] w-full">
             <Suspense
               fallback={<div aria-live="polite">Loading reviews...</div>}>
               {paginatedRecentReviews}

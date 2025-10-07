@@ -172,7 +172,6 @@ const CartButton: React.FC<{ game: Game | null }> = ({ game }) => {
   return (
     <div
       className="sm:static fixed bottom-0 left-0 p-4 z-[10000] flex flex-row sm:flex-col w-full items-center justify-center gap-4 bg-main sm:bg-transparent border-t-[1px] sm:border-none border-primary-main"
-      role="region"
       aria-label="Cart Actions for Game">
       <div className="flex flex-shrink-0 gap-[1px] sm:hidden sm:gap-[20px] items-end">
         {discountPrice &&
@@ -249,7 +248,6 @@ const CartButton: React.FC<{ game: Game | null }> = ({ game }) => {
       ) : (
         <div
           className="flex sm:w-full h-[42px] sm:h-[52px] items-center gap-6 w-full max-w-[202px] sm:max-w-[100%] sm:justify-center"
-          role="group"
           aria-label="Cart quantity controls">
           <div
             className="hidden sm:block font-usuzi-condensed text-[24px] leading-[26px] text-center w-full"

@@ -523,7 +523,6 @@ const Banner: React.FC = () => {
     return (
       <section
         className="relative banner__container w-full mx-auto"
-        role="region"
         aria-label="Banner loading">
         <div className="relative banner mx-auto mb-[32px] sm:mb-0">
           <div className="skeleton skeleton-image" />
@@ -543,7 +542,6 @@ const Banner: React.FC = () => {
   return (
     <section
       className="relative banner__container w-full mx-auto"
-      role="region"
       aria-label="Game Banner">
       <article className="relative banner mx-auto mb-[32px] sm:mb-0">
         <Link

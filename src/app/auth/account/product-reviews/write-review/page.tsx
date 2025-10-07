@@ -262,12 +262,9 @@ const ReviewContent: React.FC = React.memo(() => {
   }
 
   return (
-    <main
-      className="mt-[40px] sm:mt-[80px]"
-      role="main"
-      aria-label="Write Review Page">
+    <main className="mt-[40px] sm:mt-[80px]" aria-label="Write Review Page">
       <Suspense fallback={<div>Loading review form...</div>}>
-        <section role="region" aria-label="Review Form Section">
+        <section aria-label="Review Form Section">
           <Heading
             variant="h3"
             className="mb-[24px] sm:mb-[40px]"
@@ -284,11 +281,9 @@ const ReviewContent: React.FC = React.memo(() => {
           </Heading>
           <div
             className="max-w-[792px] w-full mx-auto"
-            role="region"
             aria-label="Game Review Content">
             <div
               className="max-w-[568px] mx-auto mb-[24px] sm:mb-[48px] relative"
-              role="region"
               aria-label={`Game image and title: ${game.title}`}>
               <Image
                 src={imageSrc || "/images/no-image.jpg"}
@@ -317,7 +312,6 @@ const ReviewContent: React.FC = React.memo(() => {
             </div>
             <div
               className="mb-[24px] sm:mb-[56px]"
-              role="region"
               aria-label="Review instructions">
               <Text
                 className="font-bold mb-[8px]"
@@ -336,7 +330,6 @@ const ReviewContent: React.FC = React.memo(() => {
               aria-label="Review submission form">
               <div
                 className="flex gap-[26px] max-w-[calc(100%-20px)] mx-auto w-full"
-                role="group"
                 aria-label="Like or dislike selection">
                 <button
                   type="button"
@@ -398,7 +391,6 @@ const ReviewContent: React.FC = React.memo(() => {
               />
               <div
                 className="flex flex-col-reverse md:flex-row gap-[8px] sm:gap-[26px] max-w-[calc(100%-20px)] mx-auto w-full"
-                role="region"
                 aria-label="Form actions">
                 <Button
                   variant="secondary"

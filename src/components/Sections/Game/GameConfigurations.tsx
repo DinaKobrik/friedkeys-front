@@ -50,7 +50,7 @@ const GameConfigurations: React.FC = () => {
   }, [isMinimum]);
 
   return (
-    <section role="region" aria-label="Game Configurations Section">
+    <section aria-label="Game Configurations Section">
       <Heading
         variant="h1"
         className="mb-[24px] sm:mb-[40px]"
@@ -60,7 +60,6 @@ const GameConfigurations: React.FC = () => {
       <div className="grid grid-cols-1 lg:grid-cols-2 items-start gap-[24px]">
         <div
           className="bg-2 card-corner p-[24px] pb-[40px] sm:p-[40px] lg:p-[24px] xl:p-[40px] sm:pt-[32px] h-full"
-          role="region"
           aria-label={
             isMinimum
               ? "Minimum System Requirements"
@@ -92,9 +91,7 @@ const GameConfigurations: React.FC = () => {
             aria-label={isMinimum ? "Minimum Specs" : "Recommended Specs"}>
             {isMinimum ? "Minimum Specs" : "Recommended Specs"}
           </Heading>
-          <div
-            className="grid grid-cols-[auto_1fr] gap-x-[20px] gap-y-[24px]"
-            role="list">
+          <div className="grid grid-cols-[auto_1fr] gap-x-[20px] gap-y-[24px]">
             {(isMinimum ? minimumSpecs : recommendedSpecs).map(
               (spec, index) => (
                 <React.Fragment key={index}>
@@ -113,7 +110,6 @@ const GameConfigurations: React.FC = () => {
         </div>
         <div
           className="bg-2 card-corner p-[24px] pb-[40px] sm:p-[40px] lg:p-[24px] xl:p-[40px] sm:pt-[32px] h-full hidden lg:block"
-          role="region"
           aria-label="Recommended System Requirements">
           <Heading
             variant="h2"
@@ -121,9 +117,7 @@ const GameConfigurations: React.FC = () => {
             aria-label="Recommended Specs">
             Recommended Specs
           </Heading>
-          <div
-            className="grid grid-cols-[auto_1fr] gap-x-[20px] gap-y-[24px]"
-            role="list">
+          <div className="grid grid-cols-[auto_1fr] gap-x-[20px] gap-y-[24px]">
             {recommendedSpecs.map((spec, index) => (
               <React.Fragment key={index}>
                 <Text

@@ -63,7 +63,7 @@ const News: React.FC = () => {
   });
 
   return (
-    <section role="region" aria-label="News Section">
+    <section aria-label="News Section">
       <Heading
         variant="h1"
         className="mb-[24px] sm:mb-[40px]"
@@ -71,7 +71,7 @@ const News: React.FC = () => {
         news
       </Heading>
       <div className="grid grid-cols-1 gap-[24px] mb-[24px] sm:mb-[40px]">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-[24px]" role="list">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-[24px]">
           {newsItems.length > 0 ? (
             newsItems
           ) : (

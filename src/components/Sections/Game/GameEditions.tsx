@@ -25,22 +25,19 @@ const GameEditionsSection: React.FC = () => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [dynamicMargin, setDynamicMargin] = useState<string>("0px");
   const [dynamicPadding, setDynamicPadding] = useState<string>("0px");
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [windowSize, setWindowSize] = useState<number>(
-    typeof window !== "undefined" ? window.innerWidth : 0
-  );
+  const [isTouchDevice, setIsTouchDevice] = useState<boolean>(false);
 
   const fetchGame = useCallback(async () => {
     const id = params?.id as string;
     if (!id) {
-      console.log("[GameEditionsDebug] No game ID found in params");
-      return;
+      throw new Error("No game ID found in params");
     }
 
     try {
       setLoading(true);
       const response = await fetch(`/api/games?type=game&id=${id}`);
-      if (!response.ok) throw new Error("Failed to fetch game");
+      if (!response.ok)
+        throw new Error(`Failed to fetch game: ${await response.text()}`);
       const data = await response.json();
       if (Array.isArray(data)) {
         const foundGame = data.find((g) => g.id === Number(id));
@@ -51,8 +48,7 @@ const GameEditionsSection: React.FC = () => {
         setGame(null);
       }
     } catch (error) {
-      console.error("Failed to fetch game:", error);
-      setGame(null);
+      throw new Error(`Failed to fetch game: ${error}`);
     } finally {
       setLoading(false);
     }
@@ -90,11 +86,6 @@ const GameEditionsSection: React.FC = () => {
 
     localStorage.setItem("favoriteGames", JSON.stringify(favoriteIds));
     setIsFavorite(!isFavorite);
-    console.log(
-      `[GameEditionsDebug] Favorite toggled for game ${game.id}: ${
-        isFavorite ? "removed" : "added"
-      }`
-    );
 
     try {
       const response = await fetch("/api/games", {
@@ -103,66 +94,67 @@ const GameEditionsSection: React.FC = () => {
           "Content-Type": "application/json",
         },
       });
-      if (response.ok) {
-        await response.json();
-      }
+      if (!response.ok)
+        throw new Error(
+          `Failed to fetch updated games: ${await response.text()}`
+        );
+      await response.json();
     } catch (error) {
-      console.error("Failed to fetch updated games:", error);
+      throw new Error(`Failed to fetch updated games: ${error}`);
     }
-  };
-
-  const updateDynamicStyles = () => {
-    if (typeof window === "undefined") return;
-    const windowWidth = window.innerWidth;
-    const scrollbarWidthValue =
-      window.innerWidth - document.documentElement.clientWidth;
-    const isTouchDevice = navigator.maxTouchPoints > 0;
-    let calculatedOffset: number;
-
-    if (windowWidth < 576) {
-      calculatedOffset = 16;
-      setDynamicMargin(`-${calculatedOffset}px`);
-      setDynamicPadding(`${calculatedOffset}px`);
-    } else if (windowWidth >= 576 && windowWidth < 1700) {
-      calculatedOffset = 46;
-      setDynamicMargin(`-${calculatedOffset}px`);
-      setDynamicPadding(`${calculatedOffset}px`);
-    } else if (windowWidth >= 1607 && windowWidth <= 1609) {
-      calculatedOffset = 146;
-      setDynamicMargin(`-${calculatedOffset}px`);
-      setDynamicPadding(`${calculatedOffset}px`);
-    } else if (windowWidth > 1608 && windowWidth <= 1920) {
-      calculatedOffset = isTouchDevice
-        ? (windowWidth - 1608) / 2
-        : (windowWidth - scrollbarWidthValue - 1608) / 2;
-      setDynamicMargin(`-${calculatedOffset}px`);
-      setDynamicPadding(`${calculatedOffset}px`);
-    } else {
-      calculatedOffset = 146;
-      setDynamicMargin(`-${calculatedOffset}px`);
-      setDynamicPadding(`${calculatedOffset}px`);
-    }
-
-    setWindowSize(windowWidth);
   };
 
   useEffect(() => {
+    const detectTouchDevice = () => {
+      const isTouch =
+        navigator.maxTouchPoints > 0 ||
+        window.matchMedia("(pointer: coarse)").matches;
+      setIsTouchDevice(isTouch);
+    };
+
+    const updateDynamicStyles = () => {
+      if (typeof window === "undefined") return;
+      const windowWidth = window.innerWidth;
+      const scrollbarWidthValue =
+        window.innerWidth - document.documentElement.clientWidth;
+      let calculatedOffset: number;
+
+      if (windowWidth < 576) {
+        calculatedOffset = 16;
+        setDynamicMargin(`-${calculatedOffset}px`);
+        setDynamicPadding(`${calculatedOffset}px`);
+      } else if (windowWidth >= 576 && windowWidth < 1700) {
+        calculatedOffset = 46;
+        setDynamicMargin(`-${calculatedOffset}px`);
+        setDynamicPadding(`${calculatedOffset}px`);
+      } else if (windowWidth >= 1607 && windowWidth <= 1609) {
+        calculatedOffset = 146;
+        setDynamicMargin(`-${calculatedOffset}px`);
+        setDynamicPadding(`${calculatedOffset}px`);
+      } else if (windowWidth > 1608 && windowWidth <= 1920) {
+        calculatedOffset = isTouchDevice
+          ? (windowWidth - 1608) / 2
+          : (windowWidth - scrollbarWidthValue - 1608) / 2;
+        setDynamicMargin(`-${calculatedOffset}px`);
+        setDynamicPadding(`${calculatedOffset}px`);
+      } else {
+        calculatedOffset = 146;
+        setDynamicMargin(`-${calculatedOffset}px`);
+        setDynamicPadding(`${calculatedOffset}px`);
+      }
+    };
+
+    detectTouchDevice();
     updateDynamicStyles();
     window.addEventListener("resize", updateDynamicStyles);
     return () => window.removeEventListener("resize", updateDynamicStyles);
-  }, []);
+  }, [isTouchDevice]);
 
-  const handleDragStart = (
-    e: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>
-  ) => {
-    if (!containerRef.current) return;
-    let startX: number;
-    if ("touches" in e) {
-      startX = e.touches[0].clientX;
-    } else {
-      startX = (e as React.MouseEvent).clientX;
-    }
+  const handleDragStart = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!containerRef.current || isTouchDevice) return;
+    const startX = e.clientX;
     const scrollLeft = containerRef.current.scrollLeft;
+
     const handleMouseMove = (moveEvent: MouseEvent) => {
       const currentX = moveEvent.clientX;
       const walk = (currentX - startX) * 2;
@@ -170,41 +162,26 @@ const GameEditionsSection: React.FC = () => {
         containerRef.current.scrollLeft = scrollLeft - walk;
       }
     };
-    const handleTouchMove = (moveEvent: TouchEvent) => {
-      const currentX = moveEvent.touches[0].clientX;
-      const walk = (currentX - startX) * 2;
-      if (containerRef.current) {
-        containerRef.current.scrollLeft = scrollLeft - walk;
-      }
-    };
+
     const handleDragEndDocument = () => {
       document.removeEventListener("mousemove", handleMouseMove);
-      document.removeEventListener("touchmove", handleTouchMove);
       document.removeEventListener("mouseup", handleDragEndDocument);
-      document.removeEventListener("touchend", handleDragEndDocument);
       if (containerRef.current) {
         containerRef.current.style.cursor = "grab";
         containerRef.current.style.userSelect = "auto";
       }
     };
-    if ("touches" in e) {
-      document.addEventListener("touchmove", handleTouchMove, {
-        passive: false,
-      });
-      document.addEventListener("touchend", handleDragEndDocument);
-    } else {
-      document.addEventListener("mousemove", handleMouseMove);
-      document.addEventListener("mouseup", handleDragEndDocument);
-    }
+
+    document.addEventListener("mousemove", handleMouseMove);
+    document.addEventListener("mouseup", handleDragEndDocument);
     containerRef.current.style.cursor = "grabbing";
     containerRef.current.style.userSelect = "none";
   };
 
   const handleDragEnd = () => {
-    if (containerRef.current) {
-      containerRef.current.style.cursor = "grab";
-      containerRef.current.style.userSelect = "auto";
-    }
+    if (!containerRef.current || isTouchDevice) return;
+    containerRef.current.style.cursor = "grab";
+    containerRef.current.style.userSelect = "auto";
   };
 
   if (loading || !game) {
@@ -249,7 +226,7 @@ const GameEditionsSection: React.FC = () => {
   ];
 
   return (
-    <section role="region" aria-label="Game Editions Section">
+    <section aria-label="Game Editions Section">
       <Heading
         variant="h1"
         className="mb-[24px] sm:mb-[40px]"
@@ -262,23 +239,27 @@ const GameEditionsSection: React.FC = () => {
         <div
           ref={containerRef}
           className="flex w-full overflow-scroll hide-scrollbar h-full gap-[12px] sm:gap-[24px]"
-          role="list"
-          style={{ paddingLeft: dynamicPadding, paddingRight: dynamicPadding }}
-          onMouseDown={handleDragStart}
-          onMouseUp={handleDragEnd}
-          onMouseLeave={handleDragEnd}
-          onTouchStart={handleDragStart}
-          onTouchEnd={handleDragEnd}>
+          style={{
+            paddingLeft: dynamicPadding,
+            paddingRight: dynamicPadding,
+            cursor: isTouchDevice ? "auto" : "grab",
+            userSelect: isTouchDevice ? "auto" : "none",
+          }}
+          {...(!isTouchDevice
+            ? {
+                onMouseDown: handleDragStart,
+                onMouseUp: handleDragEnd,
+                onMouseLeave: handleDragEnd,
+              }
+            : {})}>
           {editions.map((edition, index) => (
             <div
               key={index}
               className="flex flex-col relative game__editions-card border-[1px] border-transparent justify-between gap-[8px] flex-shrink-0 w-[268px] sm:w-[400px] lg:w-[520px]"
-              role="listitem"
               aria-label={`${edition.type} Edition Details`}>
               <div
                 className="favorite absolute w-[36px] h-[36px] sm:w-[48px] sm:h-[48px] right-[2px] top-[1px] md:right-[4px] md:top-[3px] z-10 flex justify-center items-center cursor-pointer"
                 onClick={toggleFavorite}
-                role="button"
                 aria-label={
                   isFavorite
                     ? `Remove ${game.title} from favorites`
@@ -321,12 +302,9 @@ const GameEditionsSection: React.FC = () => {
                     aria-label={`${edition.type} Edition`}>
                     {edition.type} Edition
                   </Heading>
-                  <ul className="list-disc pl-[20px]" role="list">
+                  <ul className="list-disc pl-[20px]">
                     {edition.advantages.map((advantage, idx) => (
-                      <li
-                        key={idx}
-                        role="listitem"
-                        aria-label={`Advantage: ${advantage}`}>
+                      <li key={idx} aria-label={`Advantage: ${advantage}`}>
                         <Text>{advantage}</Text>
                       </li>
                     ))}

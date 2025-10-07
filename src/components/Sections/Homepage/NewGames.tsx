@@ -32,7 +32,7 @@ const NewGames = () => {
   }, []);
 
   return (
-    <section role="region" aria-label="New Games Section">
+    <section aria-label="New Games Section">
       <div className="mb-[24px] sm:mb-[40px] flex justify-between items-center">
         <Heading variant="h1" aria-label="New Games Title">
           new
@@ -47,9 +47,7 @@ const NewGames = () => {
           see all games
         </Button>
       </div>
-      <div
-        className="grid grid-cols-1 md:grid-cols-2 gap-[12px] sm:gap-[16px] lg:gap-[24px]"
-        role="list">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-[12px] sm:gap-[16px] lg:gap-[24px]">
         {newGames.length > 0 ? (
           newGames.map((game) => <GameCard key={game.id} game={game} />)
         ) : (
