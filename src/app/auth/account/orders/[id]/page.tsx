@@ -599,7 +599,7 @@ const OrderActivation: React.FC = () => {
       <div className="flex ml-[10px] max-w-[251px] mb-[40px] sm:mb-[80px] mt-[40px] sm:mt-[80px] sm:max-w-[248px]">
         <Button
           variant="secondary"
-          className="max-w-[251px] ml-0 sm:mx-auto "
+          className="max-w-[150px] sm:max-w-[251px] ml-0 sm:mx-auto h-[40px] sm:h-[50px] flex items-center justify-center"
           onClick={() => (window.location.href = "/auth/account/orders")}>
           <svg
             width="14"

@@ -314,14 +314,14 @@ const GameReviewsSection: React.FC = () => {
           </div>
         );
       })
-      .filter((item): item is JSX.Element => item !== null); // Remove null entries
+      .filter((item): item is JSX.Element => item !== null);
   }, [reviews, games, imageSrcs]);
 
   if (loading) {
     return (
-      <Heading variant="h3" className="text-center py-10" aria-live="polite">
+      <p className="text-gray-68" aria-live="polite">
         Loading...
-      </Heading>
+      </p>
     );
   }
 

@@ -142,7 +142,7 @@ const TrendingGames = () => {
               </div>
             ))
           ) : (
-            <p className="text-center text-gray-68" aria-live="polite">
+            <p className="text-gray-68" aria-live="polite">
               Loading trending games...
             </p>
           )}
