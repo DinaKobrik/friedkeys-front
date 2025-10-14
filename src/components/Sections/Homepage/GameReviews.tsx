@@ -63,6 +63,7 @@ const GameReviewsSection: React.FC = () => {
   const [dynamicMargin, setDynamicMargin] = useState<string>("0px");
   const [dynamicPadding, setDynamicPadding] = useState<string>("0px");
   const [isTouchDevice, setIsTouchDevice] = useState<boolean>(false);
+  const [windowWidth, setWindowWidth] = useState<number>(0);
 
   const fetchGames = useCallback(async () => {
     try {
@@ -147,18 +148,22 @@ const GameReviewsSection: React.FC = () => {
 
   useEffect(() => {
     const detectTouchDevice = () => {
-      const isTouch =
-        navigator.maxTouchPoints > 0 ||
-        window.matchMedia("(pointer: coarse)").matches;
-      setIsTouchDevice(isTouch);
+      if (typeof window !== "undefined") {
+        const isTouch =
+          navigator.maxTouchPoints > 0 ||
+          window.matchMedia("(pointer: coarse)").matches;
+        setIsTouchDevice(isTouch);
+      }
     };
 
     const updateDynamicStyles = () => {
-      const windowWidth = window.innerWidth;
+      if (typeof window === "undefined") return;
+      const width = window.innerWidth;
+      setWindowWidth(width);
       let calculatedOffset: number;
 
-      if (windowWidth < 1700) {
-        if (windowWidth < 576) {
+      if (width < 1700) {
+        if (width < 576) {
           calculatedOffset = 16;
         } else {
           calculatedOffset = 46;
@@ -179,16 +184,23 @@ const GameReviewsSection: React.FC = () => {
   }, []);
 
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!scrollContainerRef.current || isTouchDevice) return;
+    if (!scrollContainerRef.current || isTouchDevice || windowWidth >= 1200)
+      return;
     setIsDragging(true);
     setStartX(e.pageX - scrollContainerRef.current.offsetLeft);
     setScrollLeft(scrollContainerRef.current.scrollLeft);
-    scrollContainerRef.current.style.cursor = "grabbing";
-    scrollContainerRef.current.style.userSelect = "none";
+    scrollContainerRef.current.classList.add("cursor-grabbing");
+    scrollContainerRef.current.classList.add("select-none");
   };
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!isDragging || !scrollContainerRef.current || isTouchDevice) return;
+    if (
+      !isDragging ||
+      !scrollContainerRef.current ||
+      isTouchDevice ||
+      windowWidth >= 1200
+    )
+      return;
     e.preventDefault();
     const x = e.pageX - scrollContainerRef.current.offsetLeft;
     const walk = (x - startX) * 1.5;
@@ -196,10 +208,14 @@ const GameReviewsSection: React.FC = () => {
   };
 
   const handleMouseUpOrLeave = () => {
-    if (!scrollContainerRef.current || isTouchDevice) return;
+    if (!scrollContainerRef.current || isTouchDevice || windowWidth >= 1200)
+      return;
     setIsDragging(false);
-    scrollContainerRef.current.style.cursor = "grab";
-    scrollContainerRef.current.style.userSelect = "auto";
+    scrollContainerRef.current.classList.remove("cursor-grabbing");
+    scrollContainerRef.current.classList.remove("select-none");
+    scrollContainerRef.current.classList.add(
+      windowWidth < 1200 ? "cursor-grab" : "cursor-auto"
+    );
   };
 
   const reviewItems = useMemo(() => {
@@ -344,18 +360,23 @@ const GameReviewsSection: React.FC = () => {
       </div>
       <div
         className="mx-auto relative max-w-[1920px] overflow-hidden"
-        style={{ marginLeft: dynamicMargin, marginRight: dynamicMargin }}>
+        style={{
+          marginLeft: dynamicMargin,
+          marginRight: dynamicMargin,
+        }}>
         <div
           ref={scrollContainerRef}
-          className="flex overflow-scroll hide-scrollbar gap-[12px] sm:gap-[16px] lg:gap-[24px]"
-          aria-label="Game reviews carousel"
+          className={`flex overflow-scroll hide-scrollbar gap-[12px] sm:gap-[16px] lg:gap-[24px] ${
+            windowWidth < 1200 && !isTouchDevice
+              ? "cursor-grab select-none"
+              : "cursor-auto"
+          }`}
           style={{
             paddingLeft: dynamicPadding,
             paddingRight: dynamicPadding,
-            cursor: isTouchDevice ? "auto" : "grab",
-            userSelect: isTouchDevice ? "auto" : "none",
           }}
-          {...(!isTouchDevice
+          aria-label="Game reviews carousel"
+          {...(windowWidth < 1200 && !isTouchDevice
             ? {
                 onMouseDown: handleMouseDown,
                 onMouseMove: handleMouseMove,

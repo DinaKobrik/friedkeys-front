@@ -159,7 +159,7 @@ const QuickMenuSection: React.FC = () => {
                 {categories.map((category) => (
                   <Heading variant="h3" key={category}>
                     <a
-                      href={`#${category.toLowerCase().replace(/\s+/g, "-")}`}
+                      href=""
                       aria-label={`Go to ${category} category`}
                       className="quick-menu__link--active relative w-full block py-[10px] focus:outline-none">
                       {category}

@@ -11,6 +11,7 @@ module.exports = {
         "primary-main": "#4EF432", // Основной цвет
         "primary-10": "#4EF4321A", // Цвет с 10% прозрачностью
         "primary-20": "#4EF4322A", // Цвет с 20% прозрачностью
+        "primary-40": "#4EF4324A",
         "primary-light": "#6df656",
         "primary-dark": "#2ef20d",
         "primary-light-2": "#abfa9e",
@@ -21,6 +22,7 @@ module.exports = {
         DLS: "rgba(255, 255, 255, 0.05)",
         red: "#D64431",
         green: "#0EC21B",
+        "red-10": "#D644311A",
         "red-20": "#D644312A",
         playstation: "#0070D1",
         nintendo: "#E60012",

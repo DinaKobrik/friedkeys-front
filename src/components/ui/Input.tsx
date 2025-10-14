@@ -73,6 +73,9 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
     const [isFocused, setIsFocused] = useState(false);
     const [caretPosition, setCaretPosition] = useState(0);
     const [showCaret, setShowCaret] = useState(false);
+    const [focusMethod, setFocusMethod] = useState<"keyboard" | "mouse" | null>(
+      null
+    );
     const inputRef = useRef<HTMLInputElement>(null);
 
     useImperativeHandle(ref, () => inputRef.current!, []);
@@ -140,6 +143,16 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
       updateCaretPosition();
       setIsFocused(true);
       setTimeout(() => setShowCaret(true), 350);
+
+      const isKeyboardFocus =
+        e.relatedTarget === null ||
+        (e.relatedTarget instanceof HTMLElement &&
+          ["INPUT", "BUTTON", "A"].includes(e.relatedTarget.tagName));
+      if (isKeyboardFocus) {
+        setFocusMethod("keyboard");
+      } else if (document.activeElement === inputRef.current) {
+        setFocusMethod("mouse");
+      }
       onFocus?.(e);
     };
 
@@ -147,6 +160,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
       setIsFocused(false);
       setShowCaret(false);
       setCaretPosition(0);
+      setFocusMethod(null);
       if (isTouched === undefined) {
         setInternalIsTouched(true);
       }
@@ -163,11 +177,15 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
       onKeyDown?.(e);
       setTimeout(updateCaretPosition, 0);
       setShowCaret(true);
+      if (e.key === "Tab" || e.key === "ArrowUp" || e.key === "ArrowDown") {
+        setFocusMethod("keyboard");
+      }
     };
 
     const handleClick = () => {
       updateCaretPosition();
       setTimeout(() => setShowCaret(true), 350);
+      setFocusMethod("mouse");
     };
 
     useEffect(() => {
@@ -212,7 +230,9 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
         <div
           className={`${containerBaseStyles} ${containerVariantStyles} ${primaryContainerStyles} ${
             backgroundClass || "bg-2"
-          } ${!effectiveIsValid && required ? errorStyles : ""} input-status`}>
+          } ${!effectiveIsValid && required ? errorStyles : ""} input-status`}
+          onFocus={handleFocus}
+          onBlur={handleBlur}>
           <input
             type={type}
             value={value}
@@ -237,6 +257,11 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
             />
           )}
           {children}
+          <div
+            className={`focus-border ${
+              focusMethod === "keyboard" ? "keyboard" : ""
+            } ${focusMethod === "mouse" ? "mouse" : ""}`}
+          />
         </div>
         {!effectiveIsValid && required && effectiveIsTouched && (
           <Text className="mt-[8px] flex items-center gap-[16px]">

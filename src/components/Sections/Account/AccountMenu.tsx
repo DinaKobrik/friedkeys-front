@@ -134,7 +134,7 @@ const AccountMenu: React.FC<{ activeLink?: string }> = React.memo(
             <Heading variant="h2">
               <Link
                 href="/auth/account/personal-info"
-                className={`account__link relative z-10 ${
+                className={`account__link focus:outline-none relative z-10 ${
                   activeLink === "/auth/account/personal-info"
                     ? "account__link--active"
                     : ""
@@ -151,7 +151,7 @@ const AccountMenu: React.FC<{ activeLink?: string }> = React.memo(
             <Heading variant="h2">
               <Link
                 href="/auth/account/orders"
-                className={`account__link relative z-10 ${
+                className={`account__link focus:outline-none relative z-10 ${
                   activeLink === "/auth/account/orders"
                     ? "account__link--active"
                     : ""
@@ -166,7 +166,7 @@ const AccountMenu: React.FC<{ activeLink?: string }> = React.memo(
             <Heading variant="h2">
               <Link
                 href="/auth/account/payment-methods"
-                className={`account__link relative z-10 ${
+                className={`account__link focus:outline-none relative z-10 ${
                   activeLink === "/auth/account/payment-methods"
                     ? "account__link--active"
                     : ""
@@ -183,7 +183,7 @@ const AccountMenu: React.FC<{ activeLink?: string }> = React.memo(
             <Heading variant="h2">
               <Link
                 href="/auth/account/favorites"
-                className={`account__link relative z-10 ${
+                className={`account__link focus:outline-none relative z-10 ${
                   activeLink === "/auth/account/favorites"
                     ? "account__link--active"
                     : ""
@@ -198,7 +198,7 @@ const AccountMenu: React.FC<{ activeLink?: string }> = React.memo(
             <Heading variant="h2">
               <Link
                 href="/auth/account/product-reviews"
-                className={`account__link relative z-10 ${
+                className={`account__link focus:outline-none relative z-10 ${
                   activeLink === "/auth/account/product-reviews"
                     ? "account__link--active"
                     : ""

@@ -5,6 +5,7 @@ import Heading from "@/components/ui/Heading";
 import Text from "@/components/ui/Text";
 import Button from "@/components/ui/Button";
 import { Suspense } from "react";
+import { useParams, useRouter } from "next/navigation";
 const Pagination = React.lazy(() => import("@/components/ui/Pagination"));
 
 interface Review {
@@ -16,8 +17,17 @@ interface Review {
   date: string;
   likes: number;
   dislikes: number;
+  id: string;
 }
 
+interface ReviewVote {
+  likes: number;
+  dislikes: number;
+  isLiked: boolean;
+  isDisliked: boolean;
+}
+
+// Статичные данные отзывов
 const reviews: Review[] = [
   {
     username: "GamerX123",
@@ -36,6 +46,7 @@ const reviews: Review[] = [
     date: "10.09.2025",
     likes: 45,
     dislikes: 5,
+    id: "1_1",
   },
   {
     username: "PlayerOne",
@@ -53,6 +64,7 @@ const reviews: Review[] = [
     date: "12.09.2025",
     likes: 52,
     dislikes: 18,
+    id: "1_2",
   },
   {
     username: "ShadowNinja",
@@ -67,6 +79,7 @@ const reviews: Review[] = [
     date: "08.09.2025",
     likes: 30,
     dislikes: 3,
+    id: "1_3",
   },
   {
     username: "CoolCat99",
@@ -85,6 +98,7 @@ const reviews: Review[] = [
     date: "14.09.2025",
     likes: 60,
     dislikes: 2,
+    id: "1_4",
   },
   {
     username: "SilentWolf",
@@ -99,6 +113,7 @@ const reviews: Review[] = [
     date: "17.09.2025",
     likes: 8,
     dislikes: 25,
+    id: "1_5",
   },
   {
     username: "SunnyDay",
@@ -113,6 +128,7 @@ const reviews: Review[] = [
     date: "15.09.2025",
     likes: 35,
     dislikes: 4,
+    id: "1_6",
   },
 ];
 
@@ -173,6 +189,88 @@ const ReviewCard = ({
   review: Review;
   bgColor: string;
 }) => {
+  const [localLikes, setLocalLikes] = useState(review.likes);
+  const [localDislikes, setLocalDislikes] = useState(review.dislikes);
+  const [isLiked, setIsLiked] = useState(false);
+  const [isDisliked, setIsDisliked] = useState(false);
+
+  useEffect(() => {
+    const storedData = localStorage.getItem("reviewOfTheGame");
+    if (storedData) {
+      const votes: { [key: string]: ReviewVote } = JSON.parse(storedData);
+      const vote = votes[review.id];
+      if (vote) {
+        setLocalLikes(vote.likes);
+        setLocalDislikes(vote.dislikes);
+        setIsLiked(vote.isLiked);
+        setIsDisliked(vote.isDisliked);
+      }
+    }
+  }, [review.id]);
+
+  const saveVote = (
+    likes: number,
+    dislikes: number,
+    liked: boolean,
+    disliked: boolean
+  ) => {
+    const storedData = localStorage.getItem("reviewOfTheGame");
+    const votes: { [key: string]: ReviewVote } = storedData
+      ? JSON.parse(storedData)
+      : {};
+    votes[review.id] = {
+      likes,
+      dislikes,
+      isLiked: liked,
+      isDisliked: disliked,
+    };
+    localStorage.setItem("reviewOfTheGame", JSON.stringify(votes));
+  };
+
+  const handleLikeClick = () => {
+    if (!isLiked && !isDisliked) {
+      const newLikes = localLikes + 1;
+      setLocalLikes(newLikes);
+      setIsLiked(true);
+      saveVote(newLikes, localDislikes, true, false);
+    } else if (isLiked) {
+      const newLikes = localLikes - 1;
+      setLocalLikes(newLikes);
+      setIsLiked(false);
+      saveVote(newLikes, localDislikes, false, false);
+    } else if (isDisliked) {
+      const newLikes = localLikes + 1;
+      const newDislikes = localDislikes - 1;
+      setLocalLikes(newLikes);
+      setLocalDislikes(newDislikes);
+      setIsDisliked(false);
+      setIsLiked(true);
+      saveVote(newLikes, newDislikes, true, false);
+    }
+  };
+
+  const handleDislikeClick = () => {
+    if (!isDisliked && !isLiked) {
+      const newDislikes = localDislikes + 1;
+      setLocalDislikes(newDislikes);
+      setIsDisliked(true);
+      saveVote(localLikes, newDislikes, false, true);
+    } else if (isDisliked) {
+      const newDislikes = localDislikes - 1;
+      setLocalDislikes(newDislikes);
+      setIsDisliked(false);
+      saveVote(localLikes, newDislikes, false, false);
+    } else if (isLiked) {
+      const newDislikes = localDislikes + 1;
+      const newLikes = localLikes - 1;
+      setLocalLikes(newLikes);
+      setLocalDislikes(newDislikes);
+      setIsLiked(false);
+      setIsDisliked(true);
+      saveVote(newLikes, newDislikes, false, true);
+    }
+  };
+
   const reviewContent = Array.isArray(review.review)
     ? review.review
     : typeof review.review === "string"
@@ -300,20 +398,34 @@ const ReviewCard = ({
             Is this review helpful?
           </p>
           <div className="flex gap-[8px] sm:gap-[16px] items-center flex-shrink-0 ml-[10px]">
-            <div
-              className="py-[11px] px-[24px] lg:py-[13px] lg:px-[30px] skew-x-[-20deg] bg-primary-20"
-              aria-label={`Mark review as helpful, ${review.likes} likes`}>
+            <button
+              className={`border-[1px] py-[11px] px-[24px] lg:py-[13px] lg:px-[30px] skew-x-[-20deg] ${
+                isLiked
+                  ? "border-primary-main bg-primary-20"
+                  : isDisliked
+                  ? "border-transparent bg-primary-10"
+                  : "border-transparent bg-primary-20"
+              }`}
+              aria-label={`Mark review as helpful, ${localLikes} likes`}
+              onClick={handleLikeClick}>
               <span className="skew-x-[20deg] block font-semibold text-[14px] leading-[20px] sm:text-[20px] sm:leading-[26px]">
-                Yes {review.likes}
+                Yes {localLikes}
               </span>
-            </div>
-            <div
-              className="py-[11px] px-[24px] lg:py-[13px] lg:px-[30px] skew-x-[-20deg] bg-red-20"
-              aria-label={`Mark review as not helpful, ${review.dislikes} dislikes`}>
+            </button>
+            <button
+              className={`border-[1px] py-[11px] px-[24px] lg:py-[13px] lg:px-[30px] skew-x-[-20deg] ${
+                isDisliked
+                  ? "border-red bg-red-20"
+                  : isLiked
+                  ? "border-transparent bg-red-10"
+                  : "border-transparent bg-red-20"
+              }`}
+              aria-label={`Mark review as not helpful, ${localDislikes} dislikes`}
+              onClick={handleDislikeClick}>
               <span className="skew-x-[20deg] block font-semibold text-[14px] leading-[20px] sm:text-[20px] sm:leading-[26px]">
-                No {review.dislikes}
+                No {localDislikes}
               </span>
-            </div>
+            </button>
           </div>
         </div>
         <p
@@ -327,13 +439,14 @@ const ReviewCard = ({
 };
 
 const GameReviews: React.FC = () => {
+  const params = useParams();
+  const router = useRouter();
   const [isAllReviews, setIsAllReviews] = useState(false);
   const [isMinimum, setIsMinimum] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [reviewsPerPage, setReviewsPerPage] = useState(2);
   const [isLg, setIsLg] = useState(false);
 
-  // Процент положительных отзывов
   const totalReviews = reviews.length;
   const likedReviews = reviews.filter((review) => review.liked).length;
   const dislikedReviews = reviews.filter((review) => !review.liked).length;
@@ -353,16 +466,16 @@ const GameReviews: React.FC = () => {
     if (!isAllReviews) {
       return sortedReviews
         .slice(0, 2)
-        .map((review: Review, index: number) => (
-          <ReviewCard key={index} review={review} bgColor="bg-2" />
+        .map((review: Review) => (
+          <ReviewCard key={review.id} review={review} bgColor="bg-2" />
         ));
     }
     const startIdx = (currentPage - 1) * reviewsPerPage;
     const endIdx = currentPage * reviewsPerPage;
     return sortedReviews
       .slice(startIdx, endIdx)
-      .map((review: Review, index: number) => (
-        <ReviewCard key={index} review={review} bgColor="bg-2" />
+      .map((review: Review) => (
+        <ReviewCard key={review.id} review={review} bgColor="bg-2" />
       ));
   }, [sortedReviews, isAllReviews, currentPage, reviewsPerPage]);
 
@@ -372,8 +485,8 @@ const GameReviews: React.FC = () => {
     );
     return recent
       .slice(0, 2)
-      .map((review: Review, index: number) => (
-        <ReviewCard key={index} review={review} bgColor="bg-3" />
+      .map((review: Review) => (
+        <ReviewCard key={review.id} review={review} bgColor="bg-3" />
       ));
   }, []);
 
@@ -406,6 +519,13 @@ const GameReviews: React.FC = () => {
   const handleAllReviewsToggle = () => {
     setIsAllReviews(true);
     setCurrentPage(1);
+  };
+
+  const handleReviewClick = (liked: boolean) => {
+    const id = params?.id as string;
+    router.push(
+      `/auth/account/product-reviews/write-review?gameId=${id}&liked=${liked}`
+    );
   };
 
   return (
@@ -443,16 +563,18 @@ const GameReviews: React.FC = () => {
         </div>
         <div className="flex items-center gap-[18px]">
           <div
-            className="py-[6px] px-[30px] h-[42px] sm:h-[52px] border-[1px] border-primary-main skew-x-[-20deg]"
-            aria-label={`Positive reviews: ${likedReviews}`}>
-            <span className="flex items-center gap-[8px] skew-x-[20deg] ">
+            className="py-[6px] px-[30px] h-[42px] sm:h-[52px] border-[1px] border-primary-main skew-x-[-20deg] hover:bg-primary-20 cursor-pointer"
+            aria-label={`Positive reviews: ${likedReviews}`}
+            onClick={() => handleReviewClick(true)}>
+            <span className="flex items-center gap-[8px] skew-x-[20deg]">
               <LikeIcon className="sm:w-[40px] sm:h-[40px]" />
               {likedReviews}
             </span>
           </div>
           <div
-            className="py-[6px] px-[30px] h-[42px] sm:h-[52px] border-[1px] border-red skew-x-[-20deg]"
-            aria-label={`Negative reviews: ${dislikedReviews}`}>
+            className="py-[6px] px-[30px] h-[42px] sm:h-[52px] border-[1px] border-red skew-x-[-20deg] hover:bg-red-20 cursor-pointer"
+            aria-label={`Negative reviews: ${dislikedReviews}`}
+            onClick={() => handleReviewClick(false)}>
             <span className="flex items-center gap-[8px] skew-x-[20deg]">
               <LikeIcon className="sm:w-[40px] sm:h-[40px] rotate-180" />
               {dislikedReviews}

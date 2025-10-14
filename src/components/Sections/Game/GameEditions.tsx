@@ -26,6 +26,7 @@ const GameEditionsSection: React.FC = () => {
   const [dynamicMargin, setDynamicMargin] = useState<string>("0px");
   const [dynamicPadding, setDynamicPadding] = useState<string>("0px");
   const [isTouchDevice, setIsTouchDevice] = useState<boolean>(false);
+  const [windowWidth, setWindowWidth] = useState<number>(0);
 
   const fetchGame = useCallback(async () => {
     const id = params?.id as string;
@@ -106,35 +107,37 @@ const GameEditionsSection: React.FC = () => {
 
   useEffect(() => {
     const detectTouchDevice = () => {
-      const isTouch =
-        navigator.maxTouchPoints > 0 ||
-        window.matchMedia("(pointer: coarse)").matches;
-      setIsTouchDevice(isTouch);
+      if (typeof window !== "undefined") {
+        const isTouch =
+          navigator.maxTouchPoints > 0 ||
+          window.matchMedia("(pointer: coarse)").matches;
+        setIsTouchDevice(isTouch);
+      }
     };
 
     const updateDynamicStyles = () => {
       if (typeof window === "undefined") return;
-      const windowWidth = window.innerWidth;
+      const currentWidth = window.innerWidth;
       const scrollbarWidthValue =
         window.innerWidth - document.documentElement.clientWidth;
       let calculatedOffset: number;
 
-      if (windowWidth < 576) {
+      if (currentWidth < 576) {
         calculatedOffset = 16;
         setDynamicMargin(`-${calculatedOffset}px`);
         setDynamicPadding(`${calculatedOffset}px`);
-      } else if (windowWidth >= 576 && windowWidth < 1700) {
+      } else if (currentWidth >= 576 && currentWidth < 1700) {
         calculatedOffset = 46;
         setDynamicMargin(`-${calculatedOffset}px`);
         setDynamicPadding(`${calculatedOffset}px`);
-      } else if (windowWidth >= 1607 && windowWidth <= 1609) {
+      } else if (currentWidth >= 1607 && currentWidth <= 1609) {
         calculatedOffset = 146;
         setDynamicMargin(`-${calculatedOffset}px`);
         setDynamicPadding(`${calculatedOffset}px`);
-      } else if (windowWidth > 1608 && windowWidth <= 1920) {
+      } else if (currentWidth > 1608 && currentWidth <= 1920) {
         calculatedOffset = isTouchDevice
-          ? (windowWidth - 1608) / 2
-          : (windowWidth - scrollbarWidthValue - 1608) / 2;
+          ? (currentWidth - 1608) / 2
+          : (currentWidth - scrollbarWidthValue - 1608) / 2;
         setDynamicMargin(`-${calculatedOffset}px`);
         setDynamicPadding(`${calculatedOffset}px`);
       } else {
@@ -142,6 +145,7 @@ const GameEditionsSection: React.FC = () => {
         setDynamicMargin(`-${calculatedOffset}px`);
         setDynamicPadding(`${calculatedOffset}px`);
       }
+      setWindowWidth(currentWidth);
     };
 
     detectTouchDevice();
@@ -151,7 +155,7 @@ const GameEditionsSection: React.FC = () => {
   }, [isTouchDevice]);
 
   const handleDragStart = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!containerRef.current || isTouchDevice) return;
+    if (!containerRef.current || isTouchDevice || windowWidth >= 1200) return;
     const startX = e.clientX;
     const scrollLeft = containerRef.current.scrollLeft;
 
@@ -167,21 +171,27 @@ const GameEditionsSection: React.FC = () => {
       document.removeEventListener("mousemove", handleMouseMove);
       document.removeEventListener("mouseup", handleDragEndDocument);
       if (containerRef.current) {
-        containerRef.current.style.cursor = "grab";
-        containerRef.current.style.userSelect = "auto";
+        containerRef.current.classList.remove("cursor-grabbing");
+        containerRef.current.classList.remove("select-none");
+        containerRef.current.classList.add(
+          windowWidth < 1200 ? "cursor-grab" : "cursor-auto"
+        );
       }
     };
 
     document.addEventListener("mousemove", handleMouseMove);
     document.addEventListener("mouseup", handleDragEndDocument);
-    containerRef.current.style.cursor = "grabbing";
-    containerRef.current.style.userSelect = "none";
+    containerRef.current.classList.add("cursor-grabbing");
+    containerRef.current.classList.add("select-none");
   };
 
   const handleDragEnd = () => {
-    if (!containerRef.current || isTouchDevice) return;
-    containerRef.current.style.cursor = "grab";
-    containerRef.current.style.userSelect = "auto";
+    if (!containerRef.current || isTouchDevice || windowWidth >= 1200) return;
+    containerRef.current.classList.remove("cursor-grabbing");
+    containerRef.current.classList.remove("select-none");
+    containerRef.current.classList.add(
+      windowWidth < 1200 ? "cursor-grab" : "cursor-auto"
+    );
   };
 
   if (loading || !game) {
@@ -238,14 +248,16 @@ const GameEditionsSection: React.FC = () => {
         style={{ marginLeft: dynamicMargin, marginRight: dynamicMargin }}>
         <div
           ref={containerRef}
-          className="flex w-full overflow-scroll hide-scrollbar h-full gap-[12px] sm:gap-[24px]"
+          className={`flex w-full overflow-scroll hide-scrollbar h-full gap-[12px] sm:gap-[24px] ${
+            windowWidth < 1200 && !isTouchDevice
+              ? "cursor-grab select-none"
+              : "cursor-auto"
+          }`}
           style={{
             paddingLeft: dynamicPadding,
             paddingRight: dynamicPadding,
-            cursor: isTouchDevice ? "auto" : "grab",
-            userSelect: isTouchDevice ? "auto" : "none",
           }}
-          {...(!isTouchDevice
+          {...(windowWidth < 1200 && !isTouchDevice
             ? {
                 onMouseDown: handleDragStart,
                 onMouseUp: handleDragEnd,

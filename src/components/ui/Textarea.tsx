@@ -6,6 +6,7 @@ import React, {
   ChangeEvent,
   ReactNode,
   KeyboardEvent,
+  FocusEvent,
 } from "react";
 import Text from "@/components/ui/Text";
 
@@ -48,6 +49,9 @@ const Textarea: React.FC<TextareaProps> = ({
 }) => {
   const [internalIsTouched, setInternalIsTouched] = useState(false);
   const [internalIsValid, setInternalIsValid] = useState(true);
+  const [focusMethod, setFocusMethod] = useState<"keyboard" | "mouse" | null>(
+    null
+  );
 
   const effectiveIsTouched =
     isTouched !== undefined ? isTouched : internalIsTouched;
@@ -70,6 +74,30 @@ const Textarea: React.FC<TextareaProps> = ({
     if (isTouched === undefined) {
       setInternalIsTouched(true);
     }
+    setFocusMethod(null);
+  };
+
+  const handleFocus = (e: FocusEvent<HTMLTextAreaElement>) => {
+    const isKeyboardFocus =
+      e.relatedTarget === null ||
+      (e.relatedTarget instanceof HTMLElement &&
+        ["INPUT", "TEXTAREA", "BUTTON", "A"].includes(e.relatedTarget.tagName));
+    if (isKeyboardFocus) {
+      setFocusMethod("keyboard");
+    } else if (document.activeElement === e.target) {
+      setFocusMethod("mouse");
+    }
+  };
+
+  const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
+    onKeyDown?.(e);
+    if (e.key === "Tab" || e.key === "ArrowUp" || e.key === "ArrowDown") {
+      setFocusMethod("keyboard");
+    }
+  };
+
+  const handleClick = () => {
+    setFocusMethod("mouse");
   };
 
   const wrapperBaseStyles = "relative w-full";
@@ -103,9 +131,11 @@ const Textarea: React.FC<TextareaProps> = ({
         <textarea
           value={value}
           onChange={onChange}
-          onKeyDown={onKeyDown}
+          onKeyDown={handleKeyDown}
           placeholder={placeholder}
           onBlur={handleBlur}
+          onFocus={handleFocus}
+          onClick={handleClick}
           autoComplete={autoComplete}
           readOnly={readOnly}
           name={name}
@@ -114,6 +144,11 @@ const Textarea: React.FC<TextareaProps> = ({
           }`}
         />
         {children}
+        <div
+          className={`focus-border ${
+            focusMethod === "keyboard" ? "keyboard" : ""
+          } ${focusMethod === "mouse" ? "mouse" : ""}`}
+        />
       </div>
       {!effectiveIsValid && required && effectiveIsTouched && (
         <Text className="mt-[8px] flex items-center gap-[16px]">

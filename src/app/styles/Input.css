@@ -14,16 +14,22 @@
   border: 2px solid theme("colors.primary-main");
 }
 
-.input-status:focus-within::after {
-  content: "";
+.input-status:focus-within .focus-border {
   position: absolute;
   top: -4px;
   left: -4px;
   right: -4px;
   bottom: -4px;
-  -webkit-border-radius: 2px;
-  -moz-border-radius: 2px;
   border-radius: 2px;
   z-index: -1;
-  border: 1px dashed white;
+  border: 1px solid transparent;
+}
+
+.input-status:focus-within .focus-border.keyboard {
+  border-style: dashed !important;
+  border-color: white !important;
+}
+
+.input-status:focus-within .focus-border.mouse {
+  border-style: none;
 }

@@ -134,7 +134,7 @@
   content: "";
   position: absolute;
   bottom: -3px;
-  height: 13px;
+  height: 20px;
   width: 146px;
   background: theme("colors.main");
   z-index: 100;

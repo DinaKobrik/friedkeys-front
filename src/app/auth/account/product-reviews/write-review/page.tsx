@@ -110,9 +110,7 @@ const ReviewContent: React.FC = React.memo(() => {
   useEffect(() => {
     const paramGameId = searchParams.get("gameId");
     const paramLiked = searchParams.get("liked") === "true";
-    const paramOrder =
-      searchParams.get("order") ||
-      `ORD${Math.floor(100000 + Math.random() * 900000)}`;
+    const paramOrder = searchParams.get("order") || "";
 
     if (paramGameId) {
       const newGameId = Number(paramGameId);
@@ -237,16 +235,13 @@ const ReviewContent: React.FC = React.memo(() => {
       setReviewText(originalReview.review || "");
       setPros(originalReview.pros || "");
       setCons(originalReview.cons || "");
-      setOrder(
-        originalReview.order ||
-          `ORD${Math.floor(100000 + Math.random() * 900000)}`
-      );
+      setOrder(originalReview.order || "");
     } else {
       setLiked(false);
       setReviewText("");
       setPros("");
       setCons("");
-      setOrder(`ORD${Math.floor(100000 + Math.random() * 900000)}`);
+      setOrder("");
       setIsTouchedReview(false);
       setIsValidReview(false);
     }
@@ -268,9 +263,15 @@ const ReviewContent: React.FC = React.memo(() => {
           <Heading
             variant="h3"
             className="mb-[24px] sm:mb-[40px]"
-            aria-label={`Navigation: account / orders / ${order} / review of ${game.title}`}>
+            aria-label={`Navigation: ${
+              order
+                ? `account / orders / ${order} / review of ${game.title}`
+                : `account / review of ${game.title}`
+            }`}>
             {isLg
-              ? `account / orders / ${order} / review of ${game.title}`
+              ? order
+                ? `account / orders / ${order} / review of ${game.title}`
+                : `account / review of ${game.title}`
               : ""}
           </Heading>
           <Heading

@@ -8,6 +8,9 @@ import { useRouter, usePathname } from "next/navigation";
 
 const Header = () => {
   const [searchValue, setSearchValue] = useState("");
+  const [focusMethod, setFocusMethod] = useState<"keyboard" | "mouse" | null>(
+    null
+  );
   const router = useRouter();
   const pathname = usePathname();
   const [previousPath, setPreviousPath] = useState(pathname);
@@ -58,6 +61,32 @@ const Header = () => {
     }`;
   };
 
+  const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
+    const isKeyboardFocus =
+      e.relatedTarget === null ||
+      (e.relatedTarget instanceof HTMLElement &&
+        ["INPUT", "BUTTON", "A"].includes(e.relatedTarget.tagName));
+    if (isKeyboardFocus) {
+      setFocusMethod("keyboard");
+    } else if (document.activeElement === e.target) {
+      setFocusMethod("mouse");
+    }
+  };
+
+  const handleBlur = () => {
+    setFocusMethod(null);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Tab" || e.key === "ArrowUp" || e.key === "ArrowDown") {
+      setFocusMethod("keyboard");
+    }
+  };
+
+  const handleClick = () => {
+    setFocusMethod("mouse");
+  };
+
   return (
     <header className="py-[14px] flex justify-between items-center gap-[10px] sm:mt-[32px]">
       <Logo />
@@ -69,6 +98,10 @@ const Header = () => {
             onChange={handleChange}
             placeholder="Search"
             className="w-full px-[20px] py-[10px] pl-[82px] font-usuzi-condensed text-[16px] leading-[16px] sm:text-[24px] sm:leading-[28px] border-none bg-transparent focus:outline-none placeholder-gray-68 hover:placeholder-white caret-primary-main skew-x-[20deg]"
+            onFocus={handleFocus}
+            onBlur={handleBlur}
+            onKeyDown={handleKeyDown}
+            onClick={handleClick}
           />
           <button type="submit">
             <svg
@@ -116,6 +149,11 @@ const Header = () => {
               />
             </svg>
           )}
+          <div
+            className={`focus-border ${
+              focusMethod === "keyboard" ? "keyboard" : ""
+            } ${focusMethod === "mouse" ? "mouse" : ""}`}
+          />
         </form>
       </div>
       <div className="max-h-[48px] hidden xl:flex items-center gap-[18px]">
