@@ -8,6 +8,7 @@ import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
 import { useCart } from "./CartHandler";
 import CartButton from "./CartHandler";
+import { useFavorite } from "./FavoriteHandler";
 import { Game } from "@/types/game";
 
 // SVG для стрелочки
@@ -54,7 +55,8 @@ const GameHeaderContent: React.FC = () => {
   const params = useParams();
   const [game, setGame] = useState<Game | null>(null);
   const [imageSrc, setImageSrc] = useState<string>("/images/no-image.jpg");
-  const [isFavorite, setIsFavorite] = useState(false);
+  const { favoriteIds, toggleFavorite } = useFavorite();
+  const isFavorite = game ? favoriteIds.includes(game.id) : false;
   const [isEditionOpen, setIsEditionOpen] = useState(false);
   const [isPlatformOpen, setIsPlatformOpen] = useState(false);
   const [isRegionOpen, setIsRegionOpen] = useState(false);
@@ -164,9 +166,6 @@ const GameHeaderContent: React.FC = () => {
       setImageSrc(
         game.image && game.image.trim() ? game.image : "/images/no-image.jpg"
       );
-      const storedFavorites = localStorage.getItem("favoriteGames");
-      const favoriteIds = storedFavorites ? JSON.parse(storedFavorites) : [];
-      setIsFavorite(favoriteIds.includes(game.id));
     }
   }, [game]);
 
@@ -183,21 +182,9 @@ const GameHeaderContent: React.FC = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, [isMinimum]);
 
-  const toggleFavorite = (e: React.MouseEvent) => {
+  const toggleFavoriteHandler = (e: React.MouseEvent) => {
     e.stopPropagation();
-    if (!game) return;
-
-    const storedFavorites = localStorage.getItem("favoriteGames");
-    let favoriteIds = storedFavorites ? JSON.parse(storedFavorites) : [];
-
-    if (isFavorite) {
-      favoriteIds = favoriteIds.filter((id: number) => id !== game.id);
-    } else {
-      favoriteIds.push(game.id);
-    }
-
-    localStorage.setItem("favoriteGames", JSON.stringify(favoriteIds));
-    setIsFavorite(!isFavorite);
+    if (game) toggleFavorite(game.id);
   };
 
   const handleEditionSelect = (edition: string) => {
@@ -325,7 +312,7 @@ const GameHeaderContent: React.FC = () => {
               </div>
               <div
                 className="w-[36px] h-[36px] sm:w-[48px] sm:h-[48px] flex justify-center items-center cursor-pointer"
-                onClick={toggleFavorite}
+                onClick={toggleFavoriteHandler}
                 aria-label={
                   isFavorite
                     ? `Remove ${game.title} from favorites`

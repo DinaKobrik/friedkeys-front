@@ -14,6 +14,7 @@ import GameReviews from "@/components/Sections/Game/GameReviews";
 import CartButton from "@/components/Sections/Game/CartHandler";
 import { useParams } from "next/navigation";
 import { Game } from "@/types/game";
+import { FavoriteProvider } from "@/components/Sections/Game/FavoriteHandler";
 
 const GameDetailPage: React.FC = () => {
   const params = useParams();
@@ -46,22 +47,24 @@ const GameDetailPage: React.FC = () => {
   }, [params]);
 
   return (
-    <CartProvider>
-      <main className="min-h-screen relative flex flex-col w-full gap-[56px] md:gap-[120px] mt-[24px] sm:mt-[80px]">
-        <GameHeader />
-        <GameAbout />
-        <GameSlider />
-        <GameEditions />
-        <GameDescription />
-        <GameConfigurations />
-        <GameFranchise />
-        <GameGenre />
-        <GameReviews />
-        <section className="sm:hidden">
-          {game && <CartButton game={game} />}
-        </section>
-      </main>
-    </CartProvider>
+    <FavoriteProvider>
+      <CartProvider>
+        <main className="min-h-screen relative flex flex-col w-full gap-[56px] md:gap-[120px] mt-[24px] sm:mt-[80px]">
+          <GameHeader />
+          <GameAbout />
+          <GameSlider />
+          <GameEditions />
+          <GameDescription />
+          <GameConfigurations />
+          <GameFranchise />
+          <GameGenre />
+          <GameReviews />
+          <section className="sm:hidden">
+            {game && <CartButton game={game} />}
+          </section>
+        </main>
+      </CartProvider>
+    </FavoriteProvider>
   );
 };
 

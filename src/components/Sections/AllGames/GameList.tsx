@@ -8,7 +8,7 @@ import Button from "@/components/ui/Button";
 import Heading from "@/components/ui/Heading";
 import Input from "@/components/ui/Input";
 import Pagination from "@/components/ui/Pagination";
-import { applyFilters, applySort } from "@/utils/filters";
+import { applyFilters, applySort, hasDiscountFilter } from "@/utils/filters";
 import { filterGamesBySearch } from "@/utils/search";
 
 const GameList: React.FC = () => {
@@ -894,7 +894,7 @@ const GameList: React.FC = () => {
             <GameCard
               key={game.id}
               game={game}
-              showSaleTimer={activeFilter === "sale"}
+              showSaleTimer={activeFilter === "sale" && hasDiscountFilter(game)}
               hidePreOrder={activeFilter === "pre-orders" ? false : true}
             />
           ))

@@ -11,22 +11,25 @@ import GameReviews from "@/components/Sections/Homepage/GameReviews";
 import News from "@/components/Sections/Homepage/News";
 import Ganres from "@/components/Sections/Homepage/Ganres";
 import JoinNow from "@/components/Sections/Homepage/JoinNow";
+import { FavoriteProvider } from "@/components/Sections/Game/FavoriteHandler";
 
 export default function Home() {
   return (
-    <main className="flex flex-col gap-[56px] md:gap-[120px] w-full">
-      <Slider />
-      <QuickMenu />
-      <Trending />
-      <SaleGames />
-      <Advantages />
-      <NewGames />
-      <PreOrders />
-      <Banner />
-      <GameReviews />
-      <News />
-      <Ganres />
-      <JoinNow />
-    </main>
+    <FavoriteProvider>
+      <main className="flex flex-col gap-[56px] md:gap-[120px] w-full">
+        <Slider />
+        <QuickMenu />
+        <Trending />
+        <SaleGames />
+        <Advantages />
+        <NewGames />
+        <PreOrders />
+        <Banner />
+        <GameReviews />
+        <News />
+        <Ganres />
+        <JoinNow />
+      </main>
+    </FavoriteProvider>
   );
 }

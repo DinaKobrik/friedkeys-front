@@ -16,6 +16,10 @@ import CartMenu from "@/components/Sections/Cart/CartMenu";
 import CartRecommendations from "@/components/Sections/Cart/CartRecommendations";
 import TotalPrice from "@/components/Sections/Cart/TotalPrice";
 import { CartProvider, useCart } from "@/components/Sections/Game/CartHandler";
+import {
+  FavoriteProvider,
+  useFavorite,
+} from "@/components/Sections/Game/FavoriteHandler";
 
 const FavoriteIcon = ({ isFavorite }: { isFavorite: boolean }) => (
   <svg
@@ -144,16 +148,18 @@ interface Source {
 
 const CartContent: React.FC = () => {
   const { cartQuantities, setCartQuantities } = useCart();
+  const { favoriteIds, toggleFavorite: toggleFavoriteFromContext } =
+    useFavorite();
   const [cartGames, setCartGames] = useState<Game[]>([]);
   const [gameCache, setGameCache] = useState<{ [id: number]: Game }>({});
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [imageSrcs, setImageSrcs] = useState<{ [key: number]: string }>({});
-  const gamesPerPage = 5;
   const [editingCartKey, setEditingCartKey] = useState<string | null>(null);
   const [newQuantity, setNewQuantity] = useState(0);
   const [isMinimum, setIsMinimum] = useState(false);
   const [isOneLine, setIsOneLine] = useState<{ [key: string]: boolean }>({});
+  const gamesPerPage = 5; // Добавляем константу
 
   const quantityRefs = useRef<{ [key: string]: HTMLInputElement | null }>({});
   const infoRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
@@ -213,8 +219,6 @@ const CartContent: React.FC = () => {
         const games = (await Promise.all(gamesPromises)).filter(
           (game) => game !== null
         ) as Game[];
-        const storedFavorites = localStorage.getItem("favoriteGames");
-        const favoriteIds = storedFavorites ? JSON.parse(storedFavorites) : [];
         const updatedGames = games.map((game) => ({
           ...game,
           isFavorite: favoriteIds.includes(game.id),
@@ -227,7 +231,7 @@ const CartContent: React.FC = () => {
     };
 
     loadCartGames();
-  }, [cartQuantities, fetchGameById]);
+  }, [cartQuantities, fetchGameById, favoriteIds]);
 
   useEffect(() => {
     setImageSrcs(
@@ -267,25 +271,6 @@ const CartContent: React.FC = () => {
       window.removeEventListener("resize", checkLineCount);
     };
   }, [cartQuantities, isMinimum]);
-
-  const toggleFavorite = useCallback((e: React.MouseEvent, gameId: number) => {
-    e.stopPropagation();
-    const storedFavorites = localStorage.getItem("favoriteGames");
-    let favoriteIds = storedFavorites ? JSON.parse(storedFavorites) : [];
-
-    if (favoriteIds.includes(gameId)) {
-      favoriteIds = favoriteIds.filter((id: number) => id !== gameId);
-    } else {
-      favoriteIds.push(gameId);
-    }
-
-    localStorage.setItem("favoriteGames", JSON.stringify(favoriteIds));
-    setCartGames((prevGames) =>
-      prevGames.map((game) =>
-        game.id === gameId ? { ...game, isFavorite: !game.isFavorite } : game
-      )
-    );
-  }, []);
 
   const updateQuantity = useCallback(
     (gameId: number, change: number, cartKey: string) => {
@@ -412,7 +397,10 @@ const CartContent: React.FC = () => {
             <div className="card-corner relative w-full flex-shrink-0 h-full max-w-[81px] sm:max-w-[180px] lg:max-w-[320px] mainCustom:max-w-[520px]">
               <div
                 className="favorite absolute w-[36px] h-[36px] sm:w-[48px] sm:h-[48px] right-0 top-0 z-10 flex justify-center items-center cursor-pointer"
-                onClick={(e) => toggleFavorite(e, game.id)}>
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleFavoriteFromContext(game.id);
+                }}>
                 <FavoriteIcon isFavorite={game.isFavorite || false} />
               </div>
               <Link href={`/all-games/${game.id}`} className="w-full h-full">
@@ -540,7 +528,6 @@ const CartContent: React.FC = () => {
   }, [
     cartGames,
     currentPage,
-    gamesPerPage,
     cartQuantities,
     editingCartKey,
     newQuantity,
@@ -550,7 +537,7 @@ const CartContent: React.FC = () => {
     imageSrcs,
     removeFromCart,
     updateQuantity,
-    toggleFavorite,
+    toggleFavoriteFromContext,
     handleQuantityChange,
     handleQuantityBlur,
     handleQuantityKeyDown,
@@ -558,7 +545,7 @@ const CartContent: React.FC = () => {
 
   const totalPages = useMemo(
     () => Math.ceil(Object.keys(cartQuantities).length / gamesPerPage),
-    [cartQuantities, gamesPerPage]
+    [cartQuantities]
   );
 
   const handlePageChange = useCallback((page: number) => {
@@ -620,9 +607,11 @@ const CartContent: React.FC = () => {
 
 const CartPage: React.FC = () => {
   return (
-    <CartProvider>
-      <CartContent />
-    </CartProvider>
+    <FavoriteProvider>
+      <CartProvider>
+        <CartContent />
+      </CartProvider>
+    </FavoriteProvider>
   );
 };
 

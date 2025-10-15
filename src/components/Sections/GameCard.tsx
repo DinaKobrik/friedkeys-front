@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { Game } from "@/types/game";
 import Image from "next/image";
 import Link from "next/link";
+import { useFavorite } from "@/components/Sections/Game/FavoriteHandler";
 
 interface GameCardProps {
   game: Game;
@@ -22,12 +23,13 @@ const GameCard: React.FC<GameCardProps> = ({
 
   const [isMobile, setIsMobile] = useState(false);
   const [discountTime, setDiscountTime] = useState<string | null>(null);
-  const [isFavorite, setIsFavorite] = useState(false);
   const [imageSrc, setImageSrc] = useState<string>(
     game.image && game.image.trim() && game.image.startsWith("/images/")
       ? game.image
       : "/images/no-image.jpg"
   );
+  const { favoriteIds, toggleFavorite } = useFavorite();
+  const isFavorite = favoriteIds.includes(game.id);
 
   useEffect(() => {
     const handleResize = () => {
@@ -37,14 +39,6 @@ const GameCard: React.FC<GameCardProps> = ({
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-
-  useEffect(() => {
-    const storedFavorites = localStorage.getItem("favoriteGames");
-    if (storedFavorites) {
-      const favoriteIds = JSON.parse(storedFavorites);
-      setIsFavorite(favoriteIds.includes(game.id));
-    }
-  }, [game.id]);
 
   const formatReleaseDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -105,32 +99,8 @@ const GameCard: React.FC<GameCardProps> = ({
     ? new Date(game.discountDate).getTime() < new Date().getTime()
     : false;
 
-  const toggleFavorite = async () => {
-    const storedFavorites = localStorage.getItem("favoriteGames");
-    let favoriteIds = storedFavorites ? JSON.parse(storedFavorites) : [];
-
-    if (isFavorite) {
-      favoriteIds = favoriteIds.filter((id: number) => id !== game.id);
-    } else {
-      favoriteIds.push(game.id);
-    }
-
-    localStorage.setItem("favoriteGames", JSON.stringify(favoriteIds));
-    setIsFavorite(!isFavorite);
-
-    try {
-      const response = await fetch("/api/games", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      if (response.ok) {
-        await response.json();
-      }
-    } catch (error) {
-      throw new Error(`Failed to fetch updated games: ${error}`);
-    }
+  const handleToggleFavorite = () => {
+    toggleFavorite(game.id);
   };
 
   return (
@@ -140,7 +110,7 @@ const GameCard: React.FC<GameCardProps> = ({
       aria-label={`Game: ${game.title}`}>
       <div
         className="favorite absolute w-[36px] h-[36px] sm:w-[48px] sm:h-[48px] right-0 top-[1px] z-10 flex justify-center items-center cursor-pointer"
-        onClick={toggleFavorite}
+        onClick={handleToggleFavorite}
         role="button"
         aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}>
         <svg

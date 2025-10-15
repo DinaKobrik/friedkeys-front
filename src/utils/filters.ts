@@ -8,7 +8,7 @@ export const hasDiscountFilter = (game: Game): boolean => {
   if (game.discountDate) {
     const discountDate = new Date(game.discountDate);
     if (!isNaN(discountDate.getTime())) {
-      discountDate.setHours(23, 59, 59, 999);
+      discountDate.setUTCHours(23, 59, 59, 999);
       discountDateTime = discountDate.getTime();
     } else {
       console.error(
@@ -18,8 +18,9 @@ export const hasDiscountFilter = (game: Game): boolean => {
     }
   }
 
+  const now = new Date();
   const isDiscountExpired = discountDateTime
-    ? discountDateTime <= new Date().getTime()
+    ? discountDateTime <= now.getTime()
     : true;
   return isDiscountValid && !isDiscountExpired;
 };
@@ -48,14 +49,16 @@ export const priceRangeFilter = (
   minPrice: string,
   maxPrice: string
 ): boolean => {
-  const min = parseFloat(minPrice);
-  const max = parseFloat(maxPrice);
-  const price = game.price;
+  const min = parseFloat(minPrice) || 0;
+  const max = parseFloat(maxPrice) || Infinity;
+  const price =
+    game.discount && !hasDiscountFilter(game)
+      ? game.price
+      : game.discount
+      ? game.price * (1 - game.discount / 100)
+      : game.price;
 
-  const isMinValid = isNaN(min) || price >= min;
-  const isMaxValid = isNaN(max) || price <= max;
-
-  return isMinValid && isMaxValid;
+  return price >= min && price <= max;
 };
 
 // Функция для применения всех фильтров

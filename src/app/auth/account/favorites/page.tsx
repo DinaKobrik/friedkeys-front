@@ -9,37 +9,20 @@ import React, {
 import Heading from "@/components/ui/Heading";
 import GameCard from "@/components/Sections/GameCard";
 import { Game } from "@/types/game";
+import { useFavorite } from "@/components/Sections/Game/FavoriteHandler";
 const AccountMenu = React.lazy(
   () => import("@/components/Sections/Account/AccountMenu")
 );
 const Pagination = React.lazy(() => import("@/components/ui/Pagination"));
 
-const debounce = <T extends () => void>(func: T, delay: number) => {
-  let timeoutId: NodeJS.Timeout;
-  return () => {
-    clearTimeout(timeoutId);
-    timeoutId = setTimeout(() => func(), delay);
-  };
-};
-
-const sortByLastAdded = (games: Game[], ids: number[]) => {
-  return [...games].sort((a, b) => {
-    const indexA = ids.indexOf(a.id);
-    const indexB = ids.indexOf(b.id);
-    return indexB - indexA;
-  });
-};
-
-const FavoritesComponent = React.memo(() => {
+export default function FavoritesComponent() {
+  const { favoriteIds } = useFavorite();
   const [favoriteGames, setFavoriteGames] = useState<Game[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [reviewsPerPage, setReviewsPerPage] = useState(12);
 
   useEffect(() => {
-    const fetchFavoriteGames = async () => {
-      const storedFavorites = localStorage.getItem("favoriteGames");
-      const favoriteIds = storedFavorites ? JSON.parse(storedFavorites) : [];
-      const controller = new AbortController();
+    const loadFavoriteGames = async () => {
       if (favoriteIds.length > 0) {
         try {
           const response = await fetch(
@@ -49,43 +32,41 @@ const FavoritesComponent = React.memo(() => {
               headers: {
                 "Content-Type": "application/json",
               },
-              signal: controller.signal,
             }
           );
           if (response.ok) {
             const allGames: Game[] = await response.json();
-            const filteredGames = allGames.filter((game) =>
-              favoriteIds.includes(game.id)
-            );
-            const sortedGames = sortByLastAdded(filteredGames, favoriteIds);
+            const sortedGames = allGames
+              .filter((game) => favoriteIds.includes(game.id))
+              .sort((a, b) => {
+                const indexA = favoriteIds.indexOf(a.id);
+                const indexB = favoriteIds.indexOf(b.id);
+                return indexB - indexA;
+              });
             setFavoriteGames(sortedGames);
           } else {
             console.error("Failed to fetch games:", response.statusText);
             setFavoriteGames([]);
           }
         } catch (error: unknown) {
-          if (error instanceof Error && error.name !== "AbortError") {
-            console.error("Error fetching favorite games:", error);
-            setFavoriteGames([]);
-          }
+          console.error("Error fetching favorite games:", error);
+          setFavoriteGames([]);
         }
       } else {
         setFavoriteGames([]);
       }
-      return () => controller.abort();
     };
-    fetchFavoriteGames();
-  }, []);
+    loadFavoriteGames();
+  }, [favoriteIds]);
 
   const handleResize = useCallback(() => {
     setReviewsPerPage(window.innerWidth < 991 ? 4 : 6);
   }, []);
 
   useEffect(() => {
-    const debouncedHandleResize = debounce(handleResize, 100);
-    debouncedHandleResize();
-    window.addEventListener("resize", debouncedHandleResize);
-    return () => window.removeEventListener("resize", debouncedHandleResize);
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, [handleResize]);
 
   const paginatedGames = useMemo(() => {
@@ -129,7 +110,7 @@ const FavoritesComponent = React.memo(() => {
             {favoriteGames.length} games
           </div>
         </div>
-        <div className="favorites-grid grid grid-cols-2 lg:grid-cols-3 gap-[12px] sm:-[16px] lg:gap-[24px]">
+        <div className="favorites-grid grid grid-cols-2 lg:grid-cols-3 gap-[12px] sm:gap-[16px] lg:gap-[24px]">
           <Suspense fallback={<div>Loading games...</div>}>
             {paginatedGames}
           </Suspense>
@@ -146,7 +127,4 @@ const FavoritesComponent = React.memo(() => {
       </section>
     </main>
   );
-});
-
-FavoritesComponent.displayName = "Favorites";
-export default FavoritesComponent;
+}

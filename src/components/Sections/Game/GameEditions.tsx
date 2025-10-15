@@ -6,6 +6,7 @@ import Image from "next/image";
 import Heading from "@/components/ui/Heading";
 import Text from "@/components/ui/Text";
 import Button from "@/components/ui/Button";
+import { useFavorite } from "./FavoriteHandler";
 
 interface Game {
   id: number;
@@ -21,12 +22,13 @@ const GameEditionsSection: React.FC = () => {
   const [game, setGame] = useState<Game | null>(null);
   const [imageSrc, setImageSrc] = useState<string>("/images/no-image.jpg");
   const [loading, setLoading] = useState(true);
-  const [isFavorite, setIsFavorite] = useState(false);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [dynamicMargin, setDynamicMargin] = useState<string>("0px");
   const [dynamicPadding, setDynamicPadding] = useState<string>("0px");
   const [isTouchDevice, setIsTouchDevice] = useState<boolean>(false);
   const [windowWidth, setWindowWidth] = useState<number>(0);
+  const { favoriteIds, toggleFavorite } = useFavorite();
+  const isFavorite = game ? favoriteIds.includes(game.id) : false;
 
   const fetchGame = useCallback(async () => {
     const id = params?.id as string;
@@ -64,45 +66,12 @@ const GameEditionsSection: React.FC = () => {
       setImageSrc(
         game.image && game.image.trim() ? game.image : "/images/no-image.jpg"
       );
-      const storedFavorites = localStorage.getItem("favoriteGames");
-      if (storedFavorites) {
-        const favoriteIds = JSON.parse(storedFavorites);
-        setIsFavorite(favoriteIds.includes(game.id));
-      }
     }
   }, [game]);
 
-  const toggleFavorite = async (e: React.MouseEvent) => {
+  const toggleFavoriteHandler = (e: React.MouseEvent) => {
     e.stopPropagation();
-    if (!game) return;
-
-    const storedFavorites = localStorage.getItem("favoriteGames");
-    let favoriteIds = storedFavorites ? JSON.parse(storedFavorites) : [];
-
-    if (isFavorite) {
-      favoriteIds = favoriteIds.filter((id: number) => id !== game.id);
-    } else {
-      favoriteIds.push(game.id);
-    }
-
-    localStorage.setItem("favoriteGames", JSON.stringify(favoriteIds));
-    setIsFavorite(!isFavorite);
-
-    try {
-      const response = await fetch("/api/games", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      if (!response.ok)
-        throw new Error(
-          `Failed to fetch updated games: ${await response.text()}`
-        );
-      await response.json();
-    } catch (error) {
-      throw new Error(`Failed to fetch updated games: ${error}`);
-    }
+    if (game) toggleFavorite(game.id);
   };
 
   useEffect(() => {
@@ -271,7 +240,7 @@ const GameEditionsSection: React.FC = () => {
               aria-label={`${edition.type} Edition Details`}>
               <div
                 className="favorite absolute w-[36px] h-[36px] sm:w-[48px] sm:h-[48px] right-[2px] top-[1px] md:right-[4px] md:top-[3px] z-10 flex justify-center items-center cursor-pointer"
-                onClick={toggleFavorite}
+                onClick={toggleFavoriteHandler}
                 aria-label={
                   isFavorite
                     ? `Remove ${game.title} from favorites`
