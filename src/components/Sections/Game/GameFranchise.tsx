@@ -52,7 +52,9 @@ const GameFranchise: React.FC = () => {
     );
 
   return (
-    <section aria-label="Game Franchise Section">
+    <section
+      className="max-w-[1400px] w-full mx-auto"
+      aria-label="Game Franchise Section">
       <Heading
         variant="h1"
         className="mb-[24px] sm:mb-[40px]"

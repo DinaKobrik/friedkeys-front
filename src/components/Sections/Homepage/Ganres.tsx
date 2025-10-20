@@ -38,7 +38,9 @@ const Genres = () => {
   }
 
   return (
-    <section aria-label="Genres Section">
+    <section
+      className="max-w-[1400px] w-full mx-auto"
+      aria-label="Genres Section">
       <Heading variant="h1" className="mb-[40px]" aria-label="Genres Title">
         Genres
       </Heading>

@@ -55,7 +55,9 @@ const GameGenre: React.FC = () => {
   const genre = games.length > 0 ? games[0].genres[0] : "Unknown Genre";
 
   return (
-    <section aria-label="Game Genre Section">
+    <section
+      className="max-w-[1400px] w-full mx-auto"
+      aria-label="Game Genre Section">
       <div className="mb-[24px] sm:mb-[40px]">
         <Heading variant="h1" aria-label={`${genre} Games Title`}>
           {genre}

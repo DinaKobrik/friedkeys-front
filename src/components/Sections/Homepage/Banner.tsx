@@ -21,6 +21,54 @@ const Banner: React.FC = () => {
   }>({});
   const [imageSrc, setImageSrc] = useState<string>("/images/no-image.jpg");
   const [loading, setLoading] = useState(true);
+  const [dynamicMargin, setDynamicMargin] = useState<string>("0px");
+  const [dynamicPadding, setDynamicPadding] = useState<string>("0px");
+  const [dynamicLeft, setDynamicLeft] = useState<string>("6px");
+
+  const updateDynamicStyles = useCallback(() => {
+    const windowWidth = typeof window !== "undefined" ? window.innerWidth : 0;
+    const scrollbarWidthValue =
+      windowWidth - (document.documentElement?.clientWidth || windowWidth);
+    const isTouchDevice = navigator.maxTouchPoints > 0;
+
+    let calculatedOffset: number;
+    if (windowWidth < 576) {
+      calculatedOffset = 16;
+      setDynamicMargin(`-${calculatedOffset}px`);
+      setDynamicLeft("6px");
+    } else if (windowWidth >= 576 && windowWidth < 1608) {
+      calculatedOffset = 46;
+      setDynamicMargin(`-${calculatedOffset}px`);
+      setDynamicLeft("46px");
+    } else if (windowWidth >= 1608 && windowWidth < 1700) {
+      calculatedOffset = 46;
+      setDynamicMargin(`-${calculatedOffset}px`);
+      setDynamicLeft(`${calculatedOffset + 156}px`);
+    } else if (windowWidth >= 1700) {
+      calculatedOffset = isTouchDevice
+        ? (windowWidth - scrollbarWidthValue - 1608) / 2
+        : (windowWidth - scrollbarWidthValue - 1608) / 2;
+      setDynamicMargin(`-${calculatedOffset}px`);
+      setDynamicLeft(`${calculatedOffset + 156}px`);
+    } else {
+      calculatedOffset = 146;
+      setDynamicMargin("-146px");
+      setDynamicLeft("0px");
+    }
+
+    setDynamicPadding(`${calculatedOffset}px`);
+  }, []);
+
+  const debounce = <T extends (...args: unknown[]) => void>(
+    func: T,
+    wait: number
+  ) => {
+    let timeout: NodeJS.Timeout;
+    return (...args: Parameters<T>) => {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => func(...args), wait);
+    };
+  };
 
   useEffect(() => {
     const fetchGames = async () => {
@@ -44,11 +92,15 @@ const Banner: React.FC = () => {
     const cartData = localStorage.getItem("cart");
     setCartQuantities(cartData ? JSON.parse(cartData) : {});
     fetchGames();
-  }, []);
+    updateDynamicStyles();
+    const debouncedUpdate = debounce(updateDynamicStyles, 100);
+    window.addEventListener("resize", debouncedUpdate);
+    return () => window.removeEventListener("resize", debouncedUpdate);
+  }, [updateDynamicStyles]);
 
-  const game = useMemo(
+  const topGames = useMemo(
     () =>
-      games.find((g) => g.id === 5) || {
+      games.find((g) => g.id === 3) || {
         id: 1,
         image: "",
         price: 0,
@@ -61,24 +113,26 @@ const Banner: React.FC = () => {
 
   useEffect(() => {
     setImageSrc(
-      game.image && game.image.trim() ? game.image : "/images/no-image.jpg"
+      topGames.image && topGames.image.trim()
+        ? topGames.image
+        : "/images/no-image.jpg"
     );
-  }, [game.image]);
+  }, [topGames.image]);
 
   const isDiscountExpired = useMemo(() => {
     const now = new Date();
     return (
-      !game.discountDate ||
-      new Date(game.discountDate).getTime() <= now.getTime()
+      !topGames.discountDate ||
+      new Date(topGames.discountDate).getTime() <= now.getTime()
     );
-  }, [game.discountDate]);
+  }, [topGames.discountDate]);
 
   const discountPrice = useMemo(
     () =>
-      game.discount && game.discount > 0 && !isDiscountExpired
-        ? game.price * (1 - game.discount / 100)
+      topGames.discount && topGames.discount > 0 && !isDiscountExpired
+        ? topGames.price * (1 - topGames.discount / 100)
         : null,
-    [game.discount, game.price, isDiscountExpired]
+    [topGames.discount, topGames.price, isDiscountExpired]
   );
 
   const getUniqueCartKey = useCallback(
@@ -86,7 +140,7 @@ const Banner: React.FC = () => {
     []
   );
 
-  const cartItem = cartQuantities[getUniqueCartKey(game.id)] || {
+  const cartItem = cartQuantities[getUniqueCartKey(topGames.id)] || {
     quantity: 0,
     edition: "Standard",
     platform: "PC",
@@ -96,7 +150,7 @@ const Banner: React.FC = () => {
   const cartQuantity = cartItem.quantity;
 
   const addToCart = useCallback(() => {
-    const gameId = game.id;
+    const gameId = topGames.id;
     const cartKey = getUniqueCartKey(gameId);
     const newItem = {
       quantity: (cartQuantities[cartKey]?.quantity || 0) + 1,
@@ -113,7 +167,7 @@ const Banner: React.FC = () => {
       localStorage.setItem("cart", JSON.stringify(newQuantities));
       return newQuantities;
     });
-  }, [game.id, cartQuantities, getUniqueCartKey]);
+  }, [topGames.id, cartQuantities, getUniqueCartKey]);
 
   const updateQuantity = useCallback(
     (gameId: number, delta: number) => {
@@ -155,40 +209,40 @@ const Banner: React.FC = () => {
     () => (
       <div
         className="skew-x-[-20deg] border-[1px] border-primary-main rounded-[2px] flex justify-center items-center w-full md:w-auto"
-        aria-label={`Original price: ${game.price} dollars`}>
+        aria-label={`Original price: ${topGames.price} dollars`}>
         <Heading
           variant="h3"
           className="skew-x-[20deg] h-[50px] py-[10px] sm:py-[12px] px-[30px] line-through hidden sm:block">
-          {game.price}$
+          {topGames.price}$
         </Heading>
         <Heading
           variant="h2"
           className="skew-x-[20deg] h-[42px] py-[10px] sm:py-[12px] px-[4px] xs:px-[12px] line-through sm:hidden">
-          {game.price}$
+          {topGames.price}$
         </Heading>
       </div>
     ),
-    [game.price]
+    [topGames.price]
   );
 
   const DiscountBadgeBlock = useMemo(
     () => (
       <div
         className="skew-x-[-20deg] bg-sale rounded-[2px] flex justify-center items-center w-full md:w-auto"
-        aria-label={`Discount: ${game.discount}%`}>
+        aria-label={`Discount: ${topGames.discount}%`}>
         <Heading
           variant="h3"
           className="skew-x-[20deg] h-[52px] py-[10px] sm:py-[12px] px-[22px] md:px-[30px] hidden sm:block">
-          -{game.discount}%
+          -{topGames.discount}%
         </Heading>
         <Heading
           variant="h2"
           className="skew-x-[20deg] py-[10px] sm:py-[12px] h-[42px] px-[4px] xs:px-[20px] sm:hidden">
-          -{game.discount}%
+          -{topGames.discount}%
         </Heading>
       </div>
     ),
-    [game.discount]
+    [topGames.discount]
   );
 
   const renderPriceBlock = useCallback(() => {
@@ -196,13 +250,10 @@ const Banner: React.FC = () => {
 
     return (
       <div
-        className={`sm:absolute z-50 bottom-[0] sm:bottom-[20%] left-[6px] sm:left-[46px] xl:left-[115px] ${
-          discountPrice === null
-            ? "bodyCustom:left-[237px]"
-            : "bodyCustom:left-[157px]"
-        } max-w-[calc(100%-32px)] sm:max-w-[calc(100%-46px)] w-full xl:max-w-[800px] mx-auto ml-[32px] sm:ml-0`}
+        className={`sm:absolute z-50 bottom-[0] sm:bottom-[20%] ${dynamicLeft} max-w-[calc(100%-32px)] sm:max-w-[calc(100%-46px)] w-full xl:max-w-[800px] mx-auto  sm:ml-0`}
+        style={{ left: dynamicLeft }}
         aria-live="polite">
-        {game.discount && game.discount > 0 && !isDiscountExpired ? (
+        {topGames.discount && topGames.discount > 0 && !isDiscountExpired ? (
           <>
             {selectedVariant === 1 && (
               <div className="md:h-[52px] banner-grid w-full items-start justify-items-start gap-[8px] mx-auto">
@@ -222,7 +273,7 @@ const Banner: React.FC = () => {
                     <Button
                       variant="secondary"
                       className="max-w-[44px] sm:max-w-[64px] h-[42px] sm:h-[52px] flex items-center justify-center flex-shrink-0"
-                      onClick={() => updateQuantity(game.id, -1)}
+                      onClick={() => updateQuantity(topGames.id, -1)}
                       aria-label="Decrease quantity">
                       -
                     </Button>
@@ -234,7 +285,7 @@ const Banner: React.FC = () => {
                     <Button
                       variant="secondary"
                       className="max-w-[44px] sm:max-w-[64px] h-[42px] sm:h-[52px] flex items-center justify-center flex-shrink-0"
-                      onClick={() => updateQuantity(game.id, 1)}
+                      onClick={() => updateQuantity(topGames.id, 1)}
                       aria-label="Increase quantity">
                       +
                     </Button>
@@ -244,7 +295,7 @@ const Banner: React.FC = () => {
                     variant="primary"
                     className="w-full lg:w-[360px] ml-0 whitespace-nowrap"
                     onClick={addToCart}
-                    aria-label={`Add ${game.title} to cart`}>
+                    aria-label={`Add ${topGames.title} to cart`}>
                     Add to cart
                   </Button>
                 )}
@@ -275,7 +326,7 @@ const Banner: React.FC = () => {
                       <Button
                         variant="secondary"
                         className="max-w-[44px] sm:max-w-[64px] h-[42px] sm:h-[52px] flex items-center justify-center flex-shrink-0"
-                        onClick={() => updateQuantity(game.id, -1)}
+                        onClick={() => updateQuantity(topGames.id, -1)}
                         aria-label="Decrease quantity">
                         -
                       </Button>
@@ -287,7 +338,7 @@ const Banner: React.FC = () => {
                       <Button
                         variant="secondary"
                         className="max-w-[44px] sm:max-w-[64px] h-[42px] sm:h-[52px] flex items-center justify-center flex-shrink-0"
-                        onClick={() => updateQuantity(game.id, 1)}
+                        onClick={() => updateQuantity(topGames.id, 1)}
                         aria-label="Increase quantity">
                         +
                       </Button>
@@ -297,7 +348,7 @@ const Banner: React.FC = () => {
                       variant="primary"
                       className="sm:max-w-[216px] ml-0 whitespace-nowrap"
                       onClick={addToCart}
-                      aria-label={`Add ${game.title} to cart`}>
+                      aria-label={`Add ${topGames.title} to cart`}>
                       Add to cart
                     </Button>
                   )}
@@ -324,7 +375,7 @@ const Banner: React.FC = () => {
                     <Button
                       variant="secondary"
                       className="max-w-[64px] h-[48px] flex items-center justify-center flex-shrink-0"
-                      onClick={() => updateQuantity(game.id, -1)}
+                      onClick={() => updateQuantity(topGames.id, -1)}
                       aria-label="Decrease quantity">
                       -
                     </Button>
@@ -336,7 +387,7 @@ const Banner: React.FC = () => {
                     <Button
                       variant="secondary"
                       className="max-w-[64px] h-[48px] flex items-center justify-center flex-shrink-0"
-                      onClick={() => updateQuantity(game.id, 1)}
+                      onClick={() => updateQuantity(topGames.id, 1)}
                       aria-label="Increase quantity">
                       +
                     </Button>
@@ -346,7 +397,7 @@ const Banner: React.FC = () => {
                     variant="primary"
                     className="sm:max-w-[calc(100%-20px)]"
                     onClick={addToCart}
-                    aria-label={`Add ${game.title} to cart`}>
+                    aria-label={`Add ${topGames.title} to cart`}>
                     Add to cart
                   </Button>
                 )}
@@ -377,7 +428,7 @@ const Banner: React.FC = () => {
                     <Button
                       variant="secondary"
                       className="max-w-[64px] h-[48px] flex items-center justify-center flex-shrink-0"
-                      onClick={() => updateQuantity(game.id, -1)}
+                      onClick={() => updateQuantity(topGames.id, -1)}
                       aria-label="Decrease quantity">
                       -
                     </Button>
@@ -389,7 +440,7 @@ const Banner: React.FC = () => {
                     <Button
                       variant="secondary"
                       className="max-w-[64px] h-[48px] flex items-center justify-center flex-shrink-0"
-                      onClick={() => updateQuantity(game.id, 1)}
+                      onClick={() => updateQuantity(topGames.id, 1)}
                       aria-label="Increase quantity">
                       +
                     </Button>
@@ -399,7 +450,7 @@ const Banner: React.FC = () => {
                     variant="primary"
                     className="max-w-[calc(100%-20px)] sm:max-w-[100%]"
                     onClick={addToCart}
-                    aria-label={`Add ${game.title} to cart`}>
+                    aria-label={`Add ${topGames.title} to cart`}>
                     Add to cart
                   </Button>
                 )}
@@ -424,7 +475,7 @@ const Banner: React.FC = () => {
                     <Button
                       variant="secondary"
                       className="max-w-[64px] xs:max-w-[44px] sm:max-w-[64px] h-[42px] sm:h-[52px] flex items-center justify-center flex-shrink-0"
-                      onClick={() => updateQuantity(game.id, -1)}
+                      onClick={() => updateQuantity(topGames.id, -1)}
                       aria-label="Decrease quantity">
                       -
                     </Button>
@@ -436,7 +487,7 @@ const Banner: React.FC = () => {
                     <Button
                       variant="secondary"
                       className="max-w-[64px] xs:max-w-[44px] sm:max-w-[64px] h-[42px] sm:h-[52px] flex items-center justify-center flex-shrink-0"
-                      onClick={() => updateQuantity(game.id, 1)}
+                      onClick={() => updateQuantity(topGames.id, 1)}
                       aria-label="Increase quantity">
                       +
                     </Button>
@@ -446,7 +497,7 @@ const Banner: React.FC = () => {
                     variant="primary"
                     className="max-w-[362px] ml-0 whitespace-nowrap"
                     onClick={addToCart}
-                    aria-label={`Add ${game.title} to cart`}>
+                    aria-label={`Add ${topGames.title} to cart`}>
                     Add to cart
                   </Button>
                 )}
@@ -457,16 +508,16 @@ const Banner: React.FC = () => {
           <div className="grid grid-cols-2 justify-center sm:flex gap-[8px] w-full sm:ml-0 sm:justify-start">
             <div
               className="skew-x-[-20deg] h-[42px] sm:h-[52px] border-[1px] border-primary-main rounded-[2px] flex justify-center items-center"
-              aria-label={`Price: ${game.price} dollars`}>
+              aria-label={`Price: ${topGames.price} dollars`}>
               <Heading
                 variant="h3"
                 className="skew-x-[20deg] p-[12px] hidden sm:block">
-                {game.price}$
+                {topGames.price}$
               </Heading>
               <Heading
                 variant="h2"
                 className="skew-x-[20deg] p-[12px] block sm:hidden">
-                {game.price}$
+                {topGames.price}$
               </Heading>
             </div>
             {isInCart ? (
@@ -474,7 +525,7 @@ const Banner: React.FC = () => {
                 <Button
                   variant="secondary"
                   className="max-w-[44px] sm:max-w-[64px] h-[42px] sm:h-[52px] flex items-center justify-center flex-shrink-0"
-                  onClick={() => updateQuantity(game.id, -1)}
+                  onClick={() => updateQuantity(topGames.id, -1)}
                   aria-label="Decrease quantity">
                   -
                 </Button>
@@ -486,7 +537,7 @@ const Banner: React.FC = () => {
                 <Button
                   variant="secondary"
                   className="max-w-[44px] sm:max-w-[64px] h-[42px] sm:h-[52px] flex items-center justify-center flex-shrink-0"
-                  onClick={() => updateQuantity(game.id, 1)}
+                  onClick={() => updateQuantity(topGames.id, 1)}
                   aria-label="Increase quantity">
                   +
                 </Button>
@@ -496,7 +547,7 @@ const Banner: React.FC = () => {
                 variant="primary"
                 className="sm:max-w-[216px] ml-0"
                 onClick={addToCart}
-                aria-label={`Add ${game.title} to cart`}>
+                aria-label={`Add ${topGames.title} to cart`}>
                 Add to cart
               </Button>
             )}
@@ -507,27 +558,33 @@ const Banner: React.FC = () => {
   }, [
     cartQuantity,
     discountPrice,
-    game.id,
-    game.title,
-    game.price,
-    game.discount,
+    topGames.id,
+    topGames.title,
+    topGames.price,
+    topGames.discount,
     selectedVariant,
     isDiscountExpired,
     addToCart,
     updateQuantity,
     PriceOriginalBlock,
     DiscountBadgeBlock,
+    dynamicLeft,
   ]);
 
   if (loading) {
     return (
       <section
-        className="relative banner__container w-full mx-auto"
+        className="relative banner__container w-[100vw] sm:bg-dark"
+        style={{ marginLeft: dynamicMargin, marginRight: dynamicMargin }}
         aria-label="Banner loading">
-        <div className="relative banner mx-auto mb-[32px] sm:mb-0">
+        <div
+          className="relative banner mx-auto max-w-[1920px]"
+          style={{ paddingLeft: dynamicPadding, paddingRight: dynamicPadding }}>
           <div className="skeleton skeleton-image" />
         </div>
-        <div className="sm:absolute z-50 bottom-[0] sm:bottom-[20%] left-[6px] sm:left-[46px] xl:left-[115px] max-w-[calc(100%-32px)] sm:max-w-[calc(100%-46px)] w-full xl:max-w-[800px] mx-auto ml-[32px] sm:ml-0">
+        <div
+          className="sm:absolute z-50 bottom-[0] sm:bottom-[20%] left-[6px] sm:left-[46px] xl:left-[115px] max-w-[calc(100%-32px)] sm:max-w-[calc(100%-46px)] w-full xl:max-w-[800px] mx-auto ml-[32px] sm:ml-0"
+          aria-live="polite">
           <div className="banner-grid w-full items-start justify-items-start gap-[8px] mx-auto">
             <div className="skeleton skeleton-price" />
             <div className="skeleton skeleton-price" />
@@ -541,27 +598,28 @@ const Banner: React.FC = () => {
 
   return (
     <section
-      className="relative banner__container w-full mx-auto"
+      className="relative banner sm:bg-dark"
+      style={{ marginLeft: dynamicMargin, marginRight: dynamicMargin }}
       aria-label="Game Banner">
-      <article className="relative banner mx-auto mb-[32px] sm:mb-0">
+      <div className="relative mx-auto max-w-[1920px]">
         <Link
-          href={`/all-games/${game.id}`}
-          title={`View ${game.title} details`}
-          aria-label={`View ${game.title} details`}>
-          <div className="relative w-full aspect-[1920/806] min-h-[216px] sm:min-h-[360px]">
+          href={`/all-games/${topGames.id}`}
+          title={`View ${topGames.title} details`}
+          aria-label={`View ${topGames.title} details`}>
+          <div className="relative banner-img max-w-[1608px] mx-auto w-full aspect-[1608/440] h-[216px] sm:h-[440px] md:h-[440px]">
             <Image
               src={imageSrc}
-              alt={game.title || "Game Banner"}
-              width={1920}
-              height={806}
-              className="w-full h-full object-cover"
+              alt={topGames.title || "Game Banner"}
+              width={1608}
+              height={440}
+              className="max-w-[1608px] w-full mx-auto h-[216px] sm:h-[440px] md:h-[440px] object-cover no-drag"
               priority
-              sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 33vw"
+              quality={100}
               onError={() => setImageSrc("/images/no-image.jpg")}
             />
           </div>
         </Link>
-      </article>
+      </div>
       {renderPriceBlock()}
     </section>
   );

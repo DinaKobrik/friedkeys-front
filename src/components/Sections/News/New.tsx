@@ -108,8 +108,8 @@ const New: React.FC<NewProps> = ({
           <Image
             src={imageSrc}
             alt={news.title}
-            width={300}
-            height={200}
+            width={1200}
+            height={800}
             className="w-full h-full object-cover rounded-[2px]"
             onError={() => setImageSrc("/images/no-image.jpg")}
           />

@@ -159,7 +159,7 @@ const CartContent: React.FC = () => {
   const [newQuantity, setNewQuantity] = useState(0);
   const [isMinimum, setIsMinimum] = useState(false);
   const [isOneLine, setIsOneLine] = useState<{ [key: string]: boolean }>({});
-  const gamesPerPage = 5; // Добавляем константу
+  const gamesPerPage = 5;
 
   const quantityRefs = useRef<{ [key: string]: HTMLInputElement | null }>({});
   const infoRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});

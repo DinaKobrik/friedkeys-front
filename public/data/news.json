@@ -2,7 +2,7 @@
   {
     "id": 1,
     "gameId": 1,
-    "image": "/images/game1.png",
+    "image": "/images/games/game1.jpeg",
     "title": "Exciting Update for Very very very very very very loooooooooooooong name Game 1",
     "description": "A major update has been released, adding new levels and features. Players are thrilled! A major update has been released, adding new levels and features. Players are thrilled! A major update has been released, adding new levels and features. Players are thrilled! A major update has been released, adding new levels and features. Players are thrilled! A major update has been released, adding new levels and features. Players are thrilled! A major update has been released, adding new levels and features. Players are thrilled!",
     "date": "2025-08-29",
@@ -21,7 +21,7 @@
   {
     "id": 2,
     "gameId": 2,
-    "image": "/images/game2.png",
+    "image": "/images/games/game2.jpeg",
     "title": "New DLC Announced for Game 2",
     "description": "Get ready for an exciting new DLC with additional content and challenges.",
     "date": "2025-08-28",
@@ -39,7 +39,7 @@
   {
     "id": 3,
     "gameId": 3,
-    "image": "/images/game3.png",
+    "image": "/images/games/game3.png",
     "title": "Game 3 Community Event",
     "description": "Join us for a special community event with exclusive rewards Join us for a special community event with exclusive rewards! Join us for a special community event with exclusive rewards! Join us for a special community event with exclusive rewards!!",
     "date": "2025-08-27",
@@ -56,7 +56,7 @@
   {
     "id": 4,
     "gameId": 4,
-    "image": "/images/game4.png",
+    "image": "/images/games/game4.png",
     "title": "Patch Notes for Game 4",
     "description": "Check out the latest patch notes with bug fixes and improvements.",
     "date": "2025-08-26",
@@ -73,7 +73,7 @@
   {
     "id": 5,
     "gameId": 5,
-    "image": "/images/game5.png",
+    "image": "/images/games/game5.png",
     "title": "Game 5 Goes Free-to-Play",
     "description": "Exciting news! Game 5 is now free-to-play for all users.",
     "date": "2025-08-25",
@@ -90,7 +90,7 @@
   {
     "id": 6,
     "gameId": 6,
-    "image": "/images/game6.png",
+    "image": "/images/games/game6.png",
     "title": "New Skins in Game 6",
     "description": "New cosmetic skins are now available for purchase in Game 6.",
     "date": "2025-08-24",
@@ -107,7 +107,7 @@
   {
     "id": 7,
     "gameId": 7,
-    "image": "/images/game7.png",
+    "image": "/images/games/game7.png",
     "title": "Game 7 Tournament Announced",
     "description": "A global tournament for Game 7 is coming soon with big prizes!",
     "date": "2025-08-23",
@@ -124,7 +124,7 @@
   {
     "id": 8,
     "gameId": 8,
-    "image": "/images/game8.png",
+    "image": "/images/games/game8.png",
     "title": "Game 8 Beta Testing",
     "description": "Beta testing for Game 8 is now open to selected players.",
     "date": "2025-08-22",
@@ -141,7 +141,7 @@
   {
     "id": 9,
     "gameId": 9,
-    "image": "/images/game9.png",
+    "image": "/images/games/game9.png",
     "title": "Game 9 Performance Update",
     "description": "A performance update for Game 9 improves frame rates significantly.",
     "date": "2025-08-21",
@@ -151,7 +151,7 @@
   {
     "id": 10,
     "gameId": 10,
-    "image": "/images/game10.png",
+    "image": "/images/games/game10.png",
     "title": "Game 10 Anniversary Celebration",
     "description": "Celebrate the 1-year anniversary of Game 10 with special events!",
     "date": "2025-08-20",
@@ -167,7 +167,7 @@
   {
     "id": 11,
     "gameId": 11,
-    "image": "/images/game11.png",
+    "image": "/images/games/game11.png",
     "title": "New Mode in Game 11",
     "description": "A new game mode has been added to Game 11, offering fresh gameplay.",
     "date": "2025-08-19",
@@ -177,7 +177,7 @@
   {
     "id": 12,
     "gameId": 12,
-    "image": "/images/game12.png",
+    "image": "/images/games/game12.png",
     "title": "Game 12 Crossplay Update",
     "description": "Crossplay is now available for Game 12 across all platforms.",
     "date": "2025-08-18",
@@ -187,7 +187,7 @@
   {
     "id": 13,
     "gameId": 13,
-    "image": "/images/game13.png",
+    "image": "/images/games/game13.png",
     "title": "Game 13 Security Patch",
     "description": "A security patch for Game 13 addresses recent vulnerabilities.",
     "date": "2025-08-17",
@@ -203,7 +203,7 @@
   {
     "id": 14,
     "gameId": 14,
-    "image": "/images/game14.png",
+    "image": "/images/games/game14.png",
     "title": "Game 14 Expansion Pack",
     "description": "An expansion pack for Game 14 adds new regions to explore.",
     "date": "2025-08-16",
@@ -213,7 +213,7 @@
   {
     "id": 15,
     "gameId": 15,
-    "image": "/images/game15.png",
+    "image": "/images/games/game15.jpeg",
     "title": "Game 15 Community Feedback",
     "description": "We’ve incorporated community feedback into the latest Game 15 update.",
     "date": "2025-08-15",
@@ -223,7 +223,7 @@
   {
     "id": 16,
     "gameId": 16,
-    "image": "/images/game16.png",
+    "image": "/images/games/game16.png",
     "title": "Game 16 Esports Event",
     "description": "An esports event for Game 16 is scheduled for next month.",
     "date": "2025-08-14",
@@ -233,7 +233,7 @@
   {
     "id": 17,
     "gameId": 17,
-    "image": "/images/game17.png",
+    "image": "/images/games/game17.png",
     "title": "Game 17 Bug Fix",
     "description": "A bug fix update for Game 17 is now live.",
     "date": "2025-08-13",
@@ -243,7 +243,7 @@
   {
     "id": 18,
     "gameId": 18,
-    "image": "/images/game18.png",
+    "image": "/images/games/game18.png",
     "title": "Game 18 New Characters",
     "description": "New playable characters are now available in Game 18.",
     "date": "2025-08-12",
@@ -253,7 +253,7 @@
   {
     "id": 19,
     "gameId": 19,
-    "image": "/images/game19.png",
+    "image": "/images/games/game19.png",
     "title": "Game 19 Server Maintenance",
     "description": "Scheduled maintenance for Game 19 servers will occur tonight.",
     "date": "2025-08-11",
@@ -263,7 +263,7 @@
   {
     "id": 20,
     "gameId": 20,
-    "image": "/images/game20.png",
+    "image": "/images/games/game20.png",
     "title": "Game 20 Collaboration",
     "description": "Game 20 collaborates with a popular franchise for new content.",
     "date": "2025-08-10",
@@ -279,7 +279,7 @@
   {
     "id": 21,
     "gameId": 21,
-    "image": "/images/game21.png",
+    "image": "/images/games/game1.jpeg",
     "title": "Game 21 Performance Boost",
     "description": "A performance boost update for Game 21 is now available.",
     "date": "2025-08-09",
@@ -289,7 +289,7 @@
   {
     "id": 22,
     "gameId": 22,
-    "image": "/images/game22.png",
+    "image": "/images/games/game2.jpeg",
     "title": "Game 22 Limited Edition",
     "description": "A limited edition version of Game 22 is now on sale.",
     "date": "2025-08-08",
@@ -299,7 +299,7 @@
   {
     "id": 23,
     "gameId": 23,
-    "image": "/images/game23.png",
+    "image": "/images/games/game3.png",
     "title": "Game 23 Patch Notes",
     "description": "Check out the latest patch notes for Game 23.",
     "date": "2025-08-07",
@@ -309,7 +309,7 @@
   {
     "id": 24,
     "gameId": 24,
-    "image": "/images/game24.png",
+    "image": "/images/games/game4.png",
     "title": "Game 24 Community Day",
     "description": "Join the Game 24 Community Day for fun activities!",
     "date": "2025-08-06",
@@ -319,7 +319,7 @@
   {
     "id": 25,
     "gameId": 25,
-    "image": "/images/game25.png",
+    "image": "/images/games/game5.png",
     "title": "Game 25 New Update",
     "description": "A new update for Game 25 includes exciting features.",
     "date": "2025-08-05",
@@ -329,7 +329,7 @@
   {
     "id": 26,
     "gameId": 26,
-    "image": "/images/game26.png",
+    "image": "/images/games/game6.png",
     "title": "Game 26 Esports League",
     "description": "A new esports league for Game 26 is launching soon.",
     "date": "2025-08-04",
@@ -339,7 +339,7 @@
   {
     "id": 27,
     "gameId": 27,
-    "image": "/images/game27.png",
+    "image": "/images/games/game7.png",
     "title": "Game 27 Balance Patch",
     "description": "A balance patch for Game 27 is now live.",
     "date": "2025-08-03",
@@ -349,7 +349,7 @@
   {
     "id": 28,
     "gameId": 28,
-    "image": "/images/game28.png",
+    "image": "/images/games/game8.png",
     "title": "Game 28 Anniversary",
     "description": "Celebrate the 2-year anniversary of Game 28 with events!",
     "date": "2025-08-02",
@@ -359,7 +359,7 @@
   {
     "id": 29,
     "gameId": 29,
-    "image": "/images/game29.png",
+    "image": "/images/games/game9.png",
     "title": "Game 29 New DLC",
     "description": "A new DLC for Game 29 is available for purchase.",
     "date": "2025-08-01",
@@ -369,7 +369,7 @@
   {
     "id": 30,
     "gameId": 30,
-    "image": "/images/game30.png",
+    "image": "/images/games/game10.png",
     "title": "Game 30 Beta Launch",
     "description": "The beta version of Game 30 is now open to players.",
     "date": "2025-07-31",
@@ -379,7 +379,7 @@
   {
     "id": 31,
     "gameId": 31,
-    "image": "/images/game31.png",
+    "image": "/images/games/game11.png",
     "title": "Game 31 Major Overhaul",
     "description": "A major overhaul for Game 31 brings a complete redesign and new mechanics.",
     "date": "2025-07-30",
@@ -397,7 +397,7 @@
   {
     "id": 32,
     "gameId": 32,
-    "image": "/images/game32.png",
+    "image": "/images/games/game12.png",
     "title": "Game 32 New Expansion",
     "description": "A new expansion for Game 32 introduces unexplored territories.",
     "date": "2025-07-29",
@@ -413,7 +413,7 @@
   {
     "id": 33,
     "gameId": 33,
-    "image": "/images/game33.png",
+    "image": "/images/games/game13.png",
     "title": "Game 33 Player Meetup",
     "description": "Join the Game 33 player meetup for exclusive in-game rewards.",
     "date": "2025-07-28",
@@ -430,7 +430,7 @@
   {
     "id": 34,
     "gameId": 34,
-    "image": "/images/game34.png",
+    "image": "/images/games/game14.png",
     "title": "Game 34 Bug Resolution",
     "description": "Latest bug resolution update for Game 34 improves stability.",
     "date": "2025-07-27",
@@ -440,7 +440,7 @@
   {
     "id": 35,
     "gameId": 35,
-    "image": "/images/game35.png",
+    "image": "/images/games/game15.jpeg",
     "title": "Game 35 Open Beta",
     "description": "Game 35 open beta is now available for all players to test.",
     "date": "2025-07-26",
@@ -450,7 +450,7 @@
   {
     "id": 36,
     "gameId": 36,
-    "image": "/images/game36.png",
+    "image": "/images/games/game16.png",
     "title": "Game 36 Cosmetic Pack",
     "description": "New cosmetic pack released for Game 36 with unique designs.",
     "date": "2025-07-25",
@@ -460,7 +460,7 @@
   {
     "id": 37,
     "gameId": 37,
-    "image": "/images/game37.png",
+    "image": "/images/games/game17.png",
     "title": "Game 37 World Championship",
     "description": "Game 37 World Championship is set to begin next week.",
     "date": "2025-07-24",
@@ -470,7 +470,7 @@
   {
     "id": 38,
     "gameId": 38,
-    "image": "/images/game38.png",
+    "image": "/images/games/game18.png",
     "title": "Game 38 Alpha Release",
     "description": "The alpha version of Game 38 is now available for testing.",
     "date": "2025-07-23",
@@ -480,7 +480,7 @@
   {
     "id": 39,
     "gameId": 39,
-    "image": "/images/game39.png",
+    "image": "/images/games/game19.png",
     "title": "Game 39 Optimization Patch",
     "description": "Optimization patch for Game 39 enhances performance.",
     "date": "2025-07-22",
@@ -496,7 +496,7 @@
   {
     "id": 40,
     "gameId": 40,
-    "image": "/images/game40.png",
+    "image": "/images/games/game20.png",
     "title": "Game 40 Birthday Bash",
     "description": "Celebrate Game 40's 3rd birthday with special events.",
     "date": "2025-07-21",
@@ -506,7 +506,7 @@
   {
     "id": 41,
     "gameId": 41,
-    "image": "/images/game41.png",
+    "image": "/images/games/game1.jpeg",
     "title": "Game 41 Multiplayer Mode",
     "description": "New multiplayer mode added to Game 41 for co-op play.",
     "date": "2025-07-20",
@@ -516,7 +516,7 @@
   {
     "id": 42,
     "gameId": 42,
-    "image": "/images/game42.png",
+    "image": "/images/games/game2.jpeg",
     "title": "Game 42 Cross-Platform",
     "description": "Cross-platform support now live for Game 42.",
     "date": "2025-07-19",
@@ -526,7 +526,7 @@
   {
     "id": 43,
     "gameId": 43,
-    "image": "/images/game43.png",
+    "image": "/images/games/game3.png",
     "title": "Game 43 Security Update",
     "description": "Security update for Game 43 fixes critical issues.",
     "date": "2025-07-18",
@@ -536,7 +536,7 @@
   {
     "id": 44,
     "gameId": 44,
-    "image": "/images/game44.png",
+    "image": "/images/games/game4.png",
     "title": "Game 44 New DLC Pack",
     "description": "New DLC pack for Game 44 adds exciting content.",
     "date": "2025-07-17",
@@ -546,7 +546,7 @@
   {
     "id": 45,
     "gameId": 45,
-    "image": "/images/game45.png",
+    "image": "/images/games/game5.png",
     "title": "Game 45 Community Input",
     "description": "Game 45 incorporates community input for its latest update.",
     "date": "2025-07-16",
@@ -562,7 +562,7 @@
   {
     "id": 46,
     "gameId": 46,
-    "image": "/images/game46.png",
+    "image": "/images/games/game6.png",
     "title": "Game 46 Esports Tournament",
     "description": "Esports tournament for Game 46 starts this weekend.",
     "date": "2025-07-15",
@@ -572,7 +572,7 @@
   {
     "id": 47,
     "gameId": 47,
-    "image": "/images/game47.png",
+    "image": "/images/games/game7.png",
     "title": "Game 47 Crash Fix",
     "description": "Crash fix update for Game 47 is now available.",
     "date": "2025-07-14",
@@ -582,7 +582,7 @@
   {
     "id": 48,
     "gameId": 48,
-    "image": "/images/game48.png",
+    "image": "/images/games/game8.png",
     "title": "Game 48 New Heroes",
     "description": "New heroes added to Game 48 for enhanced gameplay.",
     "date": "2025-07-13",
@@ -592,7 +592,7 @@
   {
     "id": 49,
     "gameId": 49,
-    "image": "/images/game49.png",
+    "image": "/images/games/game9.png",
     "title": "Game 49 Server Downtime",
     "description": "Scheduled downtime for Game 49 servers tonight.",
     "date": "2025-07-12",
@@ -602,7 +602,7 @@
   {
     "id": 50,
     "gameId": 50,
-    "image": "/images/game50.png",
+    "image": "/images/games/game10.png",
     "title": "Game 50 Partnership",
     "description": "Game 50 partners with a major brand for new content.",
     "date": "2025-07-11",
@@ -612,7 +612,7 @@
   {
     "id": 51,
     "gameId": 51,
-    "image": "/images/game51.png",
+    "image": "/images/games/game11.png",
     "title": "Game 51 Speed Boost",
     "description": "Speed boost update for Game 51 improves gameplay.",
     "date": "2025-07-10",
@@ -622,7 +622,7 @@
   {
     "id": 52,
     "gameId": 52,
-    "image": "/images/game52.png",
+    "image": "/images/games/game12.png",
     "title": "Game 52 Special Edition",
     "description": "Special edition of Game 52 now available for purchase.",
     "date": "2025-07-09",
@@ -632,7 +632,7 @@
   {
     "id": 53,
     "gameId": 53,
-    "image": "/images/game53.png",
+    "image": "/images/games/game13.png",
     "title": "Game 53 Patch Details",
     "description": "Detailed patch notes for Game 53 are now released.",
     "date": "2025-07-08",
@@ -642,7 +642,7 @@
   {
     "id": 54,
     "gameId": 54,
-    "image": "/images/game54.png",
+    "image": "/images/games/game14.png",
     "title": "Game 54 Fan Day",
     "description": "Game 54 Fan Day offers fun activities for players.",
     "date": "2025-07-07",
@@ -652,7 +652,7 @@
   {
     "id": 55,
     "gameId": 55,
-    "image": "/images/game55.png",
+    "image": "/images/games/game15.jpeg",
     "title": "Game 55 Feature Drop",
     "description": "New feature drop for Game 55 includes exciting additions.",
     "date": "2025-07-06",
@@ -662,7 +662,7 @@
   {
     "id": 56,
     "gameId": 56,
-    "image": "/images/game56.png",
+    "image": "/images/games/game16.png",
     "title": "Game 56 Pro League",
     "description": "Pro league for Game 56 launches with top players.",
     "date": "2025-07-05",
@@ -672,7 +672,7 @@
   {
     "id": 57,
     "gameId": 57,
-    "image": "/images/game57.png",
+    "image": "/images/games/game17.png",
     "title": "Game 57 Balance Adjustment",
     "description": "Balance adjustment update for Game 57 is now live.",
     "date": "2025-07-04",
@@ -682,7 +682,7 @@
   {
     "id": 58,
     "gameId": 58,
-    "image": "/images/game58.png",
+    "image": "/images/games/game18.png",
     "title": "Game 58 Milestone",
     "description": "Game 58 reaches a major milestone with new content.",
     "date": "2025-07-03",
@@ -698,7 +698,7 @@
   {
     "id": 59,
     "gameId": 59,
-    "image": "/images/game59.png",
+    "image": "/images/games/game19.png",
     "title": "Game 59 Extra DLC",
     "description": "Extra DLC for Game 59 adds more gameplay options.",
     "date": "2025-07-02",
@@ -708,7 +708,7 @@
   {
     "id": 60,
     "gameId": 60,
-    "image": "/images/game60.png",
+    "image": "/images/games/game20.png",
     "title": "Game 60 Early Access",
     "description": "Early access for Game 60 is now open to players.",
     "date": "2025-07-01",

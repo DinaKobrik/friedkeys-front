@@ -156,7 +156,7 @@ const GameCard: React.FC<GameCardProps> = ({
                   }`}>
                   DLS
                 </p>
-                <h3 className="font-medium text-white text-[14px] sm:text-[20px] leading-[17px] sm:leading-[24px] mb-[8px] sm:mb-[14px] h-[34px] sm:h-[51px] overflow-hidden">
+                <h3 className="font-medium text-white text-[14px] sm:text-[20px] leading-[17px] sm:leading-[24px] mb-[8px] sm:mb-[14px] h-[34px] sm:h-[47px] overflow-hidden">
                   {game.title}
                 </h3>
               </div>

@@ -101,7 +101,7 @@ export default function FavoritesComponent() {
       <Suspense fallback={<div aria-live="polite">Loading menu...</div>}>
         <AccountMenu activeLink="/auth/account/favorites" />
       </Suspense>
-      <section className="flex flex-col gap-[24px] sm:gap-[48px] mt-[40px] sm:mt-[80px]">
+      <section className="flex max-w-[1400px] mx-auto w-full flex-col gap-[24px] sm:gap-[48px] mt-[40px] sm:mt-[80px]">
         <div className="flex flex-col sm:flex-row justify-between items-center gap-[8px]">
           <Heading variant="h1" className="text-center sm:text-left">
             Favorites

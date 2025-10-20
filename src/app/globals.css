@@ -2,6 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  .blur-edges {
+    @apply absolute inset-0;
+    background: linear-gradient(
+      to right,
+      #000 0%,
+      #000 7%,
+      rgba(0, 0, 0, 0) 20%,
+      rgba(0, 0, 0, 0) 80%,
+      #000 93%,
+      #000 100%
+    );
+    opacity: 0.5;
+  }
+}
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -393,7 +409,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   position: absolute;
   top: 0;
   left: 0;
-  max-width: 1920px;
   width: calc(100vw - 17px);
   height: 100%;
   background: -webkit-linear-gradient(
@@ -414,13 +429,81 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     theme("colors.main") 93%,
     theme("colors.main") 100%
   );
-  background-size: 1920px auto;
+  z-index: 2;
+}
+.home__slider::after {
+  content: "";
+  display: none;
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: calc(100vw - 17px);
+  height: 100%;
+  background: -webkit-linear-gradient(
+    to right,
+    theme("colors.dark") 0%,
+    theme("colors.dark") 7%,
+    rgba(0, 0, 0, 0) 20%,
+    rgba(0, 0, 0, 0) 80%,
+    theme("colors.dark") 93%,
+    theme("colors.dark") 100%
+  );
+  background: linear-gradient(
+    to right,
+    theme("colors.dark") 0%,
+    theme("colors.dark") 7%,
+    rgba(0, 0, 0, 0) 20%,
+    rgba(0, 0, 0, 0) 80%,
+    theme("colors.dark") 93%,
+    theme("colors.dark") 100%
+  );
   z-index: 1;
 }
-
+@media (min-width: 1921px) {
+  .home__slider::after {
+    display: block;
+  }
+}
 @media (pointer: coarse) {
   .home__slider,
-  .home__slider::before {
+  .home__slider::before,
+  .home__slider::after {
     width: 100vw;
+  }
+}
+.home__slide-img::before {
+  content: "";
+  display: none;
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  max-width: 1608px;
+  width: 100%;
+  height: 100%;
+  background: -webkit-linear-gradient(
+    to right,
+    theme("colors.dark") 0%,
+    theme("colors.dark") 7%,
+    rgba(0, 0, 0, 0) 20%,
+    rgba(0, 0, 0, 0) 80%,
+    theme("colors.dark") 93%,
+    theme("colors.dark") 100%
+  );
+  background: linear-gradient(
+    to right,
+    theme("colors.dark") 0%,
+    theme("colors.dark") 7%,
+    rgba(0, 0, 0, 0) 20%,
+    rgba(0, 0, 0, 0) 80%,
+    theme("colors.dark") 93%,
+    theme("colors.dark") 100%
+  );
+  z-index: 1;
+}
+@media (min-width: 1608px) {
+  .home__slide-img::before {
+    display: block;
   }
 }

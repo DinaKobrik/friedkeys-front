@@ -19,7 +19,6 @@ const Slider: React.FC = () => {
   const [dynamicMargin, setDynamicMargin] = useState<string>("0px");
   const [dynamicPadding, setDynamicPadding] = useState<string>("0px");
   const [calculatedOffset, setCalculatedOffset] = useState<number>(146);
-  const [imageSrcs, setImageSrcs] = useState<string[]>([]);
   const [windowSize, setWindowSize] = useState<number>(
     typeof window !== "undefined" ? window.innerWidth : 0
   );
@@ -43,7 +42,7 @@ const Slider: React.FC = () => {
     } else if (windowWidth >= 1607 && windowWidth <= 1609) {
       calculatedOffset = 146;
       setDynamicMargin(`-${calculatedOffset}px`);
-    } else if (windowWidth > 1608 && windowWidth <= 1920) {
+    } else if (windowWidth > 1608) {
       calculatedOffset = isTouchDevice
         ? (windowWidth - scrollbarWidthValue - 1608) / 2
         : (windowWidth - scrollbarWidthValue - 1608) / 2;
@@ -77,16 +76,6 @@ const Slider: React.FC = () => {
         const data = await response.json();
         if (Array.isArray(data)) {
           setGames(data);
-          setImageSrcs(
-            data
-              .sort((a: Game, b: Game) => a.id - b.id)
-              .slice(0, 5)
-              .map((game: Game) =>
-                game.image && game.image.trim()
-                  ? game.image
-                  : "/images/no-image.jpg"
-              )
-          );
         } else {
           console.warn("Invalid games data format from API");
         }
@@ -107,11 +96,12 @@ const Slider: React.FC = () => {
 
   const topGames = useMemo(() => {
     return games
+      .filter((game: Game) => game.id >= 12)
       .sort((a: Game, b: Game) => a.id - b.id)
-      .slice(0, 5)
+      .slice(0, 3)
       .map((game: Game) => ({
         ...game,
-        image:
+        banner:
           game.image && game.image.trim() ? game.image : "/images/no-image.jpg",
       }));
   }, [games]);
@@ -241,106 +231,109 @@ const Slider: React.FC = () => {
 
   return (
     <section
-      key={windowSize}
-      className="mx-auto home__slider relative max-w-[1920px] overflow-hidden"
-      style={{ marginLeft: dynamicMargin, marginRight: dynamicMargin }}
-      aria-label="Game Slider Section">
-      {loading ? (
-        <p className="text-center py-10 text-gray-68" aria-live="polite">
-          Loading slider...
-        </p>
-      ) : topGames.length > 0 ? (
-        <div
-          className="relative overflow-hidden"
-          ref={sliderRef}
-          style={{
-            paddingLeft: dynamicPadding,
-            paddingRight: dynamicPadding,
-          }}>
-          <ul
-            className="flex transition-transform duration-500 ease-in-out"
-            ref={ulRef}
-            onMouseDown={handleDragStart}
-            onMouseUp={handleDragEnd}
-            onMouseLeave={handleDragEnd}
-            onTouchStart={handleDragStart}
-            onTouchEnd={handleDragEnd}
-            aria-label="Game slides">
-            {topGames.map((game: Game, index: number) => (
-              <li
-                key={index}
-                className="w-[100vw] home__slide flex-shrink-0"
-                style={{
-                  width: `calc(100vw - ${
-                    window.innerWidth - document.documentElement.clientWidth
-                  }px)`,
-                }}
-                aria-label={`Slide for ${game.title}`}>
-                <Link
-                  href={`/all-games/${game.id}`}
-                  className="w-full h-full"
-                  aria-label={`View game ${game.title}`}>
-                  <Image
-                    src={imageSrcs[index] || "/images/no-image.jpg"}
-                    alt={`Cover image for ${game.title}`}
-                    width={1920}
-                    height={880}
-                    className="w-full h-[216px] sm:h-[440px] md:h-[540px] xl:h-[880px] object-cover no-drag"
-                    loading="lazy"
-                    onError={() =>
-                      setImageSrcs((prev) => {
-                        const newSrcs = [...prev];
-                        newSrcs[index] = "/images/no-image.jpg";
-                        return newSrcs;
-                      })
-                    }
-                  />
-                </Link>
-              </li>
-            ))}
-          </ul>
-          <button
-            onClick={moveLeft}
-            className="absolute left-0 top-1/2 transform -translate-y-1/2 w-[64px] h-[64px] hidden md:flex justify-center items-center p-[16px] rounded-full bg-DLS backdrop-blur-[10px] z-10"
-            style={{ marginLeft: dynamicPadding }}
-            aria-label="Previous slide">
-            <svg
-              width="12"
-              height="22"
-              viewBox="0 0 12 22"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              aria-hidden="true">
-              <path
-                d="M10.6641 20.3334L1.33073 11.0001L10.6641 1.66675"
-                stroke="white"
-                strokeWidth="1.5"
-                strokeLinecap="square"
-              />
-            </svg>
-          </button>
-          <button
-            onClick={moveRight}
-            className="absolute right-0 top-1/2 transform -translate-y-1/2 w-[64px] h-[64px] hidden md:flex justify-center items-center p-[16px] rounded-full bg-DLS backdrop-blur-[10px] z-10"
-            style={{ marginRight: dynamicPadding }}
-            aria-label="Next slide">
-            <svg
-              width="12"
-              height="22"
-              viewBox="0 0 12 22"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              aria-hidden="true">
-              <path
-                d="M1.33588 1.66675L10.6693 11.0001L1.33588 20.3334"
-                stroke="white"
-                strokeWidth="1.5"
-                strokeLinecap="square"
-              />
-            </svg>
-          </button>
-        </div>
-      ) : null}
+      className="home__slider relative mx-auto bg-dark"
+      style={{ marginLeft: dynamicMargin, marginRight: dynamicMargin }}>
+      <div
+        key={windowSize}
+        className="mx-auto max-w-[1920px] overflow-hidden"
+        aria-label="Game Slider Section">
+        {loading ? (
+          <p className="text-center py-10 text-gray-68" aria-live="polite">
+            Loading slider...
+          </p>
+        ) : topGames.length > 0 ? (
+          <div
+            className="relative overflow-hidden"
+            ref={sliderRef}
+            style={{
+              paddingLeft: dynamicPadding,
+              paddingRight: dynamicPadding,
+            }}>
+            <ul
+              className="flex transition-transform duration-500 ease-in-out"
+              ref={ulRef}
+              onMouseDown={handleDragStart}
+              onMouseUp={handleDragEnd}
+              onMouseLeave={handleDragEnd}
+              onTouchStart={handleDragStart}
+              onTouchEnd={handleDragEnd}
+              aria-label="Game slides">
+              {topGames.map((game: Game, index: number) => (
+                <li
+                  key={index}
+                  className="w-[100vw] home__slide flex-shrink-0"
+                  style={{
+                    width: `calc(100vw - ${
+                      window.innerWidth - document.documentElement.clientWidth
+                    }px)`,
+                  }}
+                  aria-label={`Slide for ${game.title}`}>
+                  <Link
+                    href={`/all-games/${game.id}`}
+                    className="w-full h-full max-w-[1920px] block bg-dark relative"
+                    aria-label={`View game ${game.title}`}>
+                    <div className="relative home__slide-img max-w-[1608px] w-full h-full mx-auto">
+                      <Image
+                        src={game.image || "/images/no-image.jpg"}
+                        alt={`Banner image for ${game.title}`}
+                        width={1920}
+                        height={440}
+                        className="max-w-[1608px] w-full mx-auto h-[216px] sm:h-[440px] md:h-[440px] object-cover no-drag"
+                      />
+                    </div>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+            <button
+              onClick={moveLeft}
+              className="absolute top-1/2 transform -translate-y-1/2 w-[64px] h-[64px] hidden md:flex justify-center items-center p-[16px] rounded-full bg-DLS backdrop-blur-[10px] z-10"
+              style={{
+                left: windowSize > 1700 ? "50px" : dynamicPadding,
+                marginLeft: 0,
+              }}
+              aria-label="Previous slide">
+              <svg
+                width="12"
+                height="22"
+                viewBox="0 0 12 22"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true">
+                <path
+                  d="M10.6641 20.3334L1.33073 11.0001L10.6641 1.66675"
+                  stroke="white"
+                  strokeWidth="1.5"
+                  strokeLinecap="square"
+                />
+              </svg>
+            </button>
+            <button
+              onClick={moveRight}
+              className="absolute top-1/2 transform -translate-y-1/2 w-[64px] h-[64px] hidden md:flex justify-center items-center p-[16px] rounded-full bg-DLS backdrop-blur-[10px] z-10"
+              style={{
+                right: windowSize > 1700 ? "50px" : dynamicPadding,
+                marginRight: 0,
+              }}
+              aria-label="Next slide">
+              <svg
+                width="12"
+                height="22"
+                viewBox="0 0 12 22"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true">
+                <path
+                  d="M1.33588 1.66675L10.6693 11.0001L1.33588 20.3334"
+                  stroke="white"
+                  strokeWidth="1.5"
+                  strokeLinecap="square"
+                />
+              </svg>
+            </button>
+          </div>
+        ) : null}
+      </div>
     </section>
   );
 };

@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, forwardRef } from "react";
 import Heading from "@/components/ui/Heading";
 import Text from "@/components/ui/Text";
 import Button from "@/components/ui/Button";
@@ -7,34 +7,56 @@ import Textarea from "@/components/ui/Textarea";
 import Link from "next/link";
 
 // SVG для звездочки
-const StarIcon = ({
-  filled,
-  onClick,
-  isInvalid,
-}: {
-  filled: boolean;
-  onClick: () => void;
-  isInvalid: boolean;
-}) => (
-  <svg
-    className={`w-12 h-12 cursor-pointer ${
-      filled
-        ? "fill-primary-main stroke-primary-main"
-        : isInvalid
-        ? "stroke-red "
-        : "stroke-white"
-    } ${isInvalid && !filled ? "fill-none" : ""}`}
-    viewBox="0 0 45 43"
-    strokeWidth="3"
-    stroke="currentColor"
-    fill={filled ? undefined : "none"}
-    onClick={onClick}>
-    <path
-      d="M22.5 5.5L26.6535 18.2832H40.0945L29.2205 26.1836L33.374 38.9668L22.5 31.0664L11.626 38.9668L15.7795 26.1836L4.90545 18.2832H18.3465L22.5 5.5Z"
-      strokeLinecap="round"
-    />
-  </svg>
+const StarIcon = forwardRef<
+  SVGSVGElement,
+  {
+    filled: boolean;
+    onClick: () => void;
+    isInvalid: boolean;
+    onHover: () => void;
+    isHovered: boolean;
+    onFocus: () => void;
+    isFocused: boolean;
+  }
+>(
+  (
+    { filled, onClick, isInvalid, onHover, isHovered, onFocus, isFocused },
+    ref
+  ) => (
+    <svg
+      ref={ref}
+      tabIndex={0}
+      className={`w-12 h-12 cursor-pointer transition-all duration-300 ease-in-out transform hover:scale-110 outline-none focus:outline-none ${
+        filled
+          ? "fill-primary-main stroke-primary-main"
+          : isHovered || isFocused
+          ? "fill-primary-main stroke-primary-main drop-shadow-[0_0_10px_rgba(144,238,144,0.7)]"
+          : isInvalid
+          ? "stroke-red fill-none"
+          : "stroke-primary-main fill-none hover:fill-primary-main hover:stroke-primary-main"
+      }`}
+      viewBox="0 0 45 43"
+      strokeWidth="3"
+      stroke="currentColor"
+      onClick={onClick}
+      onMouseEnter={onHover}
+      onMouseLeave={() => onHover()}
+      onFocus={onFocus}
+      onKeyDown={(e) => {
+        if (e.key === " " || e.key === "Spacebar") {
+          e.preventDefault();
+          onClick();
+        }
+      }}>
+      <path
+        d="M22.5 5.5L26.6535 18.2832H40.0945L29.2205 26.1836L33.374 38.9668L22.5 31.0664L11.626 38.9668L15.7795 26.1836L4.90545 18.2832H18.3465L22.5 5.5Z"
+        strokeLinecap="round"
+      />
+    </svg>
+  )
 );
+
+StarIcon.displayName = "StarIcon";
 
 const FeedbackPage: React.FC = () => {
   const [rating, setRating] = useState<number | null>(null);
@@ -46,6 +68,9 @@ const FeedbackPage: React.FC = () => {
   const [isValidRating, setIsValidRating] = useState(true);
   const [showModal, setShowModal] = useState<boolean>(false);
   const [fadeOut, setFadeOut] = useState<boolean>(false);
+  const [hoveredStar, setHoveredStar] = useState<number | null>(null);
+  const [focusedStar, setFocusedStar] = useState<number | null>(null);
+  const starRefs = useRef<(SVGSVGElement | null)[]>([]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -102,6 +127,16 @@ const FeedbackPage: React.FC = () => {
     if (isTouchedRating && !isValidRating) {
       setIsValidRating(true);
     }
+    setHoveredStar(null);
+    setFocusedStar(null);
+  };
+
+  const handleStarHover = (star: number) => {
+    setHoveredStar(star);
+  };
+
+  const handleStarFocus = (star: number) => {
+    setFocusedStar(star);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -164,9 +199,21 @@ const FeedbackPage: React.FC = () => {
               {Array.from({ length: 5 }, (_, i) => i + 1).map((star) => (
                 <StarIcon
                   key={star}
+                  ref={(el) => {
+                    const index = star - 1;
+                    if (starRefs.current.length <= index) {
+                      starRefs.current = [...starRefs.current, el];
+                    } else {
+                      starRefs.current[index] = el;
+                    }
+                  }}
                   filled={rating !== null && star <= rating}
                   onClick={() => handleRatingChange(star)}
                   isInvalid={isTouchedRating && !isValidRating}
+                  onHover={() => handleStarHover(star)}
+                  isHovered={hoveredStar !== null && star <= hoveredStar}
+                  onFocus={() => handleStarFocus(star)}
+                  isFocused={focusedStar !== null && star <= focusedStar}
                 />
               ))}
             </div>

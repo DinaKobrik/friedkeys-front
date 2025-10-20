@@ -205,7 +205,9 @@ const GameEditionsSection: React.FC = () => {
   ];
 
   return (
-    <section aria-label="Game Editions Section">
+    <section
+      className="max-w-[1400px] w-full mx-auto"
+      aria-label="Game Editions Section">
       <Heading
         variant="h1"
         className="mb-[24px] sm:mb-[40px]"

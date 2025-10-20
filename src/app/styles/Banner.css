@@ -2,20 +2,16 @@
 .banner,
 .banner__container {
   width: calc(100vw - 17px);
-  max-width: 1920px;
 }
-.banner__container {
-  left: -16px;
-}
+
 .banner::before {
   content: "";
   pointer-events: none;
   position: absolute;
   top: 0;
   left: 0;
-  max-width: 1920px;
   width: calc(100vw - 17px);
-  height: 100%;
+  height: 216px;
   background: -webkit-linear-gradient(
     to bottom,
     theme("colors.main") 0%,
@@ -34,14 +30,11 @@
     theme("colors.main") 93%,
     theme("colors.main") 100%
   );
-  background-size: 1920px auto;
-  z-index: 1;
+  z-index: 2;
 }
-@media (max-width: 1920px) {
-  .banner,
-  .banner::before,
-  .banner__container {
-    max-width: 1700px;
+@media (min-width: 576px) {
+  .banner::before {
+    height: 100%;
   }
 }
 @media (pointer: coarse) {
@@ -51,31 +44,39 @@
     width: 100vw;
   }
 }
-@media (max-width: 1920px) {
-  .banner,
-  .banner::before,
-  .banner__container {
-    max-width: 1700px;
-  }
+.banner-img::after {
+  content: "";
+  display: none;
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  max-width: 1608px;
+  width: 100%;
+  height: 100%;
+  background: -webkit-linear-gradient(
+    to right,
+    theme("colors.dark") 0%,
+    theme("colors.dark") 7%,
+    rgba(0, 0, 0, 0) 20%,
+    rgba(0, 0, 0, 0) 80%,
+    theme("colors.dark") 93%,
+    theme("colors.dark") 100%
+  );
+  background: linear-gradient(
+    to right,
+    theme("colors.dark") 0%,
+    theme("colors.dark") 7%,
+    rgba(0, 0, 0, 0) 20%,
+    rgba(0, 0, 0, 0) 80%,
+    theme("colors.dark") 93%,
+    theme("colors.dark") 100%
+  );
+  z-index: 1;
 }
-@media (min-width: 576px) {
-  .banner__container {
-    left: -46px;
-  }
-}
-/* Десктоп  */
-@media (min-width: 1935px) and (hover: hover),
-  (min-width: 1935px) and (pointer: fine) {
-  .banner__container {
-    left: -156px;
-  }
-}
-
-/* Сенсорное устройство */
-@media (min-width: 1921px) and (hover: none),
-  (min-width: 1921px) and (pointer: coarse) {
-  .banner__container {
-    left: -156px;
+@media (min-width: 1608px) {
+  .banner-img::after {
+    display: block;
   }
 }
 

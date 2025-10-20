@@ -2,7 +2,7 @@
   {
     "id": 1,
     "title": "Very very very very very very very very very very very very loooooooooooooong name Game 1",
-    "image": "/images/game1.png",
+    "image": "/images/games/game1.jpeg",
     "price": 59.99,
     "discount": 20,
     "discountDate": "2025-08-16",
@@ -19,7 +19,7 @@
   {
     "id": 2,
     "title": "Game 2",
-    "image": "/images/game2.png",
+    "image": "/images/games/game2.jpeg",
     "price": 29.99,
     "discount": 0,
     "discountDate": "2024-07-15",
@@ -36,7 +36,7 @@
   {
     "id": 3,
     "title": "Game 3",
-    "image": "/images/game3.png",
+    "image": "/images/games/game3.png",
     "price": 49.99,
     "discount": 15,
     "discountDate": "2025-10-08",
@@ -53,7 +53,7 @@
   {
     "id": 4,
     "title": "Game 4",
-    "image": "/images/game4.png",
+    "image": "/images/games/game4.png",
     "price": 39.99,
     "discount": 10,
     "discountDate": "2025-10-09",
@@ -70,7 +70,7 @@
   {
     "id": 5,
     "title": "Game 5",
-    "image": "/images/game5.png",
+    "image": "/images/games/game5.png",
     "price": 69.99,
     "discount": 25,
     "discountDate": "2025-10-03",
@@ -87,7 +87,7 @@
   {
     "id": 6,
     "title": "Game 6",
-    "image": "/images/game6.jpg",
+    "image": "/images/games/game6.png",
     "price": 19.99,
     "discount": 0,
     "discountDate": "2024-06-20",
@@ -104,7 +104,7 @@
   {
     "id": 7,
     "title": "Game 7",
-    "image": "/images/game7.jpg",
+    "image": "/images/games/game7.png",
     "price": 79.99,
     "discount": 30,
     "discountDate": "2025-10-10",
@@ -121,7 +121,7 @@
   {
     "id": 8,
     "title": "Game 8",
-    "image": "/images/game8.jpg",
+    "image": "/images/games/game8.png",
     "price": 34.99,
     "discount": 5,
     "discountDate": "2025-10-11",
@@ -138,7 +138,7 @@
   {
     "id": 9,
     "title": "Game 9",
-    "image": "/images/game9.jpg",
+    "image": "/images/games/game9.png",
     "price": 44.99,
     "discount": 0,
     "discountDate": "2024-05-10",
@@ -155,7 +155,7 @@
   {
     "id": 10,
     "title": "Game 10",
-    "image": "/images/game10.jpg",
+    "image": "/images/games/game10.png",
     "price": 54.99,
     "discount": 15,
     "discountDate": "2025-10-12",
@@ -172,7 +172,7 @@
   {
     "id": 11,
     "title": "Game 11",
-    "image": "/images/game11.jpg",
+    "image": "/images/games/game11.png",
     "price": 29.99,
     "discount": 10,
     "discountDate": "2025-10-13",
@@ -189,7 +189,7 @@
   {
     "id": 12,
     "title": "Game 12",
-    "image": "/images/game12.jpg",
+    "image": "/images/games/game12.png",
     "price": 39.99,
     "discount": 0,
     "discountDate": "2024-04-15",
@@ -206,7 +206,7 @@
   {
     "id": 13,
     "title": "Game 13",
-    "image": "/images/game13.jpg",
+    "image": "/images/games/game13.png",
     "price": 64.99,
     "discount": 20,
     "discountDate": "2025-10-13",
@@ -223,7 +223,7 @@
   {
     "id": 14,
     "title": "Game 14",
-    "image": "/images/game14.jpg",
+    "image": "/images/games/game14.png",
     "price": 24.99,
     "discount": 5,
     "discountDate": "2025-11-15",
@@ -240,7 +240,7 @@
   {
     "id": 15,
     "title": "Game 15",
-    "image": "/images/game15.jpg",
+    "image": "/images/games/game15.jpeg",
     "price": 49.99,
     "discount": 15,
     "discountDate": "2025-11-16",
@@ -257,7 +257,7 @@
   {
     "id": 16,
     "title": "Game 16",
-    "image": "/images/game16.jpg",
+    "image": "/images/games/game16.png",
     "price": 34.99,
     "discount": 0,
     "discountDate": "2024-03-20",
@@ -274,7 +274,7 @@
   {
     "id": 17,
     "title": "Game 17",
-    "image": "/images/game17.jpg",
+    "image": "/images/games/game17.png",
     "price": 59.99,
     "discount": 25,
     "discountDate": "2025-11-22",
@@ -291,7 +291,7 @@
   {
     "id": 18,
     "title": "Game 18",
-    "image": "/images/game18.jpg",
+    "image": "/images/games/game18.png",
     "price": 19.99,
     "discount": 0,
     "discountDate": "2024-02-10",
@@ -308,7 +308,7 @@
   {
     "id": 19,
     "title": "Game 19",
-    "image": "/images/game19.jpg",
+    "image": "/images/games/game19.png",
     "price": 44.99,
     "discount": 10,
     "discountDate": "2025-11-27",
@@ -325,7 +325,7 @@
   {
     "id": 20,
     "title": "Game 20",
-    "image": "/images/game20.jpg",
+    "image": "/images/games/game20.png",
     "price": 54.99,
     "discount": 15,
     "discountDate": "2025-11-02",
@@ -342,7 +342,7 @@
   {
     "id": 21,
     "title": "Game 21",
-    "image": "/images/game21.jpg",
+    "image": "/images/games/game1.jpeg",
     "price": 39.99,
     "discount": 5,
     "discountDate": "2025-11-08",
@@ -359,7 +359,7 @@
   {
     "id": 22,
     "title": "Game 22",
-    "image": "/images/game22.jpg",
+    "image": "/images/games/game2.jpeg",
     "price": 69.99,
     "discount": 20,
     "discountDate": "2025-11-13",
@@ -376,7 +376,7 @@
   {
     "id": 23,
     "title": "Game 23",
-    "image": "/images/game23.jpg",
+    "image": "/images/games/game3.png",
     "price": 24.99,
     "discount": 0,
     "discountDate": "2024-01-15",
@@ -393,7 +393,7 @@
   {
     "id": 24,
     "title": "Game 24",
-    "image": "/images/game24.jpg",
+    "image": "/images/games/game4.png",
     "price": 49.99,
     "discount": 10,
     "discountDate": "2025-11-18",
@@ -410,7 +410,7 @@
   {
     "id": 25,
     "title": "Game 25",
-    "image": "/images/game25.jpg",
+    "image": "/images/games/game5.png",
     "price": 59.99,
     "discount": 15,
     "discountDate": "2025-11-23",
@@ -427,7 +427,7 @@
   {
     "id": 26,
     "title": "Game 26",
-    "image": "/images/game26.jpg",
+    "image": "/images/games/game6.png",
     "price": 34.99,
     "discount": 5,
     "discountDate": "2025-11-28",
@@ -444,7 +444,7 @@
   {
     "id": 27,
     "title": "Game 27",
-    "image": "/images/game27.jpg",
+    "image": "/images/games/game7.png",
     "price": 79.99,
     "discount": 25,
     "discountDate": "2025-11-04",
@@ -461,7 +461,7 @@
   {
     "id": 28,
     "title": "Game 28",
-    "image": "/images/game28.jpg",
+    "image": "/images/games/game8.png",
     "price": 29.99,
     "discount": 0,
     "discountDate": "2024-03-01",
@@ -478,7 +478,7 @@
   {
     "id": 29,
     "title": "Game 29",
-    "image": "/images/game29.jpg",
+    "image": "/images/games/game9.png",
     "price": 44.99,
     "discount": 10,
     "discountDate": "2025-11-09",
@@ -495,7 +495,7 @@
   {
     "id": 30,
     "title": "Game 30",
-    "image": "/images/game30.jpg",
+    "image": "/images/games/game10.png",
     "price": 54.99,
     "discount": 15,
     "discountDate": "2025-11-14",
@@ -512,7 +512,7 @@
   {
     "id": 31,
     "title": "Game 31",
-    "image": "/images/game31.jpg",
+    "image": "/images/games/game11.png",
     "price": 39.99,
     "discount": 5,
     "discountDate": "2025-11-19",
@@ -529,7 +529,7 @@
   {
     "id": 32,
     "title": "Game 32",
-    "image": "/images/game32.jpg",
+    "image": "/images/games/game12.png",
     "price": 69.99,
     "discount": 20,
     "discountDate": "2025-11-24",
@@ -546,7 +546,7 @@
   {
     "id": 33,
     "title": "Game 33",
-    "image": "/images/game33.jpg",
+    "image": "/images/games/game13.png",
     "price": 24.99,
     "discount": 0,
     "discountDate": "2024-02-20",
@@ -563,7 +563,7 @@
   {
     "id": 34,
     "title": "Game 34",
-    "image": "/images/game34.jpg",
+    "image": "/images/games/game14.png",
     "price": 49.99,
     "discount": 10,
     "discountDate": "2025-11-29",
@@ -580,7 +580,7 @@
   {
     "id": 35,
     "title": "Game 35",
-    "image": "/images/game35.jpg",
+    "image": "/images/games/game15.jpeg",
     "price": 59.99,
     "discount": 15,
     "discountDate": "2025-11-06",
@@ -597,7 +597,7 @@
   {
     "id": 36,
     "title": "Game 36",
-    "image": "/images/game36.jpg",
+    "image": "/images/games/game16.png",
     "price": 34.99,
     "discount": 5,
     "discountDate": "2025-11-11",
@@ -614,7 +614,7 @@
   {
     "id": 37,
     "title": "Game 37",
-    "image": "/images/game37.jpg",
+    "image": "/images/games/game17.png",
     "price": 79.99,
     "discount": 25,
     "discountDate": "2025-11-16",
@@ -631,7 +631,7 @@
   {
     "id": 38,
     "title": "Game 38",
-    "image": "/images/game38.jpg",
+    "image": "/images/games/game18.png",
     "price": 29.99,
     "discount": 0,
     "discountDate": "2024-01-30",
@@ -648,7 +648,7 @@
   {
     "id": 39,
     "title": "Game 39",
-    "image": "/images/game39.jpg",
+    "image": "/images/games/game19.png",
     "price": 44.99,
     "discount": 10,
     "discountDate": "2025-11-21",
@@ -665,7 +665,7 @@
   {
     "id": 40,
     "title": "Game 40",
-    "image": "/images/game40.jpg",
+    "image": "/images/games/game20.png",
     "price": 54.99,
     "discount": 15,
     "discountDate": "2025-11-26",
@@ -682,7 +682,7 @@
   {
     "id": 41,
     "title": "Game 41",
-    "image": "/images/game41.jpg",
+    "image": "/images/games/game1.jpeg",
     "price": 39.99,
     "discount": 5,
     "discountDate": "2025-11-31",
@@ -699,7 +699,7 @@
   {
     "id": 42,
     "title": "Game 42",
-    "image": "/images/game42.jpg",
+    "image": "/images/games/game2.jpeg",
     "price": 69.99,
     "discount": 20,
     "discountDate": "2025-11-03",
@@ -716,7 +716,7 @@
   {
     "id": 43,
     "title": "Game 43",
-    "image": "/images/game43.jpg",
+    "image": "/images/games/game3.png",
     "price": 24.99,
     "discount": 0,
     "discountDate": "2023-12-10",
@@ -733,7 +733,7 @@
   {
     "id": 44,
     "title": "Game 44",
-    "image": "/images/game44.jpg",
+    "image": "/images/games/game4.png",
     "price": 49.99,
     "discount": 10,
     "discountDate": "2025-11-08",
@@ -750,7 +750,7 @@
   {
     "id": 45,
     "title": "Game 45",
-    "image": "/images/game45.jpg",
+    "image": "/images/games/game5.png",
     "price": 59.99,
     "discount": 15,
     "discountDate": "2025-11-13",
@@ -767,7 +767,7 @@
   {
     "id": 46,
     "title": "Game 46",
-    "image": "/images/game46.jpg",
+    "image": "/images/games/game6.png",
     "price": 34.99,
     "discount": 5,
     "discountDate": "2025-11-18",
@@ -784,7 +784,7 @@
   {
     "id": 47,
     "title": "Game 47",
-    "image": "/images/game47.jpg",
+    "image": "/images/games/game7.png",
     "price": 79.99,
     "discount": 25,
     "discountDate": "2025-11-23",
@@ -801,7 +801,7 @@
   {
     "id": 48,
     "title": "Game 48",
-    "image": "/images/game48.jpg",
+    "image": "/images/games/game8.png",
     "price": 29.99,
     "discount": 0,
     "discountDate": "2024-01-05",
@@ -818,7 +818,7 @@
   {
     "id": 49,
     "title": "Game 49",
-    "image": "/images/game49.jpg",
+    "image": "/images/games/game9.png",
     "price": 44.99,
     "discount": 10,
     "discountDate": "2025-11-28",
@@ -835,7 +835,7 @@
   {
     "id": 50,
     "title": "Game 50",
-    "image": "",
+    "image": "/images/games/game10.png",
     "price": 54.99,
     "discount": 15,
     "discountDate": "2025-11-01",
@@ -852,7 +852,7 @@
   {
     "id": 51,
     "title": "Game 51",
-    "image": "/images/game51.jpg",
+    "image": "/images/games/game11.png",
     "price": 39.99,
     "discount": 5,
     "discountDate": "2025-11-06",
@@ -869,7 +869,7 @@
   {
     "id": 52,
     "title": "Game 52",
-    "image": "/images/game52.jpg",
+    "image": "/images/games/game12.png",
     "price": 69.99,
     "discount": 20,
     "discountDate": "2025-11-11",
@@ -886,7 +886,7 @@
   {
     "id": 53,
     "title": "Game 53",
-    "image": "/images/game53.jpg",
+    "image": "/images/games/game13.png",
     "price": 24.99,
     "discount": 0,
     "discountDate": "2024-02-25",
@@ -903,7 +903,7 @@
   {
     "id": 54,
     "title": "Game 54",
-    "image": "/images/game54.jpg",
+    "image": "/images/games/game14.png",
     "price": 49.99,
     "discount": 10,
     "discountDate": "2025-11-16",
@@ -920,7 +920,7 @@
   {
     "id": 55,
     "title": "Game 55",
-    "image": "/images/game55.jpg",
+    "image": "/images/games/game15.jpeg",
     "price": 59.99,
     "discount": 15,
     "discountDate": "2025-11-21",
@@ -937,7 +937,7 @@
   {
     "id": 56,
     "title": "Game 56",
-    "image": "/images/game56.jpg",
+    "image": "/images/games/game16.png",
     "price": 34.99,
     "discount": 5,
     "discountDate": "2025-11-26",
@@ -954,7 +954,7 @@
   {
     "id": 57,
     "title": "Game 57",
-    "image": "/images/game57.jpg",
+    "image": "/images/games/game17.png",
     "price": 79.99,
     "discount": 25,
     "discountDate": "2025-11-01",
@@ -971,7 +971,7 @@
   {
     "id": 58,
     "title": "Game 58",
-    "image": "/images/game58.jpg",
+    "image": "/images/games/game18.png",
     "price": 29.99,
     "discount": 0,
     "discountDate": "2024-03-15",
@@ -988,7 +988,7 @@
   {
     "id": 59,
     "title": "Game 59",
-    "image": "/images/game59.jpg",
+    "image": "/images/games/game19.png",
     "price": 44.99,
     "discount": 10,
     "discountDate": "2025-11-06",
@@ -1005,7 +1005,7 @@
   {
     "id": 60,
     "title": "Game 60",
-    "image": "/images/game60.jpg",
+    "image": "/images/games/game20.png",
     "price": 54.99,
     "discount": 15,
     "discountDate": "2025-11-11",
@@ -1022,7 +1022,7 @@
   {
     "id": 61,
     "title": "Game 61",
-    "image": "/images/game61.jpg",
+    "image": "/images/games/game1.jpeg",
     "price": 39.99,
     "discount": 5,
     "discountDate": "2025-11-16",
@@ -1039,7 +1039,7 @@
   {
     "id": 62,
     "title": "Game 62",
-    "image": "/images/game62.jpg",
+    "image": "/images/games/game2.jpeg",
     "price": 69.99,
     "discount": 20,
     "discountDate": "2025-11-21",
@@ -1056,7 +1056,7 @@
   {
     "id": 63,
     "title": "Game 63",
-    "image": "/images/game63.jpg",
+    "image": "/images/games/game3.png",
     "price": 24.99,
     "discount": 0,
     "discountDate": "2024-04-01",
@@ -1073,7 +1073,7 @@
   {
     "id": 64,
     "title": "Game 64",
-    "image": "/images/game64.jpg",
+    "image": "/images/games/game4.png",
     "price": 49.99,
     "discount": 10,
     "discountDate": "2025-11-26",
@@ -1090,7 +1090,7 @@
   {
     "id": 65,
     "title": "Game 65",
-    "image": "/images/game65.jpg",
+    "image": "/images/games/game5.png",
     "price": 59.99,
     "discount": 15,
     "discountDate": "2025-11-01",
@@ -1107,7 +1107,7 @@
   {
     "id": 66,
     "title": "Game 66",
-    "image": "/images/game66.jpg",
+    "image": "/images/games/game6.png",
     "price": 34.99,
     "discount": 5,
     "discountDate": "2025-11-06",
@@ -1124,7 +1124,7 @@
   {
     "id": 67,
     "title": "Game 67",
-    "image": "/images/game67.jpg",
+    "image": "/images/games/game7.png",
     "price": 79.99,
     "discount": 25,
     "discountDate": "2025-11-11",
@@ -1141,7 +1141,7 @@
   {
     "id": 68,
     "title": "Game 68",
-    "image": "/images/game68.jpg",
+    "image": "/images/games/game8.png",
     "price": 29.99,
     "discount": 0,
     "discountDate": "2024-03-20",
@@ -1158,7 +1158,7 @@
   {
     "id": 69,
     "title": "Game 69",
-    "image": "/images/game69.jpg",
+    "image": "/images/games/game9.png",
     "price": 44.99,
     "discount": 10,
     "discountDate": "2025-11-16",
@@ -1175,7 +1175,7 @@
   {
     "id": 70,
     "title": "Game 70",
-    "image": "/images/game70.jpg",
+    "image": "/images/games/game10.png",
     "price": 54.99,
     "discount": 15,
     "discountDate": "2025-11-21",
@@ -1192,7 +1192,7 @@
   {
     "id": 71,
     "title": "Game 71",
-    "image": "/images/game71.jpg",
+    "image": "/images/games/game11.png",
     "price": 39.99,
     "discount": 5,
     "discountDate": "2025-11-26",
@@ -1209,7 +1209,7 @@
   {
     "id": 72,
     "title": "Game 72",
-    "image": "/images/game72.jpg",
+    "image": "/images/games/game12.png",
     "price": 69.99,
     "discount": 20,
     "discountDate": "2025-11-01",
@@ -1226,7 +1226,7 @@
   {
     "id": 73,
     "title": "Game 73",
-    "image": "/images/game73.jpg",
+    "image": "/images/games/game13.png",
     "price": 24.99,
     "discount": 0,
     "discountDate": "2024-03-10",
@@ -1243,7 +1243,7 @@
   {
     "id": 74,
     "title": "Game 74",
-    "image": "/images/game74.jpg",
+    "image": "/images/games/game14.png",
     "price": 49.99,
     "discount": 10,
     "discountDate": "2025-11-06",
@@ -1260,7 +1260,7 @@
   {
     "id": 75,
     "title": "Game 75",
-    "image": "/images/game75.jpg",
+    "image": "/images/games/game15.jpeg",
     "price": 59.99,
     "discount": 15,
     "discountDate": "2025-11-11",
@@ -1277,7 +1277,7 @@
   {
     "id": 76,
     "title": "Game 76",
-    "image": "/images/game76.jpg",
+    "image": "/images/games/game16.png",
     "price": 34.99,
     "discount": 5,
     "discountDate": "2025-11-16",
@@ -1294,7 +1294,7 @@
   {
     "id": 77,
     "title": "Game 77",
-    "image": "/images/game77.jpg",
+    "image": "/images/games/game17.png",
     "price": 79.99,
     "discount": 25,
     "discountDate": "2025-11-21",
@@ -1311,7 +1311,7 @@
   {
     "id": 78,
     "title": "Game 78",
-    "image": "/images/game78.jpg",
+    "image": "/images/games/game18.png",
     "price": 29.99,
     "discount": 0,
     "discountDate": "2024-02-15",
@@ -1328,7 +1328,7 @@
   {
     "id": 79,
     "title": "Game 79",
-    "image": "/images/game79.jpg",
+    "image": "/images/games/game19.png",
     "price": 44.99,
     "discount": 10,
     "discountDate": "2025-11-26",
@@ -1345,7 +1345,7 @@
   {
     "id": 80,
     "title": "Game 80",
-    "image": "/images/game80.jpg",
+    "image": "/images/games/game20.png",
     "price": 54.99,
     "discount": 15,
     "discountDate": "2025-11-31",

@@ -63,7 +63,9 @@ const News: React.FC = () => {
   });
 
   return (
-    <section aria-label="News Section">
+    <section
+      className="max-w-[1400px] w-full mx-auto"
+      aria-label="News Section">
       <Heading
         variant="h1"
         className="mb-[24px] sm:mb-[40px]"

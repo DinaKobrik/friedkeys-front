@@ -342,7 +342,9 @@ const GameReviewsSection: React.FC = () => {
   }
 
   return (
-    <section aria-label="Game Reviews Section">
+    <section
+      className="max-w-[1400px] w-full mx-auto"
+      aria-label="Game Reviews Section">
       <div className="mb-[24px] sm:mb-[40px] flex justify-between items-center gap-[24px]">
         <Heading variant="h1" aria-label="Game Reviews Title">
           Gamer Reviews
