@@ -100,15 +100,15 @@ const TrendingGames = () => {
 
   return (
     <section
-      className="max-w-[1400px] w-full mx-auto"
+      className="max-w-[1200px] w-full mx-auto"
       aria-label="Trending Games Section">
-      <div className="mb-[24px] sm:mb-[40px] flex justify-between items-center">
+      <div className="mb-[24px] sm:mb-[30px] flex justify-between items-center">
         <Heading variant="h1" aria-label="Trending Games Title">
           Trending
         </Heading>
         <Button
           variant="secondary"
-          className="max-w-[238px] mr-[10px] hidden md:block"
+          className="max-w-[178px] mr-[8px] hidden md:block"
           onClick={() => {
             window.location.href = "/all-games?filter=trending";
           }}
@@ -121,7 +121,7 @@ const TrendingGames = () => {
         style={{ marginLeft: dynamicMargin, marginRight: dynamicMargin }}>
         <div
           ref={containerRef}
-          className="flex overflow-scroll lg:grid lg:overflow-visible lg:grid-flow-row lg:grid-cols-3 hide-scrollbar gap-[12px] sm:gap-[16px] lg:gap-[24px] w-full items-start"
+          className="flex overflow-scroll lg:grid lg:overflow-visible lg:grid-flow-row lg:grid-cols-3 hide-scrollbar gap-[12px] sm:gap-[16px] lg:gap-[18px] w-full items-start"
           aria-label="Trending games carousel"
           style={{
             paddingLeft: dynamicPadding,

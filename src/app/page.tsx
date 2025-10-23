@@ -16,7 +16,7 @@ import { FavoriteProvider } from "@/components/Sections/Game/FavoriteHandler";
 export default function Home() {
   return (
     <FavoriteProvider>
-      <main className="flex flex-col gap-[56px] md:gap-[120px] w-full">
+      <main className="flex flex-col gap-[56px] md:gap-[90px] w-full">
         <Slider />
         <QuickMenu />
         <Trending />

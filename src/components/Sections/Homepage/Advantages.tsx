@@ -4,11 +4,11 @@ import React, { useState, useEffect } from "react";
 
 const Advantages: React.FC = () => {
   const BASE_STYLES = {
-    advantages: `w-[calc(100%+150px)] relative left-[-75px] overflow-hidden px-0 sm:py-[88px] mx-auto grid gap-[8px] sm:gap-[25px] z-10`,
+    advantages: `w-[calc(100%+150px)] relative left-[-75px] overflow-hidden px-0 sm:py-[66px] mx-auto grid gap-[8px] sm:gap-[18px] z-10`,
     bgAdvantages: `bg-advantages w-full`,
-    advantage: `w-full flex flex-col gap-[16px] items-center justify-center relative py-[25px] sm:py-[45px] sm:pt-[45px] sm:pb-[16px] z-5`,
-    text: `text-center text-white text-[14px] leading-[18px] sm:text-[24px] sm:leading-[30px]`,
-    svg: `text-primary-main w-[24px] h-[24px] sm:w-[64px] sm:h-[64px]`,
+    advantage: `w-full flex flex-col gap-[16px] items-center justify-center relative py-[25px] sm:py-[33px] sm:pt-[33px] sm:pb-[12px] z-5`,
+    text: `text-center text-white text-[14px] leading-[18px] sm:text-[18px] sm:leading-[22px]`,
+    svg: `text-primary-main w-[24px] h-[24px] sm:w-[48px] sm:h-[48px]`,
   };
 
   const CONTENT_ITEMS = [
@@ -237,7 +237,9 @@ const Advantages: React.FC = () => {
   }
 
   return (
-    <section className="advantages__wrapper" aria-label="Advantages Section">
+    <section
+      className="advantages__wrapper max-w-[1200px] mx-auto"
+      aria-label="Advantages Section">
       <div className="w-full overflow-hidden">
         <div className={`${BASE_STYLES.advantages} advantages`}>
           {orderedItems.map((item) => (
@@ -257,11 +259,11 @@ const Advantages: React.FC = () => {
                   item.originalIndex === 0
                     ? "skew-x-[-20deg] px-[40px] pl-[90px] 2xl:px-[30px] 2xl:pl-[90px]"
                     : item.originalIndex === 1
-                    ? "skew-x-[-20deg] px-[25px] pr-[85px] sm:pl-[40px] 2xl:px-[50px] xl:pr-[40px]"
+                    ? "skew-x-[-20deg] px-[25px] pr-[85px] sm:pl-[40px] 2xl:px-[37px] xl:pr-[40px]"
                     : item.originalIndex === 2
-                    ? "skew-x-[-20deg] xl:skew-x-[-20deg] px-[50px] pr-[75px] xl:px-[50px] mainCustom:px-[65px]"
+                    ? "skew-x-[-20deg] xl:skew-x-[-20deg] px-[50px] pr-[75px] xl:px-[50px] mainCustom:px-[48px]"
                     : item.originalIndex === 3
-                    ? "skew-x-[20deg] xl:skew-x-[-20deg] px-[25px] pl-[85px] sm:pr-[40px] xl:px-[50px] mainCustom:px-[65px]"
+                    ? "skew-x-[20deg] xl:skew-x-[-20deg] px-[25px] pl-[85px] sm:pr-[40px] xl:px-[50px] mainCustom:px-[48px]"
                     : item.originalIndex === 4
                     ? "skew-x-[20deg] xl:skew-x-[-20deg] px-[25px] pr-[85px] sm:pl-[40px] 2xl:px-[30px] 2xl:pr-[90px] mainCustom:px-[65px] mainCustom:pr-[105px]"
                     : ""

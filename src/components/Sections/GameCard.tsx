@@ -109,14 +109,13 @@ const GameCard: React.FC<GameCardProps> = ({
       role="listitem"
       aria-label={`Game: ${game.title}`}>
       <div
-        className="favorite absolute w-[36px] h-[36px] sm:w-[48px] sm:h-[48px] right-0 top-[1px] z-10 flex justify-center items-center cursor-pointer"
+        className="favorite absolute w-[36px] h-[36px] right-0 top-0 z-10 flex justify-center items-center cursor-pointer"
         onClick={handleToggleFavorite}
         role="button"
         aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}>
         <svg
           width="16.5"
           height="21"
-          className="sm:w-[22px] sm:h-[28px]"
           viewBox="0 0 22 28"
           fill={isFavorite ? "#FFFF25" : "none"}
           xmlns="http://www.w3.org/2000/svg">
@@ -143,44 +142,44 @@ const GameCard: React.FC<GameCardProps> = ({
                 loading="lazy"
               />
               {showSaleTimer && discountTime && (
-                <div className="sale-time absolute bottom-0 left-0 text-sale text-[12px] leading-[14px] md:text-[19px] md:leading-[30px] p-[8px] sm:p-[16px] text-center w-full z-10">
+                <div className="sale-time absolute bottom-0 left-0 text-sale text-[12px] leading-[14px] md:text-[14px] md:leading-[22px] p-[8px] sm:p-[12px] text-center w-full z-10">
                   {discountTime}
                 </div>
               )}
             </div>
-            <div className="py-[8px] px-[12px] md:py-[12px] md:px-[16px] flex flex-col justify-between">
+            <div className="py-[8px] px-[12px] md:py-[9px] md:px-[12px] flex flex-col justify-between">
               <div className="flex gap-[16px] items-start">
                 <p
-                  className={`hidden sm:block font-medium text-white h-auto text-[12px] sm:text-[20px] py-[4px] sm:py-[6px] px-[8px] bg-DLS ${
+                  className={`hidden sm:block font-medium text-white h-auto text-[12px] sm:text-[15px] py-[4px] sm:py-[4px] px-[6px] bg-DLS ${
                     game.hasDlc ? "block" : "hidden sm:hidden"
                   }`}>
                   DLS
                 </p>
-                <h3 className="font-medium text-white text-[14px] sm:text-[20px] leading-[17px] sm:leading-[24px] mb-[8px] sm:mb-[14px] h-[34px] sm:h-[47px] overflow-hidden">
+                <h3 className="font-medium text-white text-[14px] sm:text-[15px] leading-[17px] sm:leading-[18px] mb-[8px] sm:mb-[10px] h-[34px] sm:h-[35px] overflow-hidden">
                   {game.title}
                 </h3>
               </div>
               <div className="flex justify-between items-center h-[34px]">
                 <p
-                  className={`block sm:hidden font-medium text-white text-[12px] leading-[14px] sm:text-[20px] sm:leading-[24px] py-[4px] sm:py-[6px] px-[8px] bg-DLS ${
+                  className={`block sm:hidden font-medium text-white text-[12px] leading-[14px] sm:text-[15px] sm:leading-[18px] py-[4px] sm:py-[4px] px-[8px] bg-DLS ${
                     game.hasDlc ? "block" : "hidden"
                   }`}>
                   DLS
                 </p>
-                <div className="flex flex-col sm:flex-row gap-[1px] sm:gap-[20px] lg:gap-[7px] xl:gap-[20px] items-end mr-auto w-full">
+                <div className="flex flex-col sm:flex-row gap-[1px] sm:gap-[20px] lg:gap-[7px] xl:gap-[15px] items-end mr-auto w-full">
                   {discountPrice &&
                   game.discount &&
                   game.discount > 0 &&
                   !isDiscountExpired ? (
                     <>
-                      <span className="text-white font-bold text-[15px] sm:text-[28px] leading-[17px] sm:leading-[28px]">
+                      <span className="text-white font-bold text-[15px] sm:text-[21px] leading-[17px] sm:leading-[21px]">
                         {discountPrice}$
                       </span>
-                      <span className="line-through text-gray-68 font-bold text-[12px] sm:text-[20px] leading-[14px] sm:leading-[20px]">
+                      <span className="line-through text-gray-68 font-bold text-[12px] sm:text-[15px] leading-[14px] sm:leading-[15px]">
                         {game.price}$
                       </span>
                       <span
-                        className={`absolute right-0 md:sticky md:right-auto md:bottom-auto text-white font-bold text-[13px] md:text-[18px] leading-[20px] py-[4px] px-[8px] md:py-[7px] md:px-[16px] rounded-[2px] bg-sale ${
+                        className={`absolute right-0 md:sticky md:right-auto md:bottom-auto text-white font-bold text-[13px] leading-[16px] py-[4px] px-[8px] md:py-[5px] md:px-[12px] rounded-[2px] bg-sale ${
                           showSaleTimer && discountTime
                             ? "bottom-[132px] sm:bottom-[160px]"
                             : "bottom-[102px] sm:bottom-[130px]"
@@ -189,7 +188,7 @@ const GameCard: React.FC<GameCardProps> = ({
                       </span>
                     </>
                   ) : (
-                    <span className="text-white font-bold text-[15px] sm:text-[28px] leading-[17px] sm:leading-[28px]">
+                    <span className="text-white font-bold text-[15px] sm:text-[21px] leading-[17px] sm:leading-[21px]">
                       {game.price}$
                     </span>
                   )}

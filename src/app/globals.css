@@ -502,7 +502,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   );
   z-index: 1;
 }
-@media (min-width: 1608px) {
+@media (min-width: 1292px) {
   .home__slide-img::before {
     display: block;
   }

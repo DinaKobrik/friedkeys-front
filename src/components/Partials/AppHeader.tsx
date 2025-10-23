@@ -88,16 +88,16 @@ const Header = () => {
   };
 
   return (
-    <header className="py-[14px] flex justify-between items-center gap-[10px] sm:mt-[32px]">
+    <header className="max-w-[1200px] mx-auto w-full py-[14px] flex justify-between items-center gap-[10px] sm:mt-[24px]">
       <Logo />
-      <div className="w-full search hidden xl:flex max-w-[380px] 2xl:max-w-[636px] h-[48px] bg-2 border-[1px] border-primary-main skew-x-[-20deg] relative">
+      <div className="w-full search hidden xl:flex max-w-[380px] 2xl:max-w-[636px] h-[36px] bg-2 border-[1px] border-primary-main skew-x-[-20deg] relative">
         <form onSubmit={handleSubmit} className="w-full">
           <input
             name="search"
             value={searchValue}
             onChange={handleChange}
             placeholder="Search"
-            className="w-full px-[20px] py-[10px] pl-[82px] font-usuzi-condensed text-[16px] leading-[16px] sm:text-[24px] sm:leading-[28px] border-none bg-transparent focus:outline-none placeholder-gray-68 hover:placeholder-white caret-primary-main skew-x-[20deg]"
+            className="w-full px-[15px] py-[7px] pl-[61px] font-usuzi-condensed text-[16px] leading-[16px] sm:text-[18px] sm:leading-[21px] border-none bg-transparent focus:outline-none placeholder-gray-68 hover:placeholder-white caret-primary-main skew-x-[20deg]"
             onFocus={handleFocus}
             onBlur={handleBlur}
             onKeyDown={handleKeyDown}
@@ -105,12 +105,12 @@ const Header = () => {
           />
           <button type="submit">
             <svg
-              width="33"
-              height="32"
+              width="24"
+              height="24"
               viewBox="0 0 33 32"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
-              className="absolute top-1/2 left-[34px] transform -translate-y-1/2 skew-x-[20deg]">
+              className="absolute top-1/2 left-[25px] transform -translate-y-1/2 skew-x-[20deg]">
               <circle
                 cx="15.5012"
                 cy="14.3847"
@@ -130,8 +130,8 @@ const Header = () => {
 
           {searchValue && (
             <svg
-              width="32"
-              height="32"
+              width="24"
+              height="24"
               viewBox="0 0 32 32"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
@@ -156,13 +156,13 @@ const Header = () => {
           />
         </form>
       </div>
-      <div className="max-h-[48px] hidden xl:flex items-center gap-[18px]">
+      <div className="max-h-[36px] hidden xl:flex items-center gap-[13px]">
         <Button
           variant="secondary"
           onClick={() => {
             window.location.href = "/support";
           }}
-          className="h-[48px] flex justify-center items-center"
+          className="h-[36px] flex justify-center items-center"
           aria-label="Support page">
           support
         </Button>
@@ -171,11 +171,11 @@ const Header = () => {
           onClick={() => {
             window.location.href = "/cart/shopping-cart";
           }}
-          className="h-[48px] flex justify-center items-center"
+          className="h-[36px] flex justify-center items-center"
           aria-label="User profile">
           <svg
-            width="33"
-            height="32"
+            width="24"
+            height="24"
             viewBox="0 0 33 32"
             fill="none"
             xmlns="http://www.w3.org/2000/svg">
@@ -216,11 +216,11 @@ const Header = () => {
           onClick={() => {
             window.location.href = "/auth/account/personal-info";
           }}
-          className="h-[48px] flex justify-center items-center"
+          className="h-[36px] flex justify-center items-center"
           aria-label="Settings">
           <svg
-            width="33"
-            height="32"
+            width="24"
+            height="24"
             viewBox="0 0 33 32"
             fill="none"
             xmlns="http://www.w3.org/2000/svg">
@@ -243,12 +243,12 @@ const Header = () => {
       </div>
       <Link
         href="/support"
-        className="support-container flex justify-center items-center xl:hidden max-w-[200px] h-[40px] sm:h-[48px] no-underline relative w-auto"
+        className="support-container flex justify-center items-center xl:hidden max-w-[150px] h-[40px] sm:h-[41px] no-underline relative w-auto"
         tabIndex={-1}
         aria-hidden="true"
         aria-label="Support mobile link">
-        <span className="support font-usuzi-condensed flex justify-center items-center text-[15px] leading-[17px] sm:text-[26px] sm:leading-[28px] font-bold uppercase text-center text-white px-[10px] py-[10px] sm:px-[12px] sm:py-[12px] pl-[30px] sm:pl-[30px] relative w-[calc(100%-4px)] h-[calc(100%-4px)] bg-main overflow-hidden z-10">
-          SUPPORT
+        <span className="support font-usuzi-condensed flex justify-center items-center text-[15px] leading-[17px] sm:text-[19px] sm:leading-[21px] font-bold uppercase text-center text-white px-[10px] py-[10px] sm:px-[9px] sm:py-[9px] pl-[30px] sm:pl-[22px] relative w-[calc(100%-4px)] h-[calc(100%-4px)] bg-main overflow-hidden z-10">
+          support
         </span>
       </Link>
       <div

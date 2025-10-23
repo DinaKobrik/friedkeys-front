@@ -38,7 +38,7 @@
     height: 100%;
     position: absolute;
     top: 0;
-    right: 12px;
+    right: 11px;
     background: theme("colors.primary-main");
     -webkit-transform: skew(20deg);
     -ms-transform: skew(20deg);
@@ -55,6 +55,32 @@
     0% 10%
   );
   clip-path: polygon(6% 0%, 100% 0%, 100% 90%, 94% 100%, 0% 100%, 0% 10%);
+}
+@media (max-width: 992px) {
+  .quick-menu__menu {
+    -webkit-clip-path: polygon(
+      3% 0%,
+      100% 0%,
+      100% 89%,
+      97% 100%,
+      0% 100%,
+      0% 11%
+    );
+    clip-path: polygon(3% 0%, 100% 0%, 100% 89%, 97% 100%, 0% 100%, 0% 11%);
+  }
+}
+@media (max-width: 393px) {
+  .quick-menu__menu {
+    -webkit-clip-path: polygon(
+      6% 0%,
+      100% 0%,
+      100% 90%,
+      94% 100%,
+      0% 100%,
+      0% 10%
+    );
+    clip-path: polygon(6% 0%, 100% 0%, 100% 90%, 94% 100%, 0% 100%, 0% 10%);
+  }
 }
 .quick-menu__link--active:hover::before,
 .quick-menu__link--active:focus::before {

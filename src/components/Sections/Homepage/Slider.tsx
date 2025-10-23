@@ -272,13 +272,13 @@ const Slider: React.FC = () => {
                     href={`/all-games/${game.id}`}
                     className="w-full h-full max-w-[1920px] block bg-dark relative"
                     aria-label={`View game ${game.title}`}>
-                    <div className="relative home__slide-img max-w-[1608px] w-full h-full mx-auto">
+                    <div className="relative home__slide-img max-w-[1200px] w-full h-full mx-auto">
                       <Image
                         src={game.image || "/images/no-image.jpg"}
                         alt={`Banner image for ${game.title}`}
                         width={1920}
                         height={440}
-                        className="max-w-[1608px] w-full mx-auto h-[216px] sm:h-[440px] md:h-[440px] object-cover no-drag"
+                        className="max-w-[1200px] w-full mx-auto h-[216px] sm:h-[340px] md:h-[440px] object-cover no-drag"
                       />
                     </div>
                   </Link>
@@ -287,15 +287,15 @@ const Slider: React.FC = () => {
             </ul>
             <button
               onClick={moveLeft}
-              className="absolute top-1/2 transform -translate-y-1/2 w-[64px] h-[64px] hidden md:flex justify-center items-center p-[16px] rounded-full bg-DLS backdrop-blur-[10px] z-10"
+              className="absolute top-1/2 transform -translate-y-1/2 w-[48px] h-[48px] hidden md:flex justify-center items-center p-[12px] rounded-full bg-DLS backdrop-blur-[10px] z-10"
               style={{
-                left: windowSize > 1700 ? "50px" : dynamicPadding,
+                left: windowSize > 1700 ? "250px" : dynamicPadding,
                 marginLeft: 0,
               }}
               aria-label="Previous slide">
               <svg
-                width="12"
-                height="22"
+                width="9"
+                height="16"
                 viewBox="0 0 12 22"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
@@ -310,15 +310,15 @@ const Slider: React.FC = () => {
             </button>
             <button
               onClick={moveRight}
-              className="absolute top-1/2 transform -translate-y-1/2 w-[64px] h-[64px] hidden md:flex justify-center items-center p-[16px] rounded-full bg-DLS backdrop-blur-[10px] z-10"
+              className="absolute top-1/2 transform -translate-y-1/2 w-[48px] h-[48px] hidden md:flex justify-center items-center p-[16px] rounded-full bg-DLS backdrop-blur-[10px] z-10"
               style={{
-                right: windowSize > 1700 ? "50px" : dynamicPadding,
+                right: windowSize > 1700 ? "250px" : dynamicPadding,
                 marginRight: 0,
               }}
               aria-label="Next slide">
               <svg
-                width="12"
-                height="22"
+                width="9"
+                height="16"
                 viewBox="0 0 12 22"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
