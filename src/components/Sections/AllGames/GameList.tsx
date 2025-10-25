@@ -375,33 +375,33 @@ const GameList: React.FC = () => {
         <div className="flex flex-wrap justify-center items-center gap-x-[8px] sm:gap-x-[20px]">
           <button
             onClick={() => handleFilterClick("trending")}
-            className={`category focus:outline-none py-[8px] px-[15px] sm:py-[16px] sm:px-[30px] text-[20px] leading-[24px] sm:text-[38px] sm:leading-[44px] font-usuzi-condensed text-white uppercase ${
+            className={`category focus:outline-none py-[8px] px-[15px] sm:py-[16px] sm:px-[30px] text-[20px] leading-[24px] sm:text-[28px] sm:leading-[33px] font-usuzi-condensed text-white uppercase ${
               activeFilter === "trending" ? "category--active" : ""
             }`}>
             Trending
           </button>
           <button
             onClick={() => handleFilterClick("pre-orders")}
-            className={`category focus:outline-none py-[8px] px-[15px] sm:py-[16px] sm:px-[30px] text-[20px] leading-[24px] sm:text-[38px] sm:leading-[44px] font-usuzi-condensed text-white uppercase ${
+            className={`category focus:outline-none py-[8px] px-[15px] sm:py-[16px] sm:px-[30px] text-[20px] leading-[24px] sm:text-[28px] sm:leading-[33px] font-usuzi-condensed text-white uppercase ${
               activeFilter === "pre-orders" ? "category--active" : ""
             }`}>
             Pre-orders
           </button>
           <button
             onClick={() => handleFilterClick("sale")}
-            className={`category focus:outline-none py-[8px] px-[15px] sm:py-[16px] sm:px-[30px] text-[20px] leading-[24px] sm:text-[38px] sm:leading-[44px] font-usuzi-condensed text-white uppercase ${
+            className={`category focus:outline-none py-[8px] px-[15px] sm:py-[16px] sm:px-[30px] text-[20px] leading-[24px] sm:text-[28px] sm:leading-[33px] font-usuzi-condensed text-white uppercase ${
               activeFilter === "sale" ? "category--active" : ""
             }`}>
             Sale
           </button>
         </div>
       </div>
-      <div className="game-count flex justify-between lg:justify-start items-center mb-[24px] lg:mb-[56px]">
+      <div className="game-count flex justify-between lg:justify-start items-center mb-[24px] lg:mb-[42px]">
         {isMobile && (
-          <div className="skew-x-[-20deg] bg-2 h-[42px] sm:h-[58px] flex ml-[10px]">
+          <div className="skew-x-[-20deg] bg-2 h-[42px] sm:h-[45px] flex ml-[10px]">
             <button
               onClick={toggleFilters}
-              className="filter-list focus:outline-none skew-x-[20deg] py-[12px] px-[38px] sm:py-[16px] sm:px-[30px] w-full text-white flex justify-between items-center text-[15px] leading-[17px] sm:text-[34px] font-usuzi-condensed uppercase">
+              className="filter-list focus:outline-none skew-x-[20deg] py-[12px] px-[38px] sm:py-[12px] sm:px-[22px] w-full text-white flex justify-between items-center text-[15px] leading-[17px] sm:text-[25px] font-usuzi-condensed uppercase">
               Filters
               {(sort ||
                 filters.system ||
@@ -426,10 +426,10 @@ const GameList: React.FC = () => {
             </button>
           </div>
         )}
-        <Heading variant="h3" className="mr-[100px] hidden lg:block">
+        <Heading variant="h3" className="mr-[75px] hidden lg:block">
           Home / Catalog
         </Heading>
-        <div className="game-count text-[16px] sm:text-[32px] font-usuzi-condensed text-white uppercase">
+        <div className="game-count text-[16px] sm:text-[24px] font-usuzi-condensed text-white uppercase">
           {games.length} games
         </div>
       </div>
@@ -453,10 +453,10 @@ const GameList: React.FC = () => {
               ✖
             </span>
           </div>
-          <div className="w-full grid cols-1 lg:grid-cols-3 xl:grid-cols-5 lg:justify-between items-center gap-[20px] mb-[20px] lg:mb-[40px]">
+          <div className="w-full grid cols-1 lg:grid-cols-3 xl:grid-cols-5 lg:justify-between items-center gap-[20px] md:gap-[15px] mb-[20px] lg:mb-[30px]">
             <div className="relative w-full" ref={sortRef}>
               <div
-                className={`skew-x-[0deg] lg:skew-x-[-20deg] bg-2 w-full h-[58px] flex ${
+                className={`skew-x-[0deg] lg:skew-x-[-20deg] bg-2 w-full h-[48px] flex ${
                   sort ? "border-2 border-primary-main" : ""
                 }`}>
                 <button
@@ -465,7 +465,10 @@ const GameList: React.FC = () => {
                     setIsSortOpen(!isSortOpen);
                   }}
                   className="filter-list focus:outline-none skew-x-[0deg] lg:skew-x-[20deg] py-[16px] px-[30px] w-full text-white flex justify-between items-center">
-                  <span className={sort ? "text-white" : "text-gray-68"}>
+                  <span
+                    className={`text-[15px] ${
+                      sort ? "text-white" : "text-gray-68"
+                    }`}>
                     {sort
                       ? sortOptions
                           .find((option) => option === sort)
@@ -511,7 +514,7 @@ const GameList: React.FC = () => {
                         setSort(option);
                         setIsSortOpen(false);
                       }}
-                      className="px-[30px] py-[8px] cursor-pointer">
+                      className="px-[30px] py-[8px] cursor-pointer text-[15px]">
                       {option
                         .replace(/-/g, " ")
                         .replace(/(^|\s)\w/g, (c) => c.toUpperCase())}
@@ -520,10 +523,9 @@ const GameList: React.FC = () => {
                 </div>
               )}
             </div>
-
             <div className="relative w-full" ref={systemRef}>
               <div
-                className={`skew-x-[0deg] lg:skew-x-[-20deg] bg-2 w-full h-[58px] flex ${
+                className={`skew-x-[0deg] lg:skew-x-[-20deg] bg-2 w-full h-[48px] flex ${
                   filters.system ? "border-2 border-primary-main" : ""
                 }`}>
                 <button
@@ -533,7 +535,9 @@ const GameList: React.FC = () => {
                   }}
                   className="filter-list focus:outline-none skew-x-[0deg] lg:skew-x-[20deg] py-[16px] px-[30px] w-full flex justify-between items-center">
                   <span
-                    className={filters.system ? "text-white" : "text-gray-68"}>
+                    className={`text-[15px] ${
+                      filters.system ? "text-white" : "text-gray-68"
+                    }`}>
                     {filters.system || "All systems"}
                     {filters.system && (
                       <span
@@ -579,17 +583,16 @@ const GameList: React.FC = () => {
                         });
                         setIsSystemOpen(false);
                       }}
-                      className="px-[30px] py-[8px] cursor-pointer">
+                      className="px-[30px] py-[8px] cursor-pointer text-[15px]">
                       {system}
                     </div>
                   ))}
                 </div>
               )}
             </div>
-
             <div className="relative w-full" ref={platformRef}>
               <div
-                className={`skew-x-[0deg] lg:skew-x-[-20deg] bg-2 w-full h-[58px] flex ${
+                className={`skew-x-[0deg] lg:skew-x-[-20deg] bg-2 w-full h-[48px] flex ${
                   filters.platform ? "border-2 border-primary-main" : ""
                 }`}>
                 <button
@@ -599,9 +602,9 @@ const GameList: React.FC = () => {
                   }}
                   className="filter-list focus:outline-none skew-x-[0deg] lg:skew-x-[20deg] py-[16px] px-[30px] w-full flex justify-between items-center">
                   <span
-                    className={
+                    className={`text-[15px] ${
                       filters.platform ? "text-white" : "text-gray-68"
-                    }>
+                    }`}>
                     {filters.platform || "All platforms"}
                     {filters.platform && (
                       <span
@@ -648,17 +651,16 @@ const GameList: React.FC = () => {
                         });
                         setIsPlatformOpen(false);
                       }}
-                      className="px-[30px] py-[8px] cursor-pointer">
+                      className="px-[30px] py-[8px] cursor-pointer text-[15px]">
                       {platform}
                     </div>
                   ))}
                 </div>
               )}
             </div>
-
             <div className="relative w-full" ref={genreRef}>
               <div
-                className={`skew-x-[0deg] lg:skew-x-[-20deg] bg-2 w-full h-[58px] flex ${
+                className={`skew-x-[0deg] lg:skew-x-[-20deg] bg-2 w-full h-[48px] flex ${
                   filters.genre.length > 0 ? "border-2 border-primary-main" : ""
                 }`}>
                 <button
@@ -668,7 +670,7 @@ const GameList: React.FC = () => {
                   }}
                   className="filter-list focus:outline-none skew-x-[0deg] lg:skew-x-[20deg] py-[16px] px-[30px] w-full text-white flex justify-between items-center">
                   <span
-                    className={`flex ${
+                    className={`flex text-[15px] ${
                       filters.genre.length > 0 ? "text-white" : "text-gray-68"
                     }`}>
                     Genres
@@ -722,7 +724,7 @@ const GameList: React.FC = () => {
                             : [...filters.genre, genre],
                         })
                       }
-                      className="px-[30px] py-[8px] cursor-pointer flex justify-between items-center">
+                      className="px-[30px] py-[8px] cursor-pointer text-[15px] flex justify-between items-center">
                       <span>{genre}</span>
                       {filters.genre.includes(genre) && (
                         <span
@@ -742,10 +744,9 @@ const GameList: React.FC = () => {
                 </div>
               )}
             </div>
-
             <div className="relative w-full" ref={dlcRef}>
               <div
-                className={`skew-x-[0deg] lg:skew-x-[-20deg] bg-2 w-full h-[58px] flex ${
+                className={`skew-x-[0deg] lg:skew-x-[-20deg] bg-2 w-full h-[48px] flex ${
                   filters.dlcFilter !== "Games & DLS"
                     ? "border-2 border-primary-main"
                     : ""
@@ -757,11 +758,11 @@ const GameList: React.FC = () => {
                   }}
                   className="filter-list focus:outline-none skew-x-[0deg] lg:skew-x-[20deg] py-[16px] px-[30px] w-full flex justify-between items-center">
                   <span
-                    className={
+                    className={`text-[15px] ${
                       filters.dlcFilter !== "Games & DLS"
                         ? "text-white"
                         : "text-gray-68"
-                    }>
+                    }`}>
                     {filters.dlcFilter}
                     {filters.dlcFilter !== "Games & DLS" && (
                       <span
@@ -806,7 +807,7 @@ const GameList: React.FC = () => {
                         setFilters({ ...filters, dlcFilter: option });
                         setIsDlcOpen(false);
                       }}
-                      className="px-[30px] py-[8px] cursor-pointer">
+                      className="px-[30px] py-[8px] cursor-pointer text-[15px]">
                       {option}
                     </div>
                   ))}
@@ -815,10 +816,10 @@ const GameList: React.FC = () => {
             </div>
           </div>
           <div className="lg:max-w-[792px] mx-auto mb-[40px]">
-            <h3 className="text-[20px] leading-[24px] lg:text-[32px] font-usuzi-condensed text-white uppercase mb-[8px]">
+            <h3 className="text-[20px] leading-[24px] lg:text-[24px] font-usuzi-condensed text-white uppercase mb-[8px]">
               Price
             </h3>
-            <div className="price-filters flex flex-col lg:flex-row justify-center items-center gap-[18px]">
+            <div className="price-filters flex flex-col lg:flex-row justify-center items-center gap-[18px] md:gap-[15px]">
               <div className="w-full overflow-hidden lg:overflow-visible">
                 <div className="w-[calc(100%+20px)] grid grid-cols-2 gap-[18px] ml-[-10px]">
                   <div
@@ -888,7 +889,7 @@ const GameList: React.FC = () => {
           </Button>
         </div>
       </div>
-      <div className="grid grid-cols-2 lg:grid-cols-3 gap-[12px] sm:gap-[16px] lg:gap-[24px] mb-[24px] md:mb-[56px]">
+      <div className="grid grid-cols-2 lg:grid-cols-3 gap-[12px] sm:gap-[16px] lg:gap-[18px] mb-[24px] md:mb-[42px]">
         {paginatedGames.length > 0 ? (
           paginatedGames.map((game) => (
             <GameCard

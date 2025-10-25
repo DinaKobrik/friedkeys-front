@@ -2,15 +2,15 @@
 
 const BottomBar = () => {
   return (
-    <div className="flex gap-[40px] flex-col-reverse 2xl:flex-row justify-between items-center pt[40px] pb-[116px] xl:pb-[32px] bg-main text-white">
-      <div className="text-[12px] sm:text-[20px]">
+    <div className="flex gap-[30px] flex-col-reverse 2xl:flex-row justify-between items-center pt[40px] pb-[116px] xl:pb-[24px] bg-main text-white">
+      <div className="text-[12px] sm:text-[15px]">
         Copyright ©2025 FRIEDKEYS – All rights reserved
       </div>
       <div className="text-[19px] hidden items-center gap-[5px] 2xl:flex">
         Задизайнили в
         <svg
-          width="18"
-          height="18"
+          width="13"
+          height="13"
           viewBox="0 0 18 18"
           fill="none"
           xmlns="http://www.w3.org/2000/svg">
@@ -22,8 +22,8 @@ const BottomBar = () => {
           />
         </svg>
         <svg
-          width="77"
-          height="21"
+          width="57"
+          height="15"
           viewBox="0 0 77 21"
           fill="none"
           xmlns="http://www.w3.org/2000/svg">
@@ -33,11 +33,11 @@ const BottomBar = () => {
           />
         </svg>
       </div>
-      <div className="flex items-center gap-[16px] xs:gap-[32px]">
-        <div className="cursor-pointer flex justify-center items-center gap-[8px] sm:gap-[16px] text-[14px] sm:text-[24px]">
+      <div className="flex items-center gap-[16px] xs:gap-[24px]">
+        <div className="cursor-pointer flex justify-center items-center gap-[8px] sm:gap-[12px] text-[14px] sm:text-[18px]">
           <svg
-            width="32"
-            height="32"
+            width="24"
+            height="24"
             viewBox="0 0 32 32"
             fill="none"
             xmlns="http://www.w3.org/2000/svg">
@@ -61,11 +61,11 @@ const BottomBar = () => {
           </svg>
           USA
         </div>
-        <div className="bg-2 h-[48px] w-[4px] skew-x-[-20deg]"></div>
-        <div className="cursor-pointer flex justify-center items-center gap-[8px] sm:gap-[16px] text-[14px] sm:text-[24px]">
+        <div className="bg-2 h-[36px] w-[4px] skew-x-[-20deg]"></div>
+        <div className="cursor-pointer flex justify-center items-center gap-[8px] sm:gap-[12px] text-[14px] sm:text-[18px]">
           <svg
-            width="32"
-            height="32"
+            width="24"
+            height="24"
             viewBox="0 0 32 32"
             fill="none"
             xmlns="http://www.w3.org/2000/svg">
@@ -76,11 +76,11 @@ const BottomBar = () => {
           </svg>
           English
         </div>
-        <div className="bg-2 h-[48px] w-[4px] skew-x-[-20deg]"></div>
-        <div className="cursor-pointer flex justify-center items-center gap-[8px] sm:gap-[16px] text-[14px] sm:text-[24px]">
+        <div className="bg-2 h-[36px] w-[4px] skew-x-[-20deg]"></div>
+        <div className="cursor-pointer flex justify-center items-center gap-[8px] sm:gap-[12px] text-[14px] sm:text-[18px]">
           <svg
-            width="16"
-            height="26"
+            width="20"
+            height="24"
             viewBox="0 0 16 26"
             fill="none"
             xmlns="http://www.w3.org/2000/svg">

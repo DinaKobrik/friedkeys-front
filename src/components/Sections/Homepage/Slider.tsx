@@ -36,16 +36,16 @@ const Slider: React.FC = () => {
     if (windowWidth < 576) {
       calculatedOffset = 16;
       setDynamicMargin(`-${calculatedOffset}px`);
-    } else if (windowWidth >= 576 && windowWidth < 1700) {
+    } else if (windowWidth >= 576 && windowWidth < 1292) {
       calculatedOffset = 46;
       setDynamicMargin(`-${calculatedOffset}px`);
-    } else if (windowWidth >= 1607 && windowWidth <= 1609) {
+    } else if (windowWidth >= 1199 && windowWidth <= 1201) {
       calculatedOffset = 146;
       setDynamicMargin(`-${calculatedOffset}px`);
-    } else if (windowWidth > 1608) {
+    } else if (windowWidth > 1200) {
       calculatedOffset = isTouchDevice
-        ? (windowWidth - scrollbarWidthValue - 1608) / 2
-        : (windowWidth - scrollbarWidthValue - 1608) / 2;
+        ? (windowWidth - scrollbarWidthValue - 1200) / 2
+        : (windowWidth - scrollbarWidthValue - 1200) / 2;
       setDynamicMargin(`-${calculatedOffset}px`);
     } else {
       calculatedOffset = 146;
@@ -278,7 +278,7 @@ const Slider: React.FC = () => {
                         alt={`Banner image for ${game.title}`}
                         width={1920}
                         height={440}
-                        className="max-w-[1200px] w-full mx-auto h-[216px] sm:h-[340px] md:h-[440px] object-cover no-drag"
+                        className="max-w-[1200px] w-full mx-auto h-[216px] sm:h-[340px] md:h-[440px] xl:h-[590px] object-cover no-drag"
                       />
                     </div>
                   </Link>

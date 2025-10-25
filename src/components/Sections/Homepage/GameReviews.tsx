@@ -262,7 +262,7 @@ const GameReviewsSection: React.FC = () => {
               <div className="flex items-center justify-between gap-[16px] w-full">
                 <div className="flex items-center justify-start w-full gap-[16px]">
                   <div
-                    className="w-[44px] h-[44px] sm:w-[64px] sm:h-[64px] bg-3 rounded-full flex justify-center items-center flex-shrink-0"
+                    className="w-[44px] h-[44px] sm:w-[48px] sm:h-[48px] bg-3 rounded-full flex justify-center items-center flex-shrink-0"
                     aria-hidden="true">
                     <svg
                       width="40"
@@ -270,7 +270,7 @@ const GameReviewsSection: React.FC = () => {
                       viewBox="0 0 40 40"
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"
-                      className="w-[28px] h-[28px] sm:w-[40px] sm:h-[40px]"
+                      className="w-[28px] h-[28px] sm:w-[30px] sm:h-[30px]"
                       aria-hidden="true">
                       <circle
                         cx="20.0026"
@@ -300,7 +300,7 @@ const GameReviewsSection: React.FC = () => {
                     </svg>
                   </div>
                   <div
-                    className="text-white font-bold text-[15px] sm:text-[20px] overflow-hidden text-ellipsis whitespace-nowrap"
+                    className="text-white font-bold text-[15px] sm:text-[15px] overflow-hidden text-ellipsis whitespace-nowrap"
                     aria-label={`Username: ${review.username}`}>
                     {review.username}
                   </div>
@@ -308,7 +308,7 @@ const GameReviewsSection: React.FC = () => {
                 <LikeIcon
                   className={`${
                     !review.liked ? "rotate-180" : ""
-                  } w-[28px] h-[28px] sm:w-[40px] md:h-[40px] flex-shrink-0`}
+                  } w-[28px] h-[28px] sm:w-[30px] md:h-[30px] flex-shrink-0`}
                   aria-label={
                     review.liked ? "Positive review" : "Negative review"
                   }
@@ -342,16 +342,14 @@ const GameReviewsSection: React.FC = () => {
   }
 
   return (
-    <section
-      className="max-w-[1400px] w-full mx-auto"
-      aria-label="Game Reviews Section">
-      <div className="mb-[24px] sm:mb-[40px] flex justify-between items-center gap-[24px]">
+    <section aria-label="Game Reviews Section">
+      <div className="mb-[24px] sm:mb-[30px] flex justify-between items-center gap-[24px]">
         <Heading variant="h1" aria-label="Game Reviews Title">
           Gamer Reviews
         </Heading>
         <Button
           variant="secondary"
-          className="max-w-[238px] mr-[10px] hidden md:block"
+          className="max-w-[178px] mr-[8px] hidden md:block"
           disabled
           onClick={() => {
             window.location.href = "/";
@@ -368,7 +366,7 @@ const GameReviewsSection: React.FC = () => {
         }}>
         <div
           ref={scrollContainerRef}
-          className={`flex overflow-scroll hide-scrollbar gap-[12px] sm:gap-[16px] lg:gap-[24px] ${
+          className={`flex overflow-scroll hide-scrollbar gap-[12px] sm:gap-[16px] lg:gap-[18px] ${
             windowWidth < 1200 && !isTouchDevice
               ? "cursor-grab select-none"
               : "cursor-auto"

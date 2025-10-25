@@ -8,7 +8,7 @@ const Logo = () => {
   return (
     <Link
       href="/"
-      className="w-[135px] h-[24px] sm:w-[222px] sm:h-[40px] sm:ml-0 cursor-pointer">
+      className="w-[135px] h-[24px] sm:w-[260px] sm:h-[48px] sm:ml-0 cursor-pointer">
       <Image
         src="/images/logo.png"
         alt="FriedKeys logo"

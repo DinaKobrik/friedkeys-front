@@ -6,7 +6,7 @@ const Advantages: React.FC = () => {
   const BASE_STYLES = {
     advantages: `w-[calc(100%+150px)] relative left-[-75px] overflow-hidden px-0 sm:py-[66px] mx-auto grid gap-[8px] sm:gap-[18px] z-10`,
     bgAdvantages: `bg-advantages w-full`,
-    advantage: `w-full flex flex-col gap-[16px] items-center justify-center relative py-[25px] sm:py-[33px] sm:pt-[33px] sm:pb-[12px] z-5`,
+    advantage: `w-full flex flex-col gap-[16px] items-center justify-center relative py-[25px] sm:py-[33px] sm:pt-[33px] sm:pb-[33px] z-5`,
     text: `text-center text-white text-[14px] leading-[18px] sm:text-[18px] sm:leading-[22px]`,
     svg: `text-primary-main w-[24px] h-[24px] sm:w-[48px] sm:h-[48px]`,
   };
@@ -237,9 +237,7 @@ const Advantages: React.FC = () => {
   }
 
   return (
-    <section
-      className="advantages__wrapper max-w-[1200px] mx-auto"
-      aria-label="Advantages Section">
+    <section className="advantages__wrapper" aria-label="Advantages Section">
       <div className="w-full overflow-hidden">
         <div className={`${BASE_STYLES.advantages} advantages`}>
           {orderedItems.map((item) => (

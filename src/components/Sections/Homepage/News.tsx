@@ -63,17 +63,15 @@ const News: React.FC = () => {
   });
 
   return (
-    <section
-      className="max-w-[1400px] w-full mx-auto"
-      aria-label="News Section">
+    <section aria-label="News Section">
       <Heading
         variant="h1"
-        className="mb-[24px] sm:mb-[40px]"
+        className="mb-[24px] sm:mb-[30px]"
         aria-label="News Title">
         news
       </Heading>
-      <div className="grid grid-cols-1 gap-[24px] mb-[24px] sm:mb-[40px]">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-[24px]">
+      <div className="grid grid-cols-1 gap-[24px] mb-[24px] sm:mb-[30px]">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-[24px] md:gap-[18px]">
           {newsItems.length > 0 ? (
             newsItems
           ) : (
@@ -85,7 +83,7 @@ const News: React.FC = () => {
       </div>
       <Button
         variant="primary"
-        className="max-w-[calc(100%-20px)] sm:max-w-[255px]"
+        className="max-w-[calc(100%-20px)] sm:max-w-[192px]"
         onClick={() => router.push("/news")}
         aria-label="Read all news articles">
         Read all

@@ -4,6 +4,7 @@
 @media (pointer: fine) {
   .btn-primary:hover {
     background: theme("colors.primary-light");
+    border: 1px solid theme("colors.primary-light");
   }
 }
 

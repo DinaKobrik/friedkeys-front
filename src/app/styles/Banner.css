@@ -74,7 +74,7 @@
   );
   z-index: 1;
 }
-@media (min-width: 1608px) {
+@media (min-width: 1200px) {
   .banner-img::after {
     display: block;
   }

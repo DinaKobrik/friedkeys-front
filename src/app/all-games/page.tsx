@@ -9,7 +9,7 @@ import { FavoriteProvider } from "@/components/Sections/Game/FavoriteHandler";
 export default function AllGame() {
   return (
     <FavoriteProvider>
-      <main className="flex flex-col w-full gap-[40px] md:gap-[120px]">
+      <main className="flex flex-col w-full gap-[40px] md:gap-[90px]">
         <Suspense
           fallback={
             <div className="text-[32px] font-usuzi-condensed text-white uppercase col-span-3 text-center mt-[80px]">

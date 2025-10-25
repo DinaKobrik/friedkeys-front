@@ -198,7 +198,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
 
     const wrapperBaseStyles = "relative w-full";
     const containerBaseStyles =
-      "relative w-full text-white focus:outline-none h-[48px] sm:h-[56px]";
+      "relative w-full text-white focus:outline-none h-[48px]";
     const inputBaseStyles =
       "no-arrows rounded-[2px] w-full h-full px-[20px] py-[16px] border-none bg-transparent placeholder-gray-68 caret-primary-main focus:outline-none";
     const textAlignStyles = textAlign === "right" ? "text-right" : "text-left";
@@ -223,7 +223,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
     return (
       <div className={`${wrapperBaseStyles} ${className}`}>
         {label && (
-          <label className="uppercase text-white m-0 font-usuzi-condensed text-[16px] leading-[16px] sm:text-[26px] sm:leading-[28px] mb-[8px] block">
+          <label className="uppercase text-white m-0 font-usuzi-condensed text-[16px] leading-[16px] sm:text-[19px] sm:leading-[21px] mb-[8px] block">
             {label}
           </label>
         )}

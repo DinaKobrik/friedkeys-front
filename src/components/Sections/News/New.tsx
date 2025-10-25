@@ -92,18 +92,18 @@ const New: React.FC<NewProps> = ({
       href={`/news/${news.id}`}
       className={`block h-full w-full ${className}`}>
       <div
-        className={`grid gap-[8px]
+        className={`grid 
          ${
            isVertical
-             ? "grid-cols-1 grid-rows-2 xs:grid-rows-3 md:grid-rows-2 xl:grid-rows-3 h-full"
-             : "grid-cols-3 h-[80px] sm:h-[160px] md:h-[248px]"
+             ? "grid-cols-1 gap-y-[8px] grid-rows-2 xs:grid-rows-3 md:grid-rows-2 xl:grid-rows-3 h-full"
+             : "grid-cols-3 gap-x-[8px] h-[80px] sm:h-[160px] md:h-[186px] xl:h-full"
          }
         `}>
         <div
           className={`card-corner flex-shrink-0 w-full h-full ${
             isVertical
               ? "max-w-[792px] max-h-[520px] row-span-1 xs:row-span-2 md:row-span-1 xl:row-span-2"
-              : "max-w-[520px] max-h-[248px]"
+              : "max-w-[520px] max-h-[186px] xl:max-h-full"
           }`}>
           <Image
             src={imageSrc}
@@ -118,12 +118,12 @@ const New: React.FC<NewProps> = ({
           className={`w-full relative flex flex-col justify-between col-span-2 ${
             isVertical
               ? "py-[24px] px-[20px] bg-2"
-              : "md:py-[24px] md:px-[20px] md:bg-2"
+              : "md:py-[18px] md:px-[15px] md:bg-2"
           } ${!isVertical && isMobileLessThan768 ? "" : "card-corner"}`}>
           <div>
             <div
               ref={titleRef}
-              className={`sm:mb-[16px] ${
+              className={`sm:mb-[12px] ${
                 isVertical
                   ? "mb-[8px]"
                   : "line-clamp-2 mb-[4px] overflow-hidden"
@@ -141,7 +141,7 @@ const New: React.FC<NewProps> = ({
               </Heading>
             </div>
             <p
-              className={`text-white text-[14px] leading-[16px] sm:text-[20px] sm:leading-[24px] mb-[4px] ${
+              className={`text-white text-[14px] leading-[16px] sm:text-[15px] sm:leading-[18px] mb-[4px] ${
                 isVertical
                   ? "line-clamp-5 md:line-clamp-6"
                   : `line-clamp-${descriptionLines} !important sm:line-clamp-2 md:line-clamp-4`
@@ -149,7 +149,7 @@ const New: React.FC<NewProps> = ({
               {news.description}
             </p>
           </div>
-          <p className="text-[#C1C1C1] text-[14px] leading-[16px] sm:text-[20px] sm:leading-[24px] text-end">
+          <p className="text-[#C1C1C1] text-[14px] leading-[16px] sm:text-[15px] sm:leading-[18px] text-end">
             {formattedDate}
           </p>
 

@@ -8,7 +8,7 @@ type TextProps = {
 const Text: React.FC<TextProps> = ({ children, className = "" }) => {
   return (
     <p
-      className={`text-white text-[15px] leading-[18px] sm:text-[20px] sm:leading-[26px] ${className}`}>
+      className={`text-white text-[15px] leading-[18px] sm:text-[15px] sm:leading-[19px] ${className}`}>
       {children}
     </p>
   );

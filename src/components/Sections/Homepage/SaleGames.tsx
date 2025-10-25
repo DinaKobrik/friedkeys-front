@@ -112,9 +112,7 @@ const DiscountedGames = () => {
   };
 
   return (
-    <section
-      className="max-w-[1200px] w-full mx-auto"
-      aria-label="Discounted Games Section">
+    <section aria-label="Discounted Games Section">
       <div className="mb-[24px] sm:mb-[30px] flex justify-between items-center">
         <Heading variant="h1" aria-label="Discounted Games Title">
           Sale
@@ -152,7 +150,7 @@ const DiscountedGames = () => {
             discountedGames.map((game) => (
               <div
                 key={game.id}
-                className="flex-shrink-0 max-w-[175px] sm:min-w-[200px] md:max-w-[340px] lg:max-w-[calc((100%-48px)/3)] w-full">
+                className="flex-shrink-0 max-w-[175px] sm:min-w-[200px] md:max-w-[340px] lg:max-w-[calc((100%-36px)/3)] w-full">
                 <GameCard game={game} showSaleTimer={true} />
               </div>
             ))

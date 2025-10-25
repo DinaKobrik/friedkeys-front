@@ -15,7 +15,7 @@ const Pagination: React.FC<PaginationProps> = ({
   return (
     <>
       {totalPages > 1 && (
-        <div className="w-full grid justify-items-center justify-center items-center grid-cols-[repeat(auto-fit,45px)] xs:grid-cols-[repeat(auto-fit,60px)] sm:grid-cols-[repeat(auto-fit,75px)] gap-[8px] xs:gap-[5px] sm:gap-[18px] my-0 mx-auto">
+        <div className="w-full grid justify-items-center justify-center items-center grid-cols-[repeat(auto-fit,45px)] xs:grid-cols-[repeat(auto-fit,60px)] gap-[8px] xs:gap-[5px] sm:gap-[18px] my-0 mx-auto">
           {totalPages > 5 &&
             (currentPage === 1 ? (
               <>
@@ -28,7 +28,7 @@ const Pagination: React.FC<PaginationProps> = ({
                   className="border-none">
                   2
                 </Button>
-                <span className="font-usuzi-condensed text-[17px] leading-[19px] sm:text-[26px] sm:leading-[28px] font-bold uppercase text-center text-white">
+                <span className="font-usuzi-condensed text-[17px] leading-[19px] sm:text-[19px] sm:leading-[21px] font-bold uppercase text-center text-white">
                   . . .
                 </span>
                 <Button

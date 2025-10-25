@@ -52,7 +52,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="max-w-[1700px] mx-auto px-[16px] sm:px-[46px] font-inter bg-main text-white font-medium">
+      <body className="max-w-[1292px] mx-auto px-[16px] sm:px-[46px] font-inter bg-main text-white font-medium xl:mt-[76px]">
         <ClientLayout>{children}</ClientLayout>
       </body>
     </html>

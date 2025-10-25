@@ -32,16 +32,14 @@ const NewGames = () => {
   }, []);
 
   return (
-    <section
-      className="max-w-[1400px] w-full mx-auto"
-      aria-label="New Games Section">
-      <div className="mb-[24px] sm:mb-[40px] flex justify-between items-center">
+    <section aria-label="New Games Section">
+      <div className="mb-[24px] sm:mb-[30px] flex justify-between items-center">
         <Heading variant="h1" aria-label="New Games Title">
           new
         </Heading>
         <Button
           variant="secondary"
-          className="max-w-[238px] mr-[10px] hidden md:block"
+          className="max-w-[178px] mr-[8px] hidden md:block"
           onClick={() => {
             window.location.href = "/all-games";
           }}
@@ -49,7 +47,7 @@ const NewGames = () => {
           see all games
         </Button>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-[12px] sm:gap-[16px] lg:gap-[24px]">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-[12px] sm:gap-[16px] lg:gap-[18px]">
         {newGames.length > 0 ? (
           newGames.map((game) => <GameCard key={game.id} game={game} />)
         ) : (

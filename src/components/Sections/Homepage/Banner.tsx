@@ -36,18 +36,18 @@ const Banner: React.FC = () => {
       calculatedOffset = 16;
       setDynamicMargin(`-${calculatedOffset}px`);
       setDynamicLeft("6px");
-    } else if (windowWidth >= 576 && windowWidth < 1608) {
+    } else if (windowWidth >= 576 && windowWidth < 1200) {
       calculatedOffset = 46;
       setDynamicMargin(`-${calculatedOffset}px`);
       setDynamicLeft("46px");
-    } else if (windowWidth >= 1608 && windowWidth < 1700) {
+    } else if (windowWidth >= 1200 && windowWidth < 1292) {
       calculatedOffset = 46;
       setDynamicMargin(`-${calculatedOffset}px`);
-      setDynamicLeft(`${calculatedOffset + 156}px`);
-    } else if (windowWidth >= 1700) {
+      setDynamicLeft(`${calculatedOffset + 96}px`);
+    } else if (windowWidth >= 1200) {
       calculatedOffset = isTouchDevice
-        ? (windowWidth - scrollbarWidthValue - 1608) / 2
-        : (windowWidth - scrollbarWidthValue - 1608) / 2;
+        ? (windowWidth - scrollbarWidthValue - 1200) / 2
+        : (windowWidth - scrollbarWidthValue - 1200) / 2;
       setDynamicMargin(`-${calculatedOffset}px`);
       setDynamicLeft(`${calculatedOffset + 156}px`);
     } else {
@@ -212,12 +212,12 @@ const Banner: React.FC = () => {
         aria-label={`Original price: ${topGames.price} dollars`}>
         <Heading
           variant="h3"
-          className="skew-x-[20deg] h-[50px] py-[10px] sm:py-[12px] px-[30px] line-through hidden sm:block">
+          className="skew-x-[20deg] h-[45px] py-[10px] sm:py-[11px] px-[22px] line-through hidden sm:block">
           {topGames.price}$
         </Heading>
         <Heading
           variant="h2"
-          className="skew-x-[20deg] h-[42px] py-[10px] sm:py-[12px] px-[4px] xs:px-[12px] line-through sm:hidden">
+          className="skew-x-[20deg] h-[40px] py-[10px] px-[4px] xs:px-[12px] line-through sm:hidden">
           {topGames.price}$
         </Heading>
       </div>
@@ -232,7 +232,7 @@ const Banner: React.FC = () => {
         aria-label={`Discount: ${topGames.discount}%`}>
         <Heading
           variant="h3"
-          className="skew-x-[20deg] h-[52px] py-[10px] sm:py-[12px] px-[22px] md:px-[30px] hidden sm:block">
+          className="skew-x-[20deg] h-[45px] py-[10px] sm:py-[12px] px-[22px] hidden sm:block">
           -{topGames.discount}%
         </Heading>
         <Heading
@@ -250,20 +250,20 @@ const Banner: React.FC = () => {
 
     return (
       <div
-        className={`sm:absolute z-50 bottom-[0] sm:bottom-[20%] ${dynamicLeft} max-w-[calc(100%-32px)] sm:max-w-[calc(100%-46px)] w-full xl:max-w-[800px] mx-auto  sm:ml-0`}
+        className={`sm:absolute z-50 bottom-[0] sm:bottom-[20%] ${dynamicLeft} xl:max-w-[642px] xl:w-full mx-auto  sm:ml-0`}
         style={{ left: dynamicLeft }}
         aria-live="polite">
         {topGames.discount && topGames.discount > 0 && !isDiscountExpired ? (
           <>
             {selectedVariant === 1 && (
-              <div className="md:h-[52px] banner-grid w-full items-start justify-items-start gap-[8px] mx-auto">
+              <div className="md:h-[45px] banner-grid max-w-[calc(100%-30px)] sm:max-w-[100%] w-full items-start justify-items-start gap-[8px] mx-auto">
                 {PriceOriginalBlock}
                 <div
                   className="skew-x-[-20deg] border-[1px] border-primary-main rounded-[2px] h-full flex justify-center items-center w-full"
                   aria-label={`Discounted price: ${discountPrice?.toFixed(
                     2
                   )} dollars`}>
-                  <span className="skew-x-[20deg] text-white font-usuzi-condensed text-[24px] leading-[20px] sm:text-[38px] sm:leading-[29px] py-[12px] px-[30px] h-[42px] sm:h-[50px]">
+                  <span className="skew-x-[20deg] text-white font-usuzi-condensed text-[24px] leading-[20px] sm:text-[28px] sm:leading-[21px] py-[11px] px-[30px] h-[42px] sm:h-[43px]">
                     {discountPrice?.toFixed(2)}$
                   </span>
                 </div>
@@ -272,19 +272,19 @@ const Banner: React.FC = () => {
                   <div className="flex items-center gap-[6px] sm:gap-[24px] flex-shrink-0 w-full max-w-[100%] sm:max-w-[202px]">
                     <Button
                       variant="secondary"
-                      className="max-w-[44px] sm:max-w-[64px] h-[42px] sm:h-[52px] flex items-center justify-center flex-shrink-0"
+                      className="max-w-[44px] sm:max-w-[64px] h-[42px] sm:h-[45px] flex items-center justify-center flex-shrink-0"
                       onClick={() => updateQuantity(topGames.id, -1)}
                       aria-label="Decrease quantity">
                       -
                     </Button>
                     <span
-                      className="text-white text-[18px] font-bold"
+                      className="text-white text-[13px] font-bold"
                       aria-label={`Quantity: ${cartQuantity}`}>
                       {cartQuantity}
                     </span>
                     <Button
                       variant="secondary"
-                      className="max-w-[44px] sm:max-w-[64px] h-[42px] sm:h-[52px] flex items-center justify-center flex-shrink-0"
+                      className="max-w-[44px] sm:max-w-[64px] h-[42px] sm:h-[45px] flex items-center justify-center flex-shrink-0"
                       onClick={() => updateQuantity(topGames.id, 1)}
                       aria-label="Increase quantity">
                       +
@@ -293,7 +293,7 @@ const Banner: React.FC = () => {
                 ) : (
                   <Button
                     variant="primary"
-                    className="w-full lg:w-[360px] ml-0 whitespace-nowrap"
+                    className="w-full lg:w-[270px] ml-0 whitespace-nowrap"
                     onClick={addToCart}
                     aria-label={`Add ${topGames.title} to cart`}>
                     Add to cart
@@ -302,7 +302,7 @@ const Banner: React.FC = () => {
               </div>
             )}
             {selectedVariant === 2 && (
-              <div className="sm:max-w-[455px] w-full mx-auto sm:mx-0 sm:ml-[30px]">
+              <div className="max-w-[calc(100%-30px)] sm:max-w-[455px] w-full mx-auto sm:mx-0 sm:ml-[30px]">
                 <Heading
                   variant="h1"
                   className="text-center mb-[6px] hidden sm:block"
@@ -357,7 +357,7 @@ const Banner: React.FC = () => {
             )}
             {selectedVariant === 3 && (
               <div className="flex flex-col gap-[8px] w-full max-w-[calc(100%-20px)] sm:max-w-[520px] mx-auto ml-[10px] sm:ml-0">
-                <div className="h-[42px] sm:h-[52px] flex w-full items-center gap-[8px] max-w-[100%]">
+                <div className="h-[42px] sm:h-[45px] flex w-full items-center gap-[8px] max-w-[100%]">
                   {PriceOriginalBlock}
                   {DiscountBadgeBlock}
                   <div
@@ -365,7 +365,7 @@ const Banner: React.FC = () => {
                     aria-label={`Discounted price: ${discountPrice?.toFixed(
                       2
                     )} dollars`}>
-                    <span className="skew-x-[20deg] text-white font-usuzi-condensed text-[20px] leading-[24px] sm:text-[38px] sm:leading-[29px] py-[12px] px-[8px] xs:px-[18px] sm:px-[30px]">
+                    <span className="skew-x-[20deg] text-white font-usuzi-condensed text-[20px] leading-[24px] sm:text-[28px] sm:leading-[29px] py-[9px] px-[8px] xs:px-[18px] sm:px-[22px]">
                       {discountPrice?.toFixed(2)}$
                     </span>
                   </div>
@@ -374,19 +374,19 @@ const Banner: React.FC = () => {
                   <div className="flex items-center gap-[24px] flex-shrink-0 w-full max-w-[202px] mx-auto">
                     <Button
                       variant="secondary"
-                      className="max-w-[64px] h-[48px] flex items-center justify-center flex-shrink-0"
+                      className="max-w-[64px] h-[42px] sm:h-[45px] flex items-center justify-center flex-shrink-0"
                       onClick={() => updateQuantity(topGames.id, -1)}
                       aria-label="Decrease quantity">
                       -
                     </Button>
                     <span
-                      className="text-white text-[18px] font-bold"
+                      className="text-white text-[13px] font-bold"
                       aria-label={`Quantity: ${cartQuantity}`}>
                       {cartQuantity}
                     </span>
                     <Button
                       variant="secondary"
-                      className="max-w-[64px] h-[48px] flex items-center justify-center flex-shrink-0"
+                      className="max-w-[64px] h-[42px] sm:h-[45px] flex items-center justify-center flex-shrink-0"
                       onClick={() => updateQuantity(topGames.id, 1)}
                       aria-label="Increase quantity">
                       +
@@ -404,8 +404,8 @@ const Banner: React.FC = () => {
               </div>
             )}
             {selectedVariant === 4 && (
-              <div className="max-w-[calc(100%-20px)] sm:max-w-[383px] flex flex-col w-full gap-[8px] sm:gap-[16px] xs:mx-[10px] sm:ml-0">
-                <div className="grid grid-cols-2 lg:flex justify-between gap-[8px] xs:gap-[24px] items-center">
+              <div className="max-w-[100%] sm:max-w-[283px] lg:max-w-[250px] flex flex-col w-full gap-[8px] sm:gap-[12px] xs:mx-[10px] sm:ml-0">
+                <div className="grid grid-cols-2 lg:flex justify-between gap-[8px] xs:gap-[18px] items-center">
                   {DiscountBadgeBlock}
                   <Heading
                     variant="h1"
@@ -427,19 +427,19 @@ const Banner: React.FC = () => {
                   <div className="flex items-center gap-[24px] flex-shrink-0 w-full max-w-[202px] mx-auto">
                     <Button
                       variant="secondary"
-                      className="max-w-[64px] h-[48px] flex items-center justify-center flex-shrink-0"
+                      className="max-w-[64px] h-[42px] sm:h-[45px] flex items-center justify-center flex-shrink-0"
                       onClick={() => updateQuantity(topGames.id, -1)}
                       aria-label="Decrease quantity">
                       -
                     </Button>
                     <span
-                      className="text-white text-[18px] font-bold"
+                      className="text-white text-[13px] font-bold"
                       aria-label={`Quantity: ${cartQuantity}`}>
                       {cartQuantity}
                     </span>
                     <Button
                       variant="secondary"
-                      className="max-w-[64px] h-[48px] flex items-center justify-center flex-shrink-0"
+                      className="max-w-[64px] h-[42px] sm:h-[45px] flex items-center justify-center flex-shrink-0"
                       onClick={() => updateQuantity(topGames.id, 1)}
                       aria-label="Increase quantity">
                       +
@@ -458,7 +458,7 @@ const Banner: React.FC = () => {
             )}
             {selectedVariant === 5 && (
               <div className="flex flex-col xs:flex-row gap-[8px] items-center xs:h-[42px] sm:h-[52px] sm:max-w-[calc(100%-66px)] w-full mx-auto sm:mx-0">
-                <div className="flex gap-[8px] items-center h-[42px] sm:h-[52px] xs:max-w-[calc(100%-20px)] sm:max-w-[calc(100%-66px)] w-full xs:w-auto mx-auto sm:mx-0 xs:ml-[10px] sm:ml-0">
+                <div className="flex gap-[8px] items-center h-[42px] sm:h-[45px] xs:max-w-[calc(100%-20px)] sm:max-w-[calc(100%-66px)] w-full xs:w-auto mx-auto sm:mx-0 xs:ml-[10px] sm:ml-0">
                   {DiscountBadgeBlock}
                   <div
                     className="skew-x-[-20deg] border-[1px] border-primary-main rounded-[2px] h-full flex justify-center items-center"
@@ -474,19 +474,19 @@ const Banner: React.FC = () => {
                   <div className="flex items-center gap-[24px] xs:gap-0 sm:gap-[24px] flex-shrink-0 w-full max-w-[202px] xs:max-w-[140px] sm:max-w-[202px]">
                     <Button
                       variant="secondary"
-                      className="max-w-[64px] xs:max-w-[44px] sm:max-w-[64px] h-[42px] sm:h-[52px] flex items-center justify-center flex-shrink-0"
+                      className="max-w-[64px] xs:max-w-[44px] sm:max-w-[64px] h-[42px] sm:h-[45px] flex items-center justify-center flex-shrink-0"
                       onClick={() => updateQuantity(topGames.id, -1)}
                       aria-label="Decrease quantity">
                       -
                     </Button>
                     <span
-                      className="text-white text-[18px] font-bold"
+                      className="text-white text-[13px] font-bold"
                       aria-label={`Quantity: ${cartQuantity}`}>
                       {cartQuantity}
                     </span>
                     <Button
                       variant="secondary"
-                      className="max-w-[64px] xs:max-w-[44px] sm:max-w-[64px] h-[42px] sm:h-[52px] flex items-center justify-center flex-shrink-0"
+                      className="max-w-[64px] xs:max-w-[44px] sm:max-w-[64px] h-[42px] sm:h-[45px] flex items-center justify-center flex-shrink-0"
                       onClick={() => updateQuantity(topGames.id, 1)}
                       aria-label="Increase quantity">
                       +
@@ -495,7 +495,7 @@ const Banner: React.FC = () => {
                 ) : (
                   <Button
                     variant="primary"
-                    className="max-w-[362px] ml-0 whitespace-nowrap"
+                    className="max-w-[calc(100%-10px)] sm:max-w-[271px] ml-0 whitespace-nowrap"
                     onClick={addToCart}
                     aria-label={`Add ${topGames.title} to cart`}>
                     Add to cart
@@ -505,9 +505,9 @@ const Banner: React.FC = () => {
             )}
           </>
         ) : (
-          <div className="grid grid-cols-2 justify-center sm:flex gap-[8px] w-full sm:ml-0 sm:justify-start">
+          <div className="grid grid-cols-2 justify-center max-w-[calc(100%-30px)] sm:max-w-[100%] mx-auto sm:flex gap-[8px] w-full sm:ml-0 sm:justify-start">
             <div
-              className="skew-x-[-20deg] h-[42px] sm:h-[52px] border-[1px] border-primary-main rounded-[2px] flex justify-center items-center"
+              className="skew-x-[-20deg] h-[42px] sm:h-[45px] border-[1px] border-primary-main rounded-[2px] flex justify-center items-center"
               aria-label={`Price: ${topGames.price} dollars`}>
               <Heading
                 variant="h3"
@@ -524,19 +524,19 @@ const Banner: React.FC = () => {
               <div className="flex items-center gap-[8px] xs:gap-[24px] flex-shrink-0 w-full max-w-[202px]">
                 <Button
                   variant="secondary"
-                  className="max-w-[44px] sm:max-w-[64px] h-[42px] sm:h-[52px] flex items-center justify-center flex-shrink-0"
+                  className="max-w-[44px] sm:max-w-[64px] h-[42px] sm:h-[45px] flex items-center justify-center flex-shrink-0"
                   onClick={() => updateQuantity(topGames.id, -1)}
                   aria-label="Decrease quantity">
                   -
                 </Button>
                 <span
-                  className="text-white text-[18px] font-bold"
+                  className="text-white text-[13px] font-bold"
                   aria-label={`Quantity: ${cartQuantity}`}>
                   {cartQuantity}
                 </span>
                 <Button
                   variant="secondary"
-                  className="max-w-[44px] sm:max-w-[64px] h-[42px] sm:h-[52px] flex items-center justify-center flex-shrink-0"
+                  className="max-w-[44px] sm:max-w-[64px] h-[42px] sm:h-[45px] flex items-center justify-center flex-shrink-0"
                   onClick={() => updateQuantity(topGames.id, 1)}
                   aria-label="Increase quantity">
                   +
@@ -545,7 +545,7 @@ const Banner: React.FC = () => {
             ) : (
               <Button
                 variant="primary"
-                className="sm:max-w-[216px] ml-0"
+                className="sm:max-w-[240px] ml-0"
                 onClick={addToCart}
                 aria-label={`Add ${topGames.title} to cart`}>
                 Add to cart
@@ -583,7 +583,7 @@ const Banner: React.FC = () => {
           <div className="skeleton skeleton-image" />
         </div>
         <div
-          className="sm:absolute z-50 bottom-[0] sm:bottom-[20%] left-[6px] sm:left-[46px] xl:left-[115px] max-w-[calc(100%-32px)] sm:max-w-[calc(100%-46px)] w-full xl:max-w-[800px] mx-auto ml-[32px] sm:ml-0"
+          className="sm:absolute z-50 bottom-[0] sm:bottom-[20%] left-[6px] sm:left-[46px] xl:left-[115px] mx-auto ml-[32px] sm:ml-0"
           aria-live="polite">
           <div className="banner-grid w-full items-start justify-items-start gap-[8px] mx-auto">
             <div className="skeleton skeleton-price" />
@@ -606,13 +606,13 @@ const Banner: React.FC = () => {
           href={`/all-games/${topGames.id}`}
           title={`View ${topGames.title} details`}
           aria-label={`View ${topGames.title} details`}>
-          <div className="relative banner-img max-w-[1608px] mx-auto w-full aspect-[1608/440] h-[216px] sm:h-[440px] md:h-[440px]">
+          <div className="relative banner-img max-w-[1292px] mx-auto w-full aspect-[1292/440] h-[216px] sm:h-[340px] md:h-[440px]">
             <Image
               src={imageSrc}
               alt={topGames.title || "Game Banner"}
-              width={1608}
+              width={1200}
               height={440}
-              className="max-w-[1608px] w-full mx-auto h-[216px] sm:h-[440px] md:h-[440px] object-cover no-drag"
+              className="max-w-[1292px] w-full mx-auto h-[216px] sm:h-[340px] md:h-[440px] object-cover no-drag"
               priority
               quality={100}
               onError={() => setImageSrc("/images/no-image.jpg")}

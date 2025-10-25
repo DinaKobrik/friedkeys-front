@@ -84,11 +84,11 @@
 }
 .card-corner::before {
   content: "";
-  top: -32px;
-  left: -32px;
+  top: -24px;
+  left: -24px;
   position: absolute;
-  width: 64px;
-  height: 64px;
+  width: 48px;
+  height: 48px;
   -webkit-transform: rotate(45deg);
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
@@ -97,11 +97,11 @@
 }
 .card-corner::after {
   content: "";
-  bottom: -32px;
-  right: -32px;
+  bottom: -24px;
+  right: -24px;
   position: absolute;
-  width: 64px;
-  height: 64px;
+  width: 48px;
+  height: 48px;
   -webkit-transform: rotate(45deg);
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
@@ -186,6 +186,25 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   pointer-events: auto;
 }
 
+/* header */
+.header {
+  box-sizing: border-box;
+}
+@media (min-width: 1200px) {
+  .header::before {
+    content: "";
+    position: absolute;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    width: 100%;
+    height: 100%;
+    background: #1717179a;
+    -webkit-backdrop-filter: blur(40px);
+    backdrop-filter: blur(40px);
+    z-index: -1;
+  }
+}
 /* game-card */
 
 .favorite::before {

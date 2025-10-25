@@ -198,8 +198,8 @@ const GameCard: React.FC<GameCardProps> = ({
             <div className="h-[7px] w-[75%] sm:w-[50%] absolute bottom-0 left-[50%] bg-primary-main translate-x-[-50%] blur-[30px] z-0"></div>
           </div>
           {!hidePreOrder && game.preOrder && game.releaseDate && (
-            <div className="block max-w-[284px] w-[calc(100%-20px)] mx-auto mt-[8px] sm:mt-[12px] py-[4px] px-[12px] skew-x-[-20deg] bg-primary-main rounded-[1px]">
-              <p className="font-semibold skew-x-[20deg] text-center text-black text-[12px] leading-[12px] sm:text-[16px] sm:leading-[16px]">
+            <div className="block max-w-[284px] w-[calc(100%-20px)] mx-auto mt-[8px] sm:mt-[9px] py-[4px] px-[12px] skew-x-[-20deg] bg-primary-main rounded-[1px]">
+              <p className="font-semibold skew-x-[20deg] text-center text-black text-[12px] leading-[12px] sm:text-[12px] sm:leading-[12px]">
                 PRE-ORDER {formatReleaseDate(game.releaseDate)}
               </p>
             </div>

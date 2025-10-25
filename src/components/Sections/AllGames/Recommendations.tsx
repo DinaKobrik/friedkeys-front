@@ -106,7 +106,7 @@ const Recommendations: React.FC = () => {
       <Heading
         variant="h1"
         aria-label="Recommendations Title"
-        className="mb-[24px] sm:mb-[40px]">
+        className="mb-[24px] sm:mb-[30px]">
         Recommendations
       </Heading>
       <div
@@ -114,7 +114,7 @@ const Recommendations: React.FC = () => {
         style={{ marginLeft: dynamicMargin, marginRight: dynamicMargin }}>
         <div
           ref={containerRef}
-          className="flex max-w-[100%] overflow-x-auto hide-scrollbar gap-[12px] sm:gap-[16px] lg:gap-[24px] w-full items-start"
+          className="flex max-w-[100%] overflow-x-auto hide-scrollbar gap-[12px] sm:gap-[16px] lg:gap-[18px] w-full items-start"
           aria-label="Recommended games carousel"
           style={{
             paddingLeft: dynamicPadding,

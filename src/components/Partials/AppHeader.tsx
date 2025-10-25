@@ -88,169 +88,171 @@ const Header = () => {
   };
 
   return (
-    <header className="max-w-[1200px] mx-auto w-full py-[14px] flex justify-between items-center gap-[10px] sm:mt-[24px]">
-      <Logo />
-      <div className="w-full search hidden xl:flex max-w-[380px] 2xl:max-w-[636px] h-[36px] bg-2 border-[1px] border-primary-main skew-x-[-20deg] relative">
-        <form onSubmit={handleSubmit} className="w-full">
-          <input
-            name="search"
-            value={searchValue}
-            onChange={handleChange}
-            placeholder="Search"
-            className="w-full px-[15px] py-[7px] pl-[61px] font-usuzi-condensed text-[16px] leading-[16px] sm:text-[18px] sm:leading-[21px] border-none bg-transparent focus:outline-none placeholder-gray-68 hover:placeholder-white caret-primary-main skew-x-[20deg]"
-            onFocus={handleFocus}
-            onBlur={handleBlur}
-            onKeyDown={handleKeyDown}
-            onClick={handleClick}
-          />
-          <button type="submit">
+    <header className="xl:fixed xl:top-0 xl:left-0 xl:z-[200] w-full header">
+      <div className=" max-w-[1920px] w-full mx-auto py-[14px] lg:px-[46px] flex justify-between items-center gap-[10px] ">
+        <Logo />
+        <div className="w-full search hidden xl:flex max-w-[380px] 2xl:max-w-[636px] h-[36px] bg-2 border-[1px] border-primary-main skew-x-[-20deg] relative">
+          <form onSubmit={handleSubmit} className="w-full">
+            <input
+              name="search"
+              value={searchValue}
+              onChange={handleChange}
+              placeholder="Search"
+              className="w-full px-[15px] py-[7px] pl-[61px] font-usuzi-condensed text-[16px] leading-[16px] sm:text-[18px] sm:leading-[21px] border-none bg-transparent focus:outline-none placeholder-gray-68 hover:placeholder-white caret-primary-main skew-x-[20deg]"
+              onFocus={handleFocus}
+              onBlur={handleBlur}
+              onKeyDown={handleKeyDown}
+              onClick={handleClick}
+            />
+            <button type="submit">
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 33 32"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                className="absolute top-1/2 left-[25px] transform -translate-y-1/2 skew-x-[20deg]">
+                <circle
+                  cx="15.5012"
+                  cy="14.3847"
+                  r="10.718"
+                  stroke="white"
+                  strokeWidth="2"
+                  strokeLinecap="square"
+                />
+                <path
+                  d="M22.8196 22.2773L28.8909 28.3329"
+                  stroke="white"
+                  strokeWidth="2"
+                  strokeLinecap="square"
+                />
+              </svg>
+            </button>
+
+            {searchValue && (
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 32 32"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                className="absolute top-1/2 right-[10px] transform -translate-y-1/2 cursor-pointer skew-x-[20deg]"
+                onClick={handleClearField}>
+                <path
+                  d="M23.5425 23.5429L8.45752 8.45795"
+                  stroke="white"
+                  strokeWidth="2"
+                />
+                <path
+                  d="M23.5425 8.45795L8.45753 23.5429"
+                  stroke="white"
+                  strokeWidth="2"
+                />
+              </svg>
+            )}
+            <div
+              className={`focus-border ${
+                focusMethod === "keyboard" ? "keyboard" : ""
+              } ${focusMethod === "mouse" ? "mouse" : ""}`}
+            />
+          </form>
+        </div>
+        <div className="max-h-[36px] hidden xl:flex items-center gap-[13px]">
+          <Button
+            variant="secondary"
+            onClick={() => {
+              window.location.href = "/support";
+            }}
+            className="h-[36px] flex justify-center items-center"
+            aria-label="Support page">
+            support
+          </Button>
+          <Button
+            variant="secondary"
+            onClick={() => {
+              window.location.href = "/cart/shopping-cart";
+            }}
+            className="h-[36px] flex justify-center items-center"
+            aria-label="User profile">
             <svg
               width="24"
               height="24"
               viewBox="0 0 33 32"
               fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              className="absolute top-1/2 left-[25px] transform -translate-y-1/2 skew-x-[20deg]">
-              <circle
-                cx="15.5012"
-                cy="14.3847"
-                r="10.718"
+              xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M20.0032 13.9053H23.5654"
                 stroke="white"
                 strokeWidth="2"
                 strokeLinecap="square"
               />
               <path
-                d="M22.8196 22.2773L28.8909 28.3329"
+                fillRule="evenodd"
+                clipRule="evenodd"
+                d="M11.0484 25.9902C11.4351 25.9902 11.7473 26.3037 11.7473 26.6891C11.7473 27.0757 11.4351 27.3892 11.0484 27.3892C10.6618 27.3892 10.3496 27.0757 10.3496 26.6891C10.3496 26.3037 10.6618 25.9902 11.0484 25.9902Z"
+                fill="white"
+                stroke="white"
+                strokeWidth="2"
+                strokeLinecap="square"
+              />
+              <path
+                fillRule="evenodd"
+                clipRule="evenodd"
+                d="M25.5379 25.9902C25.9246 25.9902 26.2381 26.3037 26.2381 26.6891C26.2381 27.0757 25.9246 27.3892 25.5379 27.3892C25.1513 27.3892 24.8391 27.0757 24.8391 26.6891C24.8391 26.3037 25.1513 25.9902 25.5379 25.9902Z"
+                fill="white"
+                stroke="white"
+                strokeWidth="2"
+                strokeLinecap="square"
+              />
+              <path
+                d="M8.33672 8.69095H29.1698L27.4773 21.5371H9.49457L7.79187 4.61068H4.50317"
                 stroke="white"
                 strokeWidth="2"
                 strokeLinecap="square"
               />
             </svg>
-          </button>
-
-          {searchValue && (
+          </Button>
+          <Button
+            variant="secondary"
+            onClick={() => {
+              window.location.href = "/auth/account/personal-info";
+            }}
+            className="h-[36px] flex justify-center items-center"
+            aria-label="Settings">
             <svg
               width="24"
               height="24"
-              viewBox="0 0 32 32"
+              viewBox="0 0 33 32"
               fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              className="absolute top-1/2 right-[10px] transform -translate-y-1/2 cursor-pointer skew-x-[20deg]"
-              onClick={handleClearField}>
+              xmlns="http://www.w3.org/2000/svg">
               <path
-                d="M23.5425 23.5429L8.45752 8.45795"
+                fillRule="evenodd"
+                clipRule="evenodd"
+                d="M22.6842 9.55964C22.6842 12.815 20.0448 15.4526 16.7912 15.4526C13.5359 15.4526 10.8965 12.815 10.8965 9.55964C10.8965 6.30433 13.5359 3.66667 16.7912 3.66667C20.0448 3.66667 22.6842 6.30433 22.6842 9.55964Z"
                 stroke="white"
-                strokeWidth="2"
+                strokeWidth="1.5"
+                strokeLinecap="square"
               />
               <path
-                d="M23.5425 8.45795L8.45753 23.5429"
+                d="M16.8364 19.7585C21.1782 19.7474 24.87 21.7409 26.227 26.0323C23.4918 27.6997 20.2723 28.3419 16.8364 28.3335C13.4006 28.3419 10.1811 27.6997 7.44592 26.0323C8.80446 21.7363 12.49 19.7474 16.8364 19.7585Z"
                 stroke="white"
-                strokeWidth="2"
+                strokeWidth="1.5"
+                strokeLinecap="square"
               />
             </svg>
-          )}
-          <div
-            className={`focus-border ${
-              focusMethod === "keyboard" ? "keyboard" : ""
-            } ${focusMethod === "mouse" ? "mouse" : ""}`}
-          />
-        </form>
+          </Button>
+        </div>
+        <Link
+          href="/support"
+          className="support-container flex justify-center items-center xl:hidden max-w-[150px] h-[40px] sm:h-[41px] no-underline relative w-auto"
+          tabIndex={-1}
+          aria-hidden="true"
+          aria-label="Support mobile link">
+          <span className="support font-usuzi-condensed flex justify-center items-center text-[15px] leading-[17px] sm:text-[19px] sm:leading-[21px] font-bold uppercase text-center text-white px-[10px] py-[10px] sm:px-[9px] sm:py-[9px] pl-[30px] sm:pl-[22px] relative w-[calc(100%-4px)] h-[calc(100%-4px)] bg-main overflow-hidden z-10">
+            support
+          </span>
+        </Link>
       </div>
-      <div className="max-h-[36px] hidden xl:flex items-center gap-[13px]">
-        <Button
-          variant="secondary"
-          onClick={() => {
-            window.location.href = "/support";
-          }}
-          className="h-[36px] flex justify-center items-center"
-          aria-label="Support page">
-          support
-        </Button>
-        <Button
-          variant="secondary"
-          onClick={() => {
-            window.location.href = "/cart/shopping-cart";
-          }}
-          className="h-[36px] flex justify-center items-center"
-          aria-label="User profile">
-          <svg
-            width="24"
-            height="24"
-            viewBox="0 0 33 32"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg">
-            <path
-              d="M20.0032 13.9053H23.5654"
-              stroke="white"
-              strokeWidth="2"
-              strokeLinecap="square"
-            />
-            <path
-              fillRule="evenodd"
-              clipRule="evenodd"
-              d="M11.0484 25.9902C11.4351 25.9902 11.7473 26.3037 11.7473 26.6891C11.7473 27.0757 11.4351 27.3892 11.0484 27.3892C10.6618 27.3892 10.3496 27.0757 10.3496 26.6891C10.3496 26.3037 10.6618 25.9902 11.0484 25.9902Z"
-              fill="white"
-              stroke="white"
-              strokeWidth="2"
-              strokeLinecap="square"
-            />
-            <path
-              fillRule="evenodd"
-              clipRule="evenodd"
-              d="M25.5379 25.9902C25.9246 25.9902 26.2381 26.3037 26.2381 26.6891C26.2381 27.0757 25.9246 27.3892 25.5379 27.3892C25.1513 27.3892 24.8391 27.0757 24.8391 26.6891C24.8391 26.3037 25.1513 25.9902 25.5379 25.9902Z"
-              fill="white"
-              stroke="white"
-              strokeWidth="2"
-              strokeLinecap="square"
-            />
-            <path
-              d="M8.33672 8.69095H29.1698L27.4773 21.5371H9.49457L7.79187 4.61068H4.50317"
-              stroke="white"
-              strokeWidth="2"
-              strokeLinecap="square"
-            />
-          </svg>
-        </Button>
-        <Button
-          variant="secondary"
-          onClick={() => {
-            window.location.href = "/auth/account/personal-info";
-          }}
-          className="h-[36px] flex justify-center items-center"
-          aria-label="Settings">
-          <svg
-            width="24"
-            height="24"
-            viewBox="0 0 33 32"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg">
-            <path
-              fillRule="evenodd"
-              clipRule="evenodd"
-              d="M22.6842 9.55964C22.6842 12.815 20.0448 15.4526 16.7912 15.4526C13.5359 15.4526 10.8965 12.815 10.8965 9.55964C10.8965 6.30433 13.5359 3.66667 16.7912 3.66667C20.0448 3.66667 22.6842 6.30433 22.6842 9.55964Z"
-              stroke="white"
-              strokeWidth="1.5"
-              strokeLinecap="square"
-            />
-            <path
-              d="M16.8364 19.7585C21.1782 19.7474 24.87 21.7409 26.227 26.0323C23.4918 27.6997 20.2723 28.3419 16.8364 28.3335C13.4006 28.3419 10.1811 27.6997 7.44592 26.0323C8.80446 21.7363 12.49 19.7474 16.8364 19.7585Z"
-              stroke="white"
-              strokeWidth="1.5"
-              strokeLinecap="square"
-            />
-          </svg>
-        </Button>
-      </div>
-      <Link
-        href="/support"
-        className="support-container flex justify-center items-center xl:hidden max-w-[150px] h-[40px] sm:h-[41px] no-underline relative w-auto"
-        tabIndex={-1}
-        aria-hidden="true"
-        aria-label="Support mobile link">
-        <span className="support font-usuzi-condensed flex justify-center items-center text-[15px] leading-[17px] sm:text-[19px] sm:leading-[21px] font-bold uppercase text-center text-white px-[10px] py-[10px] sm:px-[9px] sm:py-[9px] pl-[30px] sm:pl-[22px] relative w-[calc(100%-4px)] h-[calc(100%-4px)] bg-main overflow-hidden z-10">
-          support
-        </span>
-      </Link>
       <div
         className="flex xl:hidden fixed bottom-0 left-1/2 transform -translate-x-1/2 z-[1000] w-full justify-around bg-3"
         aria-label="Mobile navigation menu">

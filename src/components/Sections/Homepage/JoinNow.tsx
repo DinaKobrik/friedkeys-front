@@ -75,14 +75,14 @@ const JoinNow = () => {
             </linearGradient>
           </defs>
         </svg>
-        <div className="joinnow__banner absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 md:max-w-[680px] w-full md:max-h-[532px] h-full mx-auto md:p-[110px_100px_102px] flex flex-col sm:max-w-[538px] sm:max-h-[418px] xs:p-[56px_39px] p-[29px_34px] xs:max-w-[358px] xs:max-h-[278px] max-w-[322px] max-h-[250px]">
+        <div className="joinnow__banner absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 md:max-w-[680px] w-full md:max-h-[532px] h-full mx-auto md:p-[110px_100px_102px] flex flex-col justify-center sm:max-w-[538px] sm:max-h-[418px] xs:p-[56px_39px] p-[29px_34px] xs:max-w-[358px] xs:max-h-[278px] max-w-[322px] max-h-[250px]">
           <h2
-            className="font-usuzi-condensed mb-[8px] sm:mb-[24px] text-[20px] leading-[24px] sm:text-[48px] sm:leading-[56px]"
+            className="font-usuzi-condensed mb-[8px] sm:mb-[24px] text-[20px] leading-[24px] sm:text-[36px] sm:leading-[42px]"
             aria-label="Join now invitation">
             Join now and start playing!
           </h2>
           <p
-            className="sm:text-[20px] sm:leading-[26px] text-white font-medium text-[15px] leading-[19px] mb-[20px] xs:mb-[40px] md:mb-[80px]"
+            className="sm:text-[15px] sm:leading-[19px] text-white font-medium text-[15px] leading-[19px] mb-[20px] xs:mb-[30px] md:mb-[60px]"
             aria-label="Description of benefits for joining">
             Create an account today and unlock exclusive games, epic discounts,
             and special rewards

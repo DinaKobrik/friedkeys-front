@@ -3,7 +3,7 @@
   .quick-menu::before {
     content: "";
     width: 25px;
-    height: 100%;
+    height: calc(100% + 5px);
     position: absolute;
     top: 0;
     left: -12px;
@@ -13,7 +13,7 @@
   .quick-menu::after {
     content: "";
     width: 25px;
-    height: 100%;
+    height: calc(100% + 5px);
     position: absolute;
     top: 0;
     right: -13px;

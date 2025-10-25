@@ -14,10 +14,11 @@ const Button: React.FC<ButtonProps> = ({
   ...props
 }) => {
   const baseStyles =
-    "font-usuzi-condensed block my-0 mx-auto rounded-[2px] cursor-pointer text-[17px] leading-[19px] sm:text-[19px] sm:leading-[21px] font-bold text-center px-[9px] py-[9px] w-full focus:outline-none skew-x-[-20deg]";
+    "font-usuzi-condensed block my-0 mx-auto rounded-[2px] cursor-pointer text-[17px] leading-[19px] sm:text-[19px] sm:leading-[21px] font-bold text-center px-[9px] py-[11px] w-full focus:outline-none skew-x-[-20deg]";
 
   const variantStyles = {
-    primary: "btn-primary text-main z-5 bg-primary-main",
+    primary:
+      "btn-primary border-[1px] border-primary-main text-main z-5 bg-primary-main",
     secondary:
       "btn-secondary text-white border-[1px] bg-transparent border-primary-main z-10",
   };
