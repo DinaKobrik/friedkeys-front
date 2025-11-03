@@ -6,7 +6,7 @@ import Button from "@/components/ui/Button";
 const Custom404 = () => {
   return (
     <main>
-      <section className="min-h-[calc(100vh-520px)] flex justify-center items-center mx-auto relative z-10 py-[80px]">
+      <section className="min-h-[calc(100vh-520px)] flex justify-center items-center mx-auto relative z-10 py-[60px]">
         <div className="custom404 relative flex justify-center px-0 max-w-[680px] mx-auto w-full py-[43px]">
           <svg
             width="100%"
@@ -59,17 +59,17 @@ const Custom404 = () => {
             <div className="font-usuzi-grad mb-[8px] text-[80px] leading-[50px] xs:text-[100px] xs:leading-[80px] md:text-[128px] md:leading-[128px] text-primary-main">
               404
             </div>
-            <h2 className="font-usuzi-condensed text-center text-[20px] leading-[24px] sm:text-[48px] sm:leading-[56px]">
+            <h2 className="font-usuzi-condensed text-center text-[20px] leading-[24px] sm:text-[36px] sm:leading-[42px]">
               Game over...
               <br />
               Page not found!
             </h2>
-            <p className="text-center sm:text-[20px] sm:leading-[26px] text-white font-medium md:mb-[40px] text-[15px] leading-[19px] mb-[20px]">
+            <p className="text-center sm:text-[15px] sm:leading-[19px] text-white font-medium md:mb-[30px] text-[15px] leading-[19px] mb-[20px]">
               It may have been moved or deleted. Try the homepage instead
             </p>
             <Button
               variant="primary"
-              className="max-w-[500px]"
+              className="max-w-[375px]"
               onClick={() => (window.location.href = "/")}>
               Home
             </Button>

@@ -205,12 +205,12 @@ const SupportPage: React.FC = () => {
   }, []);
 
   return (
-    <main className="mt-[24px] sm:mt-[80px]">
+    <main className="mt-[24px] sm:mt-[60px] xl:mt-[136px]">
       <section>
-        <Heading variant="h3" className="mb-[24px] sm:mb-[40px]">
+        <Heading variant="h3" className="mb-[24px] sm:mb-[30px]">
           Home / support
         </Heading>
-        <Heading variant="h1" className="mb-[24px] sm:mb-[80px]">
+        <Heading variant="h1" className="mb-[24px] sm:mb-[60px]">
           FriedKeys Support Center
         </Heading>
         <div className="flex flex-col gap-[16px] max-w-[792px] mx-auto w-full">
@@ -248,7 +248,7 @@ const SupportPage: React.FC = () => {
               {isTopicOpen && (
                 <div
                   id="topicDropdown"
-                  className="absolute top-[64px] sm:top-[84px] z-50 w-full bg-2 mt-[8px] max-h-[200px] overflow-y-auto custom-scrollbar">
+                  className="absolute top-[64px] z-50 w-full bg-2 mt-[8px] max-h-[200px] overflow-y-auto custom-scrollbar">
                   {topics.map((topic) => (
                     <div
                       key={topic}
@@ -288,7 +288,7 @@ const SupportPage: React.FC = () => {
               {isOrderOpen && (
                 <div
                   id="orderDropdown"
-                  className="absolute top-[64px] sm:top-[84px] z-50 w-full bg-2 mt-[8px] max-h-[200px] overflow-y-auto custom-scrollbar">
+                  className="absolute top-[64px] z-50 w-full bg-2 mt-[8px] max-h-[200px] overflow-y-auto custom-scrollbar">
                   {orders.map((order) => (
                     <div
                       key={order}
@@ -319,7 +319,7 @@ const SupportPage: React.FC = () => {
               />
             </div>
 
-            <div className="flex flex-col gap-[8px] w-full mb-[32px] sm:mb-[40px] py-[16px]">
+            <div className="flex flex-col gap-[8px] w-full mb-[32px] py-[16px]">
               <Heading variant="h3">{`Upload a Screenshot (.png or .jpg)`}</Heading>
               <div className="grid grid-cols-1 md:grid-cols-5 md:h-[136px] py-[8px] justify-center items-center gap-[24px] md:gap-[50px]">
                 <Button
@@ -338,7 +338,7 @@ const SupportPage: React.FC = () => {
                   className="hidden"
                   name="screenshots"
                 />
-                <div className="flex overflow-x-auto custom-scrollbar-h md:col-span-3 gap-[12px] md:gap-[24px]">
+                <div className="flex overflow-x-auto custom-scrollbar-h md:col-span-3 gap-[12px] md:gap-[18px]">
                   {screenshots.map((src, index) => (
                     <div key={index} className="relative flex-shrink-0 group">
                       <Image
@@ -368,7 +368,7 @@ const SupportPage: React.FC = () => {
             <Button
               variant="primary"
               type="submit"
-              className="max-w-[calc(100%-20px)] sm:max-w-[520px] mb-[8px]">
+              className="max-w-[calc(100%-20px)] sm:max-w-[390px] mb-[8px]">
               Submit Request
             </Button>
             <Text className="mb-[12px]">

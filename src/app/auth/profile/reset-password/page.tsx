@@ -110,12 +110,12 @@ export default function ResetPassword() {
   );
 
   return (
-    <main className="my-[40px]">
+    <main className="my-[40px] newMainCustom:mt-[180px]">
       <section className="flex flex-col justify-center items-center min-h-[calc(100vh-170px)]">
-        <Heading variant="h1" className="mb-[24px] sm:mb-[32px] text-center">
+        <Heading variant="h1" className="mb-[24px] text-center">
           Reset Password
         </Heading>
-        <Text className="mb-[24px] sm:mb-[72px] text-center">
+        <Text className="mb-[24px] sm:mb-[54px] text-center">
           Enter a new password for your account.
         </Text>
         <form onSubmit={handleSubmit} className="w-full max-w-[520px]">
@@ -154,7 +154,7 @@ export default function ResetPassword() {
                 ? "Please repeat the password."
                 : "Passwords do not match."
             }
-            className="mb-[40px]"
+            className="mb-[30px]"
             isTouched={isTouchedConfirm}
             isValid={isValidConfirm}>
             <div
@@ -166,7 +166,7 @@ export default function ResetPassword() {
           <Button
             variant="primary"
             type="submit"
-            className="max-w-[calc(100%-20px)] sm:max-w-[502px] mx-auto">
+            className="max-w-[calc(100%-20px)] ">
             Reset Password
           </Button>
         </form>

@@ -355,12 +355,12 @@ const PaymentContent = () => {
         return (
           <div
             key={cartKey}
-            className="grid grid-cols-5 justify-between py-[8px] sm:py-[10px] items-center group">
+            className="grid grid-cols-5 justify-between py-[8px] sm:py-[8px] items-center group">
             <div className="col-span-3 relative">
-              <span className="text-white cursor-pointer text-[15px] leading-[15px] sm:text-[20px] sm:leading-[24px] font-medium line-clamp-2 sm:line-clamp-1 hover:text-primary-main">
+              <span className="text-white cursor-pointer text-[15px] leading-[15px] sm:leading-[18px] font-medium line-clamp-2 sm:line-clamp-1 hover:text-primary-main">
                 {displayTitle}
               </span>
-              <div className="absolute left-[10px] md:left-[32px] top-[30px] w-full bg-3 px-[12px] py-[16px] text-white text-[14px] leading-[14px] sm:text-[20px] sm:leading-[24px] hidden group-hover:block z-50">
+              <div className="absolute left-[10px] md:left-[32px] top-[30px] w-full bg-3 px-[12px] py-[12px] text-white text-[14px] leading-[14px] sm:text-[15px] sm:leading-[21px] hidden group-hover:block z-50">
                 {item.edition === "Deluxe"
                   ? `${game.title} Deluxe Edition`
                   : game.title}
@@ -371,7 +371,7 @@ const PaymentContent = () => {
                 className="w-[24px] h-[24px] sm:w-[32px] sm:h-[32px] flex items-center justify-center"
                 onClick={() => updateCartQuantity(cartKey, -1)}>
                 <svg
-                  width="17"
+                  width="12"
                   height="2"
                   viewBox="0 0 17 2"
                   fill="none"
@@ -396,13 +396,13 @@ const PaymentContent = () => {
                     onChange={handleQuantityChange}
                     onBlur={handleQuantityBlur}
                     autoFocus
-                    className="max-w-[27px] text-center bg-transparent text-primary-main no-arrows focus:outline-none"
+                    className="max-w-[22px] text-center text-[13px] bg-transparent text-primary-main no-arrows focus:outline-none"
                     onKeyDown={(e) => {
                       if (e.key === "Enter") handleQuantityBlur();
                     }}
                   />
                 ) : (
-                  <span className="text-white cursor-pointer max-w-[27px] text-center">
+                  <span className="text-white cursor-pointer max-w-[27px] text-[13px] text-center">
                     {item.quantity}
                   </span>
                 )}
@@ -411,8 +411,8 @@ const PaymentContent = () => {
                 className="w-[24px] h-[24px] sm:w-[32px] sm:h-[32px] flex items-center justify-center"
                 onClick={() => updateCartQuantity(cartKey, 1)}>
                 <svg
-                  width="25"
-                  height="24"
+                  width="18"
+                  height="18"
                   viewBox="0 0 25 24"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg">
@@ -425,7 +425,7 @@ const PaymentContent = () => {
                 </svg>
               </button>
             </div>
-            <span className="text-gray-68 font-bold text-[17px] leading-[17px] sm:text-[20px] sm:leading-[24px] text-end">
+            <span className="text-gray-68 font-bold text-[17px] leading-[17px] sm:leading-[21px] text-end">
               {effectivePrice}$
             </span>
           </div>
@@ -496,12 +496,12 @@ const PaymentContent = () => {
             return (
               <div
                 key={cartKey}
-                className="grid grid-cols-4 xs:grid-cols-5 justify-between items-center py-[8px] sm:py-[10px] group gap-[10px]">
+                className="grid grid-cols-4 xs:grid-cols-5 justify-between items-center py-[8px] sm:py-[8px] group gap-[8px]">
                 <div className="col-span-2 xs:col-span-3 relative">
-                  <span className="text-white cursor-pointer text-[15px] leading-[15px] sm:text-[20px] sm:leading-[24px] font-medium line-clamp-2 sm:line-clamp-1 hover:text-primary-main">
+                  <span className="text-white cursor-pointer text-[15px] leading-[15px] sm:leading-[21px] font-medium line-clamp-2 sm:line-clamp-1 hover:text-primary-main">
                     {displayTitle}
                   </span>
-                  <div className="absolute left-[10px] md:left-[32px] top-[30px] w-full bg-3 px-[12px] py-[16px] text-white text-[14px] leading-[14px] sm:text-[20px] sm:leading-[24px] hidden group-hover:block z-50">
+                  <div className="absolute left-[10px] md:left-[32px] top-[30px] w-full bg-3 px-[12px] py-[12px] text-white text-[14px] leading-[14px] sm:text-[15px] sm:leading-[21px] hidden group-hover:block z-50">
                     {item.edition === "Deluxe"
                       ? `${game.title} Deluxe Edition`
                       : game.title}
@@ -512,7 +512,7 @@ const PaymentContent = () => {
                     className="w-[24px] h-[24px] sm:w-[32px] sm:h-[32px] flex items-center justify-center"
                     onClick={() => updateCartQuantity(cartKey, -1)}>
                     <svg
-                      width="17"
+                      width="12"
                       height="2"
                       viewBox="0 0 17 2"
                       fill="none"
@@ -537,13 +537,13 @@ const PaymentContent = () => {
                         onChange={handleQuantityChange}
                         onBlur={handleQuantityBlur}
                         autoFocus
-                        className="max-w-[27px] text-center bg-transparent text-primary-main no-arrows focus:outline-none"
+                        className="max-w-[22px] text-center text-[13px] bg-transparent text-primary-main no-arrows focus:outline-none"
                         onKeyDown={(e) => {
                           if (e.key === "Enter") handleQuantityBlur();
                         }}
                       />
                     ) : (
-                      <span className="text-white cursor-pointer max-w-[27px] text-center">
+                      <span className="text-white cursor-pointer max-w-[27px] text-[13px] text-center">
                         {item.quantity}
                       </span>
                     )}
@@ -552,8 +552,8 @@ const PaymentContent = () => {
                     className="w-[24px] h-[24px] sm:w-[32px] sm:h-[32px] flex items-center justify-center"
                     onClick={() => updateCartQuantity(cartKey, 1)}>
                     <svg
-                      width="25"
-                      height="24"
+                      width="18"
+                      height="18"
                       viewBox="0 0 25 24"
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg">
@@ -570,7 +570,7 @@ const PaymentContent = () => {
                     </svg>
                   </button>
                 </div>
-                <span className="text-gray-68 font-bold text-[17px] leading-[17px] sm:text-[20px] sm:leading-[24px] text-end">
+                <span className="text-gray-68 font-bold text-[17px] leading-[17px sm:leading-[21px] text-end">
                   {effectivePrice}$
                 </span>
               </div>
@@ -642,8 +642,8 @@ const PaymentContent = () => {
 
   const ArrowDownIcon = (
     <svg
-      width="10"
-      height="18"
+      width="8"
+      height="13"
       viewBox="0 0 10 18"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -661,12 +661,12 @@ const PaymentContent = () => {
 
   return (
     <section>
-      <div className="flex flex-col xl:flex-row gap-[56px] sm:gap-[23px]">
-        <div className="flex-1 flex flex-col gap-[56px] lg:gap-[64px]">
+      <div className="flex flex-col xl:flex-row gap-[56px] sm:gap-[17px]">
+        <div className="flex-1 flex flex-col gap-[56px] lg:gap-[48px]">
           <div>
             <Heading
               variant="h1"
-              className="mb-[16px] sm:mb-[40px]"
+              className="mb-[16px] sm:mb-[30px]"
               aria-label="Address for Billing">
               Address for Billing
             </Heading>
@@ -700,7 +700,7 @@ const PaymentContent = () => {
                 </div>
               </Input>
               {isAddressOpen && (
-                <div className="absolute top-[48px] sm:top-[55px] left-[-10px] z-10 w-full bg-2 max-h-[200px] overflow-y-auto custom-scrollbar">
+                <div className="absolute top-[48px] left-[-10px] z-10 w-full bg-2 max-h-[200px] overflow-y-auto custom-scrollbar">
                   {addresses.map((address, index) => {
                     const vatPercentage = parseFloat(
                       address.match(/(\d+)%/)?.[1] || "0"
@@ -715,7 +715,7 @@ const PaymentContent = () => {
                           setIsTouchedAddress(true);
                           setIsAddressOpen(false);
                         }}
-                        className="px-[20px] py-[12px] cursor-pointer hover:bg-primary-10">
+                        className="px-[20px] py-[12px] text-[15px] leading-[20px] cursor-pointer hover:bg-primary-10">
                         {displayValue}
                       </div>
                     );
@@ -731,8 +731,8 @@ const PaymentContent = () => {
             />
           </div>
         </div>
-        <section className="w-full xl:w-[521px] flex flex-col gap-[12px] sm:gap-[16px]">
-          <div className="lg:skew-x-[-20deg] lg:py-[6px] lg:px-[24px] lg:flex justify-center items-center lg:bg-3">
+        <section className="w-full xl:w-[390px] flex flex-col gap-[12px]">
+          <div className="lg:skew-x-[-20deg] lg:py-[6px] lg:px-[18px] lg:flex justify-center items-center lg:bg-3">
             <Heading
               variant="h2"
               className="lg:skew-x-[20deg]"
@@ -740,10 +740,10 @@ const PaymentContent = () => {
               Total Price
             </Heading>
           </div>
-          <div className="flex flex-col gap-[20px] w-full">
+          <div className="flex flex-col gap-[15px] w-full">
             {displayMode === 1 ? (
               <>
-                <div className="flex flex-col w-full lg:min-h-[202px]">
+                <div className="flex flex-col w-full lg:min-h-[151px]">
                   {paginatedGames}
                 </div>
                 {totalPages > 1 && (
@@ -755,7 +755,7 @@ const PaymentContent = () => {
                 )}
               </>
             ) : (
-              <div className="flex flex-col gap-[20px] w-full max-h-[254px]">
+              <div className="flex flex-col gap-[20px] w-full max-h-[190px]">
                 {scrolledGames}
               </div>
             )}
@@ -763,7 +763,7 @@ const PaymentContent = () => {
           <Input
             placeholder="Discount Code"
             type="text"
-            backgroundClass="bg-3"
+            backgroundClass="bg-3 border-[#333333]"
             value={discountCode}
             onChange={(e) => {
               setDiscountCode(e.target.value);
@@ -781,8 +781,8 @@ const PaymentContent = () => {
             isValid={discountCode === "" || isValidPromoCode}>
             <div className="absolute top-[50%] translate-y-[-50%] right-[18px] cursor-pointer">
               <svg
-                width="10"
-                height="18"
+                width="8"
+                height="13"
                 viewBox="0 0 10 18"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg">
@@ -798,7 +798,7 @@ const PaymentContent = () => {
           <Input
             placeholder="Gift Cards"
             type="text"
-            backgroundClass="bg-3"
+            backgroundClass="bg-3 border-[#333333]"
             value={giftCard}
             onChange={(e) => {
               setGiftCard(e.target.value);
@@ -816,8 +816,8 @@ const PaymentContent = () => {
             isValid={giftCard === "" || isValidGiftCard}>
             <div className="absolute top-[50%] translate-y-[-50%] right-[18px] cursor-pointer">
               <svg
-                width="10"
-                height="18"
+                width="8"
+                height="13"
                 viewBox="0 0 10 18"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg">
@@ -830,60 +830,60 @@ const PaymentContent = () => {
               </svg>
             </div>
           </Input>
-          <div className="w-full md:px-[12px] md:py-[40px] flex flex-col gap-[16px]">
+          <div className="w-full md:px-[9px] md:py-[30px] flex flex-col gap-[16px]">
             <div className="flex flex-col w-full gap-[12px] sm:gap-[20px] pb-[20px] border-b-4 border-[#4C4C4C]">
-              <div className="flex w-full justify-between items-center gap-[10px]">
-                <span className="uppercase m-0 text-gray-68 font-usuzi-condensed text-[16px] leading-[16px] sm:text-[26px] sm:leading-[28px]">
+              <div className="flex w-full justify-between items-center gap-[8px]">
+                <span className="uppercase m-0 text-gray-68 font-usuzi-condensed text-[16px] leading-[16px] sm:text-[19px] sm:leading-[21px]">
                   Official price
                 </span>
-                <span className="text-gray-68 font-bold text-[17px] leading-[19px] sm:text-[20px] sm:leading-[24px]">
+                <span className="text-gray-68 font-bold text-[17px] leading-[19px] sm:text-[15px] sm:leading-[18px]">
                   {subtotal.toFixed(2)}$
                 </span>
               </div>
-              <div className="flex w-full justify-between items-center gap-[10px]">
-                <span className="uppercase m-0 text-gray-68 font-usuzi-condensed text-[16px] leading-[16px] sm:text-[26px] sm:leading-[28px]">
+              <div className="flex w-full justify-between items-center gap-[8px]">
+                <span className="uppercase m-0 text-gray-68 font-usuzi-condensed text-[16px] leading-[16px] sm:text-[19px] sm:leading-[21px]">
                   VAT ({vatPercentage}%)
                 </span>
-                <span className="text-gray-68 font-bold text-[17px] leading-[19px] sm:text-[20px] sm:leading-[24px]">
+                <span className="text-gray-68 font-bold text-[17px] leading-[19px] sm:text-[15px] sm:leading-[18px]">
                   {vat.toFixed(2)}$
                 </span>
               </div>
               {totalDiscount > 0 && (
-                <div className="flex w-full justify-between items-center gap-[10px]">
-                  <span className="uppercase m-0 text-gray-68 font-usuzi-condensed text-[16px] leading-[16px] sm:text-[26px] sm:leading-[28px]">
+                <div className="flex w-full justify-between items-center gap-[8px]">
+                  <span className="uppercase m-0 text-gray-68 font-usuzi-condensed text-[16px] leading-[16px] sm:text-[19px] sm:leading-[21px]">
                     Discount
                   </span>
-                  <span className="text-gray-68 font-bold text-[17px] leading-[19px] sm:text-[20px] sm:leading-[24px]">
+                  <span className="text-gray-68 font-bold text-[17px] leading-[19px] sm:text-[15px] sm:leading-[18px]">
                     -{totalDiscount.toFixed(2)}$
                   </span>
                 </div>
               )}
               {promoDiscount > 0 && (
-                <div className="flex w-full justify-between items-center gap-[10px]">
-                  <span className="uppercase m-0 text-gray-68 font-usuzi-condensed text-[16px] leading-[16px] sm:text-[26px] sm:leading-[28px]">
+                <div className="flex w-full justify-between items-center gap-[8px]">
+                  <span className="uppercase m-0 text-gray-68 font-usuzi-condensed text-[16px] leading-[16px] sm:text-[19px] sm:leading-[21px]">
                     Discount Code
                   </span>
-                  <span className="text-gray-68 font-bold text-[17px] leading-[19px] sm:text-[20px] sm:leading-[24px]">
+                  <span className="text-gray-68 font-bold text-[17px] leading-[19px] sm:text-[15px] sm:leading-[18px]">
                     -{promoDiscount.toFixed(2)}$
                   </span>
                 </div>
               )}
               {giftCardDiscount > 0 && (
                 <div className="flex w-full justify-between items-center gap-[10px]">
-                  <span className="uppercase m-0 text-gray-68 font-usuzi-condensed text-[16px] leading-[16px] sm:text-[26px] sm:leading-[28px]">
+                  <span className="uppercase m-0 text-gray-68 font-usuzi-condensed text-[16px] leading-[16px] sm:text-[19px] sm:leading-[21px]">
                     Gift Card
                   </span>
-                  <span className="text-gray-68 font-bold text-[17px] leading-[19px] sm:text-[20px] sm:leading-[24px]">
+                  <span className="text-gray-68 font-bold text-[17px] leading-[19px] sm:text-[15px] sm:leading-[18px]">
                     -{giftCardDiscount.toFixed(2)}$
                   </span>
                 </div>
               )}
             </div>
-            <div className="flex w-full justify-between items-center gap-[10px] sm:mb-[32px] md:mb-[56px]">
-              <span className="uppercase m-0 text-white font-usuzi-condensed text-[16px] leading-[16px] sm:text-[28px] sm:leading-[28px]">
+            <div className="flex w-full justify-between items-center gap-[10px] sm:mb-[32px] md:mb-[42px]">
+              <span className="uppercase m-0 text-white font-usuzi-condensed text-[16px] leading-[16px] sm:text-[21px] sm:leading-[21px]">
                 Total
               </span>
-              <span className="text-white font-bold text-[20px] leading-[24px] sm:text-[28px] sm:leading-[28px]">
+              <span className="text-white font-bold text-[20px] leading-[24px] sm:text-[21px] sm:leading-[21px]">
                 {total.toFixed(2)}$
               </span>
             </div>

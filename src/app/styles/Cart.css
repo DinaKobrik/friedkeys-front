@@ -32,7 +32,7 @@
   height: 100%;
   position: absolute;
   top: 0;
-  left: 17px;
+  left: 18px;
   background: theme("colors.primary-main");
   -webkit-transform: skew(20deg);
   -ms-transform: skew(20deg);
@@ -44,7 +44,7 @@
   height: 100%;
   position: absolute;
   top: 0;
-  right: 18px;
+  right: 17px;
   background: theme("colors.primary-main");
   -webkit-transform: skew(20deg);
   -ms-transform: skew(20deg);

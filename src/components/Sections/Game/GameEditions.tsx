@@ -210,7 +210,7 @@ const GameEditionsSection: React.FC = () => {
       aria-label="Game Editions Section">
       <Heading
         variant="h1"
-        className="mb-[24px] sm:mb-[40px]"
+        className="mb-[24px] sm:mb-[30px]"
         aria-label="Game Editions Title">
         Editions
       </Heading>
@@ -219,7 +219,7 @@ const GameEditionsSection: React.FC = () => {
         style={{ marginLeft: dynamicMargin, marginRight: dynamicMargin }}>
         <div
           ref={containerRef}
-          className={`flex w-full overflow-scroll hide-scrollbar h-full gap-[12px] sm:gap-[24px] ${
+          className={`flex w-full overflow-scroll hide-scrollbar h-full gap-[12px] sm:gap-[18px] ${
             windowWidth < 1200 && !isTouchDevice
               ? "cursor-grab select-none"
               : "cursor-auto"
@@ -238,10 +238,10 @@ const GameEditionsSection: React.FC = () => {
           {editions.map((edition, index) => (
             <div
               key={index}
-              className="flex flex-col relative game__editions-card border-[1px] border-transparent justify-between gap-[8px] flex-shrink-0 w-[268px] sm:w-[400px] lg:w-[520px]"
+              className="flex flex-col relative game__editions-card border-[1px] border-transparent justify-between gap-[8px] flex-shrink-0 w-[268px] sm:w-[390px]"
               aria-label={`${edition.type} Edition Details`}>
               <div
-                className="favorite absolute w-[36px] h-[36px] sm:w-[48px] sm:h-[48px] right-[2px] top-[1px] md:right-[4px] md:top-[3px] z-10 flex justify-center items-center cursor-pointer"
+                className="favorite absolute w-[36px] h-[36px] right-[2px] top-[1px] md:right-[4px] md:top-[3px] z-10 flex justify-center items-center cursor-pointer"
                 onClick={toggleFavoriteHandler}
                 aria-label={
                   isFavorite
@@ -252,7 +252,7 @@ const GameEditionsSection: React.FC = () => {
                 <svg
                   width="16.5"
                   height="21"
-                  className="sm:w-[22px] sm:h-[28px]"
+                  className="sm:w-[22px] "
                   viewBox="0 0 22 28"
                   fill={isFavorite ? "#FFFF25" : "none"}
                   xmlns="http://www.w3.org/2000/svg">
@@ -266,19 +266,19 @@ const GameEditionsSection: React.FC = () => {
                   />
                 </svg>
               </div>
-              <div className="card-corner game__editions-img w-[calc(100%-2px)] md:w-[calc(100%-4px)] h-[160px] sm:h-[280px] relative flex-shrink-0">
+              <div className="card-corner game__editions-img w-[calc(100%-2px)] md:w-[calc(100%-4px)] h-[160px] sm:h-[210px] relative flex-shrink-0">
                 <Image
                   src={imageSrc || "/images/no-image.jpg"}
                   alt={`${game.title} ${edition.type} Edition`}
-                  width={520}
-                  height={280}
+                  width={390}
+                  height={210}
                   className="object-cover w-full h-full m-[1px] md:m-[3px]"
                   loading="lazy"
                   onError={() => setImageSrc("/images/no-image.jpg")}
                 />
               </div>
               <div className="bg-2 p-[20px] pb-[32px] h-full flex flex-col justify-between gap-[16px]">
-                <div className="mb-[40px] sm:mb-[80px]">
+                <div className="mb-[40px] sm:mb-[60px]">
                   <Heading
                     variant="h3"
                     className="mb-[20px]"
@@ -293,7 +293,7 @@ const GameEditionsSection: React.FC = () => {
                     ))}
                   </ul>
                 </div>
-                <div className="flex flex-col w-full items-start gap-[24px]">
+                <div className="flex flex-col w-full items-start gap-[18px]">
                   <div className="flex gap-[1px] sm:gap-[20px] w-full items-center lg:items-end justify-between lg:justify-center">
                     {discountPrice &&
                     game.discount &&
@@ -302,20 +302,20 @@ const GameEditionsSection: React.FC = () => {
                       <>
                         <div className="flex items-center gap-[4px] lg:gap-[16px] flex-col lg:flex-row">
                           <span
-                            className="line-through font-usuzi-condensed text-gray-68 font-bold text-[20px] sm:text-[32px] leading-[16px] sm:leading-[30px]"
+                            className="line-through font-usuzi-condensed text-gray-68 font-bold text-[20px] sm:text-[24px] leading-[16px] sm:leading-[22px]"
                             aria-label={`Original price: ${game.price} dollars`}>
                             {game.price}$
                           </span>
                           <span
-                            className="text-white font-usuzi-condensed font-bold text-[24px] leading-[22px] sm:text-[32px] py-[4px] px-[8px] md:py-[6px] md:px-[16px] rounded-[2px] bg-sale"
+                            className="text-white font-usuzi-condensed font-bold text-[24px] leading-[22px] sm:text-[24px] py-[4px] px-[8px] md:py-[4px] md:px-[12px] rounded-[2px] bg-sale"
                             aria-label={`Discount of ${game.discount}%`}>
                             -{game.discount}%
                           </span>
                         </div>
                         <span
-                          className="text-white font-usuzi-condensed text-center font-bold text-[32px] sm:text-[48px] leading-[28px] sm:leading-[37px]"
+                          className="text-white font-usuzi-condensed text-center font-bold text-[32px] sm:text-[38px] leading-[28px] sm:leading-[27px]"
                           aria-label={`Discounted price: ${discountPrice} dollars`}>
-                          {discountPrice}$
+                          {discountPrice} $
                         </span>
                       </>
                     ) : (

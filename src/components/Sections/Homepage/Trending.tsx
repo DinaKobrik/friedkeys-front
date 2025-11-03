@@ -99,7 +99,7 @@ const TrendingGames = () => {
   };
 
   return (
-    <section aria-label="Trending Games Section">
+    <section className="mt-[-60px]" aria-label="Trending Games Section">
       <div className="mb-[24px] sm:mb-[30px] flex justify-between items-center">
         <Heading variant="h1" aria-label="Trending Games Title">
           Trending

@@ -137,7 +137,7 @@ export default function LogIn() {
   ];
 
   return (
-    <main className="my-[40px]">
+    <main className="my-[40px] newMainCustom:mt-[180px]">
       <section className="flex flex-col justify-center items-center max-w-[520px] mx-auto">
         <Heading variant="h1" className="mb-[24px] sm:mb-[32px] text-center">
           Log In
@@ -196,7 +196,7 @@ export default function LogIn() {
           </Input>
           <Link
             href="./forgot-password/"
-            className="block text-primary-main text-[15px] leading-[15px] sm:text-[20px] sm:leading-[20px] mb-[24px]">
+            className="block text-primary-main text-[15px] leading-[15px] mb-[18px]">
             Forgot password
           </Link>
           <Button
@@ -210,19 +210,19 @@ export default function LogIn() {
           <Heading variant="h3" className="my-[48px] w-full text-center">
             or
           </Heading>
-          <div className="h-[7px] w-full absolute top-[50%] left-[50%] bg-primary-main translate-x-[-50%] translate-y-[-50%] blur-[12px] z-[-1]"></div>
+          <div className="h-[5px] w-full absolute top-[50%] left-[50%] bg-primary-main translate-x-[-50%] translate-y-[-50%] blur-[12px] z-[-1]"></div>
         </div>
-        <div className="max-w-[520px] w-full h-[80px] overflow-hidden relative sm:mb-[40px]">
-          <div className="flex items-center justify-center gap-[12px] sm:gap-[18px] w-[calc(100%+40px)] sm:w-[560px] mx-auto absolute left-[50%] translate-x-[-50%] top-0">
+        <div className="max-w-[520px] w-full h-[80px] overflow-hidden relative sm:mb-[30px]">
+          <div className="flex items-center justify-center gap-[8px] xs:gap-[12px] sm:gap-[13px] w-[calc(100%+20px)] xs:w-[calc(100%+40px)] sm:w-[560px] mx-auto absolute left-[50%] translate-x-[-50%] top-0">
             {socialLinks.map((link, index) => (
               <Link
                 key={index}
                 href={link.href}
-                className={`h-full w-full sm:w-auto flex items-center justify-center bg-2 rounded-[2px] hover:bg-primary-10 active:bg-primary-20 py-[16px] px-[28px] sm:py-[20px] sm:px-[41px] skew-x-[-15deg]`}>
+                className={`h-full w-full sm:w-auto flex items-center justify-center bg-2 rounded-[2px] hover:bg-primary-10 active:bg-primary-20 py-[16px] px-[15px] xs:px-[28px] sm:py-[20px] sm:px-[49px] skew-x-[-15deg]`}>
                 <Image
                   src={link.src}
                   alt={link.alt}
-                  className="object-cover skew-x-[15deg] sm:w-[40px] sm:h-[40px]"
+                  className="object-cover skew-x-[15deg] w-[24px] h-[24px] sm:w-[30px] sm:h-[30px]"
                   width={24}
                   height={24}
                 />
@@ -232,7 +232,7 @@ export default function LogIn() {
         </div>
         <Link
           href="/auth/profile/registration"
-          className="text-white text-[15px] leading-[15px] sm:text-[20px] sm:leading-[20px] text-center">
+          className="text-white text-[15px] leading-[15px] text-center">
           No account yet?
         </Link>
       </section>

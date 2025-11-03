@@ -89,7 +89,7 @@ const Header = () => {
 
   return (
     <header className="xl:fixed xl:top-0 xl:left-0 xl:z-[200] w-full header">
-      <div className=" max-w-[1920px] w-full mx-auto py-[14px] lg:px-[46px] flex justify-between items-center gap-[10px] ">
+      <div className="max-w-[1920px] w-full mx-auto py-[14px] xl:px-[46px] flex justify-between items-center gap-[10px] ">
         <Logo />
         <div className="w-full search hidden xl:flex max-w-[380px] 2xl:max-w-[636px] h-[36px] bg-2 border-[1px] border-primary-main skew-x-[-20deg] relative">
           <form onSubmit={handleSubmit} className="w-full">

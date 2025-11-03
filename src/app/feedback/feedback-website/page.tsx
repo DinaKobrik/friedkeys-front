@@ -26,7 +26,7 @@ const StarIcon = forwardRef<
     <svg
       ref={ref}
       tabIndex={0}
-      className={`w-12 h-12 cursor-pointer transition-all duration-300 ease-in-out transform hover:scale-110 outline-none focus:outline-none ${
+      className={`w-9 h-9 cursor-pointer transition-all duration-300 ease-in-out transform hover:scale-110 outline-none focus:outline-none ${
         filled
           ? "fill-primary-main stroke-primary-main"
           : isHovered || isFocused
@@ -171,16 +171,16 @@ const FeedbackPage: React.FC = () => {
   };
 
   return (
-    <main className="mt-[24px] sm:mt-[80px]">
-      <Heading variant="h3" className="mb-[24px] sm:mb-[40px]">
+    <main className="mt-[24px] sm:mt-[60px] xl:mt-[136px]">
+      <Heading variant="h3" className="mb-[24px] sm:mb-[30px]">
         {isLg
           ? `Home / User's feedbacks / feedback on the website`
           : `... feedbacks / feedback on the website`}
       </Heading>
-      <Heading variant="h1" className="mb-[24px] sm:mb-[80px]">
+      <Heading variant="h1" className="mb-[24px] sm:mb-[60px]">
         feedback on the website
       </Heading>
-      <section className="max-w-[792px] mx-auto flex flex-col justify-center gap-[24px] sm:gap-[56px] w-full">
+      <section className="max-w-[792px] mx-auto flex flex-col justify-center gap-[18px] sm:gap-[42px] w-full">
         <div>
           <Text className="font-bold mb-[8px]">
             We’d love to hear your thoughts!
@@ -219,7 +219,7 @@ const FeedbackPage: React.FC = () => {
             </div>
             <div>
               {currentFeedback && (
-                <p className="text-white text-[20px] leading-[26px]">
+                <p className="text-white text-[15px] leading-[19px]">
                   {currentFeedback.text}
                 </p>
               )}
@@ -247,10 +247,10 @@ const FeedbackPage: React.FC = () => {
               !isValidReview && isTouchedReview ? "Fill in the field" : ""
             }
           />
-          <div className="flex flex-col-reverse md:flex-row justify-center mx-auto gap-[8px] md:gap-[26px] max-w-[calc(100%-18px)] w-full mt-[24px] sm:mt-[56px]">
+          <div className="flex flex-col-reverse md:flex-row justify-center mx-auto gap-[8px] md:gap-[19px] max-w-[calc(100%-18px)] w-full mt-[24px] sm:mt-[42px]">
             <Link
               href="/feedback"
-              className="font-usuzi-condensed block my-0 mx-auto rounded-[2px] cursor-pointer text-[17px] leading-[19px] sm:text-[26px] sm:leading-[28px] font-bold uppercase text-center px-[12px] py-[12px] w-full focus:outline-none skew-x-[-20deg] btn-secondary text-white border-2 bg-transparent border-primary-main z-10">
+              className="font-usuzi-condensed block my-0 mx-auto rounded-[2px] cursor-pointer text-[17px] leading-[19px] sm:text-[19px] sm:leading-[21px] font-bold uppercase text-center px-[12px] py-[12px] w-full focus:outline-none skew-x-[-20deg] btn-secondary text-white border-2 bg-transparent border-primary-main z-10">
               <span className="flex justify-center items-center skew-x-[20deg]">
                 Back to reviews
               </span>

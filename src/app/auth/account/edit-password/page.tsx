@@ -230,13 +230,13 @@ const ChangePassword: React.FC = React.memo(() => {
       <Suspense fallback={<div aria-live="polite">Loading menu...</div>}>
         <AccountMenu activeLink="/auth/account/personal-info" />
       </Suspense>
-      <section className="flex flex-col gap-[24px] sm:gap-[48px] mt-[40px] sm:mt-[80px]">
+      <section className="flex flex-col gap-[24px] sm:gap-[36px] mt-[40px] sm:mt-[60px]">
         <Suspense fallback={<div aria-live="polite">Loading heading...</div>}>
           <Heading variant="h1" className="text-center sm:text-left">
             edit personal info
           </Heading>
         </Suspense>
-        <div className="flex flex-col gap-[40px] sm:gap-[56px] w-full max-w-[520px] mx-auto min-h-[300px]">
+        <div className="flex flex-col gap-[40px] sm:gap-[42px] w-full max-w-[520px] mx-auto min-h-[300px]">
           <Suspense fallback={<div aria-live="polite">Loading input...</div>}>
             <Input
               label="Old Password"
@@ -334,7 +334,7 @@ const ChangePassword: React.FC = React.memo(() => {
               </Input>
             </Suspense>
           </div>
-          <div className="flex flex-col-reverse sm:flex-row gap-[8px] sm:gap-[26px] max-w-[calc(100%-20px)] sm:max-w-[500px] w-full mx-auto">
+          <div className="flex flex-col-reverse sm:flex-row gap-[8px] sm:gap-[19px] max-w-[calc(100%-20px)] sm:max-w-[500px] w-full mx-auto">
             <Suspense
               fallback={<div aria-live="polite">Loading button...</div>}>
               <Button

@@ -278,7 +278,7 @@ const Slider: React.FC = () => {
                         alt={`Banner image for ${game.title}`}
                         width={1920}
                         height={440}
-                        className="max-w-[1200px] w-full mx-auto h-[216px] sm:h-[340px] md:h-[440px] xl:h-[590px] object-cover no-drag"
+                        className="max-w-[1200px] w-full mx-auto h-[216px] sm:h-[340px] md:h-[440px] xl:h-[500px] object-cover no-drag"
                       />
                     </div>
                   </Link>

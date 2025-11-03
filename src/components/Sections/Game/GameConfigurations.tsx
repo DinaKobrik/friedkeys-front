@@ -53,13 +53,13 @@ const GameConfigurations: React.FC = () => {
     <section aria-label="Game Configurations Section">
       <Heading
         variant="h1"
-        className="mb-[24px] sm:mb-[40px]"
+        className="mb-[24px] sm:mb-[30px]"
         aria-label="Game Configurations Title">
         Configurations
       </Heading>
-      <div className="grid grid-cols-1 lg:grid-cols-2 items-start gap-[24px]">
+      <div className="grid grid-cols-1 lg:grid-cols-2 items-start gap-[18px]">
         <div
-          className="bg-2 card-corner p-[24px] pb-[40px] sm:p-[40px] lg:p-[24px] xl:p-[40px] sm:pt-[32px] h-full"
+          className="bg-2 card-corner p-[24px] pb-[40px] sm:p-[40px] lg:p-[24px] xl:p-[30px] sm:pt-[24px] h-full"
           aria-label={
             isMinimum
               ? "Minimum System Requirements"
@@ -87,7 +87,7 @@ const GameConfigurations: React.FC = () => {
           </div>
           <Heading
             variant="h2"
-            className="mb-[32px] text-center hidden lg:block"
+            className="mb-[24px] text-center hidden lg:block"
             aria-label={isMinimum ? "Minimum Specs" : "Recommended Specs"}>
             {isMinimum ? "Minimum Specs" : "Recommended Specs"}
           </Heading>
@@ -109,11 +109,11 @@ const GameConfigurations: React.FC = () => {
           </div>
         </div>
         <div
-          className="bg-2 card-corner p-[24px] pb-[40px] sm:p-[40px] lg:p-[24px] xl:p-[40px] sm:pt-[32px] h-full hidden lg:block"
+          className="bg-2 card-corner p-[24px] pb-[40px] sm:p-[40px] lg:p-[24px] xl:p-[30px] sm:pt-[24px] h-full hidden lg:block"
           aria-label="Recommended System Requirements">
           <Heading
             variant="h2"
-            className="mb-[32px] text-center hidden lg:block"
+            className="mb-[24px] text-center hidden lg:block"
             aria-label="Recommended Specs">
             Recommended Specs
           </Heading>

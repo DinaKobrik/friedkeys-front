@@ -98,11 +98,11 @@ export default function About() {
   };
 
   return (
-    <main className="flex flex-col justify-around gap-[48px] sm:gap-[80px] mt-[24px] sm:mt-[80px]">
+    <main className="flex flex-col justify-around gap-[48px] sm:gap-[60px] mt-[24px] sm:mt-[60px] xl:mt-[136px]">
       <section aria-label="About FriedKeys Header">
         <Heading
           variant="h3"
-          className="mb-[24px] sm:mb-[40px]"
+          className="mb-[24px] sm:mb-[30px]"
           aria-label="Navigation breadcrumb">
           Home / About FriedKeys
         </Heading>
@@ -115,7 +115,7 @@ export default function About() {
       <Platforms />
       <section
         aria-label="User Feedbacks Section"
-        className="flex flex-col gap-[16px] sm:gap-[40px]">
+        className="flex flex-col gap-[16px] sm:gap-[30px]">
         <Heading variant="h2" aria-label="Players Love FriedKeys Title">
           Players Love FriedKeys — Here’s Why
         </Heading>
@@ -124,7 +124,7 @@ export default function About() {
           style={{ marginLeft: dynamicMargin, marginRight: dynamicMargin }}>
           <UsersFeedbacks
             initialReviews={3}
-            containerClassName="flex overflow-scroll hide-scrollbar gap-[4px] sm:gap-[12px] lg:gap-[24px] w-full"
+            containerClassName="flex overflow-scroll hide-scrollbar gap-[4px] sm:gap-[12px] lg:gap-[18px] w-full"
             containerRef={containerRef}
             dynamicPadding={dynamicPadding}
             containerStyle={{
@@ -145,7 +145,7 @@ export default function About() {
           onClick={() => {
             window.location.href = "/feedback";
           }}
-          className="max-w-[270px] sm:max-w-[376px]"
+          className="max-w-[270px] sm:max-w-[282px]"
           aria-label="View all user feedbacks">
           see all User&apos;s feedbacks
         </Button>

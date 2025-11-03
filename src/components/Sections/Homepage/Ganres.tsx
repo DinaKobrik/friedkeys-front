@@ -53,7 +53,7 @@ const Genres = () => {
                 href={`/all-games?genre=${encodeURIComponent(genre.name)}`}
                 key={index}
                 className="ganer cursor-pointer relative flex justify-center items-center overflow-hidden w-[calc(100%-2px)]">
-                <div className="ganer-text font-usuzi-halftone flex justify-center items-center relative overflow-hidden w-[calc(100%-3px)] h-[calc(100%-2px)] py-[27px] px-[25px] sm:px-[35px] lg:py-[81px] lg:px-[51px] bg-2 text-[16px] xs:text-[20px] leading-[26px] lg:text-[28px] lg:leading-[33px] uppercase text-white z-10">
+                <div className="ganer-text font-usuzi-halftone flex justify-center items-center relative overflow-hidden w-[calc(100%-3px)] h-[calc(100%-2px)] py-[27px] px-[25px] sm:px-[35px] lg:py-[80px] lg:px-[51px] bg-2 text-[16px] xs:text-[20px] leading-[26px] lg:text-[28px] lg:leading-[33px] uppercase text-white z-10">
                   <span className="relative transition-all duration-500 ease-in-out">
                     {genre.name}
                   </span>

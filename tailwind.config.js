@@ -43,6 +43,7 @@ module.exports = {
         lg: "992px",
         xl: "1200px",
         "2xl": "1440px",
+        newMainCustom: "1296px",
         mainCustom: "1608px",
         bodyCustom: "1920px",
       },

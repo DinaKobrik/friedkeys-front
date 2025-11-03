@@ -198,18 +198,16 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
 
     const wrapperBaseStyles = "relative w-full";
     const containerBaseStyles =
-      "relative w-full text-white focus:outline-none h-[48px]";
+      "relative w-full text-white focus:outline-none h-[45px] border-[1px]";
     const inputBaseStyles =
-      "no-arrows rounded-[2px] w-full h-full px-[20px] py-[16px] border-none bg-transparent placeholder-gray-68 caret-primary-main focus:outline-none";
+      "no-arrows rounded-[2px] w-full h-full px-[20px] py-[16px] border-none bg-transparent placeholder-gray-68 text-[15px] leading-[20px] caret-primary-main focus:outline-none";
     const textAlignStyles = textAlign === "right" ? "text-right" : "text-left";
     const skewedContainerStyles = "skew-x-[-20deg]";
     const skewedInputStyles = "skew-x-[20deg]";
     const straightContainerStyles = "";
     const straightInputStyles = "";
-    const primaryContainerStyles = primary
-      ? "border-[1px] border-primary-20"
-      : "";
-    const errorStyles = "border-[1px] border-red";
+    const primaryContainerStyles = primary ? "border-primary-20" : "";
+    const errorStyles = "border-red";
 
     const containerVariantStyles =
       variant === "skewed" ? skewedContainerStyles : straightContainerStyles;
@@ -229,7 +227,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
         )}
         <div
           className={`${containerBaseStyles} ${containerVariantStyles} ${primaryContainerStyles} ${
-            backgroundClass || "bg-2"
+            backgroundClass || "bg-2 border-[#262626]"
           } ${!effectiveIsValid && required ? errorStyles : ""} input-status`}
           onFocus={handleFocus}
           onBlur={handleBlur}>

@@ -7,20 +7,20 @@ import Image from "next/image";
 export default function Custom404() {
   return (
     <main>
-      <section className="min-h-[calc(100vh-520px)] flex flex-col items-center justify-center py-[80px]">
-        <Image src="/images/404.png" alt="404" width={512} height={332} />
+      <section className="min-h-[calc(100vh-520px)] flex flex-col items-center justify-center py-[60px]">
+        <Image src="/images/404.png" alt="404" width={384} height={249} />
         <div className="font-usuzi-bold text-[70px] leading-[45px] sm:text-[96px] sm:leading-[60px] text-primary-main mb-[32px] sm:mb-[40px]">
           404
         </div>
-        <Heading variant="h1" className="mb-[16px] text-center">
+        <Heading variant="h1" className="mb-[12px] text-center">
           Game over... Page not found!
         </Heading>
-        <Heading variant="h3" className="mb-[32px] sm:mb-[56px] text-center">
+        <Heading variant="h3" className="mb-[32px] sm:mb-[42px] text-center">
           It may have been moved or deleted. Try the homepage instead
         </Heading>
         <Button
           variant="primary"
-          className="max-w-[calc(100%-20px)] sm:max-w-[500px]"
+          className="max-w-[calc(100%-20px)] sm:max-w-[375px]"
           onClick={() => (window.location.href = "/")}>
           Home
         </Button>

@@ -5,24 +5,24 @@ import Heading from "@/components/ui/Heading";
 
 export default function TermsConditions() {
   return (
-    <main className="min-h-screen max-w-[1336px] mx-auto flex flex-col items-center justify-center mt-[24px] sm:mt-[80px]">
-      <div className="mb-[32px] sm:mb-[80px]">
-        <Heading variant="h1" className="mb-[32px] text-center">
+    <main className="min-h-screen mx-auto flex flex-col items-center justify-center mt-[24px] sm:mt-[60px] xl:mt-[136px]">
+      <div className="mb-[32px] sm:mb-[60px]">
+        <Heading variant="h1" className="mb-[24px] text-center">
           General Terms of Sale
         </Heading>
-        <h2 className="text-white sm:text-center uppercase text-[14px] leading-[18px] sm:text-[24px] sm:leading-[24px]">
+        <h2 className="text-white sm:text-center uppercase text-[14px] leading-[18px] sm:text-[18px]">
           ACCESS CODES FOR DIGITAL CONTENT - TERMS AND CONDITIONS OF SALE
         </h2>
       </div>
 
-      <div className="flex flex-col gap-[24px] sm:gap-[40px] w-full">
+      <div className="flex flex-col gap-[24px] sm:gap-[30px] w-full">
         <Text>
           Please read the following important terms and conditions before you
           purchase any codes for digital games and/or content through this
           website.
         </Text>
-        <div className="flex flex-col w-full gap-[24px]">
-          <h3 className="text-white font-semibold text-[16px] leading-[18px] sm:text-[24px] sm:leading-[24px]">
+        <div className="flex flex-col w-full gap-[18px]">
+          <h3 className="text-white font-semibold text-[16px] leading-[18px] sm:text-[18px]">
             1. Who we are?
           </h3>
           <Text>
@@ -48,8 +48,8 @@ export default function TermsConditions() {
             and its platform.`}
           </Text>
         </div>
-        <div className="flex flex-col w-full gap-[24px]">
-          <h3 className="text-white font-semibold text-[16px] leading-[18px] sm:text-[24px] sm:leading-[24px]">
+        <div className="flex flex-col w-full gap-[18px]">
+          <h3 className="text-white font-semibold text-[16px] leading-[18px] sm:text-[18px]">
             2. Our Group Company
           </h3>
           <Text>
@@ -64,8 +64,8 @@ export default function TermsConditions() {
             refund or other payment where applicable.`}
           </Text>
         </div>
-        <div className="flex flex-col w-full gap-[24px]">
-          <h3 className="text-white font-semibold text-[16px] leading-[18px] sm:text-[24px] sm:leading-[24px]">
+        <div className="flex flex-col w-full gap-[18px]">
+          <h3 className="text-white font-semibold text-[16px] leading-[18px] sm:text-[18px]">
             3. How to contact us
           </h3>
           <Text>

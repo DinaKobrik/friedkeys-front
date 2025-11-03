@@ -6,16 +6,16 @@ import Heading from "@/components/ui/Heading";
 export default function Custom404() {
   return (
     <main>
-      <section className="min-h-[calc(100vh-520px)] flex flex-col items-center justify-center py-[80px]">
-        <div className="font-usuzi-bold text-[120px] leading-[100px] sm:text-[240px] sm:leading-[240px] text-primary-main mb-[32px] sm:mb-[40px] flex justify-center items-center gap-[20px]">
+      <section className="min-h-[calc(100vh-520px)] flex flex-col items-center justify-center py-[60px]">
+        <div className="font-usuzi-bold text-[120px] leading-[100px] sm:text-[180px] sm:leading-[180px] text-primary-main mb-[32px] sm:mb-[40px] flex justify-center items-center gap-[15px]">
           4
           <svg
-            width="142"
-            height="142"
+            width="106"
+            height="106"
             viewBox="0 0 142 142"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
-            className="w-[70px] h-[70px] sm:w-[142px] sm:h-[142px]">
+            className="w-[70px] h-[70px] sm:w-[106px] sm:h-[106px]">
             <g clipPath="url(#clip0_2441_32553)">
               <path
                 fillRule="evenodd"
@@ -43,12 +43,12 @@ export default function Custom404() {
         <Heading variant="h2" className="mb-[8px] text-center">
           Game over... Page not found!
         </Heading>
-        <Heading variant="h3" className="mb-[32px] sm:mb-[56px] text-center">
+        <Heading variant="h3" className="mb-[32px] sm:mb-[42px] text-center">
           It may have been moved or deleted. Try the homepage instead
         </Heading>
         <Button
           variant="primary"
-          className="max-w-[calc(100%-20px)] sm:max-w-[500px]"
+          className="max-w-[calc(100%-20px)] sm:max-w-[375px]"
           onClick={() => (window.location.href = "/")}>
           Home
         </Button>

@@ -5,8 +5,8 @@ import Text from "@/components/ui/Text";
 
 const PCIcon = () => (
   <svg
-    width="68"
-    height="64"
+    width="49"
+    height="48"
     viewBox="0 0 68 64"
     fill="none"
     xmlns="http://www.w3.org/2000/svg">
@@ -19,8 +19,8 @@ const PCIcon = () => (
 
 const PlayStationIcon = () => (
   <svg
-    width="53"
-    height="40"
+    width="39"
+    height="30"
     viewBox="0 0 53 40"
     fill="none"
     xmlns="http://www.w3.org/2000/svg">
@@ -33,8 +33,8 @@ const PlayStationIcon = () => (
 
 const XboxIcon = () => (
   <svg
-    width="80"
-    height="80"
+    width="60"
+    height="60"
     viewBox="0 0 80 80"
     fill="none"
     xmlns="http://www.w3.org/2000/svg">
@@ -47,8 +47,8 @@ const XboxIcon = () => (
 
 const NintendoIcon = () => (
   <svg
-    width="48"
-    height="48"
+    width="36"
+    height="36"
     viewBox="0 0 48 48"
     fill="none"
     xmlns="http://www.w3.org/2000/svg">
@@ -90,11 +90,11 @@ const PlatformItem = ({
 
   return (
     <div
-      className={`about__platform md:bg-[#1010105A] p-0 sm:p-[32px] 2xl:p-[60px] ${outer} md:border-[1px] md:border-primary-main`}>
+      className={`about__platform md:bg-[#1010105A] p-0 sm:p-[32px] 2xl:p-[45px] ${outer} md:border-[1px] md:border-primary-main`}>
       <div
-        className={`flex flex-col items-center justify-center gap-[16px] ${inner}`}>
+        className={`flex flex-col items-center justify-center gap-[12px] ${inner}`}>
         <div
-          className={`w-[40px] h-[40px] sm:w-[80px] sm:h-[80px] flex justify-center items-center ${
+          className={`w-[40px] h-[40px] sm:w-[60px] sm:h-[60px] flex justify-center items-center ${
             bgColor === "playstation"
               ? "rounded-[50%] bg-playstation p-[6px]"
               : bgColor === "nintendo"
@@ -117,8 +117,8 @@ const PlatformItem = ({
 const Platforms = () => {
   return (
     <section>
-      <div className="mb-[40px] sm:mb-[102px]">
-        <Heading variant="h2" className="mb-[8px] sm:mb-[24px]">
+      <div className="mb-[40px] sm:mb-[75px]">
+        <Heading variant="h2" className="mb-[8px] sm:mb-[18px]">
           Games for Every Gamer
         </Heading>
         <Text>
@@ -127,8 +127,8 @@ const Platforms = () => {
         </Text>
       </div>
       <div className="about__platforms relative">
-        <div className="overflow-hidden 2xl:h-[264px]">
-          <div className="grid mb-[2px] grid-cols-4 sm:grid-cols-2 2xl:grid-cols-4 gap-[0px] sm:gap-[14px] md:gap-[37px] md:w-[calc(100%+120px)] md:translate-x-[-60px]">
+        <div className="overflow-hidden 2xl:h-[198px]">
+          <div className="grid mb-[2px] grid-cols-4 sm:grid-cols-2 2xl:grid-cols-4 gap-[0px] sm:gap-[14px] md:gap-[27px] md:w-[calc(100%+120px)] md:translate-x-[-60px]">
             <PlatformItem icon={PCIcon} name="PC" bgColor="" platform="pc" />
             <PlatformItem
               icon={PlayStationIcon}

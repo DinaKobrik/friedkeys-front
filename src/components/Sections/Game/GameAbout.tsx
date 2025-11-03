@@ -75,12 +75,12 @@ const GameAbout: React.FC = () => {
 
   return (
     <section
-      className="grid grid-cols-1 xl:grid-cols-2 gap-[40px] items-start w-full"
+      className="grid grid-cols-1 lg:grid-cols-2 gap-[30px] items-start w-full"
       aria-label="Game About Section">
-      <div className="2xl:max-w-[656px]">
+      <div className="lg:max-w-[492px]">
         <Heading
           variant="h1"
-          className="mb-[24px] sm:mb-[40px]"
+          className="mb-[24px] sm:mb-[30px]"
           aria-label="About Game Title">
           About
         </Heading>
@@ -128,13 +128,13 @@ const GameAbout: React.FC = () => {
         </div>
       </div>
       <div
-        className="card-corner px-[16px] py-[20px] pb-[24px] sm:p-[40px] bg-2 flex justify-between gap-[10px]"
+        className="card-corner px-[16px] py-[20px] pb-[24px] sm:p-[30px] bg-2 flex justify-between gap-[10px]"
         aria-label="Game Specifications and Rating">
-        <div className="grid grid-cols-[auto_1fr] items-start gap-[40px]">
+        <div className="grid grid-cols-[auto_1fr] items-start gap-[30px]">
           {aboutSpecs.map((spec, index) => (
             <React.Fragment key={index}>
               <div
-                className="text-[15px] leading-[20px] sm:text-[20px] sm:leading-[26px] font-bold text-white"
+                className="text-[15px] leading-[20px] sm:text-[15px] sm:leading-[19px] font-bold text-white"
                 aria-label={`${spec.label}`}>
                 {spec.label}
               </div>
@@ -155,18 +155,18 @@ const GameAbout: React.FC = () => {
           <Image
             src="/images/bg-steam.png"
             alt="Steam platform logo"
-            width={196}
-            height={92}
+            width={147}
+            height={69}
             loading="lazy"
           />
           <div className="absolute top-[5px] left-1/2 translate-x-[-50%] w-full">
             <div
-              className="text-[32px] leading-[26px] sm:text-[48px] sm:leading-[48px] font-usuzi-condensed text-primary-main text-center mb-[15px]"
+              className="text-[32px] leading-[26px] sm:text-[36px] sm:leading-[36px] font-usuzi-condensed text-primary-main text-center mb-[15px]"
               aria-label="Game rating: 10">
               10
             </div>
             <div
-              className="text-[15px] leading-[19px] sm:text-[20px] sm:leading-[26px] text-white text-center"
+              className="text-[15px] leading-[19px] sm:text-[15px] sm:leading-[19px] text-white text-center"
               aria-label="Based on 1177 Steam reviews">
               Based on
               <br />

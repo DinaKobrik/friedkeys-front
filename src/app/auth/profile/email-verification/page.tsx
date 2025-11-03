@@ -19,12 +19,12 @@ const EmailVerify: React.FC = () => {
   }, []);
 
   return (
-    <main className="my-[40px]">
-      <section className="min-h-[calc(100vh-170px)] flex flex-col justify-center items-center max-w-[792px] mx-auto">
-        <Heading variant="h1" className="mb-[24px] sm:mb-[32px]">
+    <main className="my-[40px] newMainCustom:mt-[180px]">
+      <section className="min-h-[calc(100vh-170px)] flex flex-col justify-center items-center max-w-[594px] mx-auto">
+        <Heading variant="h1" className="mb-[24px]">
           Verify Your Email
         </Heading>
-        <Text className="mb-[32px] sm:mb-[56px] max-w-[624px] w-full mx-auto">
+        <Text className="mb-[32px] sm:mb-[42px] max-w-[468px] w-full mx-auto">
           We’ve sent a password reset link to your email{" "}
           <Link href={`mailto:${email}`} className="font-bold text-white">
             {email}
@@ -36,10 +36,10 @@ const EmailVerify: React.FC = () => {
           <br />
           Don’t forget to check your spam or promotions folder just in case.
         </Text>
-        <Text className="mb-[24px] sm:mb-[32px] max-w-[624px] w-full mx-auto">
+        <Text className="mb-[24px] max-w-[468px] w-full mx-auto">
           If you didn’t receive the email, you can try again in a few minutes.
         </Text>
-        <div className="flex flex-col sm:flex-row gap-[20px] w-full max-w-[calc(100%-20px)] mx-auto">
+        <div className="flex flex-col sm:flex-row gap-[15px] w-full max-w-[calc(100%-20px)] mx-auto">
           <Button
             variant="secondary"
             onClick={() => router.push("/auth/profile/log-in")}

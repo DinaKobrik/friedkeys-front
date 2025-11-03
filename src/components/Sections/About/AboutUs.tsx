@@ -6,9 +6,9 @@ import Image from "next/image";
 
 const AboutUs = () => {
   return (
-    <section className="grid grid-cols-1 xl:grid-cols-2 gap-[16px] sm:gap-[24px]">
+    <section className="grid grid-cols-1 lg:grid-cols-2 gap-[16px] sm:gap-[18px]">
       <div>
-        <Heading variant="h2" className="mb-[24px]">
+        <Heading variant="h2" className="mb-[18px]">
           About us
         </Heading>
         <Text>

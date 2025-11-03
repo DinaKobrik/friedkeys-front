@@ -21,9 +21,9 @@ const FAQItem = ({
   const isOpen = openIndex === index;
 
   return (
-    <div className="relative max-w-[1066px] mx-auto mb-[8px] sm:mb-[16px]">
+    <div className="relative max-w-[798px] mx-auto mb-[8px] sm:mb-[12px]">
       <div
-        className={`card-corner cursor-pointer overflow-hidden relative z-[1] flex justify-between gap-[20px] items-center w-full sm:px-[32px] sm:py-[34px] px-[16px] py-[28px] bg-2 border-none z-2 ${
+        className={`card-corner cursor-pointer overflow-hidden relative z-[1] flex justify-between gap-[20px] items-center w-full px-[16px] py-[28px] sm:px-[24px] bg-2 border-none z-2 ${
           isOpen ? "mb-[8px]" : ""
         }`}
         onClick={() => onToggle(index)}>
@@ -34,7 +34,7 @@ const FAQItem = ({
           viewBox="0 0 32 32"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          className={`transition-transform duration-500 w-[24px] h-[24px] sm:w-[32px] sm:h-[32px] ${
+          className={`transition-transform duration-500 w-[24px] h-[24px] ${
             isOpen ? "" : "rotate-180"
           }`}>
           <path
@@ -53,7 +53,7 @@ const FAQItem = ({
       <p
         className={`card-corner relative bg-2 ${
           isOpen
-            ? "max-h-[1000px] opacity-100 p-[16px] pb-[24px] sm:p-[32px] sm:pb-[40px]"
+            ? "max-h-[1000px] opacity-100 p-[16px] pb-[24px] sm:p-[24px] sm:pb-[30px] text-[15px] leading-[20px]"
             : "max-h-0 opacity-0 p-0"
         } transition-all duration-500 overflow-hidden`}
         dangerouslySetInnerHTML={{ __html: answer }}
@@ -84,10 +84,10 @@ const Faq = () => {
 
   return (
     <section>
-      <Heading variant="h2" className="mb-[8px] sm:mb-[24px]">
+      <Heading variant="h2" className="mb-[8px] sm:mb-[18px]">
         FAQs
       </Heading>
-      <Text className="mb-[16px] sm:mb-[40px]">
+      <Text className="mb-[16px] sm:mb-[30px]">
         {`Whether it’s about game keys, platforms, or regions — we’ve got the
         answers. Browse the FAQs or hit us up if you're stuck`}
       </Text>
@@ -106,7 +106,7 @@ const Faq = () => {
           window.location.href = "/faq";
         }}
         variant="secondary"
-        className="max-w-[219px] mt-[40px]">
+        className="max-w-[164px] mt-[16px] sm:mt-[30px]">
         see all faqs
       </Button>
     </section>

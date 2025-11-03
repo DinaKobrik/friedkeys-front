@@ -334,15 +334,15 @@ const Registration: React.FC = () => {
   }, []);
 
   return (
-    <main className="my-[24px] sm:my-[40px]">
+    <main className="my-[24px] sm:my-[40px] newMainCustom:mt-[180px]">
       <section className="relative flex flex-col justify-center items-center pt-[72px] sm:pt-[80px] mainCustom:pt-0">
         <Button
           variant="secondary"
           onClick={() => window.history.back()}
-          className="absolute top-0 left-0 max-w-[117px] sm:max-w-[163px] h-[40px] sm:h-[50px] flex justify-center items-center ml-[10px]">
+          className="absolute top-0 left-0 max-w-[117px] sm:max-w-[163px] h-[40px] sm:h-[45px] flex justify-center items-center ml-[10px]">
           <svg
-            width="14"
-            height="22"
+            width="11"
+            height="17"
             viewBox="0 0 14 22"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -515,7 +515,7 @@ const Registration: React.FC = () => {
               </div>
             </Input>
             {isCountryOpen && (
-              <div className="absolute top-[64px] sm:top-[84px] z-10 w-full bg-2 mt-[8px] max-h-[200px] overflow-y-auto custom-scrollbar">
+              <div className="absolute top-[64px] z-10 w-full bg-2 mt-[8px] max-h-[200px] overflow-y-auto custom-scrollbar">
                 {countries.map((countryName, index) => (
                   <div
                     key={index}
@@ -537,7 +537,7 @@ const Registration: React.FC = () => {
             }`}
             ref={agreedRef}>
             <div
-              className={`w-[24px] h-[24px] bg-transparent border-2 rounded-sm flex items-center justify-center mr-[16px] cursor-pointer ${
+              className={`w-[18px] h-[18px] bg-transparent border-2 rounded-sm flex items-center justify-center mr-[12px] cursor-pointer ${
                 !isAgreed && isTouchedAgreed ? "border-red" : "border-white"
               }`}
               onClick={() => setIsAgreed(!isAgreed)}>

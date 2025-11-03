@@ -504,14 +504,14 @@ export default React.memo(function OrdersPage() {
   }
 
   return (
-    <main className="min-h-screen mt-[24px] sm:mt-[80px]">
+    <main className="min-h-screen mt-[24px] sm:mt-[60px]">
       <Suspense fallback={<div>Loading menu...</div>}>
         <AccountMenu activeLink="/auth/account/orders" />
       </Suspense>
       <section>
-        <div className="flex flex-col sm:flex-row justify-between items-center gap-[8px] mt-[40px] sm:mt-[80px] mb-[24px] lg:mb-[48px]">
+        <div className="flex flex-col sm:flex-row justify-between items-center gap-[8px] mt-[40px] sm:mt-[60px] mb-[24px] lg:mb-[36px]">
           <Heading variant="h1">orders</Heading>
-          <div className="game-count text-[16px] sm:text-[32px] sm:font-usuzi-condensed text-white sm:uppercase">
+          <div className="game-count text-[16px] sm:text-[24px] sm:font-usuzi-condensed text-white sm:uppercase">
             {mockOrders.length} orders
           </div>
         </div>
@@ -535,7 +535,7 @@ export default React.memo(function OrdersPage() {
             status
           </Heading>
         </div>
-        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-1 gap-[16px] xl:gap-0 mb-[24px] sm:mb-[56px] xl:bg-2 xl:py-[24px]">
+        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-1 gap-[16px] xl:gap-0 mb-[24px] sm:mb-[56px] xl:bg-2 xl:py-[18px]">
           {paginatedOrders}
         </div>
         {totalPages > 1 && (

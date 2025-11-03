@@ -115,12 +115,12 @@ const PaymentMethod = ({
 
   return (
     <section>
-      <div className="mb-[16px] sm:mb-[40px]">
+      <div className="mb-[16px] sm:mb-[30px]">
         <Heading variant="h1" aria-label="Payment Method">
           Payment Method
         </Heading>
         {isPayClicked && selectedMethod === null && (
-          <Text className="mt-[8px] flex items-center gap-[16px]">
+          <Text className="mt-[8px] flex items-center gap-[12px]">
             <svg
               width="24"
               height="24"
@@ -155,7 +155,7 @@ const PaymentMethod = ({
           </Text>
         )}
       </div>
-      <div className="flex w-full flex-col gap-[16px] sm:gap-[32px]">
+      <div className="flex w-full flex-col gap-[16px] sm:gap-[18px]">
         {paymentMethods.map((method, index) => {
           const checkboxId = `save-${method.name}`;
           const isChecked = checkboxStates[checkboxId] || false;
@@ -164,9 +164,9 @@ const PaymentMethod = ({
           return (
             <div key={index} className="flex flex-col w-full gap-[8px]">
               <div
-                className={`w-full card-corner cursor-pointer h-[68px] sm:h-[128px] flex gap-[8px]`}
+                className={`w-full card-corner cursor-pointer h-[68px] sm:h-[96px] flex gap-[8px]`}
                 onClick={() => handleMethodClick(method.name)}>
-                <div className="flex-shrink-0 bg-2 px-[11px] py-[24px] sm:px-[20px] sm:py-[29px] w-[82px] sm:w-[180px] md:w-[248px] flex justify-center items-center">
+                <div className="flex-shrink-0 bg-2 px-[11px] py-[24px] sm:px-[15px] sm:py-[21px] w-[82px] sm:w-[180px] md:w-[186px] flex justify-center items-center">
                   <Image
                     src={`/images/payment/${method.name.toLowerCase()}.png`}
                     alt={`${method.name} payment method`}
@@ -175,20 +175,20 @@ const PaymentMethod = ({
                     className="max-h-full max-w-full object-contain"
                   />
                 </div>
-                <div className="relative bg-3 p-[12px] sm:py-[30px] sm:px-[24px] w-full flex flex-col items-start justify-between">
+                <div className="relative bg-3 p-[12px] sm:py-[22px] sm:px-[18px] w-full flex flex-col items-start justify-between">
                   {isSelected && (
                     <div className="h-[7px] w-[75%] absolute bottom-0 left-[50%] bg-primary-main translate-x-[-50%] blur-[30px] z-0"></div>
                   )}
-                  <div className="flex items-center gap-[12px]">
+                  <div className="flex items-center gap-[9px]">
                     <Heading variant="h3">{method.name}</Heading>
-                    <span className="text-white text-[15px] leading-[16px] sm:text-[20px] sm:leading-[20px]">
+                    <span className="text-white text-[15px] leading-[16px]">
                       {method.fee}
                     </span>
                   </div>
                   {index < 2 && (
                     <div className="flex items-center gap-[8px]">
                       <div
-                        className="w-[18px] h-[18px] bg-transparent border-2 border-white rounded-sm flex items-center justify-center cursor-pointer"
+                        className="w-[16px] h-[16px] bg-transparent border-2 border-white rounded-sm flex items-center justify-center cursor-pointer"
                         onClick={(e) => {
                           e.stopPropagation();
                           handleCheckboxToggle(checkboxId);
@@ -218,7 +218,7 @@ const PaymentMethod = ({
                       />
                       <label
                         htmlFor={checkboxId}
-                        className="text-white text-[13px] leading-[13px] sm:text-[16px]"
+                        className="text-white text-[13px] leading-[13px] sm:text-[15px]"
                         onClick={() => handleMethodClick(method.name)}>
                         Save for your next purchase
                       </label>
@@ -227,8 +227,8 @@ const PaymentMethod = ({
                 </div>
               </div>
               {isSelected && (
-                <div className="w-full bg-2 card-corner p-[12px] sm:p-[24px]">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 items-end w-full gap-y-[18px] md:gap-y-[32px] gap-x-[12px] md:gap-x-[40px]">
+                <div className="w-full bg-2 card-corner p-[12px] sm:p-[18px]">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 items-start w-full gap-y-[18px] md:gap-y-[24px] gap-x-[12px] md:gap-x-[30px]">
                     <Input
                       type="text"
                       value={cardNumber.replace(/(\d{4})(?=\d)/g, "$1 ")}
@@ -245,7 +245,7 @@ const PaymentMethod = ({
                       }
                       className="mb-[0]"
                       autoComplete="off"
-                      backgroundClass="bg-3"
+                      backgroundClass="bg-3 border-[#333333]"
                       isTouched={
                         touchedFields.cardNumber || shouldShowCardErrors
                       }
@@ -267,7 +267,7 @@ const PaymentMethod = ({
                       }
                       className="mb-[0]"
                       autoComplete="off"
-                      backgroundClass="bg-3"
+                      backgroundClass="bg-3 border-[#333333]"
                       isTouched={
                         touchedFields.cardholderName || shouldShowCardErrors
                       }
@@ -289,7 +289,7 @@ const PaymentMethod = ({
                       }
                       className="mb-[0]"
                       autoComplete="off"
-                      backgroundClass="bg-3"
+                      backgroundClass="bg-3 border-[#333333]"
                       isTouched={
                         touchedFields.expiryDate || shouldShowCardErrors
                       }
@@ -311,7 +311,7 @@ const PaymentMethod = ({
                       }
                       className="mb-[0]"
                       autoComplete="off"
-                      backgroundClass="bg-3"
+                      backgroundClass="bg-3 border-[#333333]"
                       isTouched={
                         touchedFields.securityNumber || shouldShowCardErrors
                       }

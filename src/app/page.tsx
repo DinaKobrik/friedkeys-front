@@ -1,6 +1,6 @@
 import "./globals.css";
 import Slider from "@/components/Sections/Homepage/Slider";
-import QuickMenu from "@/components/Sections/Homepage/QuickMenu";
+// import QuickMenu from "@/components/Sections/Homepage/QuickMenu";
 import Trending from "@/components/Sections/Homepage/Trending";
 import Advantages from "@/components/Sections/Homepage/Advantages";
 import NewGames from "@/components/Sections/Homepage/NewGames";
@@ -18,7 +18,7 @@ export default function Home() {
     <FavoriteProvider>
       <main className="flex flex-col gap-[56px] md:gap-[90px] w-full xl:mt-[-76px]">
         <Slider />
-        <QuickMenu />
+        {/* <QuickMenu /> */}
         <Trending />
         <SaleGames />
         <Advantages />

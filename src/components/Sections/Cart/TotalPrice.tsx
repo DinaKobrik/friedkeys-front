@@ -63,33 +63,33 @@ const TotalPrice: React.FC<TotalPriceProps> = ({
 
   return (
     <>
-      <div className="w-full hidden 2xl:w-[384px] sm:px-[12px] 2xl:flex flex-col gap-[16px]">
-        <Heading variant="h2" className="mb-[32px]" aria-label="Total Price">
+      <div className="w-full hidden 2xl:w-[288px] sm:px-[12px] 2xl:flex flex-col gap-[12px]">
+        <Heading variant="h2" className="mb-[24px]" aria-label="Total Price">
           Total Price
         </Heading>
-        <div className="flex flex-col w-full gap-[20px] pb-[20px] border-b-4 border-[#4C4C4C]">
-          <div className="flex w-full justify-between items-center gap-[10px]">
-            <span className="uppercase m-0 text-gray-68 font-usuzi-condensed text-[16px] leading-[16px] sm:text-[26px] sm:leading-[28px]">
+        <div className="flex flex-col w-full gap-[15px] pb-[15px] border-b-4 border-[#4C4C4C]">
+          <div className="flex w-full justify-between items-center gap-[8px]">
+            <span className="uppercase m-0 text-gray-68 font-usuzi-condensed text-[16px] leading-[16px] sm:text-[19px] sm:leading-[21px]">
               Official price
             </span>
-            <span className="text-gray-68 font-bold text-[20px] leading-[24px]">
+            <span className="text-gray-68 font-bold text-[15px] leading-[18px]">
               {officialPrice}$
             </span>
           </div>
-          <div className="flex w-full justify-between items-center gap-[10px]">
-            <span className="uppercase m-0 text-gray-68 font-usuzi-condensed text-[16px] leading-[16px] sm:text-[26px] sm:leading-[28px]">
+          <div className="flex w-full justify-between items-center gap-[8px]">
+            <span className="uppercase m-0 text-gray-68 font-usuzi-condensed text-[16px] leading-[16px] sm:text-[19px] sm:leading-[21px]">
               Discount
             </span>
-            <span className="text-gray-68 font-bold text-[20px] leading-[24px]">
+            <span className="text-gray-68 font-bold text-[15px] leading-[18px]">
               {totalDiscount}$
             </span>
           </div>
         </div>
-        <div className="flex w-full justify-between items-center gap-[10px] mb-[68px]">
-          <span className="uppercase m-0 text-white font-usuzi-condensed text-[16px] leading-[16px] sm:text-[28px] sm:leading-[28px]">
+        <div className="flex w-full justify-between items-center gap-[8px] mb-[51px]">
+          <span className="uppercase m-0 text-white font-usuzi-condensed text-[16px] leading-[16px] sm:text-[21px] sm:leading-[21px]">
             Subtotal
           </span>
-          <span className="text-white font-bold text-[28px] leading-[28px]">
+          <span className="text-white font-bold text-[21px] leading-[21px]">
             {subtotal}$
           </span>
         </div>

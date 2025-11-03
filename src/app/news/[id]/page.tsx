@@ -186,7 +186,7 @@ export default function NewPage() {
     isMounted && game ? cartQuantities[cartKey]?.quantity || 0 : 0;
 
   return (
-    <main className="mt-[24px] sm:mt-[80px]">
+    <main className="mt-[24px] sm:mt-[60px] xl:mt-[136px]">
       <Heading variant="h3" className="hidden lg:block">
         Home / news / {news.title}
       </Heading>
@@ -212,18 +212,18 @@ export default function NewPage() {
         All news
       </Button>
       <section>
-        <div className="mb-[50px] sm:mb-[80px] relative new__image-container -z-10 my-[26px]">
-          <div className="new__image ml-[-16px] sm:ml-[-46px] mainCustom:w-[calc(100%+92px)] h-full max-h-[905px]">
+        <div className="mb-[50px] sm:mb-[60px] relative new__image-container -z-10 my-[19px]">
+          <div className="new__image max-w-[1296px] newMainCustom:max-w-[1200px] ml-[-16px] sm:ml-[-46px] newMainCustom:ml-auto h-full max-h-[600px] mx-auto">
             <Image
               src={backgroundImageSrc}
               alt={news.title}
               width={1608}
               height={905}
-              className="mx-auto blur-xl min-h-[320px] max-h-[900px]"
+              className="mx-auto blur-md min-h-[320px] max-h-[600px]"
               onError={() => setBackgroundImageSrc("/images/no-image.jpg")}
             />
           </div>
-          <div className="absolute top-[50px] 2xl:top-1/2 h-[calc(100%-100px)] mainCustom:h-full 2xl:translate-y-[-50%] left-1/2 translate-x-[-50%] w-full max-w-[1064px] max-h-[612px]">
+          <div className="absolute top-[20px] lg:top-[60px] 2xl:top-1/2 h-[calc(100%-50px)] 2xl:translate-y-[-50%] left-1/2 translate-x-[-50%] w-full max-w-[1064px] max-h-[450px]">
             <div className="mx-auto w-full h-full">
               <Image
                 src={foregroundImageSrc}
@@ -239,13 +239,13 @@ export default function NewPage() {
         <Heading variant="h1" className="mb-[16px]">
           {news.title}
         </Heading>
-        <p className="text-[#C1C1C1] text-[14px] leading-[16px] sm:text-[20px] sm:leading-[24px] text-start mb-[48px] sm:mb-[80px]">
+        <p className="text-[#C1C1C1] text-[14px] leading-[16px] sm:text-[15px] sm:leading-[18px] text-start mb-[36px] sm:mb-[60px]">
           {formattedDate}, {formattedTime}
         </p>
       </section>
       <section className="max-w-[1064px] mx-auto">
         <Text className="mb-[75px]">{news.description}</Text>
-        <div className="max-w-[175px] sm:max-w-[520px] mx-auto mb-[32px] sm:mb-[48px]">
+        <div className="max-w-[175px] sm:max-w-[390px] mx-auto mb-[32px] sm:mb-[36px]">
           {game ? (
             <div className="flex flex-col gap-[16px]">
               <GameCard game={game} hidePreOrder={true} />
@@ -254,7 +254,7 @@ export default function NewPage() {
                   {cartQuantity === 0 ? (
                     <Button
                       variant="primary"
-                      className="max-w-[calc(100%-20px)] w-full h-[40px] sm:h-[48px] flex justify-center items-center"
+                      className="max-w-[calc(100%-20px)] w-full h-[40px] sm:h-[45px] flex justify-center items-center"
                       onClick={() => addToCart(game.id)}
                       aria-label={`${
                         game.preOrder ? "Pre-order" : "Add to cart"
@@ -274,19 +274,19 @@ export default function NewPage() {
                       <div className="flex items-center gap-6 w-full">
                         <Button
                           variant="secondary"
-                          className="max-w-[64px] h-[48px] flex items-center justify-center"
+                          className="max-w-[48px] h-[40px] sm:h-[45px] flex items-center justify-center"
                           onClick={() => updateQuantity(game.id, -1)}
                           aria-label={`Decrease quantity of ${game.title}`}>
                           -
                         </Button>
                         <span
-                          className="text-white text-[18px] font-bold"
+                          className="text-white text-[13px] font-bold"
                           aria-label={`Quantity: ${cartQuantity}`}>
                           {cartQuantity}
                         </span>
                         <Button
                           variant="secondary"
-                          className="max-w-[64px] h-[48px] flex items-center justify-center"
+                          className="max-w-[48px] h-[40px] sm:h-[45px] flex items-center justify-center"
                           onClick={() => updateQuantity(game.id, 1)}
                           aria-label={`Increase quantity of ${game.title}`}>
                           +
@@ -306,7 +306,7 @@ export default function NewPage() {
         {news.hashtags.map((tag, index) => (
           <span
             key={index}
-            className="text-white text-[14px] leading-[14px] sm:text-[20px] sm:leading-[20px]">
+            className="text-white text-[14px] leading-[14px] sm:text-[15px] sm:leading-[15px]">
             {tag}
           </span>
         ))}

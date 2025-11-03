@@ -63,7 +63,7 @@ const GameSlider: React.FC = () => {
   const [slideWidth, setSlideWidth] = useState(0);
   const [slideHeight, setSlideHeight] = useState(0);
   const [slideOffset, setSlideOffset] = useState(0);
-  const [gap, setGap] = useState(24);
+  const [gap, setGap] = useState(18);
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -215,15 +215,15 @@ const GameSlider: React.FC = () => {
         const isMobile = window.innerWidth < 1200;
         const baseWidth = isMobile
           ? 268
-          : (containerWidth - 3 * (window.innerWidth >= 576 ? 24 : 12)) / 4;
+          : (containerWidth - 3 * (window.innerWidth >= 576 ? 18 : 12)) / 4;
         setSlideWidth(baseWidth);
-        setGap(window.innerWidth >= 576 ? 24 : 12);
+        setGap(window.innerWidth >= 576 ? 18 : 12);
         setSlideOffset(
           isMobile
             ? window.innerWidth >= 576
               ? 292
               : 280
-            : baseWidth + (window.innerWidth >= 576 ? 24 : 12)
+            : baseWidth + (window.innerWidth >= 576 ? 18 : 12)
         );
         setSlideHeight(isMobile ? 149 : baseWidth * (2 / 3));
       }
@@ -319,13 +319,13 @@ const GameSlider: React.FC = () => {
     <section className="relative" aria-label="Game Media Slider Section">
       <Heading
         variant="h1"
-        className="mb-[24px] sm:mb-[40px]"
+        className="mb-[24px] sm:mb-[30px]"
         aria-label="Video and Screenshots Title">
         Video & Screenshots
       </Heading>
       <div
         ref={mainImageRef}
-        className="relative w-full h-[196px] sm:h-[300px] md:h-[400px] lg:h-[500px] xl:h-[700px] mainCustom:h-[880px] mb-[16px] sm:mb-[40px] cursor-grab"
+        className="relative w-full h-[196px] sm:h-[300px] md:h-[400px] lg:h-[500px] xl:h-[660px] mb-[16px] sm:mb-[30px] cursor-grab"
         onMouseDown={(e) => handleDragStart(e, true)}
         onMouseUp={(e) => handleDragEnd(e, true)}
         onMouseLeave={(e) => handleDragEnd(e, true)}
@@ -346,7 +346,7 @@ const GameSlider: React.FC = () => {
             {!isPlaying && (
               <button
                 onClick={togglePlay}
-                className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-DLS rounded-full p-[11px] pl-[14px] pr-[10px] sm:p-[37px] sm:pl-[42px] sm:pr-[38px] flex items-center justify-center"
+                className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-DLS rounded-full p-[11px] pl-[14px] pr-[10px] sm:p-[27px] sm:pl-[31px] sm:pr-[28px] flex items-center justify-center"
                 aria-label={isPlaying ? "Pause video" : "Play video"}>
                 <svg
                   width="28"
@@ -354,7 +354,7 @@ const GameSlider: React.FC = () => {
                   viewBox="0 0 28 32"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
-                  className="w-[24px] h-[24px] sm:w-[40px] sm:h-[40px]"
+                  className="w-[24px] h-[24px] sm:w-[30px] sm:h-[30px]"
                   aria-hidden="true">
                   <path
                     fillRule="evenodd"
@@ -369,7 +369,7 @@ const GameSlider: React.FC = () => {
             )}
             {(showControls || !isPlaying) && (
               <div
-                className="absolute bottom-[4px] left-[4px] right-[4px] md:left-[16px] md:right-[16px] md:bottom-[16px] flex gap-[12px] items-center transition-opacity duration-500"
+                className="absolute bottom-[4px] left-[4px] right-[4px] md:left-[12px] md:right-[12px] md:bottom-[12px] flex gap-[9px] items-center transition-opacity duration-500"
                 style={{ opacity: showControls ? 1 : 0 }}
                 aria-label="Video controls">
                 <button
@@ -382,7 +382,7 @@ const GameSlider: React.FC = () => {
                       viewBox="0 0 28 32"
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"
-                      className="w-[24px] h-[24px] sm:w-[40px] sm:h-[40px]"
+                      className="w-[24px] h-[24px] sm:w-[30px] sm:h-[30px]"
                       aria-hidden="true">
                       <rect
                         x="8"
@@ -412,7 +412,7 @@ const GameSlider: React.FC = () => {
                       viewBox="0 0 28 32"
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"
-                      className="w-[24px] h-[24px] sm:w-[40px] sm:h-[40px]"
+                      className="w-[24px] h-[24px] sm:w-[30px] sm:h-[30px]"
                       aria-hidden="true">
                       <path
                         fillRule="evenodd"
@@ -434,7 +434,7 @@ const GameSlider: React.FC = () => {
                   aria-valuemax={duration}
                   aria-valuenow={currentTime}
                   aria-orientation="horizontal">
-                  <div className="w-full h-[4px] bg-[#D9D9D95A] rounded">
+                  <div className="w-full h-[3px] bg-[#D9D9D95A] rounded">
                     <div
                       className="h-[4px] bg-[#D9D9D9] rounded"
                       style={{
@@ -445,7 +445,7 @@ const GameSlider: React.FC = () => {
                   </div>
                 </div>
                 <span
-                  className="text-[13px] sm:text-[20px] leading-[13px] sm:leading-[20px]"
+                  className="text-[13px] sm:text-[15px] leading-[13px] sm:leading-[15px]"
                   aria-label={`Video time: ${formatTime(
                     currentTime
                   )} of ${formatTime(duration)}`}>
@@ -478,7 +478,7 @@ const GameSlider: React.FC = () => {
         <div ref={containerRef} className="overflow-hidden">
           <div
             ref={sliderRef}
-            className="flex gap-[12px] sm:gap-[24px] transition-transform duration-300 ease-in-out"
+            className="flex gap-[12px] sm:gap-[18px] transition-transform duration-300 ease-in-out"
             style={{ width: `${totalSlides * (slideWidth + gap)}px` }}
             aria-label="Thumbnail selection">
             {mediaItems.map((item, index) => (
@@ -518,11 +518,11 @@ const GameSlider: React.FC = () => {
         </div>
         <button
           onClick={moveLeft}
-          className="hidden lg:flex absolute left-[20px] bodyCustom:left-[-104px] top-[50%] transform -translate-y-1/2 w-[64px] h-[64px] justify-center items-center p-[16px] rounded-full bg-DLS backdrop-blur-[10px] z-20"
+          className="hidden lg:flex absolute left-[20px] mainCustom:left-[-88px] top-[50%] transform -translate-y-1/2 w-[48px] h-[48px] justify-center items-center p-[12px] rounded-full bg-DLS backdrop-blur-[10px] z-20"
           aria-label="Previous slide">
           <svg
-            width="12"
-            height="22"
+            width="9"
+            height="16"
             viewBox="0 0 12 22"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -537,11 +537,11 @@ const GameSlider: React.FC = () => {
         </button>
         <button
           onClick={moveRight}
-          className="hidden lg:flex absolute right-[20px] bodyCustom:right-[-104px] top-[50%] transform -translate-y-1/2 w-[64px] h-[64px] justify-center items-center p-[16px] rounded-full bg-DLS backdrop-blur-[10px] z-20"
+          className="hidden lg:flex absolute right-[20px] mainCustom:right-[-88px] top-[50%] transform -translate-y-1/2 w-[48px] h-[48px] justify-center items-center p-[12px] rounded-full bg-DLS backdrop-blur-[10px] z-20"
           aria-label="Next slide">
           <svg
-            width="12"
-            height="22"
+            width="9"
+            height="16"
             viewBox="0 0 12 22"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"

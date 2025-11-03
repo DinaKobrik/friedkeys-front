@@ -2,11 +2,11 @@ import React from "react";
 
 const Advantages2: React.FC = () => {
   const BASE_STYLES = {
-    advantages: `w-full xl:w-[calc(100%+150px)] relative xl:left-[-75px] overflow-hidden px-0 sm:pb-[88px] sm:pt-[62px] mx-auto grid gap-[8px] sm:gap-x-[25px] sm:gap-y-[65px] md:gap-y-[25px] z-10`,
+    advantages: `w-full xl:w-[calc(100%+150px)] relative xl:left-[-75px] overflow-hidden px-0 sm:pb-[88px] sm:pt-[62px] mx-auto grid gap-[8px] sm:gap-x-[18px] sm:gap-y-[65px] md:gap-y-[25px] z-10`,
     bgAdvantages: `xl:bg-advantages flex items-center xl:justify-center xl:skew-x-[20deg]`,
-    advantage: `w-full flex flex-col gap-[16px] items-center justify-center relative xl:py-[40px] xl:pt-[45px] xl:pb-[16px] z-5`,
-    text: `text-center text-white text-[14px] leading-[18px] sm:text-[24px] sm:leading-[30px]`,
-    svg: `text-primary-main w-[24px] h-[24px] sm:w-[64px] sm:h-[64px]`,
+    advantage: `w-full flex flex-col gap-[16px] items-center justify-center relative xl:py-[40px] xl:pt-[31px] xl:pb-[16px] z-5`,
+    text: `text-center text-white text-[14px] leading-[18px] sm:text-[18px] sm:leading-[25px]`,
+    svg: `text-primary-main w-[24px] h-[24px] sm:w-[48px] sm:h-[48px]`,
   };
 
   const CONTENT_ITEMS = [

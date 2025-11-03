@@ -24,12 +24,12 @@ export default function FailedPage() {
     <main>
       <CartMenu activeItem="payment" />
       <div
-        className={`relative max-w-[548px] lg:max-w-[792px] pt-[56px] pb-[24px] mx-auto ${
+        className={`relative max-w-[548px] lg:max-w-[594px] pt-[42px] pb-[24px] mx-auto ${
           isDesktop ? "card-corner" : ""
         } ${
-          isDesktop ? "pt-[56px] pb-[64px] lg:px-[127px] bg-2" : ""
+          isDesktop ? "pt-[56px] pb-[64px] lg:px-[60px] bg-2" : ""
         } flex flex-col justify-center items-center`}>
-        <div className="failed mb-[32px] sm:mb-[40px] p-[11px] sm:p-[15px] rounded-full border-2 border-red w-[56px] h-[56px] sm:w-[80px] sm:h-[80px] flex justify-center items-center">
+        <div className="failed mb-[32px] sm:mb-[30px] p-[11px] sm:p-[15px] rounded-full border-2 border-red w-[56px] h-[56px] sm:w-[60px] sm:h-[60px] flex justify-center items-center">
           <svg
             width="50"
             height="50"
@@ -49,14 +49,14 @@ export default function FailedPage() {
           </svg>
         </div>
 
-        <Heading variant="h2" className="mb-[16px] sm:mb-[40px]">
+        <Heading variant="h2" className="mb-[16px] sm:mb-[30px]">
           Something went wrong
         </Heading>
-        <Text className="mb-[16px] sm:mb-[40px] max-w-[520px] w-full">
+        <Text className="mb-[16px] sm:mb-[30px] max-w-[520px] w-full">
           We couldn’t complete the payment. Please check <br /> the details and
           try again.
         </Text>
-        <div className="mb-[80px] w-full max-w-[520px]">
+        <div className="mb-[60px] w-full max-w-[520px]">
           <Text>Possible reasons:</Text>
           <ul className="pl-[20px] list-disc marker:text-current text-left">
             <li>
@@ -70,7 +70,7 @@ export default function FailedPage() {
             </li>
           </ul>
         </div>
-        <div className="flex flex-col md:flex-row gap-[20px] w-full justify-center max-w-[calc(100%-20px)] sm:max-w-[calc(100%-10px)] lg:max-w-[100%]">
+        <div className="flex flex-col md:flex-row gap-[15px] w-full justify-center max-w-[calc(100%-20px)]">
           <Button variant="secondary" className="md:max-w-[175px]">
             Try Again
           </Button>

@@ -101,16 +101,16 @@ export default function FavoritesComponent() {
       <Suspense fallback={<div aria-live="polite">Loading menu...</div>}>
         <AccountMenu activeLink="/auth/account/favorites" />
       </Suspense>
-      <section className="flex max-w-[1400px] mx-auto w-full flex-col gap-[24px] sm:gap-[48px] mt-[40px] sm:mt-[80px]">
+      <section className="flex w-full flex-col gap-[24px] sm:gap-[36px] mt-[40px] sm:mt-[60px]">
         <div className="flex flex-col sm:flex-row justify-between items-center gap-[8px]">
           <Heading variant="h1" className="text-center sm:text-left">
             Favorites
           </Heading>
-          <div className="game-count text-[16px] sm:text-[32px] font-usuzi-condensed text-white uppercase">
+          <div className="game-count text-[16px] sm:text-[24px] font-usuzi-condensed text-white uppercase">
             {favoriteGames.length} games
           </div>
         </div>
-        <div className="favorites-grid grid grid-cols-2 lg:grid-cols-3 gap-[12px] sm:gap-[16px] lg:gap-[24px]">
+        <div className="favorites-grid grid grid-cols-2 lg:grid-cols-3 gap-[12px] sm:gap-[16px] lg:gap-[18px]">
           <Suspense fallback={<div>Loading games...</div>}>
             {paginatedGames}
           </Suspense>

@@ -61,15 +61,15 @@ export default function NewsPage() {
   };
 
   return (
-    <main className="min-h-screen mt-[24px] sm:mt-[80px]">
-      <Heading variant="h3" className="mb-[24px] sm:mb-[40px]">
+    <main className="min-h-screen mt-[24px] sm:mt-[60px] xl:mt-[136px]">
+      <Heading variant="h3" className="mb-[24px] sm:mb-[30px]">
         Home / news
       </Heading>
-      <Heading variant="h1" className="mb-[40px] sm:mb-[80px]">
+      <Heading variant="h1" className="mb-[40px] sm:mb-[60px]">
         news
       </Heading>
       <section>
-        <div className="news-grid grid grid-cols-1 md:grid-cols-2 gap-[24px] mb-[24px] sm:mb-[56px]">
+        <div className="news-grid grid grid-cols-1 md:grid-cols-2 gap-[18px] mb-[18px] sm:mb-[42px]">
           {paginatedNews}
         </div>
         {totalPages > 1 && (

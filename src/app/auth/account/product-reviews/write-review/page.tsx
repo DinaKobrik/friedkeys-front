@@ -257,12 +257,14 @@ const ReviewContent: React.FC = React.memo(() => {
   }
 
   return (
-    <main className="mt-[40px] sm:mt-[80px]" aria-label="Write Review Page">
+    <main
+      className="mt-[40px] sm:mt-[60px] xl:mt-[136px]"
+      aria-label="Write Review Page">
       <Suspense fallback={<div>Loading review form...</div>}>
         <section aria-label="Review Form Section">
           <Heading
             variant="h3"
-            className="mb-[24px] sm:mb-[40px]"
+            className="mb-[24px] sm:mb-[30px]"
             aria-label={`Navigation: ${
               order
                 ? `account / orders / ${order} / review of ${game.title}`
@@ -276,7 +278,7 @@ const ReviewContent: React.FC = React.memo(() => {
           </Heading>
           <Heading
             variant="h1"
-            className="mb-[24px] sm:mb-[80px] text-center sm:text-left relative z-10"
+            className="mb-[24px] sm:mb-[60px] text-center sm:text-left relative z-10"
             aria-label="Review the game title">
             review the game
           </Heading>
@@ -326,7 +328,7 @@ const ReviewContent: React.FC = React.memo(() => {
             </div>
             <form
               action=""
-              className="flex flex-col w-full gap-[24px] sm:gap-[56px]"
+              className="flex flex-col w-full gap-[24px] sm:gap-[42px]"
               onSubmit={handleSubmit}
               aria-label="Review submission form">
               <div
@@ -339,7 +341,7 @@ const ReviewContent: React.FC = React.memo(() => {
                   }`}
                   onClick={() => setLiked(false)}
                   aria-label="Dislike this game">
-                  <LikeIcon className="skew-x-[20deg] w-[24px] h-[24px] sm:w-[32px] sm:h-[32px]" />
+                  <LikeIcon className="skew-x-[20deg] w-[24px] h-[24px]" />
                 </button>
                 <button
                   type="button"
@@ -348,7 +350,7 @@ const ReviewContent: React.FC = React.memo(() => {
                   }`}
                   onClick={() => setLiked(true)}
                   aria-label="Like this game">
-                  <LikeIcon className="skew-x-[20deg] w-[24px] h-[24px] sm:w-[32px] sm:h-[32px]" />
+                  <LikeIcon className="skew-x-[20deg] w-[24px] h-[24px]" />
                 </button>
               </div>
               <Textarea
@@ -391,7 +393,7 @@ const ReviewContent: React.FC = React.memo(() => {
                 aria-label="Cons text area"
               />
               <div
-                className="flex flex-col-reverse md:flex-row gap-[8px] sm:gap-[26px] max-w-[calc(100%-20px)] mx-auto w-full"
+                className="flex flex-col-reverse md:flex-row gap-[8px] sm:gap-[19px] max-w-[calc(100%-20px)] mx-auto w-full"
                 aria-label="Form actions">
                 <Button
                   variant="secondary"

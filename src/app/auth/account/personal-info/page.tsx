@@ -15,8 +15,8 @@ import AccountMenu from "@/components/Sections/Account/AccountMenu";
 // SVG для редактирования
 const EditIcon = (
   <svg
-    width="24"
-    height="24"
+    width="18"
+    height="18"
     viewBox="0 0 24 24"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
@@ -51,8 +51,8 @@ const EditIcon = (
 // SVG для даты
 const CalendarIcon = (
   <svg
-    width="24"
-    height="24"
+    width="18"
+    height="18"
     viewBox="0 0 24 24"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
@@ -224,7 +224,7 @@ const PersonalInfo: React.FC = React.memo(() => {
         <AccountMenu activeLink="/auth/account/personal-info" />
       </Suspense>
       <section
-        className="flex flex-col gap-[24px] sm:gap-[48px] mt-[40px] sm:mt-[80px]"
+        className="flex flex-col gap-[24px] sm:gap-[36px] mt-[40px] sm:mt-[60px]"
         aria-label="Personal Information Section">
         <Heading
           variant="h1"
@@ -233,7 +233,7 @@ const PersonalInfo: React.FC = React.memo(() => {
           Personal Info
         </Heading>
         <div
-          className="max-w-[520px] mx-auto w-full flex flex-col gap-[24px] sm:gap-[48px]"
+          className="max-w-[520px] mx-auto w-full flex flex-col gap-[24px] sm:gap-[36px]"
           aria-label="User Details Container">
           <div
             className="flex flex-col w-full gap-[16px]"
@@ -246,12 +246,12 @@ const PersonalInfo: React.FC = React.memo(() => {
                 Email
               </Heading>
               <div
-                className="w-full px-[20px] line-clamp-1 text-clip text-overflow overflow-hidden py-[16px] border-[1px] border-primary-20 relative text-white bg-2 focus:outline-none h-[48px] sm:h-[56px] flex items-center"
+                className="w-full px-[20px] line-clamp-1 text-clip text-overflow overflow-hidden py-[16px] border-[1px] border-primary-20 relative text-white bg-2 focus:outline-none h-[48px] flex items-center"
                 aria-label={`Email: ${userDataDisplay.email}`}>
                 {userDataDisplay.email}
                 <Link
                   href="/auth/account/edit-email"
-                  className="absolute top-[1px] bg-2 p-[11px] sm:p-[15px] border-r-primary-20 right-0"
+                  className="absolute top-[1px] bg-2 p-[11px] sm:p-[13px] border-r-primary-20 right-0"
                   aria-label="Edit Email">
                   {EditIcon}
                 </Link>
@@ -265,12 +265,12 @@ const PersonalInfo: React.FC = React.memo(() => {
                 Password
               </Heading>
               <div
-                className="w-full px-[20px] line-clamp-1 text-clip text-overflow overflow-hidden py-[16px] border-[1px] border-primary-20 relative text-white bg-2 focus:outline-none h-[48px] sm:h-[56px] flex items-center"
+                className="w-full px-[20px] line-clamp-1 text-clip text-overflow overflow-hidden py-[16px] border-[1px] border-primary-20 relative text-white bg-2 focus:outline-none h-[48px] flex items-center"
                 aria-label={`Password: ${userDataDisplay.password}`}>
                 {userDataDisplay.password}
                 <Link
                   href="/auth/account/edit-password"
-                  className="absolute top-[1px] bg-2 p-[11px] sm:p-[15px] border-r-primary-20 right-0"
+                  className="absolute top-[1px] bg-2 p-[11px] sm:p-[13px] border-r-primary-20 right-0"
                   aria-label="Edit Password">
                   {EditIcon}
                 </Link>
@@ -284,12 +284,12 @@ const PersonalInfo: React.FC = React.memo(() => {
                 First Name
               </Heading>
               <div
-                className="w-full px-[20px] line-clamp-1 text-clip text-overflow overflow-hidden py-[16px] border-[1px] border-primary-20 relative text-white bg-2 focus:outline-none h-[48px] sm:h-[56px] flex items-center"
+                className="w-full px-[20px] line-clamp-1 text-clip text-overflow overflow-hidden py-[16px] border-[1px] border-primary-20 relative text-white bg-2 focus:outline-none h-[48px] flex items-center"
                 aria-label={`First Name: ${userDataDisplay.firstName}`}>
                 {userDataDisplay.firstName}
                 <Link
                   href="/auth/account/edit-name"
-                  className="absolute top-[1px] bg-2 p-[11px] sm:p-[15px] border-r-primary-20 right-0"
+                  className="absolute top-[1px] bg-2 p-[11px] sm:p-[13px] border-r-primary-20 right-0"
                   aria-label="Edit First Name">
                   {EditIcon}
                 </Link>
@@ -303,12 +303,12 @@ const PersonalInfo: React.FC = React.memo(() => {
                 Last Name
               </Heading>
               <div
-                className="w-full px-[20px] line-clamp-1 text-clip text-overflow overflow-hidden py-[16px] border-[1px] border-primary-20 relative text-white bg-2 focus:outline-none h-[48px] sm:h-[56px] flex items-center"
+                className="w-full px-[20px] line-clamp-1 text-clip text-overflow overflow-hidden py-[16px] border-[1px] border-primary-20 relative text-white bg-2 focus:outline-none h-[48px] flex items-center"
                 aria-label={`Last Name: ${userDataDisplay.lastName}`}>
                 {userDataDisplay.lastName}
                 <Link
                   href="/auth/account/edit-name"
-                  className="absolute top-[1px] bg-2 p-[11px] sm:p-[15px] border-r-primary-20 right-0"
+                  className="absolute top-[1px] bg-2 p-[11px] sm:p-[13px] border-r-primary-20 right-0"
                   aria-label="Edit Last Name">
                   {EditIcon}
                 </Link>
@@ -322,12 +322,12 @@ const PersonalInfo: React.FC = React.memo(() => {
                 Birthday
               </Heading>
               <div
-                className="w-full px-[20px] line-clamp-1 text-clip text-overflow overflow-hidden py-[16px] border-[1px] border-primary-20 relative text-white bg-2 focus:outline-none h-[48px] sm:h-[56px] flex items-center"
+                className="w-full px-[20px] line-clamp-1 text-clip text-overflow overflow-hidden py-[16px] border-[1px] border-primary-20 relative text-white bg-2 focus:outline-none h-[48px] flex items-center"
                 aria-label={`Birthday: ${userDataDisplay.birthday}`}>
                 {userDataDisplay.birthday}
                 <Link
                   href="/auth/account/edit-name"
-                  className="absolute top-[1px] bg-2 p-[11px] sm:p-[15px] border-r-primary-20 right-0"
+                  className="absolute top-[1px] bg-2 p-[11px] sm:p-[13px] border-r-primary-20 right-0"
                   aria-label="Edit Birthday">
                   {CalendarIcon}
                 </Link>

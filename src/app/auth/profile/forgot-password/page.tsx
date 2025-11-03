@@ -48,15 +48,15 @@ export default function ForgotPassword() {
   };
 
   return (
-    <main className="my-[40px]">
+    <main className="my-[40px] newMainCustom:mt-[180px]">
       <section className="min-h-[calc(100vh-170px)] relative pt-[88px] flex flex-col justify-center items-center">
         <Button
           variant="secondary"
           onClick={() => router.push("/auth/profile/log-in")}
-          className="absolute top-0 left-0 max-w-[117px] sm:max-w-[163px] h-[40px] sm:h-[50px] flex justify-center items-center ml-[10px]">
+          className="absolute top-0 left-0 max-w-[117px] sm:max-w-[163px] h-[40px] sm:h-[45px] flex justify-center items-center ml-[10px]">
           <svg
-            width="14"
-            height="22"
+            width="11"
+            height="17"
             viewBox="0 0 14 22"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -70,10 +70,10 @@ export default function ForgotPassword() {
           </svg>
           back
         </Button>
-        <Heading variant="h1" className="mb-[24px] sm:mb-[32px] text-center">
+        <Heading variant="h1" className="mb-[24px] text-center">
           Forgot Your Password?
         </Heading>
-        <Text className="mb-[24px] sm:mb-[32px] text-left sm:text-center">
+        <Text className="mb-[24px] text-left sm:text-center">
           No worries — it happens! <br />
           Enter your email below and we’ll send you a link to reset your
           password.
@@ -99,7 +99,7 @@ export default function ForgotPassword() {
                 ? "Fill in the field"
                 : "Invalid email format"
             }
-            className="mb-[40px]"
+            className="mb-[30px]"
             isTouched={isTouched}
             isValid={isValid}
             ref={emailRef}

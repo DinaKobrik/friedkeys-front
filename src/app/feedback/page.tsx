@@ -7,22 +7,22 @@ import UsersFeedbacks from "@/components/Sections/Feedback/UsersFeedbacks";
 
 const ReviewsPage: React.FC = () => {
   return (
-    <main className="mt-[24px] sm:mt-[80px] flex flex-col gap-[24px] sm:gap-[80px]">
+    <main className="mt-[24px] sm:mt-[60px] xl:mt-[136px] flex flex-col gap-[18px] sm:gap-[60px]">
       <section>
         <Heading
           variant="h3"
-          className="mb-[24px] sm:mb-[40px]">{`Home / User's feedbacks`}</Heading>
+          className="mb-[24px] sm:mb-[30px]">{`Home / User's feedbacks`}</Heading>
         <Heading variant="h1">{` User's feedbacks`}</Heading>
       </section>
       <section
-        className={`card-corner cursor-pointer overflow-hidden relative z-[1] flex flex-col lg:flex-row justify-between gap-[24px] items-center w-full sm:px-[32px] sm:pb-[40px] sm:py-[34px] px-[16px] py-[28px] bg-2 border-none z-2 `}>
+        className={`card-corner cursor-pointer overflow-hidden relative z-[1] flex flex-col lg:flex-row justify-between gap-[18px] items-center w-full px-[16px] py-[28px] sm:px-[32px] sm:pb-[30px] sm:py-[18px]  bg-2 border-none z-2 `}>
         <Heading variant="h3">
           Tell us what you think about FriedKeys — your feedback helps us
           improve and grow.
         </Heading>
         <Button
           variant="secondary"
-          className="max-w-[calc(100%-18px)] lg:max-w-[400px]"
+          className="max-w-[calc(100%-18px)] lg:max-w-[300px]"
           onClick={() => {
             window.location.href = "/feedback/feedback-website";
           }}>
@@ -34,16 +34,16 @@ const ReviewsPage: React.FC = () => {
       </section>
       <UsersFeedbacks
         initialReviews={294}
-        containerClassName="grid grid-cols-2 lg:grid-cols-3 gap-[11px] sm:gap-[24px] mb-[24px] sm:mb-[56px]"
+        containerClassName="grid grid-cols-2 lg:grid-cols-3 gap-[11px] sm:gap-[18px] mb-[24px] sm:mb-[42px]"
       />
       <section className="join-review">
-        <div className="p-[16px] sm:p-[54px] max-w-[876px] text-center mx-auto ">
+        <div className="p-[16px] sm:p-[42px] max-w-[700px] text-center mx-auto ">
           <Heading variant="h2" className="mb-[16px]">
             Join the Squad — Share Your Thoughts!
           </Heading>
-          <Text className="mb-[16px] sm:mb-[48px]">
+          <Text className="mb-[16px] sm:mb-[36px]">
             Loved your deal? Got something to say? Let other gamers know what
-            FriedKeys is all about.Drop a quick review and help shape the
+            FriedKeys is all about. Drop a quick review and help shape the
             community.
           </Text>
           <Button
@@ -51,7 +51,7 @@ const ReviewsPage: React.FC = () => {
               window.location.href = "/feedback/feedback-website";
             }}
             variant="primary"
-            className="max-w-[calc(100%-18px)] sm:max-w-[500px]">
+            className="max-w-[calc(100%-18px)] sm:max-w-[390px]">
             Write a Review
           </Button>
         </div>

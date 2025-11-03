@@ -287,10 +287,10 @@ const ReviewCard = ({
         }`}
         aria-hidden="true"></div>
       <div>
-        <div className="flex items-center justify-between gap-[16px] mb-[32px]">
-          <div className="flex items-center justify-start w-full gap-[16px]">
+        <div className="flex items-center justify-between gap-[16px] mb-[24px]">
+          <div className="flex items-center justify-start w-full gap-[12px]">
             <div
-              className="w-[44px] h-[44px] sm:w-[64px] sm:h-[64px] flex justify-center items-center flex-shrink-0"
+              className="w-[44px] h-[44px] flex justify-center items-center flex-shrink-0"
               aria-hidden="true">
               <svg
                 width="40"
@@ -327,15 +327,13 @@ const ReviewCard = ({
               </svg>
             </div>
             <div
-              className="text-white font-bold text-[15px] sm:text-[20px] overflow-hidden text-ellipsis whitespace-nowrap"
+              className="text-white font-bold text-[15px]  overflow-hidden text-ellipsis whitespace-nowrap"
               aria-label={`Username: ${review.username}`}>
               {review.username}
             </div>
           </div>
           <LikeIcon
-            className={`sm:w-[40px] sm:h-[40px] ${
-              !review.liked ? "rotate-180" : ""
-            }`}
+            className={` ${!review.liked ? "rotate-180" : ""}`}
             aria-label={review.liked ? "Positive review" : "Negative review"}
           />
         </div>
@@ -345,19 +343,19 @@ const ReviewCard = ({
           <Text
             key={index}
             className={
-              index === reviewContent.length - 1 ? "mb-[24px]" : "mb-[16px]"
+              index === reviewContent.length - 1 ? "mb-[18px]" : "mb-[12px]"
             }
             aria-label={`Review paragraph ${index + 1}`}>
             {paragraph}
           </Text>
         ))
       ) : (
-        <Text className="mb-[24px]" aria-label="No review text available">
+        <Text className="mb-[18px]" aria-label="No review text available">
           No review text available.
         </Text>
       )}
-      <div className={review.pros.length > 0 ? "mb-[24px]" : ""}>
-        <ul className="flex flex-col w-full gap-[12px]">
+      <div className={review.pros.length > 0 ? "mb-[18px]" : ""}>
+        <ul className="flex flex-col w-full gap-[9px]">
           {review.pros.map((pro: string, i: number) => (
             <li
               key={i}
@@ -373,7 +371,7 @@ const ReviewCard = ({
           ))}
         </ul>
       </div>
-      <div className={review.cons.length > 0 ? "mb-[32px]" : ""}>
+      <div className={review.cons.length > 0 ? "mb-[24px]" : ""}>
         <ul className="flex flex-col w-full gap-[12px]">
           {review.cons.map((con: string, i: number) => (
             <li
@@ -393,13 +391,13 @@ const ReviewCard = ({
       <div className="flex flex-col 2xl:flex-row 2xl:items-center gap-[8px] sm:gap-[16px] justify-between w-full">
         <div className="flex flex-col 2xl:flex-row gap-[8px] sm:gap-[16px] 2xl:items-center flex-shrink-0">
           <p
-            className="text-[14px] leading-[20px] sm:text-[20px] font-medium text-white"
+            className="text-[14px] leading-[20px] sm:text-[15px] font-medium text-white"
             aria-label="Is this review helpful question">
             Is this review helpful?
           </p>
-          <div className="flex gap-[8px] sm:gap-[16px] items-center flex-shrink-0 ml-[10px]">
+          <div className="flex gap-[8px] sm:gap-[12px] items-center flex-shrink-0 ml-[10px]">
             <button
-              className={`border-[1px] py-[11px] px-[24px] lg:py-[13px] lg:px-[30px] skew-x-[-20deg] ${
+              className={`border-[1px] py-[11px] px-[24px] lg:py-[13px] lg:px-[22px] skew-x-[-20deg] ${
                 isLiked
                   ? "border-primary-main bg-primary-20"
                   : isDisliked
@@ -408,12 +406,12 @@ const ReviewCard = ({
               }`}
               aria-label={`Mark review as helpful, ${localLikes} likes`}
               onClick={handleLikeClick}>
-              <span className="skew-x-[20deg] block font-semibold text-[14px] leading-[20px] sm:text-[20px] sm:leading-[26px]">
+              <span className="skew-x-[20deg] block font-semibold text-[14px] leading-[20px] sm:text-[15px] sm:leading-[19px]">
                 Yes {localLikes}
               </span>
             </button>
             <button
-              className={`border-[1px] py-[11px] px-[24px] lg:py-[13px] lg:px-[30px] skew-x-[-20deg] ${
+              className={`border-[1px] py-[11px] px-[24px] lg:py-[13px] lg:px-[22px] skew-x-[-20deg] ${
                 isDisliked
                   ? "border-red bg-red-20"
                   : isLiked
@@ -422,14 +420,14 @@ const ReviewCard = ({
               }`}
               aria-label={`Mark review as not helpful, ${localDislikes} dislikes`}
               onClick={handleDislikeClick}>
-              <span className="skew-x-[20deg] block font-semibold text-[14px] leading-[20px] sm:text-[20px] sm:leading-[26px]">
+              <span className="skew-x-[20deg] block font-semibold text-[14px] leading-[20px] sm:text-[15px] sm:leading-[19px]">
                 No {localDislikes}
               </span>
             </button>
           </div>
         </div>
         <p
-          className="text-gray-68 text-[12px] leading-[16px] sm:text-[17px] sm:leading-[21px] text-end"
+          className="text-gray-68 text-[12px] leading-[16px] sm:text-[15px] sm:leading-[15px] text-end"
           aria-label={`Review date: ${review.date}`}>
           {review.date}
         </p>
@@ -532,57 +530,57 @@ const GameReviews: React.FC = () => {
     <section aria-label="Game Reviews Section">
       <Heading
         variant="h1"
-        className="mb-[24px] sm:mb-[40px]"
+        className="mb-[24px] sm:mb-[30px]"
         aria-label="Game Reviews Title">
         Reviews
       </Heading>
       <div
-        className="card-corner bg-2 py-[32px] px-[16px] sm:px-[40px] flex flex-col lg:flex-row items-center justify-between gap-[24px] mb-[24px] sm:mb-[40px] relative"
+        className="card-corner bg-2 py-[32px] px-[16px] sm:px-[30px] flex flex-col lg:flex-row items-center justify-between gap-[24px] mb-[24px] sm:mb-[40px] relative"
         aria-label="Review Summary">
         <div
           className="h-[15px] w-[75%] sm:w-[50%] absolute bottom-0 left-[50%] translate-x-[-50%] blur-[30px] z-0 rounded-full bg-primary-main"
           aria-hidden="true"></div>
-        <div className="flex items-center gap-[16px] sm:gap-[40px] z-10">
+        <div className="flex items-center gap-[16px] sm:gap-[30px] z-10">
           <span
-            className="font-usuzi text-green text-[36px] sm:text-[48px] leading-[48px]"
+            className="font-usuzi text-green text-[36px] sm:text-[36px] leading-[36px]"
             aria-label={`Percentage of positive reviews: ${percentageLiked}%`}>
             {percentageLiked}%
           </span>
-          <div className="flex flex-col gap-[4px] sm:gap-[12px]">
+          <div className="flex flex-col gap-[4px] sm:gap-[9px]">
             <span
-              className="text-green font-usuzi-condensed text-[18px] xs:text-[20px] leading-[24px] sm:text-[32px] sm:leading-[40px]"
+              className="text-green font-usuzi-condensed text-[18px] xs:text-[20px] leading-[24px] sm:text-[24px] sm:leading-[30px]"
               aria-label="Highly Recommended rating">
               Highly Recommended
             </span>
             <span
-              className="text-white text-[15px] leading-[19px] sm:text-[20px] sm:leading-[26px]"
+              className="text-white text-[15px] leading-[19px] sm:text-[15px] sm:leading-[19px]"
               aria-label={`Based on ${totalReviews} reviews`}>
               Based on {totalReviews} reviews
             </span>
           </div>
         </div>
-        <div className="flex items-center gap-[18px]">
+        <div className="flex items-center gap-[13px]">
           <div
-            className="py-[6px] px-[30px] h-[42px] sm:h-[52px] border-[1px] border-primary-main skew-x-[-20deg] hover:bg-primary-20 cursor-pointer"
+            className="py-[6px] px-[22px] h-[42px] sm:h-[45px] border-[1px] border-primary-main skew-x-[-20deg] hover:bg-primary-20 cursor-pointer"
             aria-label={`Positive reviews: ${likedReviews}`}
             onClick={() => handleReviewClick(true)}>
             <span className="flex items-center gap-[8px] skew-x-[20deg]">
-              <LikeIcon className="sm:w-[40px] sm:h-[40px]" />
+              <LikeIcon />
               {likedReviews}
             </span>
           </div>
           <div
-            className="py-[6px] px-[30px] h-[42px] sm:h-[52px] border-[1px] border-red skew-x-[-20deg] hover:bg-red-20 cursor-pointer"
+            className="py-[6px] px-[22px] h-[42px] sm:h-[45px] border-[1px] border-red skew-x-[-20deg] hover:bg-red-20 cursor-pointer"
             aria-label={`Negative reviews: ${dislikedReviews}`}
             onClick={() => handleReviewClick(false)}>
             <span className="flex items-center gap-[8px] skew-x-[20deg]">
-              <LikeIcon className="sm:w-[40px] sm:h-[40px] rotate-180" />
+              <LikeIcon className="rotate-180" />
               {dislikedReviews}
             </span>
           </div>
         </div>
       </div>
-      <div className="flex w-full items-start gap-[24px] mb-[24px]">
+      <div className="flex w-full items-start gap-[18px] mb-[18px]">
         <div
           className={`${
             isAllReviews ? "lg:max-w-[100%]" : "lg:max-w-[58%]"

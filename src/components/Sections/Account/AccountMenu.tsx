@@ -88,14 +88,14 @@ const AccountMenu: React.FC<{ activeLink?: string }> = React.memo(
         windowWidth >= 991 ? "flex h-auto" : isMenuVisible ? "block" : "hidden"
       } ${
         windowWidth < 991 && isMenuVisible
-          ? "top-[68px] sm:top-[84px] pb-[142px]"
+          ? "top-[64px] sm:top-[80px] pb-[142px]"
           : "top-0"
       } ${windowWidth < 991 && isMenuVisible ? "bottom-0" : "bottom-auto"}`;
     }, [windowWidth, isMenuVisible]);
 
     return (
       <section
-        className=" mb-[24px] mt-[24px] sm:mt-[80px] relative"
+        className=" mb-[24px] mt-[24px] sm:mt-[60px] xl:mt-[136px] relative"
         aria-label="Account Menu Navigation">
         <div className="flex justify-between items-center bg-2 account-menu relative left-[-16px] sm:left-[-46px] py-[8px] sm:py-[16px] px-[16px] sm:px-[46px] lg:hidden">
           <Heading variant="h2" aria-label="Account Menu Title">
@@ -130,7 +130,7 @@ const AccountMenu: React.FC<{ activeLink?: string }> = React.memo(
           style={{ height: calculateDynamicHeight }}
           id="account-menu-content"
           aria-label="Account Menu Items">
-          <div className="flex flex-col w-full custom-scrollbar lg:flex-row bg-2 lg:bg-transparent items-center justify-start lg:justify-center 2xl:justify-between flex-wrap gap-[16px] lg:gap-[20px]">
+          <div className="flex flex-col w-full custom-scrollbar lg:flex-row bg-2 lg:bg-transparent items-center justify-start lg:justify-center xl:justify-between flex-wrap gap-[16px] lg:gap-[20px]">
             <Heading variant="h2">
               <Link
                 href="/auth/account/personal-info"

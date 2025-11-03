@@ -6,8 +6,8 @@ import Heading from "@/components/ui/Heading";
 export default function Custom404() {
   return (
     <main>
-      <section className="min-h-[calc(100vh-520px)] py-[80px] flex flex-col items-center justify-center">
-        <div className="card-corner relative max-w-[792px] w-full mx-auto flex flex-col items-center justify-center bg-2 px-[16px] sm:px-[25px] py-[35px] sm:pt-[56px] sm:pb-[64px] md:px-[40px]">
+      <section className="min-h-[calc(100vh-520px)] py-[60px] flex flex-col items-center justify-center">
+        <div className="card-corner relative max-w-[594px] w-full mx-auto flex flex-col items-center justify-center bg-2 px-[16px] sm:px-[25px] py-[35px] sm:pt-[42px] sm:pb-[48px] md:px-[30px]">
           <div className="font-usuzi-halftone text-[98px] leading-[70px] sm:text-[128px] sm:leading-[128px] text-primary-main mb-[8px] sm:mb-[40px]">
             404
           </div>
@@ -16,12 +16,12 @@ export default function Custom404() {
           </Heading>
           <Heading
             variant="h3"
-            className="mb-[32px] sm:mb-[64px] text-center max-w-[500px]">
+            className="mb-[32px] sm:mb-[48px] text-center max-w-[500px]">
             It may have been moved or deleted. Try the homepage instead
           </Heading>
           <Button
             variant="primary"
-            className="max-w-[calc(100%-20px)] sm:max-w-[500px]"
+            className="max-w-[calc(100%-20px)] sm:max-w-[375px]"
             onClick={() => (window.location.href = "/")}>
             Home
           </Button>

@@ -147,7 +147,7 @@ const Order: React.FC<OrderProps> = React.memo(
             date / time
           </Heading>
           <Text
-            className="text-end flex items-center justify-end 2xl:justify-center gap-[16px] 2xl:pr-[60px] w-full"
+            className="text-end flex items-center justify-end 2xl:justify-center gap-[16px] xl:pr-[60px] w-full"
             aria-label={`Order date and time: ${date} ${time}`}>
             <span>{date}</span> <span>{time}</span>
           </Text>
@@ -167,7 +167,7 @@ const Order: React.FC<OrderProps> = React.memo(
             total price
           </Heading>
           <Text
-            className="text-end xl:pr-[30px] 2xl:pr-[50px] mainCustom:pr-[70px] w-full"
+            className="text-end xl:pr-[50px] w-full"
             aria-label={`Total price: ${totalPrice} dollars`}>
             {totalPrice}$
           </Text>
@@ -177,7 +177,7 @@ const Order: React.FC<OrderProps> = React.memo(
             Payment method
           </Heading>
           <Text
-            className="text-end xl:pr-[40px] 2xl:pr-[60px] mainCustom:pr-[80px] w-full"
+            className="text-end xl:pr-[80px] w-full"
             aria-label={`Payment method: ${paymentMethod}`}>
             {paymentMethod}
           </Text>
@@ -187,7 +187,7 @@ const Order: React.FC<OrderProps> = React.memo(
             status
           </Heading>
           <Text
-            className="text-end xl:text-start 2xl:pl-[40px] mainCustom:pl-[60px] w-full"
+            className="text-end xl:text-start 2xl:pl-[20px] w-full"
             aria-label={`Order status: ${status}`}>
             {status}
           </Text>

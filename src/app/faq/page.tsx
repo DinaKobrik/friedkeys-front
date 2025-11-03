@@ -89,18 +89,18 @@ const FAQPage = () => {
   };
 
   return (
-    <main className="mt-[24px] sm:mt-[80px]">
+    <main className="mt-[24px] sm:mt-[60px xl:mt-[136px]">
       <section>
-        <Heading variant="h3" className="mb-[24px] sm:mb-[40px]">
+        <Heading variant="h3" className="mb-[24px] sm:mb-[30px]">
           Home / faqs
         </Heading>
-        <Heading variant="h1" className="mb-[24px] sm:mb-[80px]">
+        <Heading variant="h1" className="mb-[24px] sm:mb-[60px]">
           Frequently Asked Questions
         </Heading>
-        <div className="max-w-[1064px] mx-auto">
+        <div className="max-w-[798px] mx-auto">
           {faqData.map((section, sectionIndex) => (
-            <div key={sectionIndex} className="mb-[32px] sm:mb-[56px]">
-              <Heading variant="h2" className="mb-[16px] sm:mb-[48px]">
+            <div key={sectionIndex} className="mb-[32px] sm:mb-[42px]">
+              <Heading variant="h2" className="mb-[16px] sm:mb-[36px]">
                 {section.section}
               </Heading>
               {section.questions.map((item, index) => {
@@ -108,9 +108,9 @@ const FAQPage = () => {
                 const isOpen = openIndex === globalIndex;
 
                 return (
-                  <div key={index} className="relative mb-[8px] sm:mb-[16px]">
+                  <div key={index} className="relative mb-[8px] sm:mb-[12px]">
                     <div
-                      className={`card-corner cursor-pointer overflow-hidden relative z-[1]  flex justify-between gap-[20px] items-center w-full sm:px-[32px] sm:py-[34px] px-[16px] py-[28px] bg-2 border-none z-2 ${
+                      className={`card-corner cursor-pointer overflow-hidden relative z-[1]  flex justify-between gap-[20px] items-center w-full px-[16px] py-[28px] sm:px-[24px] sm:py-[25px] bg-2 border-none z-2 ${
                         isOpen ? "mb-[8px]" : ""
                       }`}
                       onClick={() => toggleAnswer(globalIndex)}>
@@ -121,7 +121,7 @@ const FAQPage = () => {
                         viewBox="0 0 32 32"
                         fill="none"
                         xmlns="http://www.w3.org/2000/svg"
-                        className={`transition-transform duration-500 w-[24px] h-[24px] sm:w-[32px] sm:h-[32px] ${
+                        className={`transition-transform duration-500 w-[24px] h-[24px] ${
                           isOpen ? "" : "rotate-180"
                         }`}>
                         <path
@@ -140,7 +140,7 @@ const FAQPage = () => {
                     <p
                       className={`card-corner relative bg-2 ${
                         isOpen
-                          ? "max-h-[1000px] opacity-100 p-[16px] pb-[24px] sm:p-[32px] sm:pb-[40px]"
+                          ? "max-h-[1000px] opacity-100 p-[16px] pb-[24px] sm:p-[24px] sm:pb-[30px] text-[15px] leading-[20px]"
                           : "max-h-0 opacity-0 p-0"
                       } transition-all duration-500 overflow-hidden`}
                       dangerouslySetInnerHTML={{ __html: item.answer }}

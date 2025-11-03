@@ -314,11 +314,11 @@ const ProductReviews: React.FC = React.memo(() => {
         return (
           <div
             key={globalIndex}
-            className="grid grid-cols-1 lg:grid-cols-3 gap-[8px] sm:gap-[24px]"
+            className="grid grid-cols-1 lg:grid-cols-3 gap-[8px] sm:gap-[18px]"
             aria-label={`Review for ${game.title} from ${formatDate(
               review.date
             )}`}>
-            <div className="card-corner h-[160px] xs:h-[200px] sm:h-[240px] md:h-[300px] lg:h-[336px] xl:h-[280px]">
+            <div className="card-corner h-[160px] xs:h-[200px] sm:h-[240px] md:h-[300px] lg:h-[267px] xl:h-[210px]">
               <Link
                 href={`/all-games/${game.id}`}
                 className="w-full h-full"
@@ -339,14 +339,14 @@ const ProductReviews: React.FC = React.memo(() => {
                 />
               </Link>
             </div>
-            <div className="lg:col-span-2 card-corner grid grid-cols-1 gap-[23px] w-full p-[16px] pb-[24px] sm:py-[24px] sm:px-[32px] lg:h-[336px] xl:h-[280px] bg-2 relative">
+            <div className="lg:col-span-2 card-corner grid grid-cols-1 gap-[23px] w-full p-[16px] pb-[24px] sm:py-[18px] sm:px-[24px] lg:h-[267px] xl:h-[210px] bg-2 relative">
               <div
                 className={`h-[20px] w-[50%] absolute top-0 left-[50%] ${
                   !review.liked ? "bg-red" : "bg-primary-main"
                 } translate-x-[-50%] blur-[50px] z-0`}></div>
-              <div className="flex items-center gap-[16px] sm:gap-[32px]">
+              <div className="flex items-center gap-[16px] sm:gap-[24px]">
                 <div
-                  className={`w-[64px] h-[40px] sm:w-[72px] sm:h-[48px] flex justify-center items-center py-[8px] px-[20px] border-[1px] skew-x-[-20deg] ${
+                  className={`w-[64px] h-[40px] sm:h-[45px] flex justify-center items-center py-[8px] px-[20px] border-[1px] skew-x-[-20deg] ${
                     review.liked
                       ? "border-primary-main bg-primary-20"
                       : "border-red bg-red-20 rotate-180"
@@ -371,43 +371,43 @@ const ProductReviews: React.FC = React.memo(() => {
                 </div>
               </div>
               <Text
-                className="line-clamp-3"
+                className="line-clamp-3 xl:line-clamp-2"
                 aria-label={`Review text: ${review.review}`}>
                 {review.review}
               </Text>
-              <div className="flex justify-between items-start xl:items-end flex-col xl:flex-row gap-[16px]">
+              <div className="flex justify-between items-start xl:items-end flex-col xl:flex-row gap-[12px]">
                 <div
                   className="flex gap-[8px] sm:gap-[16px] items-center flex-shrink-0"
                   aria-label={`Helpfulness votes: ${review.likes} likes, ${review.dislikes} dislikes`}>
-                  <p className="text-[14px] leading-[20px] sm:text-[20px] font-medium text-white">
+                  <p className="text-[14px] leading-[20px] sm:text-[15px] font-medium text-white">
                     This review is helpful
                   </p>
-                  <div className="py-[6px] px-[12px] lg:py-[13px] lg:px-[30px] lg:skew-x-[-20deg] bg-primary-20">
-                    <span className="lg:skew-x-[20deg] block font-semibold text-[14px] leading-[20px] sm:text-[20px] sm:leading-[26px]">
+                  <div className="py-[6px] px-[12px] lg:py-[10px] lg:px-[23px] lg:skew-x-[-20deg] bg-primary-20">
+                    <span className="lg:skew-x-[20deg] block font-semibold text-[14px] leading-[20px] sm:text-[15px] sm:leading-[26px]">
                       Yes {review.likes}
                     </span>
                   </div>
-                  <div className="py-[6px] px-[12px] lg:py-[13px] lg:px-[30px] lg:skew-x-[-20deg] bg-red-20">
-                    <span className="lg:skew-x-[20deg] block font-semibold text-[14px] leading-[20px] sm:text-[20px] sm:leading-[26px]">
+                  <div className="py-[6px] px-[12px] lg:py-[10px] lg:px-[23px] lg:skew-x-[-20deg] bg-red-20">
+                    <span className="lg:skew-x-[20deg] block font-semibold text-[14px] leading-[20px] sm:text-[15px] sm:leading-[26px]">
                       No {review.dislikes}
                     </span>
                   </div>
                 </div>
                 <div className="flex justify-between items-end xl:justify-end w-full">
-                  <div className="flex gap-[10px] sm:gap-[26px]">
+                  <div className="flex gap-[10px] sm:gap-[18px]">
                     <Button
                       variant="secondary"
-                      className="w-[64px] h-[40px] sm:w-[72px] sm:h-[48px] flex justify-center items-center"
+                      className="w-[64px] sm:w-[64px] h-[40px] sm:h-[45px] flex justify-center items-center"
                       onClick={() => handleDeleteReview(globalIndex)}
                       aria-label={`Delete review for ${game.title}`}>
-                      <DeleteIcon className="cursor-pointer w-[24px] h-[24px] sm:w-[32px] sm:h-[32px]" />
+                      <DeleteIcon className="cursor-pointer w-[24px] h-[24px] " />
                     </Button>
                     <Button
                       variant="secondary"
-                      className="w-[64px] h-[40px] sm:w-[72px] sm:h-[48px] flex justify-center items-center"
+                      className="w-[64px] sm:w-[64px] h-[40px] sm:h-[45px] flex justify-center items-center"
                       onClick={() => handleEditReview(globalIndex)}
                       aria-label={`Edit review for ${game.title}`}>
-                      <EditIcon className="cursor-pointer w-[24px] h-[24px] sm:w-[32px] sm:h-[32px]" />
+                      <EditIcon className="cursor-pointer w-[24px] h-[24px]" />
                     </Button>
                   </div>
                   <Text
@@ -468,13 +468,13 @@ const ProductReviews: React.FC = React.memo(() => {
         {reviews.length === 0 ? (
           <Heading
             variant="h3"
-            className="my-[24px] sm:my-[48px]"
+            className="my-[24px] sm:my-[36px]"
             aria-label="No reviews message">
             No reviews yet
           </Heading>
         ) : (
           <div
-            className="favorites-grid grid grid-cols-1 gap-[16px] sm:gap-[24px] mb-[24px] sm:mb-[48px]"
+            className="favorites-grid grid grid-cols-1 gap-[16px] sm:gap-[18px] mb-[24px] sm:mb-[36px]"
             aria-label="Reviews List">
             {paginatedReviews}
             <Pagination
@@ -487,7 +487,7 @@ const ProductReviews: React.FC = React.memo(() => {
         )}
         <Button
           variant="primary"
-          className="max-w-[calc(100%-20px)] sm:max-w-[500px]"
+          className="max-w-[calc(100%-20px)] sm:max-w-[370px]"
           aria-label="Leave a review for a game"
           onClick={() => (window.location.href = "/auth/account/orders")}>
           leave a review for the game

@@ -49,7 +49,7 @@ const GameDetailPage: React.FC = () => {
   return (
     <FavoriteProvider>
       <CartProvider>
-        <main className="min-h-screen relative flex flex-col w-full gap-[56px] md:gap-[120px] mt-[24px] sm:mt-[80px]">
+        <main className="min-h-screen relative flex flex-col w-full gap-[56px] md:gap-[90px] mt-[24px] sm:mt-[60px] xl:mt-[136px]">
           <GameHeader />
           <GameAbout />
           <GameSlider />

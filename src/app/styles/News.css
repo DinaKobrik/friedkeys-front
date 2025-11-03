@@ -5,11 +5,11 @@
 .new__image-container::before {
   content: "";
   position: absolute;
-  top: -60px;
+  top: -45px;
   left: 50%;
   max-width: 1920px;
   width: calc(100vw - 17px);
-  height: calc(100% + 100px);
+  height: calc(100% + 75px);
   background: -webkit-linear-gradient(
     to bottom,
     theme("colors.main") 0%,
@@ -28,7 +28,6 @@
     theme("colors.main") 93%,
     theme("colors.main") 100%
   );
-  background-size: 1920px auto;
   -webkit-transform: translateX(-50%);
   -ms-transform: translateX(-50%);
   transform: translateX(-50%);

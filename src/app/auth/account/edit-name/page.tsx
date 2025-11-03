@@ -32,12 +32,12 @@ const ChangeName: React.FC = React.memo(() => {
 
   const CalendarIcon = (
     <svg
-      width="24"
-      height="24"
+      width="18"
+      height="18"
       viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className="cursor-default absolute top-[12px] right-[12px] sm:top-[16px] sm:right-[16px] pointer-events-none">
+      className="cursor-default absolute top-[12px] right-[12px] sm:top-[14px] sm:right-[14px] pointer-events-none">
       <path
         d="M3.75781 9.59898H20.245"
         stroke="white"
@@ -241,7 +241,7 @@ const ChangeName: React.FC = React.memo(() => {
       <Suspense fallback={<div>Loading menu...</div>}>
         <AccountMenu activeLink="/auth/account/personal-info" />
       </Suspense>
-      <section className="flex flex-col gap-[24px] sm:gap-[48px] mt-[40px] sm:mt-[80px]">
+      <section className="flex flex-col gap-[24px] sm:gap-[36px] mt-[40px] sm:mt-[60px]">
         <Suspense fallback={<div>Loading heading...</div>}>
           <Heading variant="h1" className="text-center sm:text-left">
             edit personal info
@@ -300,13 +300,13 @@ const ChangeName: React.FC = React.memo(() => {
               required
               variant="straight"
               errorMessage={validateForm() ? "" : "Fill in the field"}
-              className="mb-[24px] sm:mb-[40px]"
+              className="mb-[24px] sm:mb-[30px]"
               autoComplete="off"
               ref={birthdayRef}>
               {CalendarIcon}
             </Input>
           </Suspense>
-          <div className="flex flex-col-reverse sm:flex-row gap-[8px] sm:gap-[26px] max-w-[calc(100%-20px)] sm:max-w-[500px] w-full mx-auto">
+          <div className="flex flex-col-reverse sm:flex-row gap-[8px] sm:gap-[19px] max-w-[calc(100%-20px)] sm:max-w-[500px] w-full mx-auto">
             <Suspense fallback={<div>Loading button...</div>}>
               <Button
                 variant="secondary"

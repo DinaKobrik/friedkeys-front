@@ -61,20 +61,20 @@ const GameDescription: React.FC = () => {
       if (windowWidth < 576) {
         calculatedOffset = 16;
         setDynamicMargin(`-${calculatedOffset}px`);
-      } else if (windowWidth >= 576 && windowWidth < 1700) {
+      } else if (windowWidth >= 576 && windowWidth < 1292) {
         calculatedOffset = 46;
         setDynamicMargin(`-${calculatedOffset}px`);
-      } else if (windowWidth >= 1607 && windowWidth <= 1609) {
+      } else if (windowWidth >= 1199 && windowWidth <= 1201) {
         calculatedOffset = 146;
         setDynamicMargin(`-${calculatedOffset}px`);
-      } else if (windowWidth > 1608 && windowWidth <= 1920) {
+      } else if (windowWidth > 1200 && windowWidth <= 1920) {
         calculatedOffset = isTouchDevice
-          ? (windowWidth - 1608) / 2
-          : (windowWidth - scrollbarWidthValue - 1608) / 2;
+          ? (windowWidth - 1200) / 2
+          : (windowWidth - scrollbarWidthValue - 1200) / 2;
         setDynamicMargin(`-${calculatedOffset}px`);
       } else {
-        calculatedOffset = 146;
-        setDynamicMargin("-146px");
+        calculatedOffset = 360;
+        setDynamicMargin("-360px");
       }
 
       setDynamicPadding(`${calculatedOffset}px`);
@@ -125,7 +125,7 @@ const GameDescription: React.FC = () => {
     <section aria-label="Game Description Section">
       <Heading
         variant="h1"
-        className="mb-[24px] sm:mb-[40px]"
+        className="mb-[24px] sm:mb-[30px]"
         aria-label="Game Description Title">
         Description
       </Heading>
@@ -134,7 +134,7 @@ const GameDescription: React.FC = () => {
         style={{ marginLeft: dynamicMargin, marginRight: dynamicMargin }}>
         <div
           ref={containerRef}
-          className="flex gap-[12px] sm:gap-[24px] overflow-x-auto scrollbar-hide custom-scrollbar-h items-start pb-[28px] sm:pb-[60px]"
+          className="flex gap-[12px] sm:gap-[18px] overflow-x-auto scrollbar-hide custom-scrollbar-h items-start pb-[28px] sm:pb-[45px]"
           style={{
             paddingLeft: dynamicPadding,
             paddingRight: dynamicPadding,
@@ -151,14 +151,14 @@ const GameDescription: React.FC = () => {
           {gameData.map((item, index) => (
             <div
               key={index}
-              className="flex-shrink-0 w-[268px] sm:w-[394px] lg:w-[520px]"
+              className="flex-shrink-0 w-[268px] sm:w-[394px] lg:w-[390px]"
               aria-label={`Feature: ${item.subtitle}`}>
-              <div className="card-corner h-[160px] sm:h-[220px] lg:h-[280px] relative mb-[16px] sm:mb-[32px]">
+              <div className="card-corner h-[160px] sm:h-[220px] lg:h-[210px] relative mb-[16px] sm:mb-[24px]">
                 <Image
                   src={item.photo}
                   alt={item.subtitle}
-                  width={520}
-                  height={280}
+                  width={390}
+                  height={210}
                   className="object-cover h-full w-full"
                   draggable="false"
                   loading="lazy"

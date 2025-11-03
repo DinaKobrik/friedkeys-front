@@ -23,12 +23,12 @@ export default function SuccessPage() {
     <main>
       <CartMenu activeItem="payment" />
       <div
-        className={`relative py-[56px] max-w-[792px] mx-auto ${
+        className={`relative py-[42px] max-w-[594px] mx-auto ${
           isDesktop ? "card-corner" : ""
         } ${
           isDesktop ? "pt-[56px] pb-[64px] px-[56px] bg-2" : ""
         } flex flex-col justify-center items-center`}>
-        <div className="success mb-[32px] sm:mb-[40px] p-[11px] sm:p-[15px] rounded-full border-2 border-primary-main w-[56px] h-[56px] sm:w-[80px] sm:h-[80px] flex justify-center items-center">
+        <div className="success mb-[32px] sm:mb-[30px] p-[11px] sm:p-[15px] rounded-full border-2 border-primary-main w-[56px] h-[56px] sm:w-[60px] sm:h-[60px] flex justify-center items-center">
           <svg
             width="38"
             height="28"
@@ -43,10 +43,10 @@ export default function SuccessPage() {
             />
           </svg>
         </div>
-        <Heading variant="h1" className="mb-[16px] sm:mb-[24px]">
+        <Heading variant="h1" className="mb-[16px] sm:mb-[18px]">
           Done!
         </Heading>
-        <Heading variant="h2" className="text-center mb-[24px] sm:mb-[80px]">
+        <Heading variant="h2" className="text-center mb-[24px] sm:mb-[60px]">
           Your payment was successful
         </Heading>
         <Button

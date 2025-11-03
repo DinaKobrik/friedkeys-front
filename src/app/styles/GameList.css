@@ -93,7 +93,7 @@
   appearance: textfield;
 }
 .custom-scrollbar::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 .custom-scrollbar::-webkit-scrollbar-track {
   background: #333;

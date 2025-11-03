@@ -175,15 +175,15 @@ const RecommendationsBlock: React.FC = () => {
 
   return (
     <FavoriteProvider>
-      <section className="mb-[56px] md:mb-[120px] 2xl:mb-0">
+      <section className="mb-[56px] md:mb-[90px] 2xl:mb-0">
         <Heading
           variant="h1"
           aria-label="Recommendations Section"
           aria-live="polite"
-          className="mb-[24px] sm:mb-[40px]">
+          className="mb-[24px] sm:mb-[30px]">
           Recommendations
         </Heading>
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-[16px] sm:gap-[24px]">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-[16px] sm:gap-[18px]">
           {games.length > 0 ? (
             games.map((game) => {
               const discountPrice =
@@ -197,18 +197,18 @@ const RecommendationsBlock: React.FC = () => {
               return (
                 <div
                   key={game.id}
-                  className="w-full  h-[125px] sm:h-[280px] lg:h-full flex flex-col relative min-w-[138px] xs:min-w-[175px] sm:min-w-[200px]">
+                  className="w-full  h-[125px] sm:h-[210px] lg:h-full flex flex-col relative min-w-[138px] xs:min-w-[175px] sm:min-w-[200px]">
                   <div className="h-full w-full">
                     <div
-                      className={`game-card lg:bg-2 relative h-full flex flex-row lg:flex-col justify-between gap-[12px] sm:gap-[16px] lg:gap-[0px] ${
+                      className={`game-card lg:bg-2 relative h-full flex flex-row lg:flex-col justify-between gap-[12px] sm:gap-[12px] lg:gap-[0px] ${
                         isLessThan992 ? "" : "card-corner"
                       }`}>
                       <div
-                        className={`relative w-full max-w-[81px] sm:max-w-[180px] lg:max-w-[520px] h-[125px] sm:h-[280px] ${
+                        className={`relative w-full max-w-[81px] sm:max-w-[180px] lg:max-w-[520px] h-[125px] sm:h-[210px] ${
                           isLessThan992 ? "card-corner" : ""
                         }`}>
                         <div
-                          className="favorite absolute w-[36px] h-[36px] sm:w-[48px] sm:h-[48px] right-0 top-0 z-10 flex justify-center items-center cursor-pointer"
+                          className="favorite absolute w-[36px] h-[36px] right-0 top-0 z-10 flex justify-center items-center cursor-pointer"
                           onClick={(e) => {
                             e.preventDefault();
                             toggleFavoriteFromContext(game.id);
@@ -216,7 +216,6 @@ const RecommendationsBlock: React.FC = () => {
                           <svg
                             width="16.5"
                             height="21"
-                            className="sm:w-[22px] sm:h-[28px]"
                             viewBox="0 0 22 28"
                             fill={isFavorite[game.id] ? "#FFFF25" : "none"}
                             xmlns="http://www.w3.org/2000/svg">
@@ -249,20 +248,20 @@ const RecommendationsBlock: React.FC = () => {
                         </Link>
                       </div>
                       <div
-                        className={`w-full md:bg-2 p-0 md:p-[32px] md:pt-[24px] flex flex-col justify-between ${
+                        className={`w-full md:bg-2 p-0 md:p-[24px] md:pt-[18px] lg:p-[12px] flex flex-col justify-between ${
                           isLessThan992 && !isLessThan768 ? "card-corner" : ""
                         }`}>
                         <div>
-                          <div className="flex gap-[16px] items-start">
+                          <div className="flex gap-[12px] items-start">
                             <p
-                              className={`hidden lg:block font-medium text-white h-auto text-[12px] leading-[17px] sm:text-[20px] py-[4px] sm:py-[6px] px-[8px] bg-DLS ${
+                              className={`hidden lg:block font-medium text-white h-auto text-[12px] leading-[17px] sm:text-[15px] py-[4px] sm:py-[6px] px-[8px] bg-DLS ${
                                 game.hasDlc ? "block" : "hidden sm:hidden"
                               }`}
                               aria-label={`DLC indicator for ${game.title}`}>
                               DLS
                             </p>
                             <h3
-                              className="font-medium font-usuzi-condensed lg:font-inter line-clamp-2 text-white text-[14px] sm:text-[20px] leading-[17px] sm:leading-[24px] mb-[12px] sm:mb-[23px]"
+                              className="font-medium font-usuzi-condensed lg:font-inter line-clamp-2 text-white text-[14px] sm:text-[19px] leading-[17px] sm:leading-[21px] mb-[12px] sm:mb-[17px]"
                               aria-label={`Game title: ${game.title}`}>
                               {game.title}
                             </h3>
@@ -273,11 +272,11 @@ const RecommendationsBlock: React.FC = () => {
                             }}
                             className={`flex lg:hidden items-center flex-wrap line-clamp-2 justify-${
                               isOneLine[game.id] ? "between" : "start"
-                            } w-full gap-[8px] md:gap-[20px] gap-y-[3px]`}>
-                            <span className="text-white text-[13px] leading-[15px] sm:text-[20px] whitespace-nowrap">
+                            } w-full gap-[8px] md:gap-[15px] gap-y-[3px]`}>
+                            <span className="text-white text-[13px] leading-[15px] sm:text-[15px] whitespace-nowrap">
                               Standard
                             </span>
-                            <span className="text-white text-[13px] leading-[15px] sm:text-[20px] flex gap-[4px] sm:gap-[8px] items-center whitespace-nowrap">
+                            <span className="text-white text-[13px] leading-[15px] sm:text-[15px] flex gap-[4px] sm:gap-[8px] items-center whitespace-nowrap">
                               <svg
                                 width="40"
                                 height="29"
@@ -292,37 +291,37 @@ const RecommendationsBlock: React.FC = () => {
                               </svg>
                               PlayStation Store
                             </span>
-                            <span className="text-white text-[13px] leading-[15px] sm:text-[20px] whitespace-nowrap">
+                            <span className="text-white text-[13px] leading-[15px] sm:text-[15px] whitespace-nowrap">
                               PC
                             </span>
                           </div>
                         </div>
                         <div className="flex justify-between items-center h-[40px] sm:h-[48px] lg:h-[34px]">
-                          <div className="hidden lg:flex flex-col sm:flex-row gap-[1px] sm:gap-[20px] lg:gap-[7px] xl:gap-[20px] items-end mr-auto w-full">
+                          <div className="hidden lg:flex flex-col sm:flex-row gap-[1px] sm:gap-[20px] lg:gap-[7px] xl:gap-[15px] items-end mr-auto w-full">
                             {discountPrice &&
                             game.discount &&
                             game.discount > 0 &&
                             !isDiscountExpired(game.discountDate) ? (
                               <>
                                 <span
-                                  className="text-white font-bold text-[15px] sm:text-[28px] leading-[17px] sm:leading-[28px]"
+                                  className="text-white font-bold text-[15px] sm:text-[21px] leading-[17px] sm:leading-[21px]"
                                   aria-label={`Discounted price: ${discountPrice}$`}>
                                   {discountPrice}$
                                 </span>
                                 <span
-                                  className="line-through text-gray-68 font-bold text-[12px] sm:text-[20px] leading-[14px] sm:leading-[20px]"
+                                  className="line-through text-gray-68 font-bold text-[12px] sm:text-[15px] leading-[14px] sm:leading-[20px]"
                                   aria-label={`Original price: ${game.price}$`}>
                                   {game.price}$
                                 </span>
                                 <span
-                                  className={`absolute right-0 md:sticky md:right-auto md:bottom-auto text-white font-bold text-[13px] md:text-[18px] leading-[13px] sm:leading-[20px] py-[4px] px-[8px] md:py-[7px] md:px-[16px] rounded-[2px] bg-sale ${"bottom-[102px] sm:bottom-[130px]"}`}
+                                  className={`absolute right-0 md:sticky md:right-auto md:bottom-auto text-white font-bold text-[13px] md:text-[13px] leading-[13px] sm:leading-[15px] py-[4px] px-[8px] md:py-[7px] md:px-[16px] rounded-[2px] bg-sale ${"bottom-[102px] sm:bottom-[130px]"}`}
                                   aria-label={`Discount percentage: -${game.discount}%`}>
                                   -{game.discount}%
                                 </span>
                               </>
                             ) : (
                               <span
-                                className="text-white font-bold text-[15px] sm:text-[28px] leading-[17px] sm:leading-[28px]"
+                                className="text-white font-bold text-[15px] sm:text-[21px] leading-[17px] sm:leading-[21px]"
                                 aria-label={`Price: ${game.price}$`}>
                                 {game.price}$
                               </span>
@@ -333,20 +332,20 @@ const RecommendationsBlock: React.FC = () => {
                             game.discount &&
                             game.discount > 0 &&
                             !isDiscountExpired(game.discountDate) ? (
-                              <div className="flex items-center gap-[12px] sm:gap-[20px]">
+                              <div className="flex items-center gap-[12px] sm:gap-[15px]">
                                 <span
-                                  className={`text-white font-bold text-[13px] md:text-[18px] leading-[20px] py-[4px] px-[8px] md:py-[7px] md:px-[16px] rounded-[2px] bg-sale ${"bottom-[102px] sm:bottom-[130px]"}`}
+                                  className={`text-white font-bold text-[13px] leading-[20px] py-[4px] px-[8px] md:py-[5px] md:px-[12px] rounded-[2px] bg-sale ${"bottom-[102px] sm:bottom-[130px]"}`}
                                   aria-label={`Discount percentage: -${game.discount}%`}>
                                   -{game.discount}%
                                 </span>
                                 <div className="flex flex-col items-end">
                                   <span
-                                    className="text-white font-bold text-[15px] sm:text-[28px] leading-[17px] sm:leading-[28px]"
+                                    className="text-white font-bold text-[15px] sm:text-[21px] leading-[17px] sm:leading-[21px]"
                                     aria-label={`Discounted price: ${discountPrice}$`}>
                                     {discountPrice}$
                                   </span>
                                   <span
-                                    className="line-through text-gray-68 font-bold text-[12px] sm:text-[20px] leading-[14px] sm:leading-[20px]"
+                                    className="line-through text-gray-68 font-bold text-[12px] sm:text-[15px] leading-[14px] sm:leading-[15px]"
                                     aria-label={`Original price: ${game.price}$`}>
                                     {game.price}$
                                   </span>
@@ -354,7 +353,7 @@ const RecommendationsBlock: React.FC = () => {
                               </div>
                             ) : (
                               <span
-                                className="text-white font-bold text-[15px] sm:text-[28px] leading-[17px] sm:leading-[28px]"
+                                className="text-white font-bold text-[15px] sm:text-[21px] leading-[17px] sm:leading-[21px]"
                                 aria-label={`Price: ${game.price}$`}>
                                 {game.price}$
                               </span>
@@ -368,18 +367,18 @@ const RecommendationsBlock: React.FC = () => {
                         }`}></div>
                     </div>
                   </div>
-                  <div className="lg:mt-[24px] absolute lg:static bottom-[0px] right-0 md:bottom-[32px] md:right-[32px] mr-[10px] lg:mr-0">
+                  <div className="lg:mt-[18px] absolute lg:static bottom-[0px] right-0 md:bottom-[32px] md:right-[32px] mr-[10px] lg:mr-0">
                     {cartQuantity === 0 ? (
                       <Button
                         variant="secondary"
-                        className="max-w-[245px] w-full h-[40px] sm:h-[48px] flex justify-center items-center lg:max-w-[calc(100%-20px)]"
+                        className="max-w-[245px] min-w-[60px] w-full h-[40px] sm:h-[45px] flex justify-center items-center lg:max-w-[calc(100%-20px)]"
                         onClick={() => addToCart(game.id)}
                         aria-label={`Add ${game.title} to cart`}>
                         <span className="hidden lg:block">Add to Cart</span>
                         <span className="lg:hidden">
                           <svg
-                            width="33"
-                            height="32"
+                            width="24"
+                            height="24"
                             viewBox="0 0 33 32"
                             fill="none"
                             xmlns="http://www.w3.org/2000/svg">
@@ -421,25 +420,25 @@ const RecommendationsBlock: React.FC = () => {
                         className="flex sm:w-full items-center gap-6 w-full max-w-[80px] xs:max-w-[202px] sm:max-w-[80px] md:max-w-[100%] sm:justify-center"
                         aria-live="polite"
                         aria-label={`Game ${game.title} is in cart with quantity ${cartQuantity}`}>
-                        <div className="flex justify-center items-center h-[40px] font-usuzi-condensed text-[15px] leading-[17px] sm:text-[24px] sm:leading-[26px] text-center w-full">
+                        <div className="flex justify-center items-center h-[40px] font-usuzi-condensed text-[15px] leading-[17px] sm:text-[18px] sm:leading-[19px] text-center w-full">
                           in the cart
                         </div>
                         <div className="hidden lg:flex items-center gap-6 w-full max-w-[202px]">
                           <Button
                             variant="secondary"
-                            className="max-w-[64px] h-[48px] flex items-center justify-center"
+                            className="max-w-[48px] h-[45px] flex items-center justify-center"
                             onClick={() => updateQuantity(game.id, -1)}
                             aria-label={`Decrease quantity of ${game.title}`}>
                             -
                           </Button>
                           <span
-                            className="text-white text-[18px] font-bold"
+                            className="text-white text-[13px] font-bold"
                             aria-label={`Quantity: ${cartQuantity}`}>
                             {cartQuantity}
                           </span>
                           <Button
                             variant="secondary"
-                            className="max-w-[64px] h-[48px] flex items-center justify-center"
+                            className="max-w-[48px] h-[45px] flex items-center justify-center"
                             onClick={() => updateQuantity(game.id, 1)}
                             aria-label={`Increase quantity of ${game.title}`}>
                             +
