@@ -334,12 +334,12 @@ const Registration: React.FC = () => {
   }, []);
 
   return (
-    <main className="my-[24px] sm:my-[40px] newMainCustom:mt-[180px]">
-      <section className="relative flex flex-col justify-center items-center pt-[72px] sm:pt-[80px] mainCustom:pt-0">
+    <main className="my-[24px] sm:my-[40px] newMainCustom:mt-[136px]">
+      <section className="relative max-w-[520px] bodyCustom:max-w-[100%] mx-auto flex flex-col justify-center items-center mainCustom:pt-0">
         <Button
           variant="secondary"
           onClick={() => window.history.back()}
-          className="absolute top-0 left-0 max-w-[117px] sm:max-w-[163px] h-[40px] sm:h-[45px] flex justify-center items-center ml-[10px]">
+          className="bodyCustom:absolute bodyCustom:top-0 bodyCustom:left-0 mb-[32px] bodyCustom:mb-0 max-w-[117px] sm:max-w-[163px] h-[40px] sm:h-[45px] flex justify-center items-center ml-[10px]">
           <svg
             width="11"
             height="17"

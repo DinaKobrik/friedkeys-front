@@ -48,12 +48,12 @@ export default function ForgotPassword() {
   };
 
   return (
-    <main className="my-[40px] newMainCustom:mt-[180px]">
-      <section className="min-h-[calc(100vh-170px)] relative pt-[88px] flex flex-col justify-center items-center">
+    <main className="my-[40px] newMainCustom:mt-[136px]">
+      <section className="min-h-[calc(100vh-170px)] relative max-w-[520px] bodyCustom:max-w-[100%] mx-auto flex flex-col justify-center items-center">
         <Button
           variant="secondary"
           onClick={() => router.push("/auth/profile/log-in")}
-          className="absolute top-0 left-0 max-w-[117px] sm:max-w-[163px] h-[40px] sm:h-[45px] flex justify-center items-center ml-[10px]">
+          className="bodyCustom:absolute bodyCustom:top-0 bodyCustom:left-0 mb-[32px] bodyCustom:mb-0 max-w-[117px] sm:max-w-[163px] h-[40px] sm:h-[45px] flex justify-center items-center ml-[10px]">
           <svg
             width="11"
             height="17"

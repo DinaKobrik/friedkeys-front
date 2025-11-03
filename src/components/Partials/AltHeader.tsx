@@ -6,8 +6,8 @@ import Link from "next/link";
 
 const Header = () => {
   return (
-    <header className="py-[14px] newMainCustom:px-[46px] xl:mt-[-76px] newMainCustom:mt-0 newMainCustom:fixed newMainCustom:left-0 newMainCustom:top-0 w-full">
-      <div className="flex justify-between items-center gap-[10px] sm:mt-[32px] max-w-[1920px] mx-auto w-full">
+    <header className="py-[14px] xl:mt-[-76px] newMainCustom:mt-0 newMainCustom:fixed newMainCustom:left-0 newMainCustom:top-0 w-full">
+      <div className="newMainCustom:px-[46px] flex justify-between items-center gap-[10px] max-w-[1920px] mx-auto w-full">
         <Logo />
         <div className="max-h-[48px] hidden sm:flex items-center gap-[18px]">
           <Button

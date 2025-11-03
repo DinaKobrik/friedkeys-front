@@ -110,7 +110,7 @@ export default function ResetPassword() {
   );
 
   return (
-    <main className="my-[40px] newMainCustom:mt-[180px]">
+    <main className="my-[40px] newMainCustom:mt-[136px]">
       <section className="flex flex-col justify-center items-center min-h-[calc(100vh-170px)]">
         <Heading variant="h1" className="mb-[24px] text-center">
           Reset Password

@@ -137,7 +137,7 @@ export default function LogIn() {
   ];
 
   return (
-    <main className="my-[40px] newMainCustom:mt-[180px]">
+    <main className="my-[40px] newMainCustom:mt-[136px]">
       <section className="flex flex-col justify-center items-center max-w-[520px] mx-auto">
         <Heading variant="h1" className="mb-[24px] sm:mb-[32px] text-center">
           Log In
